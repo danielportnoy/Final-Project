@@ -2,8 +2,8 @@ package main;
 
 import java.util.LinkedList;
 
-import logics.Scenario;
-import logics.Statement;
+import logics.game.Scenario;
+import logics.grammar.statements.Statement;
 
 public class Main {
 

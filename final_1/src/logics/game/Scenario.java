@@ -1,11 +1,11 @@
-package logics;
+package logics.game;
 
-import graphics.Board;
 import graphics.Graphics_Control;
-import graphics.Tile;
 
 import java.util.LinkedList;
 
+import logics.grammar.statements.Statement;
+import logics.grammar.types.Type;
 import characters.Hero;
 
 public class Scenario {

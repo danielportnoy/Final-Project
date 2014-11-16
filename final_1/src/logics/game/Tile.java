@@ -1,4 +1,4 @@
-package graphics;
+package logics.game;
 
 public class Tile {
 

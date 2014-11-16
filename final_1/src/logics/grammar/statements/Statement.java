@@ -1,4 +1,7 @@
-package logics;
+package logics.grammar.statements;
+
+import logics.grammar.types.Type;
+
 
 public abstract class Statement {
 

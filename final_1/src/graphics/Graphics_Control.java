@@ -1,5 +1,7 @@
 package graphics;
 
+import logics.game.Board;
+import logics.game.Tile;
 import characters.Hero;
 
 public class Graphics_Control {
