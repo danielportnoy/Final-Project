@@ -1,9 +1,11 @@
 package logics.grammar.statements;
 
-import logics.grammar.types.Type;
+import logics.visitor.CodeVisitable;
 
 
-public abstract class Statement {
+/*import logics.grammar.types.Type;*/
+
+public abstract class Statement implements CodeVisitable {
 
 	public String name;
 
@@ -11,5 +13,5 @@ public abstract class Statement {
 		this.name = name;
 	}
 
-	public abstract Type Run();
+	/*public abstract Type Run();*/
 }

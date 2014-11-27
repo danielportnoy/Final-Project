@@ -1,15 +1,14 @@
 package logics.game;
 
-public class Tile {
+public abstract class Tile {
 
 	private int rowCoord;
 	private int colCoord;
 	private String mark;
 
-	public Tile(int rowCoord,int colCoord, String mark) {
+	public Tile(int rowCoord,int colCoord) {
 		this.rowCoord=rowCoord;
 		this.colCoord=colCoord;
-		setMark(mark);
 	}
 
 	public int getRowCoord() {

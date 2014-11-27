@@ -1,20 +1,21 @@
 package main;
 
-import java.util.LinkedList;
-
-import logics.game.Scenario;
-import logics.grammar.statements.Statement;
+/*import logics.game.Scenario;*/
+import logics.game.levels.level1.Level1;
+import logics.grammar.statements.Block;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		Scenario s = new Scenario(3, 3, "H", 1, 1 , "G", 1 , 2);
+		Level1 s = new Level1(3, 3, "H", 1, 1 , "G", 1 , 2);
 		
-		LinkedList<Statement> l = new LinkedList<Statement>();
-		l.add(s.GoRightStatement());
 		
-		s.RunCode(l);
+		Block b = new Block();
+		
+		b.addStatemnt(s.GoRightStatement());
+		
+		s.RunCode(b);
 		
 	}	
 }

@@ -1,29 +1,26 @@
 package logics.game;
 
-import graphics.Graphics_Control;
-
-import java.util.LinkedList;
-
-import logics.grammar.statements.Statement;
-import logics.grammar.types.Type;
+import logics.grammar.statements.Block;
 import characters.Hero;
 
-public class Scenario {
+public abstract class Scenario {
 
 	public Board board;
 	public Hero hero;
 
-	public Tile goalTile;
+	/*public Tile goalTile;*/
 
-	public Scenario(int boardRows, int boardCols , String heroLook ,  int heroRow , int heroCol, String goalMark, int goalRow, int goalCol) {
+	public Scenario(int boardRows, int boardCols , String heroLook ,  int heroRow , int heroCol/*, String goalMark, int goalRow, int goalCol*/) {
 		board=new Board(boardRows,boardCols);
 		hero = new Hero(heroLook, heroRow, heroCol);
 
-		goalTile = board.getTiles()[goalRow][goalCol];
+		/*goalTile = board.getTiles()[goalRow][goalCol];
 		goalTile.setMark(goalMark);
+		
+		board.getTiles()[0][0]=new Wall_Tile(0, 0);*/
 	}
 
-	public void RunCode(LinkedList<Statement> code){
+	public abstract void RunCode(Block codeBlock);/*{
 
 		Graphics_Control.drawBoard(board, hero);
 
@@ -43,13 +40,13 @@ public class Scenario {
 			System.out.println("You Won!");
 		else
 			System.out.println("You Lost!");
-	}
+	}*/
 
-	public boolean isWin(){
+	public abstract boolean isWin();/*{
 		return hero.getRowCoord()==goalTile.getRowCoord() & hero.getColCoord()==goalTile.getColCoord();
-	}
+	}*/
 
-	class GoRight_Statement extends Statement{
+	/*class GoRight_Statement extends Statement{
 
 		public GoRight_Statement() {
 			super("Go right");
@@ -65,5 +62,5 @@ public class Scenario {
 
 	public Statement GoRightStatement() {
 		return new GoRight_Statement();
-	}
+	}*/
 }
