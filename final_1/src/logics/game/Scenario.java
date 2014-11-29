@@ -10,9 +10,9 @@ public abstract class Scenario {
 
 	/*public Tile goalTile;*/
 
-	public Scenario(int boardRows, int boardCols , String heroLook ,  int heroRow , int heroCol/*, String goalMark, int goalRow, int goalCol*/) {
-		board=new Board(boardRows,boardCols);
-		hero = new Hero(heroLook, heroRow, heroCol);
+	public Scenario(int boardHeight, int boardLength , String heroLook ,  Coordinate heroLocation/*, String goalMark, int goalRow, int goalCol*/) {
+		board=new Board(boardHeight,boardLength);
+		hero = new Hero(heroLook, heroLocation);
 
 		/*goalTile = board.getTiles()[goalRow][goalCol];
 		goalTile.setMark(goalMark);

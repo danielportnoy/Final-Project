@@ -1,7 +1,7 @@
 package logics.visitor;
 
-public interface CodeVisitable {
+public interface CodeVisitable<R> {
 	
-	public void accept(CodeVisitor v);
+	public R accept(CodeVisitor v);
 
 }

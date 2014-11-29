@@ -5,7 +5,7 @@ import logics.visitor.CodeVisitable;
 
 /*import logics.grammar.types.Type;*/
 
-public abstract class Statement implements CodeVisitable {
+public abstract class Statement implements CodeVisitable<Void> {
 
 	public String name;
 

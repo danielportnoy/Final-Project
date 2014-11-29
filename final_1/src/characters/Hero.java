@@ -1,32 +1,24 @@
 package characters;
 
+import logics.game.Coordinate;
+
 public class Hero {
 
 	private String look;
 
-	private int rowCoord;
-	private int colCoord;
+	private Coordinate location;
 
-	public Hero(String look , int rowCoord , int colCoord) {
+	public Hero(String look , Coordinate location) {
 		setLook(look);
-		setRowCoord(rowCoord);
-		setColCoord(colCoord);
+		setLocation(location);
 	}
 
-	public int getRowCoord() {
-		return rowCoord;
+	public Coordinate getLocation() {
+		return location;
 	}
 
-	public void setRowCoord(int rowCoord) {
-		this.rowCoord = rowCoord;
-	}
-
-	public int getColCoord() {
-		return colCoord;
-	}
-
-	public void setColCoord(int colCoord) {
-		this.colCoord = colCoord;
+	public void setLocation(Coordinate location) {
+		this.location = location;
 	}
 
 	public String getLook() {
