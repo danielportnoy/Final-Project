@@ -12,6 +12,8 @@ import logics.visitor.CodeVisitorElement;
 
 public class Level1 extends Scenario {
 
+	public Tile goalTile;
+
 	public Level1(int boardHeight, int boardLength, String heroLook,Coordinate heroLocation,String goalMark, Coordinate goalLocation) {
 		super(boardHeight, boardLength, heroLook, heroLocation);
 
@@ -22,36 +24,8 @@ public class Level1 extends Scenario {
 		board.setTileAtLoaction(new Wall_Tile(wallLocation),wallLocation);
 	}
 
-	public Tile goalTile;
-
-
-	/*@Override
-	public void RunCode(Block codeBlock){
-
-		Level1CodeVisitorElement l1v = new Level1CodeVisitorElement();
-
-		Graphics_Control.drawBoard(board, hero);
-
-		for (Statement statement : codeBlock.getStatements()) {
-			statement.accept(l1v);
-
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			Graphics_Control.drawBoard(board, hero);
-		}
-
-		if(isWin())
-			System.out.println("You Won!");
-		else
-			System.out.println("You Lost!");
-	}*/
-
 	@Override
-	public boolean isWin() {
+	public boolean checkWin() {
 		return hero.getLocation().equals(goalTile.getLocation());
 	}
 
@@ -66,13 +40,6 @@ public class Level1 extends Scenario {
 			((Level1CodeVisitorElement)v).visit(this);
 			return null;
 		}
-
-		/*@Override
-		public Type Run() {
-			hero.setColCoord(hero.getColCoord()+1);
-			return null;
-		}*/
-
 	}
 
 
@@ -84,7 +51,7 @@ public class Level1 extends Scenario {
 
 			Coordinate targetCoord = new Coordinate(hero.getLocation());
 			targetCoord.setColCoord(cuurCol+1);
-			
+
 			Tile targetTile = board.getTileAtLoaction(targetCoord);
 
 			if(targetTile==null)
@@ -111,7 +78,7 @@ public class Level1 extends Scenario {
 				Graphics_Control.drawBoard(board, hero);
 			}
 
-			if(isWin())
+			if(checkWin())
 				System.out.println("You Won!");
 			else
 				System.out.println("You Lost!");

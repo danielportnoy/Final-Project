@@ -7,7 +7,7 @@ public class Board {
 	private int boardLength;
 	private int boardHeight;
 
-	public Board(int boardRows, int boardCols/*, int heroRow, int heroCol, int goalRow, int goalCol*/) {
+	public Board(int boardRows, int boardCols) {
 
 		tiles = new Tile[boardRows][boardCols];
 
@@ -30,8 +30,8 @@ public class Board {
 		if( -1 < location.getRowCoord() && location.getRowCoord() < getBoardHeight()
 				&& -1 < location.getColCoord() && location.getColCoord() < getBoardLength())
 			return tiles[location.getRowCoord()][location.getColCoord()];
-		
-			return null;
+
+		return null;
 	}
 
 	public void setTileAtLoaction(Tile tile , Coordinate location){

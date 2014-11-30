@@ -5,16 +5,12 @@ import java.util.LinkedList;
 import logics.visitor.CodeVisitor;
 
 public class Block extends Statement{
-	
+
 	private LinkedList<Statement> statements;
 
 	public Block() {
 		super("");
 		statements= new LinkedList<Statement>();
-	}
-	
-	public LinkedList<Statement> getStatements() {
-		return statements;
 	}
 
 	/*
@@ -22,7 +18,11 @@ public class Block extends Statement{
 		this.statements = statements;
 	}
 	*/
-	
+
+	public LinkedList<Statement> getStatements() {
+		return statements;
+	}
+
 	public void addStatemnt(Statement s){
 		statements.addLast(s);
 	}
