@@ -12,12 +12,7 @@ public class Boolean_Literal extends Literal_Expression  {
 	}
 
 	public Boolean_Literal(boolean value) {
-		this.value = value;
-	}
-
-	@Override
-	public Boolean accept(CodeVisitor v) {
-		return v.visit(this);
+		setValue(value);
 	}
 	
 	public boolean getValue() {
@@ -27,5 +22,10 @@ public class Boolean_Literal extends Literal_Expression  {
     public void setValue(boolean value) {
         this.value = value;
     }
+    
+    @Override
+	public Boolean_Literal accept(CodeVisitor v) {
+		return v.visit(this);
+	}
 
 }
