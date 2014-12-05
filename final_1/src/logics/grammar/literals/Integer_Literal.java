@@ -24,8 +24,8 @@ public class Integer_Literal extends Literal_Expression {
 	}
 
 	@Override
-	public Literal_Expression accept(CodeVisitor v) {
+	public Integer accept(CodeVisitor v) {
 		return v.visit(this);
 	}
-
+	
 }

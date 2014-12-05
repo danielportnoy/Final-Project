@@ -1,8 +1,6 @@
 package logics.grammar.expression;
 
-import logics.visitor.CodeVisitor;
-
-public class Binary_Expression extends Expression{
+public abstract class Binary_Expression extends Expression{
 	
 	public static enum Operator {
         or, 			// ||
@@ -61,10 +59,4 @@ public class Binary_Expression extends Expression{
 	public void setOp(Operator op) {
 		this.op = op;
 	}
-
-	@Override
-	public Expression accept(CodeVisitor v) {
-		return v.visit(this);
-	}
-
 }

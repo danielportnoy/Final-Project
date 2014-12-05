@@ -24,7 +24,7 @@ public class Boolean_Literal extends Literal_Expression  {
     }
     
     @Override
-	public Boolean_Literal accept(CodeVisitor v) {
+	public Boolean accept(CodeVisitor v) {
 		return v.visit(this);
 	}
 
