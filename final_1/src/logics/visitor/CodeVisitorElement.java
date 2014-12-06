@@ -8,6 +8,7 @@ import logics.grammar.literals.Integer_Literal;
 import logics.grammar.statements.Block;
 import logics.grammar.statements.If_Statement;
 import logics.grammar.statements.Statement;
+import logics.grammar.statements.While_Statement;
 
 
 public class CodeVisitorElement implements CodeVisitor {
@@ -16,7 +17,7 @@ public class CodeVisitorElement implements CodeVisitor {
 	public Boolean visit(Boolean_Literal boolean_Literal) {
 		return boolean_Literal.getValue();
 	}
-	
+
 	@Override
 	public Integer visit(Integer_Literal integer_Literal) {
 		return integer_Literal.getValue();
@@ -28,7 +29,7 @@ public class CodeVisitorElement implements CodeVisitor {
 		//Expression conditionResult = (Expression)if_Statement.getCondition().accept(this);
 
 		boolean res = (boolean) if_Statement.getCondition().accept(this);
-		
+
 		if(if_Statement.getThenStmt()!=null && res == true)
 			if_Statement.getThenStmt().accept(this);
 		else if(if_Statement.getElseStmt()!=null && res == false)
@@ -55,7 +56,7 @@ public class CodeVisitorElement implements CodeVisitor {
 
 		Object r = right.accept(this);
 		Object l = left.accept(this);
- 
+
 		if(op == Boolean_Binary_Expression.Operator.equals)
 			return r.equals(l);
 		else
@@ -64,7 +65,7 @@ public class CodeVisitorElement implements CodeVisitor {
 
 	@Override
 	public Integer visit(Integer_Binary_Expression integer_Binary_Expression) {
-		
+
 		Expression right = integer_Binary_Expression.getRight();
 		Expression left = integer_Binary_Expression.getLeft();
 
@@ -77,5 +78,20 @@ public class CodeVisitorElement implements CodeVisitor {
 			return r+l;		
 		else
 			return null;		
+	}
+
+	@Override
+	public void visit(While_Statement while_Statement) {
+
+		boolean res = (boolean) while_Statement.getCondition().accept(this);
+
+		while(while_Statement.getBody()!=null && res == true){
+			
+			while_Statement.getBody().accept(this);
+
+			res = (boolean) while_Statement.getCondition().accept(this);
+		}
+
+		return;
 	}
 }

@@ -60,6 +60,16 @@ public class Level1 extends Scenario {
 				return;
 
 			hero.getLocation().setColCoord(cuurCol+1);	
+
+			// --- TODO --- //
+			Graphics_Control.drawBoard(board, hero);
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			// --- TODO --- //
 		}
 
 		@Override
@@ -68,7 +78,9 @@ public class Level1 extends Scenario {
 
 			for (Statement statement : block.getStatements()) {
 				statement.accept(this);
-
+				
+				// --- TODO --- //
+				/*
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -76,6 +88,8 @@ public class Level1 extends Scenario {
 				}
 
 				Graphics_Control.drawBoard(board, hero);
+				*/
+				// --- TODO --- //
 			}
 
 			if(checkWin())

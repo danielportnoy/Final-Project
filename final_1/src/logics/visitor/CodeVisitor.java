@@ -6,6 +6,7 @@ import logics.grammar.literals.Boolean_Literal;
 import logics.grammar.literals.Integer_Literal;
 import logics.grammar.statements.Block;
 import logics.grammar.statements.If_Statement;
+import logics.grammar.statements.While_Statement;
 
 public interface CodeVisitor {
 
@@ -20,5 +21,7 @@ public interface CodeVisitor {
 	Boolean visit(Boolean_Binary_Expression boolean_binary_Expression);
 
 	Integer visit(Integer_Binary_Expression integer_Binary_Expression);
+
+	void visit(While_Statement while_Statement);
 
 }
