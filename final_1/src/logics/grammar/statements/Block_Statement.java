@@ -4,11 +4,11 @@ import java.util.LinkedList;
 
 import logics.visitor.CodeVisitor;
 
-public class Block extends Statement{
+public class Block_Statement extends Statement{
 
 	private LinkedList<Statement> statements;
 
-	public Block() {
+	public Block_Statement() {
 		super("");
 		statements= new LinkedList<Statement>();
 	}

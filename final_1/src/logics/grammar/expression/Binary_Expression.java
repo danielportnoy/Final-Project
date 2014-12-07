@@ -1,28 +1,8 @@
 package logics.grammar.expression;
 
+import logics.grammar.operators.Operator;
+
 public abstract class Binary_Expression extends Expression{
-	
-	public static enum Operator {
-        or, 			// ||
-        and, 			// &&
-        binOr, 			// |
-        binAnd, 		// &
-        xor, 			// ^
-        equals,			// ==
-        notEquals, 		// !=
-        less, 			// <
-        greater, 		// >
-        lessEquals, 	// <=
-        greaterEquals, 	// >=
-        lShift, 		// <<
-        rSignedShift, 	// >>
-        rUnsignedShift, // >>>
-        plus, 			// +
-        minus, 			// -
-        times, 			// *
-        divide, 		// /
-        remainder, 		// %
-    }
 
 	private Expression left;
 

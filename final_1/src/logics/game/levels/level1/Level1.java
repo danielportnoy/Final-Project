@@ -5,7 +5,7 @@ import logics.game.Coordinate;
 import logics.game.Scenario;
 import logics.game.Tile;
 import logics.game.Wall_Tile;
-import logics.grammar.statements.Block;
+import logics.grammar.statements.Block_Statement;
 import logics.grammar.statements.Statement;
 import logics.visitor.CodeVisitor;
 import logics.visitor.CodeVisitorElement;
@@ -73,7 +73,7 @@ public class Level1 extends Scenario {
 		}
 
 		@Override
-		public void visit(Block block) {
+		public void visit(Block_Statement block) {
 			Graphics_Control.drawBoard(board, hero);
 
 			for (Statement statement : block.getStatements()) {
@@ -104,7 +104,7 @@ public class Level1 extends Scenario {
 	}
 
 	@Override
-	public void RunCode(Block codeBlock) {
+	public void RunCode(Block_Statement codeBlock) {
 		codeBlock.accept(new Level1CodeVisitorElement());
 	}
 

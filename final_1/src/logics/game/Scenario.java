@@ -1,6 +1,6 @@
 package logics.game;
 
-import logics.grammar.statements.Block;
+import logics.grammar.statements.Block_Statement;
 import characters.Hero;
 
 public abstract class Scenario {
@@ -13,7 +13,7 @@ public abstract class Scenario {
 		hero = new Hero(heroLook, heroLocation);
 	}
 
-	public abstract void RunCode(Block codeBlock);
+	public abstract void RunCode(Block_Statement codeBlock);
 
 	public abstract boolean checkWin();
 }
