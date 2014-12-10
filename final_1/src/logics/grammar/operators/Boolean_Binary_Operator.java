@@ -2,7 +2,7 @@ package logics.grammar.operators;
 
 public class Boolean_Binary_Operator extends Binary_Operator<Boolean> {
 
-	public Boolean_Binary_Operator(BinOperatorEnum operator) {
+	public Boolean_Binary_Operator(BinaryOperatorEnum operator) {
 		super(operator);
 	}
 
@@ -10,7 +10,7 @@ public class Boolean_Binary_Operator extends Binary_Operator<Boolean> {
 	public Boolean operate(Boolean right, Boolean left) {
 
 		Boolean res = false;
-		BinOperatorEnum op =getOperator();
+		BinaryOperatorEnum op =getOperator();
 
 		switch(op){
 
@@ -30,7 +30,7 @@ public class Boolean_Binary_Operator extends Binary_Operator<Boolean> {
 	private Boolean operate(Integer right, Integer left) {
 
 		Boolean res = false;
-		BinOperatorEnum op =getOperator();
+		BinaryOperatorEnum op =getOperator();
 		
 		switch(op){
 

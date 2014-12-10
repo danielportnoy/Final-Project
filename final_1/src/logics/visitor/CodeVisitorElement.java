@@ -1,15 +1,21 @@
 package logics.visitor;
 
+import java.util.LinkedList;
+
 import logics.grammar.Identifier;
+import logics.grammar.StatementExpression;
 import logics.grammar.expression.Boolean_Binary_Expression;
 import logics.grammar.expression.Expression;
 import logics.grammar.expression.Integer_Binary_Expression;
-import logics.grammar.expression.VariableDeclaration_Statement;
+import logics.grammar.expression.Integer_Unary_Expression;
+import logics.grammar.expression.VariableDeclaration_Expression;
 import logics.grammar.literals.Boolean_Literal;
 import logics.grammar.literals.Integer_Literal;
 import logics.grammar.operators.Boolean_Binary_Operator;
 import logics.grammar.operators.Integer_Binary_Operator;
+import logics.grammar.operators.Integer_Unary_Operator;
 import logics.grammar.statements.Block_Statement;
+import logics.grammar.statements.For_Statement;
 import logics.grammar.statements.If_Statement;
 import logics.grammar.statements.Statement;
 import logics.grammar.statements.While_Statement;
@@ -101,13 +107,13 @@ public class CodeVisitorElement implements CodeVisitor {
 	}
 
 	@Override
-	public void visit(VariableDeclaration_Statement variableDeclaration_Statement) {
+	public void visit(VariableDeclaration_Expression variableDeclaration_Expression) {
 
-		if(variableDeclaration_Statement.getIdentifier()!=null && variableDeclaration_Statement.getInitStmt()!=null){
-			String id = variableDeclaration_Statement.getIdentifier().getName();
+		if(variableDeclaration_Expression.getIdentifier()!=null && variableDeclaration_Expression.getInitStmt()!=null){
+			String id = variableDeclaration_Expression.getIdentifier().getName();
 
 			if(id!=null)
-				DB.db.put(id, variableDeclaration_Statement.getInitStmt().accept(this));
+				DB.db.put(id, variableDeclaration_Expression.getInitStmt().accept(this));
 		}
 	}
 
@@ -115,12 +121,61 @@ public class CodeVisitorElement implements CodeVisitor {
 	public String visit(Identifier identifier) {
 		return identifier.getName();
 	}
-	
+
 	private Object extractExpression(Expression exp) {
-		
+
 		if(exp instanceof Identifier)
 			return DB.db.get(exp.accept(this));
 		else
 			return exp.accept(this);
+	}
+
+	@Override
+	public Integer visit(Integer_Unary_Expression integer_Unary_Expression) {
+
+		Expression exp = integer_Unary_Expression.getExp();
+
+		Integer_Unary_Operator op = (Integer_Unary_Operator) integer_Unary_Expression.getOp();
+
+		Object e = extractExpression(exp);
+
+		if(op != null && e != null)
+			return op.operate(e , exp);
+		else
+			return null;	
+	}
+
+	@Override
+	public void visit(StatementExpression statementExpression) {
+		statementExpression.getExpression().accept(this);
+	}
+
+	@Override
+	public void visit(For_Statement for_Statement) {
+
+		LinkedList<Expression> forInit = for_Statement.getForInit();
+		Expression condition = for_Statement.getCondition();
+		LinkedList<Expression> forUpdate = for_Statement.getForUpdate();
+		Statement body = for_Statement.getBody();
+
+		if (forInit != null){
+			for (int i = 0; i < forInit.size(); i++)
+				forInit.get(i).accept(this);
+		}
+
+
+		if (condition != null) {
+
+			while((boolean) extractExpression(condition)){ //TODO
+
+				if(body != null)
+					body.accept(this);
+				
+				if (forUpdate != null) {
+					for (int i = 0; i < forUpdate.size(); i++)
+						forUpdate.get(i).accept(this);
+				}
+			}
+		}
 	}
 }

@@ -3,14 +3,14 @@ package logics.grammar.operators;
 public class Integer_Binary_Operator extends Binary_Operator<Integer> {
 
 
-	public Integer_Binary_Operator(BinOperatorEnum operator) {
+	public Integer_Binary_Operator(BinaryOperatorEnum operator) {
 		super(operator);
 	}
 
 	public Integer operate(Integer right , Integer left) {
 
 		Integer res = 0;
-		BinOperatorEnum op =getOperator();
+		BinaryOperatorEnum op =getOperator();
 
 		switch(op){
 

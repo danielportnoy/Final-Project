@@ -5,20 +5,15 @@ import logics.grammar.statements.Statement;
 import logics.grammar.types.Primitive_Type;
 import logics.visitor.CodeVisitor;
 
-public class VariableDeclaration_Statement extends Statement {
+public class VariableDeclaration_Expression extends Expression {
 
 	private Primitive_Type type;
 
 	private Identifier identifier;
 
 	private Expression initStmt;
-
-	public VariableDeclaration_Statement() {
-		super("");
-	}
 	
-	public VariableDeclaration_Statement(Primitive_Type type , Identifier identifier , Expression initStmt){
-		super("");
+	public VariableDeclaration_Expression(Primitive_Type type , Identifier identifier , Expression initStmt){
 		this.type = type;
 		this.identifier = identifier;
 		this.initStmt = initStmt;

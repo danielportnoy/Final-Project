@@ -2,17 +2,39 @@ package logics.grammar.operators;
 
 public abstract class Binary_Operator<R> extends Operator {
 	
-	private BinOperatorEnum operator;
+	public static enum BinaryOperatorEnum {
+        or, 			// ||
+        and, 			// &&
+        binOr, 			// |
+        binAnd, 		// &
+        xor, 			// ^
+        equals,			// ==
+        notEquals, 		// !=
+        less, 			// <
+        greater, 		// >
+        lessEquals, 	// <=
+        greaterEquals, 	// >=
+        lShift, 		// <<
+        rSignedShift, 	// >>
+        rUnsignedShift, // >>>
+        plus, 			// +
+        minus, 			// -
+        times, 			// *
+        divide, 		// /
+        remainder, 		// %
+    }	
 	
-	public Binary_Operator(BinOperatorEnum operator) {
+	private BinaryOperatorEnum operator;
+	
+	public Binary_Operator(BinaryOperatorEnum operator) {
 		this.operator = operator;
 	}
 	
-	public BinOperatorEnum getOperator() {
+	public BinaryOperatorEnum getOperator() {
 		return operator;
 	}
 
-	public void setOperator(BinOperatorEnum operator) {
+	public void setOperator(BinaryOperatorEnum operator) {
 		this.operator = operator;
 	}
 	
