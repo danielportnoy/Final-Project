@@ -6,7 +6,7 @@ public class Bool_Idnt extends Idnt<Boolean> {
 
 	public Bool_Idnt(String name) {
 		super(name);
-		setValue(false);
+		//setValue(false);	// TODO
 	}
 
 	@Override

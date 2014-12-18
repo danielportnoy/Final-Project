@@ -6,7 +6,7 @@ public class Int_Idnt extends Idnt<Integer> {
 
 	public Int_Idnt(String name) {
 		super(name);
-		setValue(0);	// TODO
+		//setValue(0);	// TODO
 	}
 
 	@Override

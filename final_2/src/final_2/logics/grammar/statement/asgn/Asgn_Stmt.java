@@ -1,10 +1,11 @@
-package final_2.logics.grammar.expression.binary.asgn;
+package final_2.logics.grammar.statement.asgn;
 
 import final_2.logics.grammar.expression.Expr;
 import final_2.logics.grammar.expression.identifier.Idnt;
 import final_2.logics.grammar.operator.binary.asgn.Asgn_Op;
+import final_2.logics.grammar.statement.Stmt;
 
-public abstract class Asgn_Expr<T> extends Expr<T> {
+public abstract class Asgn_Stmt<T> extends Stmt {
 	
 	private Idnt<T> identifier;
 	
@@ -12,8 +13,8 @@ public abstract class Asgn_Expr<T> extends Expr<T> {
 	
 	private Expr<T> expression;
 
-	public Asgn_Expr(Idnt<T> identifier, Asgn_Op<T> operator, Expr<T> expression) {
-		super();
+	public Asgn_Stmt(Idnt<T> identifier, Asgn_Op<T> operator, Expr<T> expression) {
+		super(""); // TODO
 		this.identifier = identifier;
 		this.operator = operator;
 		this.expression = expression;
