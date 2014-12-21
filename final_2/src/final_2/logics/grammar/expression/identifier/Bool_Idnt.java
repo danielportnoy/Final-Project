@@ -16,7 +16,8 @@ public class Bool_Idnt extends Idnt<Boolean> {
 	
 	@Override
 	public void setValue(Boolean value) {
-		ScopeTable.BoolScope.put(getName(), value);
+		if(ScopeTable.BoolScope.containsKey(getName()))
+			ScopeTable.BoolScope.put(getName(), value);
 	}
 
 }

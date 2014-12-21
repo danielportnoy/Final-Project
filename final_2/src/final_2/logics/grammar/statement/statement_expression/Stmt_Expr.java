@@ -8,7 +8,6 @@ public abstract class Stmt_Expr<T> extends Stmt {
 	private Expr<T> expression;
 
 	public Stmt_Expr(Expr<T> expression) {
-		super(expression.toString());
 		this.expression=expression;
 	}
 
@@ -23,5 +22,10 @@ public abstract class Stmt_Expr<T> extends Stmt {
 	@Override
 	public void run() {
 		getExpression().run();
+	}
+	
+	@Override
+	public String toString() {
+		return getExpression().toString() + ";" + "\n";
 	}
 }

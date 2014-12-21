@@ -11,7 +11,6 @@ public class If_Stmt extends Stmt {
 	private Stmt elseBody;
 	
 	public If_Stmt(Bool_Expr condition, Stmt thenBody, Stmt elseBody) {
-		super("if");
 		this.condition=condition;
 		this.thenBody=thenBody;
 		this.elseBody = elseBody;
@@ -47,5 +46,21 @@ public class If_Stmt extends Stmt {
 			thenBody.run();
 		else
 			elseBody.run();
+	}
+
+	@Override
+	public String toString() {
+
+		String res = "if " + "(" + getCondition().toString() + ")" + " {" + "\n";
+		
+		res += getThenBody().toString() + "\n" + "}";
+		
+		res += "else " + " {" +"\n";
+		
+		res += getElseBody().toString() + "\n" + "}";
+		
+		res+= "\n";
+		
+		return res;
 	}
 }

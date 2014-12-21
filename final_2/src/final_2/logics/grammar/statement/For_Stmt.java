@@ -15,7 +15,6 @@ public class For_Stmt extends Stmt {
 	private Stmt body;
 
 	public For_Stmt( LinkedList<Stmt> forInit, Bool_Expr condition, LinkedList<Stmt> forUpdate, Stmt body) {
-		super("for");
 		this.forInit = forInit;
 		this.condition = condition;
 		this.body = body;
@@ -68,5 +67,29 @@ public class For_Stmt extends Stmt {
 				stmt.run();
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+
+		String res = "for " + "(" ;
+		
+		for (Stmt stmt : getForInit()) {
+			res += stmt.toString() + ",";
+		}
+		
+		res += " ; " + getCondition().toString() + " ; ";
+
+		for (Stmt stmt : getForUpdate()) {
+			res += stmt.toString() + ",";
+		}
+		
+		res += ")" + " {" + "\n";
+		
+		res += getBody().toString() + "\n" + "}";
+
+		res += "\n";
+
+		return res;
 	}
 }

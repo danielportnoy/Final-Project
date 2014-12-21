@@ -16,7 +16,8 @@ public class Int_Idnt extends Idnt<Integer> {
 	
 	@Override
 	public void setValue(Integer value) {
-		ScopeTable.IntScope.put(getName(),value);
+		if(ScopeTable.IntScope.containsKey(getName()))
+			ScopeTable.IntScope.put(getName(),value);
 	}
 
 }

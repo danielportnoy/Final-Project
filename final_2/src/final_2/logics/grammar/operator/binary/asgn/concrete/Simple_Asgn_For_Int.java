@@ -1,9 +1,9 @@
 package final_2.logics.grammar.operator.binary.asgn.concrete;
 
 import final_2.logics.grammar.expression.identifier.Idnt;
-import final_2.logics.grammar.operator.binary.asgn.Int_Asgn_Op;
+import final_2.logics.grammar.operator.binary.asgn.Bin_Asgn_Op_For_Int;
 
-public class Simple_Asgn_For_Int extends Int_Asgn_Op{
+public class Simple_Asgn_For_Int extends Bin_Asgn_Op_For_Int{
 
 	public Simple_Asgn_For_Int() {
 		super("=");
