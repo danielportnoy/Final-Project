@@ -7,7 +7,7 @@ import final_2.main.ScopeTable;
 
 public class Var_Dec_Stmt_For_Int_Idnt extends Var_Dec_Stmt_For_Idnt<Integer> {
 
-	public Var_Dec_Stmt_For_Int_Idnt( Idnt<Integer> identifier) {
+	public Var_Dec_Stmt_For_Int_Idnt(Idnt<Integer> identifier) {
 		super(new Primitive_Type(Primitive_Type.Primitive.Int), identifier);
 	}
 
