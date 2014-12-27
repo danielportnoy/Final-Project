@@ -72,7 +72,9 @@ public class Main {
 
 		 */
 		
-		/*Level1 l = new Level1(5, 5, "H", new Coordinate(1, 1), "G",	new Coordinate(1,4));
-		l.GoRightStmt();*/
+		/*
+		Level1 l = new Level1(5, 5, "H", new Coordinate(1, 1), "G",	new Coordinate(1,4));
+		l.GoRightStmt();
+		*/
 	}
 }
