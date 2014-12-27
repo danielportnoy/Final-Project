@@ -1,5 +1,8 @@
 package final_2.main;
 
+import final_2.logics.game.level1.Level1;
+import final_2.logics.game.level1.infrastructure.Coordinate;
+
 public class Main {
 
 	public static void main(String[] args){
@@ -68,5 +71,8 @@ public class Main {
 		System.out.println(bs);
 
 		 */
+		
+		/*Level1 l = new Level1(5, 5, "H", new Coordinate(1, 1), "G",	new Coordinate(1,4));
+		l.GoRightStmt();*/
 	}
 }
