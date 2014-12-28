@@ -9,10 +9,18 @@ public abstract class Tile {
 	private boolean isHabitable;
 
 	public Tile(String mark , Coordinate location , boolean isHabitable) {
-		setMark(mark);
-		setLocation(location);
-		setHabitable(isHabitable);
+		this.mark = mark;
+		this.location = location;
+		this.isHabitable = isHabitable;
 	}
+	
+	public Tile(Tile other) {
+		this.mark = other.getMark();
+		this.location = other.getLocation();
+		this.isHabitable = other.isHabitable();
+	}
+	
+	public abstract Tile makeCopy();
 
 	public boolean isHabitable() {
 		return isHabitable;

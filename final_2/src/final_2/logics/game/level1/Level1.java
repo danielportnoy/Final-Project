@@ -2,28 +2,44 @@ package final_2.logics.game.level1;
 
 import final_2.logics.game.level1.infrastructure.Board;
 import final_2.logics.game.level1.infrastructure.Coordinate;
+import final_2.logics.game.level1.infrastructure.Goal_Tile;
 import final_2.logics.game.level1.infrastructure.Hero;
-import final_2.logics.game.level1.infrastructure.Tile;
 import final_2.logics.game.level1.infrastructure.Wall_Tile;
+import final_2.logics.game.level1.infrastructure.infoBundle_Level1;
 import final_2.logics.game.scenario.Scenario;
 import final_2.logics.grammar.statement.Block_Stmt;
-import final_2.logics.grammar.statement.Stmt;
+import final_2.main.ScopeTable;
 
 public class Level1 implements Scenario {
 
 	private Board board;
 	private Hero hero;
-	
-	private Tile goalTile;
 
-	public Level1(int boardHeight, int boardLength, String heroLook,Coordinate heroLocation,String goalMark, Coordinate goalLocation) {
+	private Goal_Tile goalTile;
+
+	private infoBundle_Level1 infoBundle;
+
+	public Level1(Level1 other) {
+		this.board=new Board(other.getBoard());
+		this.hero=new Hero(other.getHero());
+		this.goalTile = new Goal_Tile(other.getGoalTile());
+	}
+
+	public Level1(int boardHeight, int boardLength, String heroLook,Coordinate heroLocation, Coordinate goalLocation) {
+
 		this.board=new Board(boardHeight, boardLength);
 		this.hero=new Hero(heroLook, heroLocation);
-		
-		this.goalTile = this.board.getTileAtLoaction(goalLocation);
-		
-		Coordinate wallLocation = new Coordinate(0, 0);
-		board.setTileAtLoaction(new Wall_Tile(wallLocation),wallLocation);
+		this.goalTile = new Goal_Tile(goalLocation);
+		this.infoBundle = new infoBundle_Level1(boardHeight, boardLength, heroLook, heroLocation, goalLocation);
+
+		initialize();
+	}
+
+	private void initialize() {
+		board.setTile(goalTile);
+
+		Wall_Tile wall = new Wall_Tile(new Coordinate(0,0));
+		board.setTile(wall);
 	}
 
 	public Board getBoard() {
@@ -41,13 +57,21 @@ public class Level1 implements Scenario {
 	public void setHero(Hero hero) {
 		this.hero = hero;
 	}
-	
-	public Tile getGoalTile() {
+
+	public Goal_Tile getGoalTile() {
 		return goalTile;
 	}
 
-	public void setGoalTile(Tile goalTile) {
+	public void setGoalTile(Goal_Tile goalTile) {
 		this.goalTile = goalTile;
+	}
+
+	public infoBundle_Level1 getInfoBundle() {
+		return infoBundle;
+	}
+
+	public void setInfoBundle(infoBundle_Level1 infoBundle) {
+		this.infoBundle = infoBundle;
 	}
 
 	@Override
@@ -59,12 +83,24 @@ public class Level1 implements Scenario {
 	public boolean checkWin() {
 		return hero.getLocation().equals(goalTile.getLocation());
 	}
-	
-	class GoRightStmt extends Stmt {
+
+	@Override
+	public void reset() {
+
+		board = new Board(getInfoBundle().getBoardHeight(), getInfoBundle().getBoardLength());
+		hero = new Hero(getInfoBundle().getHeroLook(), getInfoBundle().getHeroLocation());
+		goalTile = new Goal_Tile(getInfoBundle().getGoalLocation());
+
+		initialize();
+		
+		ScopeTable.reset();
+	}
+
+	/*class GoRightStmt extends Stmt {
 
 		@Override
 		public void run() {
-			
+
 			int cuurCol = hero.getLocation().getColCoord();
 
 			Coordinate targetCoord = new Coordinate(hero.getLocation());
@@ -85,9 +121,9 @@ public class Level1 implements Scenario {
 			return "goRight();\n";
 		}	
 	}
-	
+
 	public GoRightStmt GoRightStmt(){
 		return new GoRightStmt();
-	}
+	}*/
 
 }

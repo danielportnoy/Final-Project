@@ -45,6 +45,6 @@ public abstract class Bin_Asgn_Stmt<T> extends Stmt {
 	
 	@Override
 	public String toString() {
-		return getIdentifier().toString() + " " + getOperator().toString() + " " + getExpression().toString() + ";" + "\n";
+		return getIdentifier().toString() + " " + getOperator().toString() + " " + getExpression().toString();
 	}
 }

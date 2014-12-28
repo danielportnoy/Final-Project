@@ -7,4 +7,6 @@ public interface Scenario {
 	public abstract void RunCode(Block_Stmt codeBlock);
 
 	public abstract boolean checkWin();
+	
+	public abstract void reset();
 }

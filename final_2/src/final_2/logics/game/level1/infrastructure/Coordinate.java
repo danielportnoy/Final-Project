@@ -6,13 +6,17 @@ public class Coordinate {
 	private int colCoord;
 
 	public Coordinate( int rowCoord, int colCoord){
-		setRowCoord(rowCoord);
-		setColCoord(colCoord);
+		this.rowCoord=rowCoord;
+		this.colCoord=colCoord;
 	}
 	
 	public Coordinate(Coordinate other) {
-		setRowCoord(other.getRowCoord());
-		setColCoord(other.getColCoord());
+		this.rowCoord=other.rowCoord;
+		this.colCoord=other.colCoord;
+	}
+	
+	public Coordinate makeCopy() {
+		return new Coordinate(this);
 	}
 
 	public int getRowCoord() {

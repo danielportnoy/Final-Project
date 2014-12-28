@@ -21,3 +21,42 @@ public class Bool_Idnt extends Idnt<Boolean> {
 	}
 
 }
+
+/*
+package final_2.logics.grammar.expression.identifier;
+
+import final_2.logics.grammar.expression.Bool_Expr;
+import final_2.main.ScopeTable;
+
+public class Bool_Idnt extends Bool_Expr {
+
+	private String name;
+
+	public Bool_Idnt(String name) {
+		this.name = name;
+	}
+
+	public Boolean run() {
+		return ScopeTable.BoolScope.get(getName());
+	}
+
+	public void setValue(Integer value) {
+		if(ScopeTable.IntScope.containsKey(getName()))
+			ScopeTable.IntScope.put(getName(),value);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
+
+}
+*/

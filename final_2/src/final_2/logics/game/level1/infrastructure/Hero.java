@@ -7,8 +7,13 @@ public class Hero {
 	private Coordinate location;
 
 	public Hero(String look , Coordinate location) {
-		setLook(look);
-		setLocation(location);
+		this.look=look;
+		this.location = location.makeCopy();
+	}
+
+	public Hero(Hero other) {
+		this.look = other.look;
+		this.location = other.getLocation().makeCopy();
 	}
 
 	public Coordinate getLocation() {
@@ -16,7 +21,7 @@ public class Hero {
 	}
 
 	public void setLocation(Coordinate location) {
-		this.location = location;
+		this.location = location.makeCopy();
 	}
 
 	public String getLook() {

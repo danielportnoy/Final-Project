@@ -17,6 +17,7 @@ public class For_Stmt extends Stmt {
 	public For_Stmt( LinkedList<Stmt> forInit, Bool_Expr condition, LinkedList<Stmt> forUpdate, Stmt body) {
 		this.forInit = forInit;
 		this.condition = condition;
+		this.forUpdate = forUpdate;
 		this.body = body;
 	}
 
@@ -73,19 +74,27 @@ public class For_Stmt extends Stmt {
 	public String toString() {
 
 		String res = "for " + "(" ;
-		
-		for (Stmt stmt : getForInit()) {
-			res += stmt.toString() + ",";
+
+		for (int i = 0; i < getForInit().size() ; i++) {
+
+			res += getForInit().get(i).toString();
+
+			if(i+1< getForInit().size())
+				res += ",";
 		}
-		
+
 		res += " ; " + getCondition().toString() + " ; ";
 
-		for (Stmt stmt : getForUpdate()) {
-			res += stmt.toString() + ",";
+		for (int i = 0; i < getForUpdate().size() ; i++) {
+
+			res += getForUpdate().get(i).toString();
+
+			if(i+1< getForUpdate().size())
+				res += ",";
 		}
-		
+
 		res += ")" + " {" + "\n";
-		
+
 		res += getBody().toString() + "\n" + "}";
 
 		res += "\n";

@@ -26,6 +26,6 @@ public abstract class Stmt_Expr<T> extends Stmt {
 	
 	@Override
 	public String toString() {
-		return getExpression().toString() + ";" + "\n";
+		return getExpression().toString();
 	}
 }

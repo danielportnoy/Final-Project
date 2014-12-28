@@ -6,4 +6,13 @@ public class Regular_Tile extends Tile {
 		super("-",location,true);
 	}
 
+	public Regular_Tile(Regular_Tile other) {
+		super(other);
+	}
+
+	@Override
+	public Regular_Tile makeCopy() {
+		return new Regular_Tile(this);
+	}
+
 }

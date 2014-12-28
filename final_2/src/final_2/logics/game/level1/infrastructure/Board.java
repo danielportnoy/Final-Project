@@ -21,6 +21,21 @@ public class Board {
 		this.boardLength = boardCols;
 	}
 
+	public Board(Board other) {
+
+		tiles = new Tile[other.getBoardHeight()][other.getBoardLength()];
+
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles[i].length; j++) {
+				tiles[i][j] = other.getTileAtLoaction(new Coordinate(i,j)).makeCopy();
+			}
+		}
+
+		this.boardHeight = other.getBoardHeight();
+		this.boardLength = other.getBoardLength();
+
+	}
+
 	public Tile[][] getTiles() {
 		return tiles;
 	}
@@ -34,10 +49,11 @@ public class Board {
 		return null;
 	}
 
-	public void setTileAtLoaction(Tile tile , Coordinate location){
-		tiles[location.getRowCoord()][location.getColCoord()] = tile;
+	public void setTile(Tile tile){
+		int rCoord = tile.getLocation().getRowCoord();
+		int cCoord = tile.getLocation().getColCoord();
+		tiles[rCoord][cCoord] = tile;
 	}
-
 
 	public int getBoardLength() {
 		return boardLength;
