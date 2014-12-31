@@ -40,9 +40,9 @@ public class Bool_Idnt extends Bool_Expr {
 		return ScopeTable.BoolScope.get(getName());
 	}
 
-	public void setValue(Integer value) {
-		if(ScopeTable.IntScope.containsKey(getName()))
-			ScopeTable.IntScope.put(getName(),value);
+	public void setValue(Boolean value) {
+		if(ScopeTable.BoolScope.containsKey(getName()))
+			ScopeTable.BoolScope.put(getName(),value);
 	}
 
 	public String getName() {
