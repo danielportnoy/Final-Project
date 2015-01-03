@@ -17,25 +17,26 @@ import logic.grammar.operator.rational.concrete.Equals_For_Bool;
 import logic.grammar.operator.rational.concrete.Equals_For_Int;
 import logic.grammar.operator.rational.concrete.Greater_Than_For_Int;
 import logic.grammar.statement.Block_Stmt;
-import logic.grammar.statement.varDec.concrete.Var_Dec_Stmt_For_Bool;
-import logic.grammar.statement.varDec.concrete.Var_Dec_Stmt_For_Int;
+import logic.grammar.statement.varDec.concrete.Var_Dec_Stmt_Regular;
+import logic.grammar.statement.varDec.concrete.Var_Dec_Stmt_Asgn;
 
 public class Test {
 
 	public static void main(String[] args) {
 		
+		/*
 		Int_Idnt i = new Int_Idnt("i");
 		Bool_Idnt j = new Bool_Idnt("j");
 		
-		Var_Dec_Stmt_For_Int Inti = new Var_Dec_Stmt_For_Int(i, new Int_Literal(3));
+		Var_Dec_Stmt_Asgn Inti = new Var_Dec_Stmt_Asgn(i, new Int_Literal(3));
 		Inti.run();
-		//System.out.println(Inti);
+		System.out.println(Inti);
 		
-		Var_Dec_Stmt_For_Bool Boolj = new Var_Dec_Stmt_For_Bool(j, new Bool_Literal(false));
+		Var_Dec_Stmt_Regular Boolj = new Var_Dec_Stmt_Regular(j);
 		Boolj.run();
-		//System.out.println(Boolj);
+		System.out.println(Boolj);
 
-		/*Arithmetic_Expr ipz = new Arithmetic_Expr(i, new Plus() , new Int_Literal(2)); 
+		Arithmetic_Expr ipz = new Arithmetic_Expr(i, new Plus() , new Int_Literal(2)); 
 		System.out.println(ipz.toString() + " " + ipz.run());
 		
 		Arithmetic_Expr ipp = new Arithmetic_Expr(i, new Increment()); 
@@ -58,12 +59,13 @@ public class Test {
 		
 		Assignment_Expr iA123 = new Assignment_Expr(i, new Simple_Asgn_For_Int(), new Int_Literal(123));
 		System.out.println(iA123.toString());
-		iA123.run();*/
+		iA123.run();
 		
 		Block_Stmt bs = new Block_Stmt();
 		bs.getStatements().add(Inti);
 		bs.getStatements().add(Boolj);
 		System.out.println(bs);
+		*/
 	}
 
 }

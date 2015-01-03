@@ -1,6 +1,6 @@
 package logic.grammar.type;
 
-public class Primitive_Type extends Type{
+public abstract class Primitive_Type extends Type{
 	
 	public enum Primitive {
 		Int, Boolean,

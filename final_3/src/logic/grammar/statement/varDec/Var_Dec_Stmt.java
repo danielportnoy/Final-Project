@@ -18,6 +18,4 @@ public abstract class Var_Dec_Stmt extends Stmt{
 	public void setType(Type type) {
 		this.type = type;
 	}
-		
-	public abstract void setDefault(); 
 }
