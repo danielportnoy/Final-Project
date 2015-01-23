@@ -3,14 +3,16 @@ package com.example.logic;
 import com.example.codescreenapp.GraphicsUnit;
 import com.example.logic.codescreen.CodeScreen;
 import com.example.logic.codescreen.InputMethod;
-import com.example.logic.optionmenu.OptionFilter;
 import com.example.logic.optionmenu.Option;
+import com.example.logic.optionmenu.OptionFilter;
 import com.example.logic.optionmenu.OptionMenu;
 import com.example.logic.optionmenu.OptionEnum;
 import com.example.logic.optionmenu.OptionsDB;
 import com.example.logic.pattern.Idnt_Ptrn;
+import com.example.logic.pattern.Literal_Ptrn;
 import com.example.logic.pattern.ReturnDataType_Ptrn;
 import com.example.logic.pattern.VarDecNoAsgn_Ptrn;
+import com.example.logic.pattern.VarDecWithAsgn_Ptrn;
 import com.example.logic.placeholder.PlaceHolder;
 import com.example.logic.placeholder.PlaceHolderType;
 
@@ -50,8 +52,18 @@ public class Manager {
 			codeScreen.addNewLine();
 			GraphicsUnit.getInstance().updateCodeLines();
 
+		}else if(option.getOption().equals(OptionEnum.VarDecWithAsgn)){
+
+			ph.setPattern(new VarDecWithAsgn_Ptrn());
+
+			optionMenu.clearMenu();
+			GraphicsUnit.getInstance().updateOptionsMenu();
+
+			codeScreen.addNewLine();
+			GraphicsUnit.getInstance().updateCodeLines();
+
 		}
-		else if(ph.getOptionFilter().equals(OptionFilter.ReturnType)){
+		else if(ph.getPlaceholderType().equals(PlaceHolderType.ReturnType)){
 
 			ph.setPattern(new ReturnDataType_Ptrn(option.toString()));
 			ph.setInputMethod(InputMethod.Disabled);
@@ -67,11 +79,42 @@ public class Manager {
 				else if(option.getOption().equals(OptionEnum.Boolean))
 					idntPH.setPlaceholderType(PlaceHolderType.BoolIdnt);
 			}
+			else if(ph.getParent() instanceof VarDecWithAsgn_Ptrn){
+
+				PlaceHolder idntPH = ((VarDecWithAsgn_Ptrn)ph.getParent()).getIdntPlaceHolder();
+
+				if(option.getOption().equals(OptionEnum.Int))
+					idntPH.setPlaceholderType(PlaceHolderType.IntIdnt);
+				else if(option.getOption().equals(OptionEnum.Boolean))
+					idntPH.setPlaceholderType(PlaceHolderType.BoolIdnt);
+
+				PlaceHolder exprPH = ((VarDecWithAsgn_Ptrn)ph.getParent()).getExprPlaceHolder();
+
+				if(option.getOption().equals(OptionEnum.Int)){
+					exprPH.setPlaceholderType(PlaceHolderType.IntExpr);
+					exprPH.setOptionFilter(OptionFilter.Int);
+				}
+				else if(option.getOption().equals(OptionEnum.Boolean)){
+					exprPH.setPlaceholderType(PlaceHolderType.BoolExpr);
+					exprPH.setOptionFilter(OptionFilter.Boolean);
+				}
+
+				exprPH.setInputMethod(InputMethod.Option);
+			}
 
 			optionMenu.clearMenu();
 			GraphicsUnit.getInstance().updateOptionsMenu();			
-
 		}	
+		else if(option.getOption().equals(OptionEnum.IntLiteral)){
+
+			ph.setInputMethod(InputMethod.Keyboard);
+			ph.setPlaceholderType(PlaceHolderType.IntLiteral);
+
+			GraphicsUnit.getInstance().updateCodeLines();
+			
+			optionMenu.clearMenu();
+			GraphicsUnit.getInstance().updateOptionsMenu();		
+		}
 	}
 
 	public void pickedCode(PlaceHolder ph) {
@@ -88,7 +131,10 @@ public class Manager {
 				ph.getPlaceholderType().equals(PlaceHolderType.IntIdnt) | 
 				ph.getPlaceholderType().equals(PlaceHolderType.BoolIdnt))
 			ph.setPattern(new Idnt_Ptrn(text));
-		
+		else if(ph.getPlaceholderType().equals(PlaceHolderType.IntLiteral) | 
+				ph.getPlaceholderType().equals(PlaceHolderType.BoolLiteral))
+			ph.setPattern(new Literal_Ptrn(text));
+
 		ph.setInputMethod(InputMethod.Disabled);
 		GraphicsUnit.getInstance().updateCodeLines();
 

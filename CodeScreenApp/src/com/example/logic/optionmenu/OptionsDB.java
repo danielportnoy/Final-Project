@@ -14,16 +14,20 @@ public class OptionsDB {
 	static{
 		mainOptions = new HashMap<OptionFilter, List<Option>>();
 
-		Option[] initialOptions = { new Option(OptionEnum.VarDec)};
+		Option[] voidOptions = { new Option(OptionEnum.VarDec)};
 
-		mainOptions.put(OptionFilter.Void , new ArrayList<Option>(Arrays.asList(initialOptions)));
+		mainOptions.put(OptionFilter.Void , new ArrayList<Option>(Arrays.asList(voidOptions)));
+		
+		Option[] intOptions = { new Option(OptionEnum.IntLiteral)};
+
+		mainOptions.put(OptionFilter.Int , new ArrayList<Option>(Arrays.asList(intOptions)));
 	}
 
 	private static Map<OptionEnum,List<Option>> subOptions = new HashMap<OptionEnum, List<Option>>();
 	static{
 		subOptions = new HashMap<OptionEnum, List<Option>>();
 
-		Option[] optionsVarDec = { new Option(OptionEnum.VarDecNoAsgn)};
+		Option[] optionsVarDec = { new Option(OptionEnum.VarDecNoAsgn) , new Option(OptionEnum.VarDecWithAsgn)};
 
 		subOptions.put(OptionEnum.VarDec , new ArrayList<Option>(Arrays.asList(optionsVarDec)));
 	}

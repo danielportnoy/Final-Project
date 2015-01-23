@@ -7,8 +7,12 @@ import com.example.logic.Manager;
 import com.example.logic.codescreen.InputMethod;
 import com.example.logic.pattern.NewLinePattern;
 import com.example.logic.placeholder.PlaceHolder;
+import com.example.logic.placeholder.PlaceHolderType;
 
 import android.content.Context;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.style.TextAppearanceSpan;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,12 +85,6 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 			else if(item.getInputMethod().equals(InputMethod.Keyboard)){
 				EditText et = new EditText(context);
 				setEditText(et, codeLinearLayout, item, item.toString());
-				
-				/*if(item.getOptionFilter().getOption()==null)
-					et.setEnabled(false);
-				
-				if(item.getPlaceholderType().equals(PlaceHolderType.Idnt))
-					et.setEnabled(false);*/
 			}
 			else if(item.getInputMethod().equals(InputMethod.Disabled)){
 				TextView tv = new TextView(context);
@@ -159,6 +157,7 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 		setLayoutParams(button);
 
 		button.setText(text);
+		button.setTextAppearance(context, android.R.style.TextAppearance_Small);
 
 		button.setOnClickListener(new MyOnClickListener(item));
 
@@ -170,6 +169,7 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 		setLayoutParams(textView);
 
 		textView.setText(text);
+		textView.setTextAppearance(context, android.R.style.TextAppearance_Small);
 
 		codeLinearLayout.addView(textView);
 	}
@@ -181,12 +181,15 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 		editText.setSingleLine(true);
 		
 		editText.setHint(text);
+		editText.setTextAppearance(context, android.R.style.TextAppearance_Small);
 		
-		//tv.setInputType(InputType.TYPE_CLASS_NUMBER);
+		if(item.getPlaceholderType().equals(PlaceHolderType.IntLiteral)){
+			editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-		//InputFilter[] filterArray = new InputFilter[1];
-		//filterArray[0] = new InputFilter.LengthFilter(3);
-		//tv.setFilters(filterArray);
+			InputFilter[] filterArray = new InputFilter[1];
+			filterArray[0] = new InputFilter.LengthFilter(3);
+			editText.setFilters(filterArray);
+		}
 
 		//Integer literalValue = ((Int_Literal)(((Expr_Stmt)(Manager.getInstance().getCodeScreen().getStatements().get(row))).getExpression())).getValue();
 

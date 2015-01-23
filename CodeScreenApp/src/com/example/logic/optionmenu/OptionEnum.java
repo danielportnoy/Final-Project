@@ -4,9 +4,12 @@ public enum OptionEnum {
 	
 	VarDec ("var dec"),
 	VarDecNoAsgn ("var dec no asgn"),
+	VarDecWithAsgn ("var dec with asgn"),
 
 	Int ("int"),
 	Boolean ("boolean"),
+	
+	IntLiteral ("int literal"),
 
 	;
 

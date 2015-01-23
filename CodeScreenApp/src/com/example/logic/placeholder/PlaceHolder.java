@@ -3,7 +3,6 @@ package com.example.logic.placeholder;
 import com.example.logic.codescreen.InputMethod;
 import com.example.logic.optionmenu.OptionFilter;
 import com.example.logic.pattern.Pattern;
-import com.example.logic.pattern.Semicolon_Ptrn;
 
 public class PlaceHolder {
 
@@ -74,23 +73,9 @@ public class PlaceHolder {
 
 	@Override
 	public String toString() {
-		if(pattern == null){
-			if(optionFilter != null)
-				return "< " + optionFilter.toString() + " >";
-			else
-				return "< " + placeholderType.toString() + " >";
-		}
+		if(pattern == null)
+			return "< " + placeholderType.toString() + " >";
 		else
 			return pattern.toString();
-	}
-
-	public static PlaceHolder setSemicolon(PlaceHolder ph){
-
-		ph.setPlaceholderType(PlaceHolderType.Semicolon);
-		ph.setOptionFilter(null);
-		ph.setInputMethod(InputMethod.Disabled);
-		ph.setPattern(new Semicolon_Ptrn());
-
-		return ph;
 	}
 }
