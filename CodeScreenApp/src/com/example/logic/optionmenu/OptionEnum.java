@@ -5,14 +5,8 @@ public enum OptionEnum {
 	VarDec ("var dec"),
 	VarDecNoAsgn ("var dec no asgn"),
 
-	ReturnType ("return type"),
-	Void ("void"),
 	Int ("int"),
 	Boolean ("boolean"),
-	
-	Idnt("idetifier"),//TODO
-	IntIdnt ("int identifier"),
-	BooleanIdnt ("boolean identifier"),
 
 	;
 

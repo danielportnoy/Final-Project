@@ -2,9 +2,10 @@ package com.example.logic.codescreen;
 
 import java.util.LinkedList;
 
-import com.example.logic.grammar.PlaceHolder;
-import com.example.logic.optionmenu.OptionEnum;
 import com.example.logic.optionmenu.OptionFilter;
+import com.example.logic.pattern.NewLinePattern;
+import com.example.logic.placeholder.PlaceHolder;
+import com.example.logic.placeholder.PlaceHolderType;
 
 public class CodeScreen {
 
@@ -16,11 +17,7 @@ public class CodeScreen {
 	}
 
 	public void addNewLine() {
-
-		/*	PlaceHolder newPH = new PlaceHolder();
-		newPH.setOptionFilter(new OptionFilter(null, OptionEnum.Void));*/
-
-		statements.add(new PlaceHolder(new OptionFilter(OptionEnum.Void) , InputMethod.Option , null));
+		statements.add(new PlaceHolder(null, new NewLinePattern() , PlaceHolderType.addNewLine ,OptionFilter.Void, InputMethod.Option));
 	} 
 
 	public LinkedList<PlaceHolder> getStatements() {
@@ -37,7 +34,7 @@ public class CodeScreen {
 		}
 	}
 
-	public boolean isAllLinesOK(){
+	public boolean validateAllLines(){
 		for (PlaceHolder PlaceHolder : statements) {
 			if(!PlaceHolder.validate())
 				return false;

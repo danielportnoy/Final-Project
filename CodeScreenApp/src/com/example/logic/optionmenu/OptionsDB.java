@@ -10,13 +10,13 @@ import java.util.Map.Entry;
 
 public class OptionsDB {
 
-	private static Map<OptionEnum, List<Option>> mainOptions = new HashMap<OptionEnum, List<Option>>();
+	private static Map<OptionFilter, List<Option>> mainOptions = new HashMap<OptionFilter, List<Option>>();
 	static{
-		mainOptions = new HashMap<OptionEnum, List<Option>>();
+		mainOptions = new HashMap<OptionFilter, List<Option>>();
 
 		Option[] initialOptions = { new Option(OptionEnum.VarDec)};
 
-		mainOptions.put(OptionEnum.Void , new ArrayList<Option>(Arrays.asList(initialOptions)));
+		mainOptions.put(OptionFilter.Void , new ArrayList<Option>(Arrays.asList(initialOptions)));
 	}
 
 	private static Map<OptionEnum,List<Option>> subOptions = new HashMap<OptionEnum, List<Option>>();
@@ -28,50 +28,43 @@ public class OptionsDB {
 		subOptions.put(OptionEnum.VarDec , new ArrayList<Option>(Arrays.asList(optionsVarDec)));
 	}
 
-	private static Map<OptionEnum, List<Option>> typeOptions = new HashMap<OptionEnum, List<Option>>();
+	private static Map<OptionFilter, List<Option>> typeOptions = new HashMap<OptionFilter, List<Option>>();
 	static{
-		typeOptions = new HashMap<OptionEnum, List<Option>>();
+		typeOptions = new HashMap<OptionFilter, List<Option>>();
 
 		Option[] optionTypes = { new Option(OptionEnum.Int) , new Option(OptionEnum.Boolean)};
 
-		typeOptions.put(OptionEnum.ReturnType , new ArrayList<Option>(Arrays.asList(optionTypes)));
+		typeOptions.put(OptionFilter.ReturnType , new ArrayList<Option>(Arrays.asList(optionTypes)));
 	}
 
-	private static List<Option> filterByOption (OptionEnum option) {
+	public static List<Option> filterByOptionFilter(OptionFilter optionFilter) {
 
 		ArrayList<Option> res = new ArrayList<Option>();
 
-		if(option == null){	
+		if(optionFilter == null){	
 
-			for (Entry<OptionEnum, List<Option>> entry : mainOptions.entrySet()) {
+			for (Entry<OptionFilter, List<Option>> entry : mainOptions.entrySet()) {
 				res.addAll(entry.getValue());
 			}
 		}
-		else if(option.equals(OptionEnum.Void)){	
+		else if(optionFilter.equals(OptionFilter.Void)){	
 
-			for (Entry<OptionEnum, List<Option>> entry : mainOptions.entrySet()) {
-				if(entry.getKey().equals(OptionEnum.Void))
+			for (Entry<OptionFilter, List<Option>> entry : mainOptions.entrySet()) {
+				if(entry.getKey().equals(OptionFilter.Void))
 					res.addAll(entry.getValue());
 			}
 		}
-		else if(option.equals(OptionEnum.Int)){	
+		else if(optionFilter.equals(OptionFilter.Int)){	
 
-			for (Entry<OptionEnum, List<Option>> entry : mainOptions.entrySet()) {
-				if(entry.getKey().equals(OptionEnum.Int))
+			for (Entry<OptionFilter, List<Option>> entry : mainOptions.entrySet()) {
+				if(entry.getKey().equals(OptionFilter.Int))
 					res.addAll(entry.getValue());
 			}
 		}
-		else if(option.equals(OptionEnum.VarDec)){	
+		else if(optionFilter.equals(OptionFilter.ReturnType)){	
 
-			for (Entry<OptionEnum, List<Option>> entry : subOptions.entrySet()) {
-				if(entry.getKey().equals(OptionEnum.VarDec))
-					res.addAll(entry.getValue());
-			}
-		}		
-		else if(option.equals(OptionEnum.ReturnType)){	
-
-			for (Entry<OptionEnum, List<Option>> entry : typeOptions.entrySet()) {
-				if(entry.getKey().equals(OptionEnum.ReturnType))
+			for (Entry<OptionFilter, List<Option>> entry : typeOptions.entrySet()) {
+				if(entry.getKey().equals(OptionFilter.ReturnType))
 					res.addAll(entry.getValue());
 			}
 		}		
@@ -79,13 +72,24 @@ public class OptionsDB {
 		return res;
 	}
 
-	public static List<Option> filter(OptionFilter optionFilter) {
+	public static List<Option> filterByOptionEnum(OptionEnum optionEnum) {
+		
+		ArrayList<Option> res = new ArrayList<Option>();
+		
+		if(optionEnum == null){	
 
-		if(optionFilter == null)
-			return null;
-		else if(optionFilter.isFilterByOption())
-			return filterByOption(optionFilter.getOption());
+			for (Entry<OptionEnum, List<Option>> entry : subOptions.entrySet()) {
+				res.addAll(entry.getValue());
+			}
+		}
+		else if(optionEnum.equals(OptionEnum.VarDec)){	
 
-		return null;	
+			for (Entry<OptionEnum, List<Option>> entry : subOptions.entrySet()) {
+				if(entry.getKey().equals(OptionEnum.VarDec))
+					res.addAll(entry.getValue());
+			}
+		}		
+		
+		return res;
 	}
 }

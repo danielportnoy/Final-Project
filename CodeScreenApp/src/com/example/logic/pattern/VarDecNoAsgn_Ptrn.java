@@ -1,26 +1,34 @@
-package com.example.logic.grammar;
+package com.example.logic.pattern;
 
 import com.example.logic.codescreen.InputMethod;
-import com.example.logic.optionmenu.OptionEnum;
 import com.example.logic.optionmenu.OptionFilter;
+import com.example.logic.placeholder.PlaceHolder;
+import com.example.logic.placeholder.PlaceHolderType;
 
 public class VarDecNoAsgn_Ptrn extends Pattern {
 
 	private PlaceHolder TypePlaceHolder;
 	private PlaceHolder IdntPlaceHolder;
+	
+	private PlaceHolder Semicolon;
 
 	public VarDecNoAsgn_Ptrn() {
-		super(2);
+		super(3);
 
 		TypePlaceHolder = getPlaceHolders().get(0);
 		IdntPlaceHolder = getPlaceHolders().get(1);	
+		Semicolon = getPlaceHolders().get(2);
 
-		TypePlaceHolder.setOptionFilter(new OptionFilter(OptionEnum.ReturnType));
+		TypePlaceHolder.setPlaceholderType(PlaceHolderType.ReturnType);
+		TypePlaceHolder.setOptionFilter(OptionFilter.ReturnType);
 		TypePlaceHolder.setInputMethod(InputMethod.Option);
 		
-		//IdntPlaceHolder.setOptionFilter(new OptionFilter(null));
-		IdntPlaceHolder.setOptionFilter(new OptionFilter(OptionEnum.Idnt));
+		IdntPlaceHolder.setPlaceholderType(PlaceHolderType.Idnt);
+		IdntPlaceHolder.setOptionFilter(null);
 		IdntPlaceHolder.setInputMethod(InputMethod.Keyboard);
+		
+		PlaceHolder.setSemicolon(Semicolon);
+		
 	}
 	
 	public PlaceHolder getTypePlaceHolder() {

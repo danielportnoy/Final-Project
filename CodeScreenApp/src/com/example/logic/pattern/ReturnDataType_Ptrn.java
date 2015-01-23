@@ -1,4 +1,5 @@
-package com.example.logic.grammar;
+package com.example.logic.pattern;
+
 
 public class ReturnDataType_Ptrn extends Pattern {
 

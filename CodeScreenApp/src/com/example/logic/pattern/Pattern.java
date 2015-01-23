@@ -1,9 +1,8 @@
-package com.example.logic.grammar;
+package com.example.logic.pattern;
 
 import java.util.ArrayList;
 
-import com.example.logic.optionmenu.OptionFilter;
-
+import com.example.logic.placeholder.PlaceHolder;
 
 public abstract class Pattern {
 		
@@ -14,8 +13,8 @@ public abstract class Pattern {
 		this.placeHolders = new ArrayList<PlaceHolder>(numberOfElements);
 		
 		for (int i = 0; i < numberOfElements ; i++) {
-			placeHolders.add(new PlaceHolder(new OptionFilter(null),null , this));
-		}
+			placeHolders.add(new PlaceHolder(this,null,null,null,null));
+		}		
 	}
 
 	public ArrayList<PlaceHolder> getPlaceHolders() {
@@ -28,4 +27,14 @@ public abstract class Pattern {
 
 	@Override
 	public abstract String toString();
+	
+	public boolean validate(){
+		
+		for (PlaceHolder PlaceHolder : placeHolders) {
+			if(!PlaceHolder.validate())
+				return false;
+		}
+
+		return true;
+	}
 }

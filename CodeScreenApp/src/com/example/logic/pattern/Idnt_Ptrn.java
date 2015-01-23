@@ -1,10 +1,11 @@
-package com.example.logic.grammar;
+package com.example.logic.pattern;
 
-public class BooleanIdnt_Ptrn extends Pattern{
+
+public class Idnt_Ptrn extends Pattern{
 	
 	private String name;
 
-	public BooleanIdnt_Ptrn(String name) {
+	public Idnt_Ptrn(String name) {
 		super(0);
 		this.name = name;
 	}

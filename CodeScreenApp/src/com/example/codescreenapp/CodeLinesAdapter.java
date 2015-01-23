@@ -5,8 +5,8 @@ import java.util.List;
 import com.example.codescreenapp.R;
 import com.example.logic.Manager;
 import com.example.logic.codescreen.InputMethod;
-import com.example.logic.grammar.PlaceHolder;
-import com.example.logic.optionmenu.OptionEnum;
+import com.example.logic.pattern.NewLinePattern;
+import com.example.logic.placeholder.PlaceHolder;
 
 import android.content.Context;
 import android.view.KeyEvent;
@@ -50,7 +50,7 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 
 		PlaceHolder item = getItem(position);
 
-		if(item.getPattern() == null)
+		if(item.getPattern() instanceof NewLinePattern)
 			handleNewLine(codeLinearLayout, item);
 		else
 			handleInOrder(codeLinearLayout, item);
@@ -64,7 +64,7 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 
 		Button newLineButton = new Button(context);
 
-		if(!Manager.getInstance().getCodeScreen().isAllLinesOK())
+		if(!Manager.getInstance().getCodeScreen().validateAllLines())
 			newLineButton.setEnabled(false);
 
 		setButton(newLineButton, codeLinearLayout, item, "+");
@@ -83,10 +83,10 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 				setEditText(et, codeLinearLayout, item, item.toString());
 				
 				/*if(item.getOptionFilter().getOption()==null)
-					et.setEnabled(false);*/
-				
-				if(item.getOptionFilter().getOption().equals(OptionEnum.Idnt))
 					et.setEnabled(false);
+				
+				if(item.getPlaceholderType().equals(PlaceHolderType.Idnt))
+					et.setEnabled(false);*/
 			}
 			else if(item.getInputMethod().equals(InputMethod.Disabled)){
 				TextView tv = new TextView(context);

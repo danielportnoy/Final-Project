@@ -1,32 +1,22 @@
 package com.example.logic.optionmenu;
 
 
-public class OptionFilter {
-
-	private boolean filterByOption;
-	private OptionEnum option;
+public enum OptionFilter {
 	
-	public OptionFilter(OptionEnum option){
-		
-		filterByOption = option!=null;
-		this.option = option;
-		
-	}
-
-	public boolean isFilterByOption() {
-		return filterByOption;
-	}
-
-	public OptionEnum getOption() {
-		return option;
-	}
+	ReturnType ("return type"),
 	
-	@Override
+	Void ("void"),
+	Int ("int"),
+	Boolean ("boolean"),
+	
+	;
+	
+	private final String name;       
+
+	private OptionFilter(String s) {
+		name = s;
+	}
 	public String toString() {
-		
-		if(isFilterByOption())
-			return option.toString();
-		
-		return null;
-	}
+		return name;
+	};
 }

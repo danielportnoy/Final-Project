@@ -1,19 +1,18 @@
 package com.example.logic;
 
-import android.util.Log;
-
 import com.example.codescreenapp.GraphicsUnit;
 import com.example.logic.codescreen.CodeScreen;
 import com.example.logic.codescreen.InputMethod;
-import com.example.logic.grammar.IntIdnt_Ptrn;
-import com.example.logic.grammar.PlaceHolder;
-import com.example.logic.grammar.ReturnDataType_Ptrn;
-import com.example.logic.grammar.VarDecNoAsgn_Ptrn;
 import com.example.logic.optionmenu.OptionFilter;
 import com.example.logic.optionmenu.Option;
 import com.example.logic.optionmenu.OptionMenu;
 import com.example.logic.optionmenu.OptionEnum;
 import com.example.logic.optionmenu.OptionsDB;
+import com.example.logic.pattern.Idnt_Ptrn;
+import com.example.logic.pattern.ReturnDataType_Ptrn;
+import com.example.logic.pattern.VarDecNoAsgn_Ptrn;
+import com.example.logic.placeholder.PlaceHolder;
+import com.example.logic.placeholder.PlaceHolderType;
 
 public class Manager {
 
@@ -37,7 +36,7 @@ public class Manager {
 
 		if(option.getOption().equals(OptionEnum.VarDec)){
 
-			optionMenu.loadNewOptions(OptionsDB.filter(new OptionFilter(OptionEnum.VarDec)));
+			optionMenu.loadNewOptions(OptionsDB.filterByOptionEnum(OptionEnum.VarDec));
 			GraphicsUnit.getInstance().updateOptionsMenu();
 
 		}
@@ -52,7 +51,7 @@ public class Manager {
 			GraphicsUnit.getInstance().updateCodeLines();
 
 		}
-		else if(ph.getOptionFilter().getOption().equals(OptionEnum.ReturnType)){
+		else if(ph.getOptionFilter().equals(OptionFilter.ReturnType)){
 
 			ph.setPattern(new ReturnDataType_Ptrn(option.toString()));
 			ph.setInputMethod(InputMethod.Disabled);
@@ -64,34 +63,32 @@ public class Manager {
 				PlaceHolder idntPH = ((VarDecNoAsgn_Ptrn)ph.getParent()).getIdntPlaceHolder();
 
 				if(option.getOption().equals(OptionEnum.Int))
-					idntPH.setOptionFilter(new OptionFilter(OptionEnum.IntIdnt));
+					idntPH.setPlaceholderType(PlaceHolderType.IntIdnt);
 				else if(option.getOption().equals(OptionEnum.Boolean))
-					idntPH.setOptionFilter(new OptionFilter(OptionEnum.BooleanIdnt));
+					idntPH.setPlaceholderType(PlaceHolderType.BoolIdnt);
 			}
 
 			optionMenu.clearMenu();
 			GraphicsUnit.getInstance().updateOptionsMenu();			
 
 		}	
-
-		Log.d("aaa", option.toString());
 	}
 
 	public void pickedCode(PlaceHolder ph) {
 
 		this.ph = ph;
 
-		optionMenu.loadNewOptions(OptionsDB.filter(ph.getOptionFilter()));
+		optionMenu.loadNewOptions(OptionsDB.filterByOptionFilter(ph.getOptionFilter()));
 		GraphicsUnit.getInstance().updateOptionsMenu();
 	}
 
 	public void setCode(String text, PlaceHolder ph) {
 
-		if(ph.getOptionFilter().getOption().equals(OptionEnum.IntIdnt))
-			ph.setPattern(new IntIdnt_Ptrn(text));
-		else if(ph.getOptionFilter().getOption().equals(OptionEnum.BooleanIdnt))
-			ph.setPattern(new IntIdnt_Ptrn(text));
-
+		if(ph.getPlaceholderType().equals(PlaceHolderType.Idnt) | 
+				ph.getPlaceholderType().equals(PlaceHolderType.IntIdnt) | 
+				ph.getPlaceholderType().equals(PlaceHolderType.BoolIdnt))
+			ph.setPattern(new Idnt_Ptrn(text));
+		
 		ph.setInputMethod(InputMethod.Disabled);
 		GraphicsUnit.getInstance().updateCodeLines();
 
