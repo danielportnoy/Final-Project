@@ -25,7 +25,7 @@ public class Manager {
 
 	private static Manager instance = new Manager( );
 
-	private Manager() {
+	private Manager() { 
 		codeScreen = new CodeScreen();
 		optionMenu = new OptionMenu();
 	}
