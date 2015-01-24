@@ -18,9 +18,17 @@ public class OptionsDB {
 
 		mainOptions.put(OptionFilter.Void , new ArrayList<Option>(Arrays.asList(voidOptions)));
 		
-		Option[] intOptions = { new Option(OptionEnum.IntLiteral)};
+		Option[] intOptions = { new Option(OptionEnum.Literal)};
 
 		mainOptions.put(OptionFilter.Int , new ArrayList<Option>(Arrays.asList(intOptions)));
+		
+		Option[] boolOptions = { new Option(OptionEnum.Literal)};
+
+		mainOptions.put(OptionFilter.Boolean , new ArrayList<Option>(Arrays.asList(boolOptions)));
+		
+		Option[] boolLiteralOptions = { new Option(OptionEnum.True) , new Option(OptionEnum.False)};
+
+		mainOptions.put(OptionFilter.BooleanLiteral , new ArrayList<Option>(Arrays.asList(boolLiteralOptions)));
 	}
 
 	private static Map<OptionEnum,List<Option>> subOptions = new HashMap<OptionEnum, List<Option>>();
@@ -62,6 +70,20 @@ public class OptionsDB {
 
 			for (Entry<OptionFilter, List<Option>> entry : mainOptions.entrySet()) {
 				if(entry.getKey().equals(OptionFilter.Int))
+					res.addAll(entry.getValue());
+			}
+		}
+		else if(optionFilter.equals(OptionFilter.Boolean)){	
+
+			for (Entry<OptionFilter, List<Option>> entry : mainOptions.entrySet()) {
+				if(entry.getKey().equals(OptionFilter.Boolean))
+					res.addAll(entry.getValue());
+			}
+		}
+		else if(optionFilter.equals(OptionFilter.BooleanLiteral)){	
+
+			for (Entry<OptionFilter, List<Option>> entry : mainOptions.entrySet()) {
+				if(entry.getKey().equals(OptionFilter.BooleanLiteral))
 					res.addAll(entry.getValue());
 			}
 		}

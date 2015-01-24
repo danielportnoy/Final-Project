@@ -16,13 +16,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="16dp"
-            android:layout_weight="0.7"
+            android:layout_weight="0.75"
             android:orientation="vertical" >
 
             <ListView
                 android:id="@+id/listView_Code"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="2dp" >
             </ListView>
         </LinearLayout>
 
@@ -30,7 +32,7 @@
             android:id="@+id/LinearLayout_Options"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.25"
             android:orientation="vertical" >
 
             <ListView

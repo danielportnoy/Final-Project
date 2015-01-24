@@ -9,7 +9,10 @@ public enum OptionEnum {
 	Int ("int"),
 	Boolean ("boolean"),
 	
-	IntLiteral ("int literal"),
+	Literal ("literal"),
+	
+	True ("true"),
+	False ("false"),
 
 	;
 

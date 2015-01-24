@@ -12,7 +12,6 @@ import com.example.logic.placeholder.PlaceHolderType;
 import android.content.Context;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.style.TextAppearanceSpan;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
@@ -140,7 +140,31 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 			if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
 
-				Manager.getInstance().setCode(v.getText().toString() , ph);
+				if(ph.getPlaceholderType().equals(PlaceHolderType.Idnt)){	//TODO	
+
+					String text = v.getText().toString();
+					boolean isValidIdentifier = true;
+
+					if(text == null || text.length() == 0)
+						isValidIdentifier = false;
+					else{
+						if(!Character.isJavaIdentifierStart((text.charAt(0))))
+							isValidIdentifier = false;
+
+						for (int i = 1; i < text.length() ; i++) {
+							if(!Character.isJavaIdentifierPart((text.charAt(i))))
+								isValidIdentifier = false;
+						}
+					}
+
+					if(isValidIdentifier)
+						Manager.getInstance().setCode(v.getText().toString() , ph);
+					else
+						Toast.makeText(context, "Bad identifier format", Toast.LENGTH_SHORT).show();
+
+				}
+
+				//Manager.getInstance().setCode(v.getText().toString() , ph);
 
 				v.clearFocus();
 
@@ -179,10 +203,10 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 		setLayoutParams(editText);
 
 		editText.setSingleLine(true);
-		
+
 		editText.setHint(text);
 		editText.setTextAppearance(context, android.R.style.TextAppearance_Small);
-		
+
 		if(item.getPlaceholderType().equals(PlaceHolderType.IntLiteral)){
 			editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -199,7 +223,7 @@ public class CodeLinesAdapter extends ArrayAdapter<PlaceHolder>{
 		//tv.setHint("< int literal >");
 
 		//tv.setTag("intLiteralEditText");
-		
+
 		editText.setOnEditorActionListener(new MyOnEditorActionListener(item));
 
 		editText.setImeOptions(EditorInfo.IME_ACTION_DONE);

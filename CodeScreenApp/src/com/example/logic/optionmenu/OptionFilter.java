@@ -9,6 +9,8 @@ public enum OptionFilter {
 	Int ("int"),
 	Boolean ("boolean"),
 	
+	BooleanLiteral("boolean literal");
+	
 	;
 	
 	private final String name;       

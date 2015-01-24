@@ -105,11 +105,28 @@ public class Manager {
 			optionMenu.clearMenu();
 			GraphicsUnit.getInstance().updateOptionsMenu();			
 		}	
-		else if(option.getOption().equals(OptionEnum.IntLiteral)){
-
-			ph.setInputMethod(InputMethod.Keyboard);
-			ph.setPlaceholderType(PlaceHolderType.IntLiteral);
-
+		else if(option.getOption().equals(OptionEnum.Literal)){
+			
+			if(ph.getPlaceholderType().equals(PlaceHolderType.IntExpr)){
+				ph.setPlaceholderType(PlaceHolderType.IntLiteral);
+				ph.setInputMethod(InputMethod.Keyboard);
+				}
+			else if(ph.getPlaceholderType().equals(PlaceHolderType.BoolExpr)){
+				ph.setPlaceholderType(PlaceHolderType.BoolLiteral);
+				ph.setOptionFilter(OptionFilter.BooleanLiteral);
+				ph.setInputMethod(InputMethod.Option);
+			}
+			
+			GraphicsUnit.getInstance().updateCodeLines();
+			
+			optionMenu.clearMenu();
+			GraphicsUnit.getInstance().updateOptionsMenu();		
+		}
+		else if(option.getOption().equals(OptionEnum.True) | option.getOption().equals(OptionEnum.False)){
+			
+			ph.setPattern(new Literal_Ptrn(option.toString()));
+			ph.setInputMethod(InputMethod.Disabled);
+			
 			GraphicsUnit.getInstance().updateCodeLines();
 			
 			optionMenu.clearMenu();
