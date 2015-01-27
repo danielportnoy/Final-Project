@@ -17,6 +17,7 @@ import com.example.logic.placeholder.PlaceHolder;
 import com.example.logic.placeholder.PlaceHolderType;
 
 public class Manager {
+	
 
 	private CodeScreen codeScreen;
 	private OptionMenu optionMenu;
