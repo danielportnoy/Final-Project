@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalprojecttestapp;
 
 import final_2.logics.game.scenario.Scenario;
 import android.os.Bundle;

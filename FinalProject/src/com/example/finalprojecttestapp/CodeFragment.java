@@ -1,6 +1,8 @@
-package com.example.finalproject;
+package com.example.finalprojecttestapp;
 
 import java.util.LinkedList;
+
+import com.example.finalproject.R;
 
 import final_2.logics.game.level1.Level1;
 import final_2.logics.game.level1.infrastructure.stmt.GoRightStmt;

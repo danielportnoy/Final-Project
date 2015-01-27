@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         <activity
-            android:name="com.example.finalproject.MainManuActivity"
+            android:name="com.example.finalprojecttestapp.MainManuActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -24,12 +24,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.finalproject.LevelPickingActivity"
+            android:name="com.example.finalprojecttestapp.LevelPickingActivity"
             android:label="@string/title_activity_level_picking"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.example.finalproject.GameScreenActivity"
+            android:name="com.example.finalprojecttestapp.GameScreenActivity"
             android:label="@string/title_activity_game_screen"
             android:screenOrientation="landscape" >
         </activity>

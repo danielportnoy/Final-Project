@@ -1,4 +1,6 @@
-package com.example.finalproject;
+package com.example.finalprojecttestapp;
+
+import com.example.finalproject.R;
 
 import final_2.logics.game.level1.Level1;
 import final_2.logics.game.level1.infrastructure.Board;
