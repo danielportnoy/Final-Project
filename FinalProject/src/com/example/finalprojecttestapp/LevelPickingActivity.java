@@ -1,6 +1,6 @@
 package com.example.finalprojecttestapp;
 
-import com.example.finalproject.R;
+import com.example.finalprojecttestapp.R;
 
 import android.os.Bundle;
 import android.app.Activity;
