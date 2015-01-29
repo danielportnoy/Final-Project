@@ -42,6 +42,18 @@ public class CodeScreenActivity extends Activity {
 
 	private void initOptionsMenu() {
 		options = (ListView)findViewById(R.id.listView_Options);
+		/*	
+		Button back = new Button(this);
+		back.setText("return back");
+		back.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				CodeScreenManager.getInstance().backClicked();
+			}
+		});
+
+		options.addFooterView(back);
+		 */
 		optionsAdapter = new OptionsAdapter(this, android.R.layout.simple_list_item_1, csmanager.getOptionMenu().getOptions());
 		options.setAdapter(optionsAdapter);		
 	}
@@ -52,5 +64,4 @@ public class CodeScreenActivity extends Activity {
 		getMenuInflater().inflate(R.menu.code_screen, menu);
 		return true;
 	}
-
 }

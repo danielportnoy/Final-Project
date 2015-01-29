@@ -171,4 +171,9 @@ public class CodeScreenManager {
 		instance = new CodeScreenManager();
 	}
 
+	/*public void backClicked() {
+		// TODO Auto-generated method stub
+		Log.d("aaa", "backClicked");
+	}*/
+
 }
