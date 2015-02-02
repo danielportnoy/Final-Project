@@ -1,24 +1,24 @@
 package com.example.finalprojecttestapp;
 
+import grammarModuleTest2.logics.game.level1.Level1;
+import grammarModuleTest2.logics.game.level1.infrastructure.stmt.GoRightStmt;
+import grammarModuleTest2.logics.game.scenario.Scenario;
+import grammarModuleTest2.logics.grammar.expression.binary.concrete.Bool_Bin_Expr_For_Int;
+import grammarModuleTest2.logics.grammar.expression.identifier.Int_Idnt;
+import grammarModuleTest2.logics.grammar.expression.unary.concrete.Int_Un_Expr_For_Int_Idnt;
+import grammarModuleTest2.logics.grammar.literal.Int_Literal;
+import grammarModuleTest2.logics.grammar.operator.binary.concrete.Less_Than_For_Int;
+import grammarModuleTest2.logics.grammar.operator.unary.idnt.concrete.Increment_For_Int_Idnt;
+import grammarModuleTest2.logics.grammar.statement.Block_Stmt;
+import grammarModuleTest2.logics.grammar.statement.For_Stmt;
+import grammarModuleTest2.logics.grammar.statement.Stmt;
+import grammarModuleTest2.logics.grammar.statement.asgn.concrete.Simple_Asgn_Stmt_For_Int;
+import grammarModuleTest2.logics.grammar.statement.statement_expression.Stmt_Expr_For_Int;
+import grammarModuleTest2.logics.grammar.statement.varDec.asgn.concrete.Var_Dec_Asgn_For_Int;
 import java.util.LinkedList;
 
 import com.example.finalprojecttestapp.R;
 
-import final_2.logics.game.level1.Level1;
-import final_2.logics.game.level1.infrastructure.stmt.GoRightStmt;
-import final_2.logics.game.scenario.Scenario;
-import final_2.logics.grammar.expression.binary.concrete.Bool_Bin_Expr_For_Int;
-import final_2.logics.grammar.expression.identifier.Int_Idnt;
-import final_2.logics.grammar.expression.unary.concrete.Int_Un_Expr_For_Int_Idnt;
-import final_2.logics.grammar.literal.Int_Literal;
-import final_2.logics.grammar.operator.binary.concrete.Less_Than_For_Int;
-import final_2.logics.grammar.operator.unary.idnt.concrete.Increment_For_Int_Idnt;
-import final_2.logics.grammar.statement.Block_Stmt;
-import final_2.logics.grammar.statement.For_Stmt;
-import final_2.logics.grammar.statement.Stmt;
-import final_2.logics.grammar.statement.asgn.concrete.Simple_Asgn_Stmt_For_Int;
-import final_2.logics.grammar.statement.statement_expression.Stmt_Expr_For_Int;
-import final_2.logics.grammar.statement.varDec.asgn.concrete.Var_Dec_Asgn_For_Int;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,7 +31,7 @@ public class CodeFragment extends Fragment {
 	private TextView codeTextView;
 
 	private Block_Stmt codeBlock;
-	
+
 	private Level1 level1; 
 
 	@Override
@@ -43,7 +43,7 @@ public class CodeFragment extends Fragment {
 		codeBlock = new Block_Stmt();
 
 		// -------------------
-		
+
 		LinkedList<Stmt> forInit = new LinkedList<Stmt>();
 		LinkedList<Stmt> forUpdate = new LinkedList<Stmt>();
 
@@ -60,15 +60,18 @@ public class CodeFragment extends Fragment {
 		Int_Un_Expr_For_Int_Idnt ipp = new Int_Un_Expr_For_Int_Idnt(i, new Increment_For_Int_Idnt());
 		Stmt_Expr_For_Int ippS = new Stmt_Expr_For_Int(ipp);
 		forUpdate.add(ippS);
-
-		For_Stmt forS = new For_Stmt(forInit, iLT3, forUpdate, new GoRightStmt(level1));
 		
+		Block_Stmt forBody = new Block_Stmt();
+		forBody.getStatements().add( new GoRightStmt(level1));
+
+		For_Stmt forS = new For_Stmt(forInit, iLT3, forUpdate, forBody);
+
 		// -------------------
 		
 		codeBlock.getStatements().add(forS);
 
 		codeTextView = (TextView) myFragmentView.findViewById(R.id.textView_Code);		
-		codeTextView.setText(codeBlock.toString());
+		codeTextView.setText(forS.toString());
 
 		return myFragmentView;
 	}

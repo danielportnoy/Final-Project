@@ -2,10 +2,11 @@ package com.example.finalprojecttestapp;
 
 import com.example.finalprojecttestapp.R;
 
-import final_2.logics.game.level1.Level1;
-import final_2.logics.game.level1.infrastructure.Coordinate;
-import final_2.logics.game.scenario.Scenario;
-import final_2.logics.grammar.statement.Block_Stmt;
+import grammarModuleTest2.logics.game.level1.Level1;
+import grammarModuleTest2.logics.game.level1.infrastructure.Coordinate;
+import grammarModuleTest2.logics.game.scenario.Scenario;
+import grammarModuleTest2.logics.grammar.statement.Block_Stmt;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -37,19 +38,19 @@ public class GameScreenActivity extends FragmentActivity implements FragmentComm
 	}
 
 	private Scenario getLevelInstance() {
-		
+
 		switch (levelNumber) {
 		case 1:
 			return new Level1(5, 5, "H", new Coordinate(1, 1), new Coordinate(1, 4));
-			
+
 		case 2:
 
 			break;
-			
+
 		case 3:
 
 			break;
-			
+
 		default:
 			break;
 		}

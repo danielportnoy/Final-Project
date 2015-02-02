@@ -1,6 +1,7 @@
 package com.example.finalprojecttestapp;
 
-import final_2.logics.game.scenario.Scenario;
+import grammarModuleTest2.logics.game.scenario.Scenario;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
