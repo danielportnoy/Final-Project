@@ -4,15 +4,14 @@ import java.util.List;
 
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.codescreenlogic.CodeScreenManager;
-import com.example.finalprojectapp.codescreenlogic.optionmenu.Option;
+import com.example.finalprojectapp.codescreenlogic.optionmenu.option.Option;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.Button;
 
 public class OptionsAdapter extends ArrayAdapter<Option> {
 
@@ -26,7 +25,7 @@ public class OptionsAdapter extends ArrayAdapter<Option> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		TextView optionTextView = null;
+		Button optionButton = null;
 		View view = null;
 
 		if (convertView == null) {
@@ -35,37 +34,15 @@ public class OptionsAdapter extends ArrayAdapter<Option> {
 		}
 		else
 			view = convertView;
+		
+		optionButton = (Button) view.findViewById(R.id.button_option);
 
 		Option item = getItem(position);
-
-		if(item != null){
-			optionTextView = (TextView) view.findViewById(R.id.textView_oprtion);
-
-			optionTextView.setOnClickListener(new MyOnClickListener(item));
-
-			optionTextView.setText(item.toString());
-		}
-		else{
-
-		}
+		
+		if(item != null);
+			item.setButton(context, optionButton , CodeScreenManager.getInstance().getCurrentSetter());
 
 		return view;
 	}
-
-	private class MyOnClickListener implements OnClickListener
-	{
-
-		Option option;
-		public MyOnClickListener(Option option) {
-			this.option = option;
-		}
-
-		@Override
-		public void onClick(View v)
-		{
-			CodeScreenManager.getInstance().pickedOption(option);
-		}
-
-	};
 
 }

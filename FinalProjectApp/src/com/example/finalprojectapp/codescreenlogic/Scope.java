@@ -1,38 +1,84 @@
 package com.example.finalprojectapp.codescreenlogic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.example.finalprojectapp.nodetree.node.Node;
+
 public class Scope {
 
-	private Map<String, Integer> IntegerScope;
-	private Map<String, Boolean> BooleanScope;
+	private Map<String, Integer> IntegerIdentifiers;
+	private Map<String, Integer> BooleanIdentifiers;
 
 	public Scope() {
-		IntegerScope = new HashMap<String, Integer>();
-		BooleanScope = new HashMap<String, Boolean>();
+		IntegerIdentifiers = new HashMap<String, Integer>();
+		BooleanIdentifiers = new HashMap<String, Integer>();
 	}
 
-	public Map<String, Integer> getIntegerScope() {
-		return IntegerScope;
+	public Map<String, Integer> getIntegerIdentifiers() {
+		return IntegerIdentifiers;
 	}
 
-	public Map<String, Boolean> getBooleanScope() {
-		return BooleanScope;
+	public Map<String, Integer> getBooleanIdentifiers() {
+		return BooleanIdentifiers;
 	}
 
-	public static Scope clone(Scope other){
+	private List<String> getIntegerIdentifiersUntil(int until) {
+		return getIdentifiersUntil(IntegerIdentifiers, until);
+	}
 
-		Scope clone = new Scope();
+	private List<String> getBooleanIdentifiersUntil(int until) {
+		return getIdentifiersUntil(BooleanIdentifiers, until);
+	}
 
-		for (Entry<String, Integer> entry : other.getIntegerScope().entrySet()) {
-			clone.getIntegerScope().put(entry.getKey(), entry.getValue());
+	private List<String> getIdentifiersUntil(Map<String, Integer> map , int until){
+
+		List<String> ids = new ArrayList<String>();
+
+		for (Entry<String, Integer> entry : map.entrySet()) {
+			if(entry.getValue() < until)
+				ids.add(entry.getKey());
 		}
-		for (Entry<String, Boolean> entry : other.getBooleanScope().entrySet()) {
-			clone.getBooleanScope().put(entry.getKey(), entry.getValue());
-		}
 
-		return clone;
+		return ids;
+	}
+
+	public static List<String> getIdentifiersRecursive(Node n , int order){
+
+		List<String> identifiers = new ArrayList<String>();
+
+		identifiers.addAll(getBooleanIdentifiersRecursive(n,order));
+		identifiers.addAll(getIntegerIdentifiersRecursive(n,order));
+
+		return identifiers;
+	}
+
+	public static List<String> getBooleanIdentifiersRecursive(Node n , int order){
+
+		List<String> identifiers = new ArrayList<String>();
+
+		if(n==null)
+			return identifiers;
+
+		identifiers.addAll(getBooleanIdentifiersRecursive(n.getParent(),n.getOrder()));
+		identifiers.addAll(n.getScope().getBooleanIdentifiersUntil(order));
+
+		return identifiers;
+	}
+
+	public static List<String> getIntegerIdentifiersRecursive(Node n , int order){
+
+		List<String> identifiers = new ArrayList<String>();
+
+		if(n==null)
+			return identifiers;
+
+		identifiers.addAll(getIntegerIdentifiersRecursive(n.getParent(),n.getOrder()));
+		identifiers.addAll(n.getScope().getIntegerIdentifiersUntil(order));
+
+		return identifiers;
 	}
 }

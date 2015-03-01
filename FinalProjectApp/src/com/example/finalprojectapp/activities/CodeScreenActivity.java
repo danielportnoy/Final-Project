@@ -1,8 +1,8 @@
 package com.example.finalprojectapp.activities;
 
 import com.example.finalprojectapp.R;
+import com.example.finalprojectapp.codescreenlogic.CodeScreenGraphicsUnit;
 import com.example.finalprojectapp.codescreenlogic.CodeScreenManager;
-import com.example.finalprojectapp.codescreenlogic.GraphicsUnit;
 import com.example.finalprojectapp.codescreenlogic.adapters.CodeLinesAdapter;
 import com.example.finalprojectapp.codescreenlogic.adapters.OptionsAdapter;
 
@@ -20,7 +20,7 @@ public class CodeScreenActivity extends Activity {
 	private CodeLinesAdapter codeLinesAdapter = null;
 
 	private CodeScreenManager csmanager = CodeScreenManager.getInstance();
-	private GraphicsUnit gu = GraphicsUnit.getInstance();
+	private CodeScreenGraphicsUnit gu = CodeScreenGraphicsUnit.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +36,13 @@ public class CodeScreenActivity extends Activity {
 
 	private void initCodeLines() {
 		codeLines = (ListView)findViewById(R.id.listView_Code);
-		codeLinesAdapter = new CodeLinesAdapter(this, android.R.layout.simple_list_item_1, csmanager.getCodeScreen().getStatements());
+		codeLinesAdapter = new CodeLinesAdapter(this, android.R.layout.simple_list_item_1, csmanager.getCodeScreen().getCodeLines());
 		codeLines.setAdapter(codeLinesAdapter);	
 	}
 
 	private void initOptionsMenu() {
 		options = (ListView)findViewById(R.id.listView_Options);
-		/*	
-		Button back = new Button(this);
-		back.setText("return back");
-		back.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				CodeScreenManager.getInstance().backClicked();
-			}
-		});
-
-		options.addFooterView(back);
-		 */
-		optionsAdapter = new OptionsAdapter(this, android.R.layout.simple_list_item_1, csmanager.getOptionMenu().getOptions());
+		optionsAdapter = new OptionsAdapter(this, android.R.layout.simple_list_item_1, csmanager.getOptionMenu().getCurrentCommands());
 		options.setAdapter(optionsAdapter);		
 	}
 

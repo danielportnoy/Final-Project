@@ -4,9 +4,8 @@ import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.codescreenlogic.CodeScreenManager;
 import com.example.finalprojectapp.constants.Constants;
 import com.example.finalprojectapp.gamescreenlogic.GameScreenManager;
+import com.example.finalprojectapp.gamescreenlogic.Level1;
 import com.example.finalprojectapp.gamescreenlogic.Scenario;
-import com.example.finalprojectapp.gamescreenlogic.level1.Level1;
-import com.example.finalprojectapp.gamescreenlogic.level1.infrastructure.Coordinate;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,19 +33,32 @@ public class GameScreenActivity extends Activity implements OnClickListener {
 		levelTextView = (TextView)findViewById(R.id.TextView_LevelNumber);
 		levelTextView.setText(levelNumber+"");
 
+		GameScreenManager.reset();
 		CodeScreenManager.reset();
 
 		initScenario(levelNumber);
 
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume(); //TODO
+
+		Button b = (Button) findViewById(R.id.buttonRun);
+		
+		if(!CodeScreenManager.getInstance().getCodeScreen().isCodeScreenValid())
+			b.setEnabled(false);
+		else
+			b.setEnabled(true);
+	}
+
 	private void initScenario(int levelNumber) {
 
 		switch (levelNumber) {
 		case 1:
-			Scenario level1 = new Level1(5, 5, "H", new Coordinate(1, 1), new Coordinate(1, 4));
+			Scenario level1 = new Level1();
 			GameScreenManager.getInstance().setScenario(level1);
-			//CodeScreenManager.getInstance().addSpecialPatterns(Level1.getSpecialPatterns());
+			CodeScreenManager.getInstance().setOptions(level1.getAvailableOptions());
 			break;
 		case 2:
 

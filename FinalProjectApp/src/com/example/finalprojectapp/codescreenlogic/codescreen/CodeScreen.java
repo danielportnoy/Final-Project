@@ -1,44 +1,51 @@
 package com.example.finalprojectapp.codescreenlogic.codescreen;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.example.finalprojectapp.codescreenlogic.optionmenu.OptionFilter;
-import com.example.finalprojectapp.codescreenlogic.pattern.NewLinePattern;
-import com.example.finalprojectapp.codescreenlogic.placeholder.PlaceHolder;
-import com.example.finalprojectapp.codescreenlogic.placeholder.PlaceHolderType;
+import com.example.finalprojectapp.nodetree.node.block.InitialBlockNode;
 
 public class CodeScreen {
 
-	private LinkedList<PlaceHolder> statements;
+	private InitialBlockNode initialBlock;
+	private List<CodeLine> codeLines;
 
 	public CodeScreen() {
-		statements = new LinkedList<PlaceHolder>();
-		addNewLine();
+		initialBlock = new InitialBlockNode();
+		codeLines = new ArrayList<CodeLine>();
+		updateCodeLines();
 	}
 
-	public void addNewLine() {
-		statements.add(new PlaceHolder(null, new NewLinePattern() , PlaceHolderType.addNewLine ,OptionFilter.Void, InputMethod.Option));
-	} 
+	public void updateCodeLines() {
 
-	public LinkedList<PlaceHolder> getStatements() {
-		return statements;
+		codeLines.clear();
+
+		CodeLine temp = new CodeLine();
+
+		for (CodePart codePart : initialBlock.getCodeParts()) {
+			if(!codePart.isNewline())
+				temp.getCodeScreenParts().add(codePart);
+			else{
+				codeLines.add(temp);
+				temp = new CodeLine();
+			}
+		}	
+
+		codeLines.add(temp);
 	}
 
-	public void setStatements(LinkedList<PlaceHolder> statements) {
-		this.statements = statements;
+	public InitialBlockNode getInitialBlock() {
+		return initialBlock;
 	}
 
-	public void displayCode(){
-		for (PlaceHolder PlaceHolder : statements) {
-			System.out.println(PlaceHolder);
-		}
+	public List<CodeLine> getCodeLines() {
+		return codeLines;
 	}
 
-	public boolean validateAllLines(){
-		for (PlaceHolder PlaceHolder : statements) {
-			if(!PlaceHolder.validate())
+	public boolean isCodeScreenValid() {
+		for (CodePart codePart : initialBlock.getCodeParts())
+			if(codePart.getSetter()!=null && codePart.getSetter().isMandatory())
 				return false;
-		}
 
 		return true;
 	}

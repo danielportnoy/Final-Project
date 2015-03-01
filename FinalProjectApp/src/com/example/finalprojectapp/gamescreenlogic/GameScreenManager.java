@@ -1,5 +1,6 @@
 package com.example.finalprojectapp.gamescreenlogic;
 
+
 public class GameScreenManager {
 
 	private Scenario scenario;
