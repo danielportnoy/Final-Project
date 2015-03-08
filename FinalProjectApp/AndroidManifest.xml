@@ -29,14 +29,18 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.example.finalprojectapp.activities.GameScreenActivity"
+            android:name="com.example.finalprojectapp.activities.ScenraioDisplyActivity"
             android:label="@string/title_activity_game_screen"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.example.finalprojectapp.activities.CodeScreenActivity"
-            android:label="@string/title_activity_code_screen"
+            android:name="com.example.finalprojectapp.codewriting.CodeWritingActivity"
+            android:label="@string/title_activity_code_writing"
             android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.example.finalprojectapp.coderunning.CodeRunningActivity"
+            android:label="@string/title_activity_code_running" >
         </activity>
     </application>
 

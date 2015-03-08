@@ -15,8 +15,9 @@
     <string name="run">Run</string>
     <string name="code">Code</string>
     <string name="reset">Reset</string>
-    <string name="title_activity_code_screen">CodeScreenActivity</string>
+    <string name="title_activity_code_writing">CodeWritingActivity</string>
     <string name="positive">positive</string>
     <string name="negative">negative</string>
-    
+    <string name="title_activity_code_running">CodeRunningActivity</string>
+
 </resources>

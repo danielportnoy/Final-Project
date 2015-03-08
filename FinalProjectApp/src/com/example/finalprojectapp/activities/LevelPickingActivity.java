@@ -1,7 +1,9 @@
 package com.example.finalprojectapp.activities;
 
+import com.example.finalprojectapp.Constants;
+import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
-import com.example.finalprojectapp.constants.Constants;
+import com.example.finalprojectapp.scenario.concrete.Level1;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -35,13 +37,17 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 
-		Intent intent = new Intent(this, GameScreenActivity.class);
+		Intent intent = new Intent(this, ScenraioDisplyActivity.class);
 
 		switch (v.getId()) {
 		case R.id.buttonLEVEL1:
 			intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 1);
 			editor.putInt(Constants.LEVEL_NUMBER_EXTRA, 1);
 			editor.commit();
+			
+			LevelManager.getInstance().reset();
+			LevelManager.getInstance().loadScenario(new Level1());
+			
 			break;
 		case R.id.buttonLEVEL2:
 			intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 2);
