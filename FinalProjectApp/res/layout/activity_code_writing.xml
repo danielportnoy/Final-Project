@@ -5,26 +5,26 @@
     tools:context=".CodeWritingActivity" >
 
     <LinearLayout
-        android:id="@+id/LinearLayout_Screen"
+        android:id="@+id/LinearLayout_Writing"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="1" >
 
         <LinearLayout
-            android:id="@+id/LinearLayout_Code"
+            android:id="@+id/LinearLayout_Writing_Code"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:layout_weight="0.75"
             android:orientation="vertical" >
 
             <ListView
-                android:id="@+id/listView_Code"
+                android:id="@+id/listView_Writing_Code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@android:color/transparent"
-                android:dividerHeight="2dp" >
+                android:dividerHeight="1dp" >
             </ListView>
         </LinearLayout>
 

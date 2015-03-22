@@ -1,15 +1,15 @@
 package com.example.finalprojectapp.codewriting.managment;
 
 import com.example.finalprojectapp.codewriting.adapter.OptionsAdapter;
-import com.example.finalprojectapp.codewriting.adapter.CodeLinesAdapter;
+import com.example.finalprojectapp.codewriting.adapter.CodeWritingLinesAdapter;
 
 public class CodeWritingGraphicUnit {
 
-	private CodeLinesAdapter codeLinesAdapter;
+	private CodeWritingLinesAdapter codeWritingLinesAdapter;
 	private OptionsAdapter optionsAdapter;
 
-	public CodeWritingGraphicUnit(CodeLinesAdapter codeLinesAdapter, OptionsAdapter optionsAdapter) {
-		this.codeLinesAdapter = codeLinesAdapter;
+	public CodeWritingGraphicUnit(CodeWritingLinesAdapter codeWritingLinesAdapter, OptionsAdapter optionsAdapter) {
+		this.codeWritingLinesAdapter = codeWritingLinesAdapter;
 		this.optionsAdapter = optionsAdapter;
 	}
 
@@ -17,12 +17,12 @@ public class CodeWritingGraphicUnit {
 		optionsAdapter.notifyDataSetChanged();
 	}
 
-	public void updateCodeLines() {
-		codeLinesAdapter.notifyDataSetChanged();
+	public void updateCodeWritingLines() {
+		codeWritingLinesAdapter.notifyDataSetChanged();
 	}
 
-	public CodeLinesAdapter getCodeLinesAdapter() {
-		return codeLinesAdapter;
+	public CodeWritingLinesAdapter getCodeWritingLinesAdapter() {
+		return codeWritingLinesAdapter;
 	}
 
 	public OptionsAdapter getOptionsAdapter() {

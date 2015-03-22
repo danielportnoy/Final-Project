@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.LevelManager;
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
@@ -16,33 +17,47 @@ public class PlusNode extends Node{
 	private Node right;
 
 	@Override
-	public List<CodePart> getCodeParts() {
+	public List<CodeWritingPart> getCodeWritingParts() {
 
-		List<CodePart> res = new ArrayList<CodePart>();
+		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
 		if(left == null)
-			res.add(new CodePart(false, false, null, new LeftSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new LeftSetter(this)));
 		else
-			res.addAll(left.getCodeParts());
+			res.addAll(left.getCodeWritingParts());
 
-		res.add(new CodePart(false, false, "+", null));
+		res.add(new CodeWritingPart(false, false, "+", null));
 
 		if(right == null)
-			res.add(new CodePart(false, false, null, new RightSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new RightSetter(this)));
 		else			
-			res.addAll(right.getCodeParts());
+			res.addAll(right.getCodeWritingParts());
 
 		return res;
 	}
-	
+
+	@Override
+	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
+		
+		isHighlighted = target.equals(this) || isHighlighted;
+		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+		res.addAll(left.getCodeRunningParts(target,isHighlighted));
+
+		res.add(new CodeRunningPart(false, false,isHighlighted, "+"));
+
+		res.addAll(right.getCodeRunningParts(target,isHighlighted));
+
+		return res;
+	}
+
+
 	@Override
 	public ReturnObject run() {
-		LevelManager.getInstance().getCodeRunningManager().takeSnapshot(left);
-		LevelManager.getInstance().getCodeRunningManager().takeSnapshot(right);
-		
+		LevelManager.getInstance().takeSnapshot(this);
 		return new ReturnObject(left.run().getIntValue() + right.run().getIntValue());
 	}
-	
+
 	class LeftSetter extends Setter{
 
 		final static int order = 0;
@@ -66,14 +81,14 @@ public class PlusNode extends Node{
 			return possibilities;
 		}
 	}
-	
+
 	class RightSetter extends Setter{
 
 		final static int order = 0;
 
 		public RightSetter(Node parent) {
 			super("< int expr >", true, parent, order);	// TODO
-			
+
 		}
 
 		@Override

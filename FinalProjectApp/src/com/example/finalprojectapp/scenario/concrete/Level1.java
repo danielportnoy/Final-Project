@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.example.finalprojectapp.coderunning.GameSnapshot;
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.DrawGameView;
+import com.example.finalprojectapp.LevelManager;
+import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.coderunning.snapshot.GameSnapshot;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.codewriting.option.concrete.block.BlockOption;
 import com.example.finalprojectapp.codewriting.option.concrete.literal.LiteralOption;
@@ -25,9 +29,9 @@ import com.example.finalprojectapp.scenario.Scenario;
 
 public class Level1 extends Scenario {
 
-	final int SIZE = 7;	// TODO
+	final int SIZE = 6;	// TODO
 
-	int heroX=0,heroY=0,targetX=6,targetY=6;
+	int heroX=0,heroY=0,targetX=5,targetY=5;
 
 	@Override
 	public void initiateAvailableOptions() {
@@ -51,6 +55,26 @@ public class Level1 extends Scenario {
 		return new MyGameSnapshot(heroX, heroY);
 	}
 
+	@Override
+	public void drawSnapshot(GameSnapshot gameSnapshot , DrawGameView drawGameView) {
+
+
+		MyGameSnapshot myGameSnapshot = (MyGameSnapshot)gameSnapshot;
+		Level1_DrawGameView level1_DrawGameView = (Level1_DrawGameView) drawGameView;
+		
+		level1_DrawGameView.a(myGameSnapshot.getHeroX(), myGameSnapshot.getHeroY());
+		level1_DrawGameView.invalidate();
+
+	}
+	
+	@Override
+	public DrawGameView getDrawGameViewInstance(Context context , AttributeSet attrs) {
+		return new Level1_DrawGameView(context, attrs);
+	}
+	
+	/******************** Nested classes ********************/
+	
+	/********** snapshot class **********/
 	class MyGameSnapshot extends GameSnapshot{
 
 		private int heroX,heroY;
@@ -68,15 +92,17 @@ public class Level1 extends Scenario {
 			return heroY;
 		}
 	}
+	/********** snapshot class **********/
 
+	/********** special nodes class's **********/
 	class GoRightNode extends Node{
 
 		@Override
-		public List<CodePart> getCodeParts() {
+		public List<CodeWritingPart> getCodeWritingParts() {
 
-			List<CodePart> res = new ArrayList<CodePart>();
+			List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-			res.add(new CodePart(false, false, "goRight();", null));
+			res.add(new CodeWritingPart(false, false, "goRight();", null));
 
 			return res;
 		}
@@ -84,13 +110,29 @@ public class Level1 extends Scenario {
 		@Override
 		public ReturnObject run() {
 
-			heroX++;
+			LevelManager.getInstance().takeSnapshot(this);
+
+			if( heroX < SIZE - 1 )
+				heroX++;
 
 			return new ReturnObject();
 		}
 
-	}
+		@Override
+		public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
 
+			isHighlighted = target.equals(this) || isHighlighted;
+			List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+			res.add(new CodeRunningPart(false, false,isHighlighted, "goRight();"));
+
+			return res;
+		}
+
+	}
+	/********** special nodes class's **********/
+	
+	/********** special option class's **********/
 	class GoRightOption extends Option{
 
 		@Override
@@ -101,7 +143,7 @@ public class Level1 extends Scenario {
 		@Override
 		public void setButton(Context context, Button optionButton,final Setter setter) {
 
-			optionButton.setText("goRight()");	//TODO
+			optionButton.setText("goRight");	//TODO
 
 			optionButton.setOnClickListener(new OnClickListener() {
 
@@ -114,4 +156,8 @@ public class Level1 extends Scenario {
 		}
 
 	}
+	/********** special option class's **********/
+
+	/******************** Nested classes ********************/
+
 }

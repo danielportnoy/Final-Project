@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.LevelManager;
-import com.example.finalprojectapp.codewriting.codeline.CodeLine;
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingLine;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.codewriting.option.concrete.identifier.BoolIdentifierOption;
 import com.example.finalprojectapp.codewriting.option.concrete.identifier.IntIdentifierOption;
@@ -15,38 +15,40 @@ import com.example.finalprojectapp.node.Type;
 
 public class CodeWritingLogicUnit {
 
-	private List<CodeLine> codeLines;
+	private List<CodeWritingLine> codeWritingLines;
 	private List<Option> currentOptions;
 
+	private LevelManager levelManager = LevelManager.getInstance();
+
 	public CodeWritingLogicUnit() {
-		codeLines = new ArrayList<CodeLine>();
+		codeWritingLines = new ArrayList<CodeWritingLine>();
 		currentOptions = new ArrayList<Option>();
 	}
 
-	public List<CodeLine> getCodeLines() {
-		return codeLines;
+	public List<CodeWritingLine> getWritingCodeLines() {
+		return codeWritingLines;
 	}
 
 	public List<Option> getCurrentOptions() {
 		return currentOptions;
 	}
 
-	public void updateCodeLines() {
+	public void updateCodeWritingLines() {
 
-		codeLines.clear();
+		codeWritingLines.clear();
 
-		CodeLine temp = new CodeLine();
+		CodeWritingLine temp = new CodeWritingLine();
 
-		for (CodePart codePart : LevelManager.getInstance().getRootNode().getCodeParts()) {
+		for (CodeWritingPart codePart : levelManager.getRootNode().getCodeWritingParts()) {
 			if(!codePart.isNewline())
-				temp.getCodeScreenParts().add(codePart);
+				temp.getCodeWritingParts().add(codePart);
 			else{
-				codeLines.add(temp);
-				temp = new CodeLine();
+				codeWritingLines.add(temp);
+				temp = new CodeWritingLine();
 			}
 		}	
 
-		codeLines.add(temp);
+		codeWritingLines.add(temp);
 	}
 
 	public void loadOptionsForSetter(Setter setter) {
@@ -59,7 +61,7 @@ public class CodeWritingLogicUnit {
 
 	private void loadStaticOptions(Setter setter) {
 
-		for (Option option : LevelManager.getInstance().getScenario().getAvailableOptions()) {
+		for (Option option : levelManager.getScenario().getAvailableOptions()) {
 			for (Type type : setter.possibleTypes()) {
 				if(option.isType(type))
 					currentOptions.add(option);
@@ -82,5 +84,13 @@ public class CodeWritingLogicUnit {
 				currentOptions.add(new IntIdentifierOption(id));
 		}
 	}
+
+	/*public boolean isCodeLinesValid() {
+		for (CodeWritingPart codePart : levelManager.getRootNode().getCodeWritingParts())
+			if(codePart.getSetter()!=null && codePart.getSetter().isMandatory())
+				return false;
+
+		return true;
+	}*/
 
 }

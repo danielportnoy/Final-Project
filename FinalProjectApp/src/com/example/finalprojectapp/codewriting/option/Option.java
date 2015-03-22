@@ -15,6 +15,6 @@ public abstract class Option {
 	public abstract void setButton(Context context, Button optionButton, Setter setter);
 
 	public void refresh(){
-		LevelManager.getInstance().getCodeWritingManager().refresh();
+		LevelManager.getInstance().refrashWritingScreen();
 	}
 }

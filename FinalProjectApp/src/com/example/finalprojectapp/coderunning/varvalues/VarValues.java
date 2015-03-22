@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.coderunning;
+package com.example.finalprojectapp.coderunning.varvalues;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,8 +8,8 @@ import java.util.Map.Entry;
 
 public class VarValues {
 
-	Map<String, Integer> intValues = new HashMap<String, Integer>();
-	Map<String, Boolean> boolValues = new HashMap<String, Boolean>();
+	private Map<String, Integer> intValues = new HashMap<String, Integer>();
+	private Map<String, Boolean> boolValues = new HashMap<String, Boolean>();
 
 	public VarValues(VarValues other){
 		intValues.putAll(other.intValues);
@@ -18,6 +18,14 @@ public class VarValues {
 
 	public VarValues() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public Map<String, Integer> getIntValues() {
+		return intValues;
+	}
+
+	public Map<String, Boolean> getBoolValues() {
+		return boolValues;
 	}
 
 	public void removeExtra(List<String> identifiers){

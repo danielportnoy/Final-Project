@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.LevelManager;
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
@@ -19,17 +20,30 @@ public class InitialBlockNode extends Node{
 	}
 
 	@Override
-	public List<CodePart> getCodeParts() {
+	public List<CodeWritingPart> getCodeWritingParts() {
 
-		List<CodePart> res = new ArrayList<CodePart>();
+		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
 		for (Node innerNode : innerNodes){
-			res.addAll(innerNode.getCodeParts());
-			res.add(new CodePart(false, true, null, null));
+			res.addAll(innerNode.getCodeWritingParts());
+			res.add(new CodeWritingPart(false, true, null, null));
 		}
 
-		res.add(new CodePart(false, false, null, new InitialBlockSetter(this)));// add more 
+		res.add(new CodeWritingPart(false, false, null, new InitialBlockSetter(this)));// add more 
 
+		return res;
+	}
+	
+	@Override
+	public List<CodeRunningPart> getCodeRunningParts(Node target,boolean isHighlighted) {
+		
+		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+		for (Node innerNode : innerNodes){
+			res.addAll(innerNode.getCodeRunningParts(target,isHighlighted));
+			res.add(new CodeRunningPart(false, true,false, null));
+		}
+		
 		return res;
 	}
 	
@@ -37,9 +51,10 @@ public class InitialBlockNode extends Node{
 	public ReturnObject run() {
 		
 		for (Node n : innerNodes){
-			LevelManager.getInstance().getCodeRunningManager().takeSnapshot(n);
 			n.run();
 		}
+		
+		LevelManager.getInstance().takeSnapshot(this);	// TODO
 		
 		return new ReturnObject();	// TODO
 	}

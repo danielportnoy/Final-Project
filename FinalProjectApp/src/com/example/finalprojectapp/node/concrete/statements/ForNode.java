@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.LevelManager;
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
@@ -19,72 +20,100 @@ public class ForNode extends Node{			// TODO
 	private Node body;
 
 	@Override
-	public List<CodePart> getCodeParts() {
+	public List<CodeWritingPart> getCodeWritingParts() {
 
-		List<CodePart> res = new ArrayList<CodePart>();
+		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodePart(false, false, "for (", null));
+		res.add(new CodeWritingPart(false, false, "for (", null));
 
 		if(init == null)
-			res.add(new CodePart(false, false, null, new InitSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new InitSetter(this)));
 		else
-			res.addAll(init.getCodeParts());
+			res.addAll(init.getCodeWritingParts());
 
-		res.add(new CodePart(false, false, ";", null));
+		res.add(new CodeWritingPart(false, false, ";", null));
 
 		if(condition == null)
-			res.add(new CodePart(false, false, null, new ConditionSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this)));
 		else
-			res.addAll(condition.getCodeParts());
-		
-		res.add(new CodePart(false, false, ";", null));
-		
+			res.addAll(condition.getCodeWritingParts());
+
+		res.add(new CodeWritingPart(false, false, ";", null));
+
 		if(update == null)
-			res.add(new CodePart(false, false, null, new UpdateSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new UpdateSetter(this)));
 		else
-			res.addAll(update.getCodeParts());
-		
-		res.add(new CodePart(false, false, ")", null));
+			res.addAll(update.getCodeWritingParts());
+
+		res.add(new CodeWritingPart(false, false, ")", null));
 
 
 		if(body == null){
-			res.add(new CodePart(false, true, null, null));
-			res.add(new CodePart(true, false, null, null));
+			res.add(new CodeWritingPart(false, true, null, null));
+			res.add(new CodeWritingPart(true, false, null, null));
 
-			res.add(new CodePart(false, false, null, new BodySetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new BodySetter(this)));
 		}
 		else{
 			if(body instanceof BlockNode)	//TODO
-				res.addAll(body.getCodeParts());
+				res.addAll(body.getCodeWritingParts());
 			else{
-				res.add(new CodePart(false, true, null, null));
-				res.addAll(CodePart.tabber(body.getCodeParts()));
+				res.add(new CodeWritingPart(false, true, null, null));
+				res.addAll(CodeWritingPart.tabber(body.getCodeWritingParts()));
 			}
 
 		}
 
 		return res;
-	
+
 	}
-	
+
+	@Override
+	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
+		
+		isHighlighted = target.equals(this) || isHighlighted;
+		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+		res.add(new CodeRunningPart(false, false,isHighlighted, "for ("));
+
+		if(init != null)
+			res.addAll(init.getCodeRunningParts(target,isHighlighted));
+		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
+
+		if(condition != null)
+			res.addAll(condition.getCodeRunningParts(target,isHighlighted));
+		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
+
+		if(update != null)
+			res.addAll(update.getCodeRunningParts(target,isHighlighted));	
+		res.add(new CodeRunningPart(false, false,isHighlighted, ")"));
+
+
+		if(body instanceof BlockNode)	//TODO
+			res.addAll(body.getCodeRunningParts(target,isHighlighted));
+		else{
+			res.add(new CodeRunningPart(false, true,isHighlighted, null));
+			res.addAll(CodeRunningPart.tabber(body.getCodeRunningParts(target,isHighlighted)));
+		}
+
+		return res;
+	}
+
 	@Override
 	public ReturnObject run() {
 
-		LevelManager.getInstance().getCodeRunningManager().takeSnapshot(init);
+		LevelManager.getInstance().takeSnapshot(this);
+		
 		init.run();
 
 		while(condition.run().getBoolValue()){
-			
-			LevelManager.getInstance().getCodeRunningManager().takeSnapshot(body);
 			body.run();
-			
-			LevelManager.getInstance().getCodeRunningManager().takeSnapshot(update);
 			update.run();
 		}
 
 		return new ReturnObject();
 	}
-	
+
 	class InitSetter extends Setter{
 
 		static final int order = 0;

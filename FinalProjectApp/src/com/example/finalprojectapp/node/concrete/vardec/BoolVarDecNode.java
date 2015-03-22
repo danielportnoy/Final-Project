@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.LevelManager;
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
@@ -18,36 +19,55 @@ public class BoolVarDecNode extends Node {
 	public BoolVarDecNode(String identifier) {
 		this.identifier = identifier;
 	}
-	
+
 	@Override
-	public List<CodePart> getCodeParts() {
+	public List<CodeWritingPart> getCodeWritingParts() {
 
-		List<CodePart> res = new ArrayList<CodePart>();
+		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodePart(false, false, "boolean "+ identifier, null));
+		res.add(new CodeWritingPart(false, false, "boolean "+ identifier, null));
 
 		if(initialValue == null){
-			res.add(new CodePart(false, false, ";", null));
-			res.add(new CodePart(false, false, null, new InitialValueSetter(this)));
+			res.add(new CodeWritingPart(false, false, ";", null));
+			res.add(new CodeWritingPart(false, false, null, new InitialValueSetter(this)));
 		}
 		else{
-			res.add(new CodePart(false, false, "=", null));
-			res.addAll(initialValue.getCodeParts());
-			res.add(new CodePart(false, false, ";", null));
+			res.add(new CodeWritingPart(false, false, "=", null));
+			res.addAll(initialValue.getCodeWritingParts());
+			res.add(new CodeWritingPart(false, false, ";", null));
 		}
 
 		return res;
 	}
-	
+
+	@Override
+	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
+
+		isHighlighted = target.equals(this) || isHighlighted;
+		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+		res.add(new CodeRunningPart(false, false,isHighlighted, "boolean "+ identifier));
+
+		if(initialValue != null){
+			res.add(new CodeRunningPart(false, false,isHighlighted, "="));
+			res.addAll(initialValue.getCodeRunningParts(target,isHighlighted));
+		}
+
+		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
+
+		return res;
+	}
+
 	@Override
 	public ReturnObject run() {
-		
+
+		LevelManager.getInstance().takeSnapshot(this);
+
 		if(initialValue==null)
-			LevelManager.getInstance().getCodeRunningManager().putBool(identifier, false);
-		else{
-			LevelManager.getInstance().getCodeRunningManager().takeSnapshot(initialValue);
-			LevelManager.getInstance().getCodeRunningManager().putBool(identifier, initialValue.run().getBoolValue());
-		}
+			LevelManager.getInstance().putBooleanValueToIdentifier(identifier, false);
+		else
+			LevelManager.getInstance().putBooleanValueToIdentifier(identifier, initialValue.run().getBoolValue());
+
 		return new ReturnObject();
 	}
 

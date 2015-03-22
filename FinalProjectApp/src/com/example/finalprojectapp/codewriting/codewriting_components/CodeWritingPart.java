@@ -1,11 +1,11 @@
-package com.example.finalprojectapp.codewriting.codeline;
+package com.example.finalprojectapp.codewriting.codewriting_components;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.node.Setter;
 
-public class CodePart {
+public class CodeWritingPart {
 
 	private boolean tab = false;
 	private boolean newline = false;
@@ -13,7 +13,7 @@ public class CodePart {
 	private String text = null;
 	private Setter setter = null;
 
-	public CodePart(boolean tab , boolean newline , String text , Setter setter) {
+	public CodeWritingPart(boolean tab , boolean newline , String text , Setter setter) {
 		this.tab = tab;
 		this.newline = newline;
 		this.text = text;
@@ -36,17 +36,17 @@ public class CodePart {
 		return setter;
 	}
 	
-	public static List<CodePart> tabber(List<CodePart> codeParts){
+	public static List<CodeWritingPart> tabber(List<CodeWritingPart> codeParts){
 				
-		List<CodePart> tabbedCodeParts = new ArrayList<CodePart>();
+		List<CodeWritingPart> tabbedCodeParts = new ArrayList<CodeWritingPart>();
 		
-		tabbedCodeParts.add(0,  new CodePart(true, false, null, null));
+		tabbedCodeParts.add(0,  new CodeWritingPart(true, false, null, null));
 
 		for (int i = 0; i < codeParts.size(); i++) {
 			tabbedCodeParts.add(codeParts.get(i));
 			
 			if(codeParts.get(i).isNewline())
-				tabbedCodeParts.add(new CodePart(true, false, null, null));
+				tabbedCodeParts.add(new CodeWritingPart(true, false, null, null));
 		}
 		
 		return tabbedCodeParts;

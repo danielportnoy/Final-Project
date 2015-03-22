@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.LevelManager;
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 
@@ -17,18 +18,30 @@ public class BoolIdentifier extends Node{
 	}
 
 	@Override
-	public List<CodePart> getCodeParts() {
+	public List<CodeWritingPart> getCodeWritingParts() {
 		
-		List<CodePart> res = new ArrayList<CodePart>();
+		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodePart(false, false, name, null));
+		res.add(new CodeWritingPart(false, false, name, null));
 
 		return res;
 	}
 	
 	@Override
+	public List<CodeRunningPart> getCodeRunningParts(Node target,boolean isHighlighted) {
+		
+		isHighlighted = target.equals(this) || isHighlighted;
+		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+		res.add(new CodeRunningPart(false, false,isHighlighted, name));
+
+		return res;
+	}
+
+	@Override
 	public ReturnObject run() {	
-		return new ReturnObject(LevelManager.getInstance().getCodeRunningManager().getBool(name));
+		LevelManager.getInstance().takeSnapshot(this);
+		return new ReturnObject(LevelManager.getInstance().getBooleanValueFromIdentifier(name));
 	}
 
 }

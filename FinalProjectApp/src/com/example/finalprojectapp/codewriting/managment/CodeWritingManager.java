@@ -12,6 +12,14 @@ public class CodeWritingManager {
 		this.graphics = graphics;	
 	}
 
+	public CodeWritingLogicUnit getLogics() {
+		return logics;
+	}
+
+	public CodeWritingGraphicUnit getGraphics() {
+		return graphics;
+	}
+
 	public void SetterClick(Setter setter) {
 
 		logics.loadOptionsForSetter(setter);
@@ -22,9 +30,9 @@ public class CodeWritingManager {
 
 	public void refresh(){
 		logics.getCurrentOptions().clear();
-		logics.updateCodeLines();
+		logics.updateCodeWritingLines();
 
 		graphics.updateOptions();
-		graphics.updateCodeLines();
+		graphics.updateCodeWritingLines();
 	}
 }

@@ -17,6 +17,8 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 
 	private SharedPreferences.Editor editor;
 	private SharedPreferences settings;
+	
+	private LevelManager levelManager = LevelManager.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +47,8 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 			editor.putInt(Constants.LEVEL_NUMBER_EXTRA, 1);
 			editor.commit();
 			
-			LevelManager.getInstance().reset();
-			LevelManager.getInstance().loadScenario(new Level1());
+			levelManager.reset();
+			levelManager.loadScenario(new Level1());
 			
 			break;
 		case R.id.buttonLEVEL2:

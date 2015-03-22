@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.LevelManager;
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
@@ -17,31 +18,31 @@ public class IfThenNode extends Node{
 	private Node thenBody;
 
 	@Override
-	public List<CodePart> getCodeParts() {
+	public List<CodeWritingPart> getCodeWritingParts() {
 
-		List<CodePart> res = new ArrayList<CodePart>();
+		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodePart(false, false, "if (", null));
+		res.add(new CodeWritingPart(false, false, "if (", null));
 
 		if(condition == null)
-			res.add(new CodePart(false, false, null, new ConditionSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this)));
 		else
-			res.addAll(condition.getCodeParts());
+			res.addAll(condition.getCodeWritingParts());
 
-		res.add(new CodePart(false, false, ")", null));
+		res.add(new CodeWritingPart(false, false, ")", null));
 
 		if(thenBody == null){
-			res.add(new CodePart(false, true, null, null));
-			res.add(new CodePart(true, false, null, null));
+			res.add(new CodeWritingPart(false, true, null, null));
+			res.add(new CodeWritingPart(true, false, null, null));
 
-			res.add(new CodePart(false, false, null, new ThenBodySetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new ThenBodySetter(this)));
 		}
 		else{
 			if(thenBody instanceof BlockNode)	//TODO
-				res.addAll(thenBody.getCodeParts());
+				res.addAll(thenBody.getCodeWritingParts());
 			else{
-				res.add(new CodePart(false, true, null, null));
-				res.addAll(CodePart.tabber(thenBody.getCodeParts()));
+				res.add(new CodeWritingPart(false, true, null, null));
+				res.addAll(CodeWritingPart.tabber(thenBody.getCodeWritingParts()));
 			}
 
 		}
@@ -49,16 +50,35 @@ public class IfThenNode extends Node{
 		return res;
 
 	}
-	
+
+	@Override
+	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
+		
+		isHighlighted = target.equals(this) || isHighlighted;
+		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+		res.add(new CodeRunningPart(false, false,isHighlighted, "if ("));
+		res.addAll(condition.getCodeRunningParts(target,isHighlighted));
+		res.add(new CodeRunningPart(false, false,isHighlighted, ")"));
+
+		if(thenBody instanceof BlockNode)	//TODO
+			res.addAll(thenBody.getCodeRunningParts(target,isHighlighted));
+		else{
+			res.add(new CodeRunningPart(false, true, isHighlighted, null));
+			res.addAll(CodeRunningPart.tabber(thenBody.getCodeRunningParts(target,isHighlighted)));
+		}
+
+		return res;
+	}
+
 	@Override
 	public ReturnObject run() {
 
-		LevelManager.getInstance().getCodeRunningManager().takeSnapshot(condition);
+		LevelManager.getInstance().takeSnapshot(this);
 
-		if(condition.run().getBoolValue()){
-			LevelManager.getInstance().getCodeRunningManager().takeSnapshot(thenBody);
+		if(condition.run().getBoolValue())
 			thenBody.run();
-		}
+		
 		return new ReturnObject();
 	}
 

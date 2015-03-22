@@ -2,7 +2,8 @@ package com.example.finalprojectapp.node;
 
 import java.util.List;
 
-import com.example.finalprojectapp.codewriting.codeline.CodePart;
+import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 
 public abstract class Node {
 
@@ -39,7 +40,9 @@ public abstract class Node {
 		this.scope = scope;
 	}
 
-	public abstract List<CodePart> getCodeParts();
+	public abstract List<CodeWritingPart> getCodeWritingParts();
+	public abstract List<CodeRunningPart> getCodeRunningParts(Node target , boolean isHighlighted);
+
 	
 	public abstract ReturnObject run();
 

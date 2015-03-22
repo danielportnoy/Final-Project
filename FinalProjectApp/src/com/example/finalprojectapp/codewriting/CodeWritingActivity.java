@@ -3,7 +3,7 @@ package com.example.finalprojectapp.codewriting;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.codewriting.adapter.OptionsAdapter;
-import com.example.finalprojectapp.codewriting.adapter.CodeLinesAdapter;
+import com.example.finalprojectapp.codewriting.adapter.CodeWritingLinesAdapter;
 import com.example.finalprojectapp.codewriting.managment.CodeWritingGraphicUnit;
 import com.example.finalprojectapp.codewriting.managment.CodeWritingLogicUnit;
 import com.example.finalprojectapp.codewriting.managment.CodeWritingManager;
@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.widget.ListView;
 
 public class CodeWritingActivity extends Activity {
+	
+	private LevelManager levelManager = LevelManager.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +24,8 @@ public class CodeWritingActivity extends Activity {
 
 		CodeWritingLogicUnit logics = new CodeWritingLogicUnit();
 
-		ListView codeLines = (ListView)findViewById(R.id.listView_Code);
-		CodeLinesAdapter codeLinesAdapter = new CodeLinesAdapter(this, android.R.layout.simple_list_item_1, logics.getCodeLines());
+		ListView codeLines = (ListView)findViewById(R.id.listView_Writing_Code);
+		CodeWritingLinesAdapter codeLinesAdapter = new CodeWritingLinesAdapter(this, android.R.layout.simple_list_item_1, logics.getWritingCodeLines());
 		codeLines.setAdapter(codeLinesAdapter);	
 
 		ListView options = (ListView)findViewById(R.id.listView_Options);
@@ -34,7 +36,7 @@ public class CodeWritingActivity extends Activity {
 
 		CodeWritingManager manager = new CodeWritingManager(logics, graphics);
 
-		LevelManager.getInstance().registerCodeWritingManager(manager);
+		levelManager.registerCodeWritingManager(manager);
 
 		manager.refresh();
 	}

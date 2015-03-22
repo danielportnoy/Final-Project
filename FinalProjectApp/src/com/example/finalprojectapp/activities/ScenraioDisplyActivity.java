@@ -1,6 +1,6 @@
 package com.example.finalprojectapp.activities;
 
-import com.example.finalprojectapp.Constants;
+import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.coderunning.CodeRunningActivity;
 import com.example.finalprojectapp.codewriting.CodeWritingActivity;
@@ -11,24 +11,29 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class ScenraioDisplyActivity extends Activity implements OnClickListener {
 
+	/*
 	private int levelNumber;
-
 	private TextView levelTextView = null;
+	 */
+	private LevelManager levelManager = LevelManager.getInstance();
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scenario_disply);
 
+		/*
 		levelNumber = getIntent().getIntExtra(Constants.LEVEL_NUMBER_EXTRA, 1);
 
 		levelTextView = (TextView)findViewById(R.id.TextView_LevelNumber);
 		levelTextView.setText(levelNumber+"");
+		 */
 
 	}
 
@@ -40,6 +45,18 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+
+		Button b = (Button) findViewById(R.id.buttonRun);
+
+		if(!levelManager.isCodeLinesValid())
+			b.setEnabled(false);
+		else
+			b.setEnabled(true);
+	}
+
+	@Override
 	public void onClick(View v) {
 
 		Intent intent = null;
@@ -47,18 +64,19 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 		switch (v.getId()) {
 
 		case R.id.buttonRun:
-			//Toast.makeText(this, "run", Toast.LENGTH_SHORT).show();
 			intent = new Intent(this, CodeRunningActivity.class);
 			startActivity(intent);
 			break;
+
 		case R.id.buttonCode:
-			//Toast.makeText(this, "code", Toast.LENGTH_SHORT).show();
 			intent = new Intent(this, CodeWritingActivity.class);
 			startActivity(intent);
 			break;
+
 		case R.id.buttonReset:
 			Toast.makeText(this, "reset", Toast.LENGTH_SHORT).show();
 			break;
+
 		default:
 			break;
 		}

@@ -40,7 +40,8 @@
         </activity>
         <activity
             android:name="com.example.finalprojectapp.coderunning.CodeRunningActivity"
-            android:label="@string/title_activity_code_running" >
+            android:label="@string/title_activity_code_running"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
 
