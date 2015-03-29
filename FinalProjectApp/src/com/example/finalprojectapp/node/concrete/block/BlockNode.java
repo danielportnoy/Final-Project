@@ -16,6 +16,7 @@ public class BlockNode extends Node {
 
 	public BlockNode() {
 		innerNodes = new ArrayList<Node>();
+		setType(Type.Statement);
 	}
 
 	@Override

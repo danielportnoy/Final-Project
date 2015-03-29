@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.node.concrete.operators.arithmetic;
+package com.example.finalprojectapp.node.concrete.operators.relational;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +11,16 @@ import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
-public class PlusNode extends Node{
+public class EqualsNode extends Node {
 
 	private Node left;
+	private Type left_type;
+
 	private Node right;
+	private Type right_type;
 	
-	public PlusNode() {
-		setType(Type.Int);
+	public EqualsNode() {
+		setType(Type.Bool);
 	}
 
 	@Override
@@ -27,10 +30,10 @@ public class PlusNode extends Node{
 
 		if(left == null)
 			res.add(new CodeWritingPart(false, false, null, new LeftSetter(this)));
-		else
+		else			
 			res.addAll(left.getCodeWritingParts());
 
-		res.add(new CodeWritingPart(false, false, "+", null));
+		res.add(new CodeWritingPart(false, false, "==", null));
 
 		if(right == null)
 			res.add(new CodeWritingPart(false, false, null, new RightSetter(this)));
@@ -41,33 +44,39 @@ public class PlusNode extends Node{
 	}
 
 	@Override
-	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
-		
+	public List<CodeRunningPart> getCodeRunningParts(Node target,boolean isHighlighted) {
+
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
 		res.addAll(left.getCodeRunningParts(target,isHighlighted));
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, "+"));
+		res.add(new CodeRunningPart(false, false,isHighlighted, "=="));
 
 		res.addAll(right.getCodeRunningParts(target,isHighlighted));
 
 		return res;
 	}
 
-
 	@Override
 	public ReturnObject run() {
+
 		LevelManager.getInstance().takeSnapshot(this);
-		return new ReturnObject(left.run().getIntValue() + right.run().getIntValue());
+
+		if(left_type == Type.Bool && right_type == Type.Bool)
+			return new ReturnObject(left.run().getBoolValue() == right.run().getBoolValue());
+		else if(left_type == Type.Int && right_type == Type.Int)
+			return new ReturnObject(left.run().getIntValue() == right.run().getIntValue());
+		
+		return new ReturnObject();	// TODO
 	}
 
 	class LeftSetter extends Setter{
 
 		final static int order = 0;
 
-		public LeftSetter(Node parent) {
-			super("< int expr >", true, parent, order);	// TODO	
+		public LeftSetter(Node parent) {	// TODO	
+			super("< expr >", true, parent, order);	
 		}
 
 		@Override
@@ -75,24 +84,31 @@ public class PlusNode extends Node{
 			left = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
+			
+			left_type = toSet.getType();
 		}
 
 		@Override
 		public List<Type> possibleTypes() {
 			List<Type> possibilities = new ArrayList<Type>();
-			possibilities.add(Type.Int);
+
+			if(right_type == null){
+				possibilities.add(Type.Bool);
+				possibilities.add(Type.Int);
+			}
+			else
+				possibilities.add(right_type);
 
 			return possibilities;
 		}
 	}
-
+	
 	class RightSetter extends Setter{
 
 		final static int order = 0;
 
-		public RightSetter(Node parent) {
-			super("< int expr >", true, parent, order);	// TODO
-
+		public RightSetter(Node parent) {	// TODO	
+			super("< expr >", true, parent, order);	
 		}
 
 		@Override
@@ -100,12 +116,20 @@ public class PlusNode extends Node{
 			right = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
+			
+			right_type = toSet.getType();
 		}
 
 		@Override
 		public List<Type> possibleTypes() {
 			List<Type> possibilities = new ArrayList<Type>();
-			possibilities.add(Type.Int);
+
+			if(left_type == null){
+				possibilities.add(Type.Bool);
+				possibilities.add(Type.Int);
+			}
+			else
+				possibilities.add(left_type);
 
 			return possibilities;
 		}

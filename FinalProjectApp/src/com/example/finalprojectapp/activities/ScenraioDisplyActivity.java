@@ -4,6 +4,7 @@ import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.coderunning.CodeRunningActivity;
 import com.example.finalprojectapp.codewriting.CodeWritingActivity;
+import com.example.finalprojectapp.scenario.MySurfaceView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,29 +13,24 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 public class ScenraioDisplyActivity extends Activity implements OnClickListener {
 
-	/*
-	private int levelNumber;
-	private TextView levelTextView = null;
-	 */
-	private LevelManager levelManager = LevelManager.getInstance();
-
-
+	private MySurfaceView gameView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scenario_disply);
+		
+		gameView = LevelManager.getInstance().getScenario().generateGameView(this);
+		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		/*
-		levelNumber = getIntent().getIntExtra(Constants.LEVEL_NUMBER_EXTRA, 1);
-
-		levelTextView = (TextView)findViewById(R.id.TextView_LevelNumber);
-		levelTextView.setText(levelNumber+"");
-		 */
-
+		LinearLayout gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_GameScreen);
+		gameViewLayout.addView(gameView);
 	}
 
 	@Override
@@ -50,10 +46,12 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 
 		Button b = (Button) findViewById(R.id.buttonRun);
 
-		if(!levelManager.isCodeLinesValid())
+		if(!LevelManager.getInstance().isCodeLinesValid())
 			b.setEnabled(false);
 		else
 			b.setEnabled(true);
+		
+		gameView.reset();
 	}
 
 	@Override

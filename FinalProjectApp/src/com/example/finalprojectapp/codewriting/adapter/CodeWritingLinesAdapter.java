@@ -94,7 +94,9 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 	private void handleSetter(LinearLayout codeLineLinearLayout,final Setter setter) {
 		Button button = new Button(context);
 
-		Android_Utils.setLayoutParams(button , context);
+		//Android_Utils.setLayoutParams(button , context);	// TODO
+
+		Android_Utils.setSetterLayoutParams(button , context);
 
 		/*
 		android:text="Button"

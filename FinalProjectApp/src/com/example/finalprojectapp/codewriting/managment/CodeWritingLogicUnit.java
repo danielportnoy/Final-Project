@@ -18,8 +18,6 @@ public class CodeWritingLogicUnit {
 	private List<CodeWritingLine> codeWritingLines;
 	private List<Option> currentOptions;
 
-	private LevelManager levelManager = LevelManager.getInstance();
-
 	public CodeWritingLogicUnit() {
 		codeWritingLines = new ArrayList<CodeWritingLine>();
 		currentOptions = new ArrayList<Option>();
@@ -39,7 +37,7 @@ public class CodeWritingLogicUnit {
 
 		CodeWritingLine temp = new CodeWritingLine();
 
-		for (CodeWritingPart codePart : levelManager.getRootNode().getCodeWritingParts()) {
+		for (CodeWritingPart codePart : LevelManager.getInstance().getRootNode().getCodeWritingParts()) {
 			if(!codePart.isNewline())
 				temp.getCodeWritingParts().add(codePart);
 			else{
@@ -61,7 +59,7 @@ public class CodeWritingLogicUnit {
 
 	private void loadStaticOptions(Setter setter) {
 
-		for (Option option : levelManager.getScenario().getAvailableOptions()) {
+		for (Option option : LevelManager.getInstance().getScenario().getAvailableOptions()) {
 			for (Type type : setter.possibleTypes()) {
 				if(option.isType(type))
 					currentOptions.add(option);
@@ -86,7 +84,7 @@ public class CodeWritingLogicUnit {
 	}
 
 	/*public boolean isCodeLinesValid() {
-		for (CodeWritingPart codePart : levelManager.getRootNode().getCodeWritingParts())
+		for (CodeWritingPart codePart : LevelManager.getInstance().getRootNode().getCodeWritingParts())
 			if(codePart.getSetter()!=null && codePart.getSetter().isMandatory())
 				return false;
 

@@ -17,8 +17,6 @@ public class CodeRunningLogicUnit {
 
 	private List<CodeRunningLine> codeRunningLines;
 
-	private LevelManager levelManager = LevelManager.getInstance();
-
 	public CodeRunningLogicUnit() {
 		values = new VarValues();
 		snapshots = new ArrayList<Snapshot>();
@@ -27,7 +25,7 @@ public class CodeRunningLogicUnit {
 	}
 
 	public void takeSnapshot(Node n){
-		snapshots.add(new Snapshot(n,values, levelManager.getScenario().takeSnapshot()));
+		snapshots.add(new Snapshot(n,values, LevelManager.getInstance().getScenario().takeSnapshot()));
 	}
 
 	public void putInt(String id, int value){
@@ -58,7 +56,7 @@ public class CodeRunningLogicUnit {
 
 		CodeRunningLine temp = new CodeRunningLine();
 
-		for (CodeRunningPart codePart : levelManager.getRootNode().getCodeRunningParts(target,false)) {
+		for (CodeRunningPart codePart : LevelManager.getInstance().getRootNode().getCodeRunningParts(target,false)) {
 			if(!codePart.isNewline())
 				temp.getCodeRunningParts().add(codePart);
 			else{

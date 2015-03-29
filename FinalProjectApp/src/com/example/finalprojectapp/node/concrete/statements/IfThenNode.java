@@ -16,6 +16,10 @@ public class IfThenNode extends Node{
 
 	private Node condition;
 	private Node thenBody;
+	
+	public IfThenNode() {
+		setType(Type.Statement);
+	}
 
 	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {

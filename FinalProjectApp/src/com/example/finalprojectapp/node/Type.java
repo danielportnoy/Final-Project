@@ -6,6 +6,8 @@ public enum Type {
 	Int,
 	Bool,
 	
+	ForInit, ForUpdate,
+	
 	;
 
 }

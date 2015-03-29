@@ -15,7 +15,7 @@
             android:id="@+id/LinearLayout_Running_Screen"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.89"
+            android:layout_weight="0.85"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -55,22 +55,47 @@
             android:id="@+id/LinearLayout_Running_Watch"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.11"
+            android:layout_weight="0.15"
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/button_prevSnapshot"
-                android:layout_width="wrap_content"
+                android:id="@+id/button_startSnapshot"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:onClick="onClick"
-                android:text="&lt;" />
+                android:text="@string/toBeginning" />
+
+            <Button
+                android:id="@+id/button_prevSnapshot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="@string/previous" />
+
+            <Button
+                android:id="@+id/button_PlayPause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClick" />
 
             <Button
                 android:id="@+id/button_nextSnapshot"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:onClick="onClick"
-                android:text=">" />
+                android:text="@string/next" />
+
+            <Button
+                android:id="@+id/button_endSnapshot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:text="@string/toEnd" />
         </LinearLayout>
     </LinearLayout>
 

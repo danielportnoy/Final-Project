@@ -58,6 +58,14 @@ public class LevelManager {
 	public InitialBlockNode getRootNode() {
 		return rootNode;
 	}
+	
+	public CodeRunningManager getCodeRunningManager() {
+		return codeRunningManager;
+	}
+	
+	public CodeWritingManager getCodeWritingManager() {
+		return codeWritingManager;
+	}
 	/******************* GET *******************/
 
 	/******************* Utility *******************/
@@ -99,8 +107,8 @@ public class LevelManager {
 		codeWritingManager.refresh();
 	}
 
-	public void refrashRunningScreen(int snapshotNum, DrawGameView drawGameView){
-		codeRunningManager.refresh(snapshotNum, drawGameView);
+	public void refrashRunningScreen(int snapshotNum){
+		codeRunningManager.refresh(snapshotNum);
 	}
 
 	/********** refresh utilities **********/

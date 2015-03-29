@@ -18,6 +18,7 @@ public class BoolVarDecNode extends Node {
 
 	public BoolVarDecNode(String identifier) {
 		this.identifier = identifier;
+		setType(Type.Statement);
 	}
 
 	@Override
@@ -28,8 +29,8 @@ public class BoolVarDecNode extends Node {
 		res.add(new CodeWritingPart(false, false, "boolean "+ identifier, null));
 
 		if(initialValue == null){
-			res.add(new CodeWritingPart(false, false, ";", null));
 			res.add(new CodeWritingPart(false, false, null, new InitialValueSetter(this)));
+			res.add(new CodeWritingPart(false, false, ";", null));
 		}
 		else{
 			res.add(new CodeWritingPart(false, false, "=", null));
@@ -63,7 +64,7 @@ public class BoolVarDecNode extends Node {
 
 		LevelManager.getInstance().takeSnapshot(this);
 
-		if(initialValue==null)
+		if(initialValue == null)
 			LevelManager.getInstance().putBooleanValueToIdentifier(identifier, false);
 		else
 			LevelManager.getInstance().putBooleanValueToIdentifier(identifier, initialValue.run().getBoolValue());

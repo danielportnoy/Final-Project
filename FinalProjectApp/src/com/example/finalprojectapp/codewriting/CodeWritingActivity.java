@@ -15,8 +15,6 @@ import android.widget.ListView;
 
 public class CodeWritingActivity extends Activity {
 	
-	private LevelManager levelManager = LevelManager.getInstance();
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,11 +34,10 @@ public class CodeWritingActivity extends Activity {
 
 		CodeWritingManager manager = new CodeWritingManager(logics, graphics);
 
-		levelManager.registerCodeWritingManager(manager);
-
+		LevelManager.getInstance().registerCodeWritingManager(manager);
+		
 		manager.refresh();
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -3,10 +3,12 @@ package com.example.finalprojectapp.node.concrete.literal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
+import com.example.finalprojectapp.node.Type;
 
 public class IntLiteralNode extends Node {
 
@@ -14,6 +16,7 @@ public class IntLiteralNode extends Node {
 
 	public IntLiteralNode(int value) {
 		this.value = value;
+		setType(Type.Int);
 	}
 
 	@Override
@@ -39,7 +42,8 @@ public class IntLiteralNode extends Node {
 
 	
 	@Override
-	public ReturnObject run() {	
+	public ReturnObject run() {
+		LevelManager.getInstance().takeSnapshot(this);
 		return new ReturnObject(value);
 	}
 

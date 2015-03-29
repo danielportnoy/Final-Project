@@ -19,6 +19,10 @@ public class ForNode extends Node{			// TODO
 	private Node update;
 	private Node body;
 
+	public ForNode() {
+		setType(Type.Statement);
+	}
+
 	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {
 
@@ -26,12 +30,12 @@ public class ForNode extends Node{			// TODO
 
 		res.add(new CodeWritingPart(false, false, "for (", null));
 
-		if(init == null)
+		if(init == null){
 			res.add(new CodeWritingPart(false, false, null, new InitSetter(this)));
+			res.add(new CodeWritingPart(false, false, ";", null));
+		}
 		else
 			res.addAll(init.getCodeWritingParts());
-
-		res.add(new CodeWritingPart(false, false, ";", null));
 
 		if(condition == null)
 			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this)));
@@ -70,7 +74,7 @@ public class ForNode extends Node{			// TODO
 
 	@Override
 	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
-		
+
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
@@ -103,12 +107,18 @@ public class ForNode extends Node{			// TODO
 	public ReturnObject run() {
 
 		LevelManager.getInstance().takeSnapshot(this);
-		
-		init.run();
 
-		while(condition.run().getBoolValue()){
-			body.run();
-			update.run();
+		if(init != null)
+			init.run();
+
+		if(condition!=null){
+			
+			while(condition.run().getBoolValue()){
+				body.run();
+
+				if(update != null)
+					update.run();
+			}
 		}
 
 		return new ReturnObject();
@@ -133,7 +143,7 @@ public class ForNode extends Node{			// TODO
 		public List<Type> possibleTypes() {
 
 			List<Type> possibilities = new ArrayList<Type>();
-			possibilities.add(Type.Statement);
+			possibilities.add(Type.ForInit);
 
 			return possibilities;
 		}
@@ -184,7 +194,7 @@ public class ForNode extends Node{			// TODO
 		public List<Type> possibleTypes() {
 
 			List<Type> possibilities = new ArrayList<Type>();
-			possibilities.add(Type.Statement);
+			possibilities.add(Type.ForUpdate);
 
 			return possibilities;
 		}

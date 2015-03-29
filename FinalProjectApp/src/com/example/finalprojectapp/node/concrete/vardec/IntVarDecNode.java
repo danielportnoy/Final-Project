@@ -18,6 +18,7 @@ public class IntVarDecNode extends Node {
 
 	public IntVarDecNode(String identifier) {
 		this.identifier = identifier;
+		setType(Type.Statement);
 	}
 
 	@Override
@@ -28,8 +29,8 @@ public class IntVarDecNode extends Node {
 		res.add(new CodeWritingPart(false, false, "int "+ identifier, null));
 
 		if(initialValue == null){
-			res.add(new CodeWritingPart(false, false, ";", null));
 			res.add(new CodeWritingPart(false, false, null, new InitialValueSetter(this)));
+			res.add(new CodeWritingPart(false, false, ";", null));
 		}
 		else{
 			res.add(new CodeWritingPart(false, false, "=", null));

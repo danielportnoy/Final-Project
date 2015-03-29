@@ -8,6 +8,7 @@ import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunnin
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
+import com.example.finalprojectapp.node.Type;
 
 public class IntIdentifier extends Node{
 	
@@ -15,6 +16,7 @@ public class IntIdentifier extends Node{
 	
 	public IntIdentifier(String name) {
 		this.name = name;
+		setType(Type.Int);
 	}
 
 	@Override

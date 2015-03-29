@@ -1,34 +1,32 @@
 package com.example.finalprojectapp.coderunning;
 
-import com.example.finalprojectapp.DrawGameView;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.coderunning.adapter.CodeRunningLinesAdapter;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningGraphicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningLogicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
+import com.example.finalprojectapp.scenario.MySurfaceView;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
 public class CodeRunningActivity extends Activity implements OnClickListener {
 
-	private int snapshotNum;
-	private CodeRunningManager manager;
-	private DrawGameView dgv;
-	
-	private LevelManager levelManager = LevelManager.getInstance();
+	private MySurfaceView gameView;
+	private CodePlayer player;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_code_running);	
+		setContentView(R.layout.activity_code_running);
 
 		CodeRunningLogicUnit logics = new CodeRunningLogicUnit();
 
@@ -36,23 +34,23 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 		CodeRunningLinesAdapter codeRunningLinesAdapter = new CodeRunningLinesAdapter(this, android.R.layout.simple_list_item_1, logics.getRunningCodeLines());
 		codeLines.setAdapter(codeRunningLinesAdapter);	
 
-		CodeRunningGraphicUnit graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter);
+		gameView = LevelManager.getInstance().getScenario().generateGameView(this);
+		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		manager = new CodeRunningManager(logics, graphics);
+		CodeRunningGraphicUnit graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter , gameView);
+		LevelManager.getInstance().registerCodeRunningManager(new CodeRunningManager(logics, graphics));
 
-		levelManager.registerCodeRunningManager(manager);
+		LinearLayout gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_Running_Game);
+		gameViewLayout.addView(gameView);
 
-		levelManager.getRootNode().run();
+		LevelManager.getInstance().getScenario().reset();
 
-		snapshotNum = 0;
+		LevelManager.getInstance().getRootNode().run();
 
-		LinearLayout l = (LinearLayout) findViewById(R.id.LinearLayout_Running_Game);
-		dgv = levelManager.getScenario().getDrawGameViewInstance(this, null);
-		dgv.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		l.addView(dgv);
-
-		manager.refresh(snapshotNum , dgv);
-
+		player = new CodePlayer(LevelManager.getInstance().getCodeRunningManager().getLogics().getSnapshots().size() , this);
+		player.display();
+		
+		((Button)findViewById(R.id.button_PlayPause)).setText("Play");
 	}
 
 	@Override
@@ -66,15 +64,24 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
+		case R.id.button_startSnapshot:
+			player.startSnapshot();
+			break;
 		case R.id.button_prevSnapshot:
-			if(snapshotNum > 0)
-				snapshotNum--;
-			manager.refresh(snapshotNum , dgv);
+			player.prevSnapshot();
+			break;
+		case R.id.button_PlayPause:
+			if(player.isPlaying())
+				((Button)findViewById(R.id.button_PlayPause)).setText("Play");
+			else
+				((Button)findViewById(R.id.button_PlayPause)).setText("Pause");
+			player.togglePlay();
 			break;
 		case R.id.button_nextSnapshot:
-			if(snapshotNum < manager.getLogics().getSnapshots().size() - 1)
-				snapshotNum++;
-			manager.refresh(snapshotNum , dgv);
+			player.nextSnapshot();
+			break;
+		case R.id.button_endSnapshot:
+			player.endSnapshot();
 			break;
 
 		default:

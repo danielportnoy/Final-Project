@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.codewriting.option.concrete.operation.arithmetic;
+package com.example.finalprojectapp.codewriting.option.concrete.literal;
 
 import android.content.Context;
 import android.view.View;
@@ -8,28 +8,27 @@ import android.widget.Button;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
-import com.example.finalprojectapp.node.concrete.operators.arithmetic.PlusNode;
+import com.example.finalprojectapp.node.concrete.literal.BoolLiteralNode;
 
-public class PlusOption extends Option{
+public class FalseOption extends Option{
 
 	@Override
 	public boolean isType(Type type) {
-		return type == Type.Int;
+		return type == Type.Bool;
 	}
 
 	@Override
-	public void setButton(Context context, Button optionButton, final Setter setter) {
-		
-		optionButton.setText("+");	//TODO
+	public void setButton(final Context context, Button optionButton, final Setter setter) {
+
+		optionButton.setText("False");
 
 		optionButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				setter.setChildNode(new PlusNode());
+				setter.setChildNode(new BoolLiteralNode(false));
 				refresh();
 			}
 		});
 	}
-
 }

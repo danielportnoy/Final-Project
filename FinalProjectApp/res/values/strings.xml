@@ -19,5 +19,10 @@
     <string name="positive">positive</string>
     <string name="negative">negative</string>
     <string name="title_activity_code_running">CodeRunningActivity</string>
+    <string name="toBeginning">|&lt;</string>
+    <string name="previous">&lt;</string>
+    <string name="next">></string>
+    <string name="toEnd">>|</string>
+    <string name="enter_text_here">Enter Text Here</string>
 
 </resources>

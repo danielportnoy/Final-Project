@@ -9,6 +9,7 @@ public abstract class Node {
 
 	private Node parent;
 	private int order;
+	private Type type;
 	
 	private Scope scope;
 
@@ -30,6 +31,14 @@ public abstract class Node {
 
 	public void setOrder(int oredr) {
 		this.order = oredr;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 	public Scope getScope() {

@@ -96,7 +96,7 @@ public class LiteralOption extends Option{
 
 					builder.setTitle("Select The Integer Literal");
 					LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-					View view = inflater.inflate(R.layout.int_literal_dialog, null);
+					View view = inflater.inflate(R.layout.pick_number_dialog, null);
 
 					final NumberPicker numberPicker = (NumberPicker)view.findViewById(R.id.numberPicker_intLiteral);
 					numberPicker.setMinValue(0);

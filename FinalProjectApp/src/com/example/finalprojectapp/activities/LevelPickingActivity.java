@@ -1,6 +1,5 @@
 package com.example.finalprojectapp.activities;
 
-import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.scenario.concrete.Level1;
@@ -8,16 +7,16 @@ import com.example.finalprojectapp.scenario.concrete.Level1;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class LevelPickingActivity extends Activity implements OnClickListener{
 
-	private SharedPreferences.Editor editor;
-	private SharedPreferences settings;
-	
+	/*private SharedPreferences.Editor editor;
+	private SharedPreferences settings;*/
+
 	private LevelManager levelManager = LevelManager.getInstance();
 
 	@Override
@@ -25,8 +24,12 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_level_picking);
 
-		settings = 	getSharedPreferences(Constants.SHARED_PREFERANCES, MODE_PRIVATE);
-		editor = settings.edit();
+		/*settings = 	getSharedPreferences(Constants.SHARED_PREFERANCES, MODE_PRIVATE);
+		editor = settings.edit();*/
+		
+		// TODO temporary
+		((Button)findViewById(R.id.buttonLEVEL2)).setEnabled(false);
+		((Button)findViewById(R.id.buttonLEVEL3)).setEnabled(false);
 	}
 
 	@Override
@@ -43,23 +46,29 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 
 		switch (v.getId()) {
 		case R.id.buttonLEVEL1:
-			intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 1);
+			/*intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 1);
 			editor.putInt(Constants.LEVEL_NUMBER_EXTRA, 1);
-			editor.commit();
-			
+			editor.commit();*/
+
 			levelManager.reset();
 			levelManager.loadScenario(new Level1());
-			
+
 			break;
 		case R.id.buttonLEVEL2:
-			intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 2);
+			/*intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 2);
 			editor.putInt(Constants.LEVEL_NUMBER_EXTRA, 2);
-			editor.commit();
+			editor.commit();*/
+
+			levelManager.reset();
+
 			break;
 		case R.id.buttonLEVEL3:
-			intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 3);
+			/*intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 3);
 			editor.putInt(Constants.LEVEL_NUMBER_EXTRA, 3);
-			editor.commit();
+			editor.commit();*/
+
+			levelManager.reset();
+
 			break;
 
 		default:

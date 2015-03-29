@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/LinearLayout_CodeItem"
+    <EditText
+        android:id="@+id/editText_Identifier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        android:padding="1dp" >
-    </LinearLayout>
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:hint="@string/enter_text_here" >
+    </EditText>
 
 </RelativeLayout>

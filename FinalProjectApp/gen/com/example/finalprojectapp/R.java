@@ -36,42 +36,45 @@ public final class R {
         public static final int not_mandatory_button=0x7f02000c;
     }
     public static final class id {
-        public static final int LinearLayout_CodeItem=0x7f08001d;
-        public static final int LinearLayout_ControlButton=0x7f080019;
-        public static final int LinearLayout_GameScreen=0x7f080017;
-        public static final int LinearLayout_Options=0x7f08000c;
+        public static final int LinearLayout_CodeItem=0x7f08001f;
+        public static final int LinearLayout_ControlButton=0x7f08001b;
+        public static final int LinearLayout_GameScreen=0x7f08001a;
+        public static final int LinearLayout_Options=0x7f08000f;
         public static final int LinearLayout_Running=0x7f080000;
         public static final int LinearLayout_Running2=0x7f080002;
         public static final int LinearLayout_Running_Code=0x7f080003;
         public static final int LinearLayout_Running_Game=0x7f080005;
         public static final int LinearLayout_Running_Screen=0x7f080001;
         public static final int LinearLayout_Running_Watch=0x7f080006;
-        public static final int LinearLayout_Screen=0x7f080016;
-        public static final int LinearLayout_Writing=0x7f080009;
-        public static final int LinearLayout_Writing_Code=0x7f08000a;
-        public static final int TextView_LevelNumber=0x7f080018;
-        public static final int action_settings=0x7f080023;
-        public static final int buttonCode=0x7f08001b;
-        public static final int buttonEXIT=0x7f080015;
-        public static final int buttonLEVEL1=0x7f08000f;
-        public static final int buttonLEVEL2=0x7f080010;
-        public static final int buttonLEVEL3=0x7f080011;
-        public static final int buttonOPTIONS=0x7f080014;
-        public static final int buttonPLAY=0x7f080013;
-        public static final int buttonReset=0x7f08001c;
-        public static final int buttonRun=0x7f08001a;
-        public static final int button_nextSnapshot=0x7f080008;
-        public static final int button_option=0x7f080022;
-        public static final int button_prevSnapshot=0x7f080007;
-        public static final int linearLayout_levelButtons=0x7f08000e;
-        public static final int linearLayout_menuButtons=0x7f080012;
-        public static final int listView_Options=0x7f08000d;
+        public static final int LinearLayout_Screen=0x7f080019;
+        public static final int LinearLayout_Writing=0x7f08000c;
+        public static final int LinearLayout_Writing_Code=0x7f08000d;
+        public static final int action_settings=0x7f080026;
+        public static final int buttonCode=0x7f08001d;
+        public static final int buttonEXIT=0x7f080018;
+        public static final int buttonLEVEL1=0x7f080012;
+        public static final int buttonLEVEL2=0x7f080013;
+        public static final int buttonLEVEL3=0x7f080014;
+        public static final int buttonOPTIONS=0x7f080017;
+        public static final int buttonPLAY=0x7f080016;
+        public static final int buttonReset=0x7f08001e;
+        public static final int buttonRun=0x7f08001c;
+        public static final int button_PlayPause=0x7f080009;
+        public static final int button_endSnapshot=0x7f08000b;
+        public static final int button_nextSnapshot=0x7f08000a;
+        public static final int button_option=0x7f080020;
+        public static final int button_prevSnapshot=0x7f080008;
+        public static final int button_startSnapshot=0x7f080007;
+        public static final int editText_Identifier=0x7f080021;
+        public static final int linearLayout_levelButtons=0x7f080011;
+        public static final int linearLayout_menuButtons=0x7f080015;
+        public static final int listView_Options=0x7f080010;
         public static final int listView_Running_Code=0x7f080004;
-        public static final int listView_Writing_Code=0x7f08000b;
-        public static final int numberPicker_intLiteral=0x7f08001e;
-        public static final int radioButton_negative=0x7f080021;
-        public static final int radioButton_positive=0x7f080020;
-        public static final int radioGroup_positive_negative=0x7f08001f;
+        public static final int listView_Writing_Code=0x7f08000e;
+        public static final int numberPicker_intLiteral=0x7f080022;
+        public static final int radioButton_negative=0x7f080025;
+        public static final int radioButton_positive=0x7f080024;
+        public static final int radioGroup_positive_negative=0x7f080023;
     }
     public static final class layout {
         public static final int activity_code_running=0x7f030000;
@@ -80,8 +83,9 @@ public final class R {
         public static final int activity_main_manu=0x7f030003;
         public static final int activity_scenario_disply=0x7f030004;
         public static final int code_item=0x7f030005;
-        public static final int int_literal_dialog=0x7f030006;
-        public static final int option_item=0x7f030007;
+        public static final int option_item=0x7f030006;
+        public static final int pick_identifier_dialog=0x7f030007;
+        public static final int pick_number_dialog=0x7f030008;
     }
     public static final class menu {
         public static final int code_screen=0x7f070000;
@@ -94,21 +98,26 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int code=0x7f05000c;
+        public static final int enter_text_here=0x7f050016;
         public static final int exit=0x7f050005;
         public static final int hello_world=0x7f050002;
         public static final int level_1=0x7f050007;
         public static final int level_2=0x7f050008;
         public static final int level_3=0x7f050009;
         public static final int negative=0x7f050010;
+        public static final int next=0x7f050014;
         public static final int options=0x7f050003;
         public static final int play=0x7f050004;
         public static final int positive=0x7f05000f;
+        public static final int previous=0x7f050013;
         public static final int reset=0x7f05000d;
         public static final int run=0x7f05000b;
         public static final int title_activity_code_running=0x7f050011;
         public static final int title_activity_code_writing=0x7f05000e;
         public static final int title_activity_game_screen=0x7f05000a;
         public static final int title_activity_level_picking=0x7f050006;
+        public static final int toBeginning=0x7f050012;
+        public static final int toEnd=0x7f050015;
     }
     public static final class style {
         /** 

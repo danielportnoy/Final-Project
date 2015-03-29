@@ -80,4 +80,15 @@ public class Scope {
 
 		return identifiers;
 	}
+	
+	public static Type getTypeByIdentifier(Node n, int order, String identifier){
+		
+		if(getBooleanIdentifiersRecursive(n, order).contains(identifier))
+			return Type.Bool;
+		else if(getIntegerIdentifiersRecursive(n, order).contains(identifier))
+			return Type.Int;
+		
+		return null;	// TODO
+
+	}
 }
