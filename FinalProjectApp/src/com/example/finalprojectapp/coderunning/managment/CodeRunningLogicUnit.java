@@ -67,4 +67,12 @@ public class CodeRunningLogicUnit {
 
 		codeRunningLines.add(temp);
 	}
+	
+	public boolean checkWin(int gameSnapShotNum){
+		return snapshots.get(gameSnapShotNum).gameSnapshot.checkWin();
+	}
+	
+	public boolean checkLoss(int gameSnapShotNum){
+		return snapshots.get(gameSnapShotNum).gameSnapshot.checkLoss();
+	}
 }

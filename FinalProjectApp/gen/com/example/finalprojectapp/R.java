@@ -9,6 +9,22 @@ package com.example.finalprojectapp;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int interval=0x7f010000;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int min=0x7f010001;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -17,64 +33,65 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int background_board=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int level1_background=0x7f020002;
-        public static final int level1_hero_1=0x7f020003;
-        public static final int level1_hero_2=0x7f020004;
-        public static final int level1_hero_3=0x7f020005;
-        public static final int level1_hero_4=0x7f020006;
-        public static final int level1_hero_5=0x7f020007;
-        public static final int level1_hero_6=0x7f020008;
-        public static final int level1_hero_7=0x7f020009;
-        public static final int level1_hero_8=0x7f02000a;
-        public static final int mandatory_button=0x7f02000b;
-        public static final int not_mandatory_button=0x7f02000c;
+        public static final int coin=0x7f020000;
+        public static final int hero_sprite=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int level1_background=0x7f020003;
+        public static final int mandatory_button=0x7f020004;
+        public static final int not_mandatory_button=0x7f020005;
+        public static final int tile_set_one=0x7f020006;
+        public static final int tile_set_two=0x7f020007;
     }
     public static final class id {
-        public static final int LinearLayout_CodeItem=0x7f08001f;
-        public static final int LinearLayout_ControlButton=0x7f08001b;
-        public static final int LinearLayout_GameScreen=0x7f08001a;
-        public static final int LinearLayout_Options=0x7f08000f;
-        public static final int LinearLayout_Running=0x7f080000;
-        public static final int LinearLayout_Running2=0x7f080002;
-        public static final int LinearLayout_Running_Code=0x7f080003;
-        public static final int LinearLayout_Running_Game=0x7f080005;
-        public static final int LinearLayout_Running_Screen=0x7f080001;
-        public static final int LinearLayout_Running_Watch=0x7f080006;
-        public static final int LinearLayout_Screen=0x7f080019;
-        public static final int LinearLayout_Writing=0x7f08000c;
-        public static final int LinearLayout_Writing_Code=0x7f08000d;
-        public static final int action_settings=0x7f080026;
-        public static final int buttonCode=0x7f08001d;
-        public static final int buttonEXIT=0x7f080018;
-        public static final int buttonLEVEL1=0x7f080012;
-        public static final int buttonLEVEL2=0x7f080013;
-        public static final int buttonLEVEL3=0x7f080014;
-        public static final int buttonOPTIONS=0x7f080017;
-        public static final int buttonPLAY=0x7f080016;
-        public static final int buttonReset=0x7f08001e;
-        public static final int buttonRun=0x7f08001c;
-        public static final int button_PlayPause=0x7f080009;
-        public static final int button_endSnapshot=0x7f08000b;
-        public static final int button_nextSnapshot=0x7f08000a;
-        public static final int button_option=0x7f080020;
-        public static final int button_prevSnapshot=0x7f080008;
-        public static final int button_startSnapshot=0x7f080007;
-        public static final int editText_Identifier=0x7f080021;
-        public static final int linearLayout_levelButtons=0x7f080011;
-        public static final int linearLayout_menuButtons=0x7f080015;
-        public static final int listView_Options=0x7f080010;
-        public static final int listView_Running_Code=0x7f080004;
-        public static final int listView_Writing_Code=0x7f08000e;
-        public static final int numberPicker_intLiteral=0x7f080022;
-        public static final int radioButton_negative=0x7f080025;
-        public static final int radioButton_positive=0x7f080024;
-        public static final int radioGroup_positive_negative=0x7f080023;
+        public static final int LinearLayout_CodeItem=0x7f09001e;
+        public static final int LinearLayout_ControlButton=0x7f09001b;
+        public static final int LinearLayout_GameScreen=0x7f09001a;
+        public static final int LinearLayout_Options=0x7f09000f;
+        public static final int LinearLayout_Running=0x7f090000;
+        public static final int LinearLayout_Running2=0x7f090002;
+        public static final int LinearLayout_Running_Code=0x7f090003;
+        public static final int LinearLayout_Running_Game=0x7f090005;
+        public static final int LinearLayout_Running_Screen=0x7f090001;
+        public static final int LinearLayout_Running_Watch=0x7f090006;
+        public static final int LinearLayout_Screen=0x7f090019;
+        public static final int LinearLayout_Writing=0x7f09000c;
+        public static final int LinearLayout_Writing_Code=0x7f09000d;
+        public static final int action_clear=0x7f09002c;
+        public static final int action_settings=0x7f09002b;
+        public static final int buttonCode=0x7f09001c;
+        public static final int buttonEXIT=0x7f090018;
+        public static final int buttonLEVEL1=0x7f090012;
+        public static final int buttonLEVEL2=0x7f090013;
+        public static final int buttonLEVEL3=0x7f090014;
+        public static final int buttonPLAY=0x7f090016;
+        public static final int buttonRun=0x7f09001d;
+        public static final int buttonSETTINGS=0x7f090017;
+        public static final int button_PlayPause=0x7f090009;
+        public static final int button_endSnapshot=0x7f09000b;
+        public static final int button_nextSnapshot=0x7f09000a;
+        public static final int button_option=0x7f090020;
+        public static final int button_prevSnapshot=0x7f090008;
+        public static final int button_startSnapshot=0x7f090007;
+        public static final int checkBox_ShowNessageAgain=0x7f09002a;
+        public static final int editText_Identifier=0x7f090021;
+        public static final int linearLayout_levelButtons=0x7f090011;
+        public static final int linearLayout_menuButtons=0x7f090015;
+        public static final int listView_Options=0x7f090010;
+        public static final int listView_Running_Code=0x7f090004;
+        public static final int listView_Writing_Code=0x7f09000e;
+        public static final int numberPicker_intLiteral=0x7f090022;
+        public static final int radioButton_negative=0x7f090025;
+        public static final int radioButton_positive=0x7f090024;
+        public static final int radioGroup_positive_negative=0x7f090023;
+        public static final int seekBarPrefBarContainer=0x7f090026;
+        public static final int seekBarPrefSeekBar=0x7f090028;
+        public static final int seekBarPrefValue=0x7f090027;
+        public static final int textView_gameEndText=0x7f09001f;
+        public static final int textView_gameStartText=0x7f090029;
     }
     public static final class layout {
         public static final int activity_code_running=0x7f030000;
@@ -82,42 +99,54 @@ public final class R {
         public static final int activity_level_picking=0x7f030002;
         public static final int activity_main_manu=0x7f030003;
         public static final int activity_scenario_disply=0x7f030004;
-        public static final int code_item=0x7f030005;
-        public static final int option_item=0x7f030006;
-        public static final int pick_identifier_dialog=0x7f030007;
-        public static final int pick_number_dialog=0x7f030008;
+        public static final int activity_settings=0x7f030005;
+        public static final int code_item=0x7f030006;
+        public static final int end_level_dialog=0x7f030007;
+        public static final int option_item=0x7f030008;
+        public static final int pick_identifier_dialog=0x7f030009;
+        public static final int pick_number_dialog=0x7f03000a;
+        public static final int seek_bar_preference=0x7f03000b;
+        public static final int start_level_dialog=0x7f03000c;
     }
     public static final class menu {
-        public static final int code_screen=0x7f070000;
-        public static final int display_screen=0x7f070001;
-        public static final int level_picking=0x7f070002;
-        public static final int main_manu=0x7f070003;
-        public static final int running_screen=0x7f070004;
+        public static final int code_screen_menu=0x7f080000;
+        public static final int display_screen_menu=0x7f080001;
+        public static final int level_picking_menu=0x7f080002;
+        public static final int main_manu=0x7f080003;
+        public static final int running_screen_menu=0x7f080004;
+        public static final int settings_menu=0x7f080005;
     }
     public static final class string {
-        public static final int action_settings=0x7f050001;
-        public static final int app_name=0x7f050000;
-        public static final int code=0x7f05000c;
-        public static final int enter_text_here=0x7f050016;
-        public static final int exit=0x7f050005;
-        public static final int hello_world=0x7f050002;
-        public static final int level_1=0x7f050007;
-        public static final int level_2=0x7f050008;
-        public static final int level_3=0x7f050009;
-        public static final int negative=0x7f050010;
-        public static final int next=0x7f050014;
-        public static final int options=0x7f050003;
-        public static final int play=0x7f050004;
-        public static final int positive=0x7f05000f;
-        public static final int previous=0x7f050013;
-        public static final int reset=0x7f05000d;
-        public static final int run=0x7f05000b;
-        public static final int title_activity_code_running=0x7f050011;
-        public static final int title_activity_code_writing=0x7f05000e;
-        public static final int title_activity_game_screen=0x7f05000a;
-        public static final int title_activity_level_picking=0x7f050006;
-        public static final int toBeginning=0x7f050012;
-        public static final int toEnd=0x7f050015;
+        public static final int action_settings=0x7f060001;
+        public static final int app_name=0x7f060000;
+        public static final int clear=0x7f06001d;
+        public static final int code=0x7f06000b;
+        public static final int do_not_show_this_message_again=0x7f060019;
+        public static final int enter_text_here=0x7f060015;
+        public static final int exit=0x7f060004;
+        public static final int graphics=0x7f060018;
+        public static final int hello_world=0x7f060017;
+        public static final int level_1=0x7f060006;
+        public static final int level_2=0x7f060007;
+        public static final int level_3=0x7f060008;
+        public static final int level_instructions_off=0x7f06001b;
+        public static final int level_instructions_on=0x7f06001c;
+        public static final int misc=0x7f06001a;
+        public static final int negative=0x7f06000f;
+        public static final int next=0x7f060013;
+        public static final int play=0x7f060003;
+        public static final int positive=0x7f06000e;
+        public static final int previous=0x7f060012;
+        public static final int reset=0x7f06000c;
+        public static final int run=0x7f06000a;
+        public static final int settings=0x7f060002;
+        public static final int title_activity_code_running=0x7f060010;
+        public static final int title_activity_code_writing=0x7f06000d;
+        public static final int title_activity_game_screen=0x7f060009;
+        public static final int title_activity_level_picking=0x7f060005;
+        public static final int title_activity_settings=0x7f060016;
+        public static final int toBeginning=0x7f060011;
+        public static final int toEnd=0x7f060014;
     }
     public static final class style {
         /** 
@@ -141,10 +170,13 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
+    }
+    public static final class xml {
+        public static final int preferences=0x7f040000;
     }
 }

@@ -3,14 +3,12 @@ package com.example.finalprojectapp.codewriting.option.concrete.vardec;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Scope;
 import com.example.finalprojectapp.node.Setter;
@@ -43,16 +41,17 @@ public class BoolVarDecOption extends Option {
 
 				builder.setTitle("Select The Identifier Name");
 				
-				/*final EditText input = new EditText(context);	//TODO
+				final EditText input = new EditText(context);
 
-				builder.setView(input);*/
+				builder.setView(input);
 				
-				LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+				//TODO
+				/*LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 				View view = inflater.inflate(R.layout.pick_identifier_dialog, null);
 
 				final EditText input = (EditText)view.findViewById(R.id.editText_Identifier);
 
-				builder.setView(view);
+				builder.setView(view);*/
 
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {

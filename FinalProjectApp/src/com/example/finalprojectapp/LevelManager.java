@@ -58,11 +58,11 @@ public class LevelManager {
 	public InitialBlockNode getRootNode() {
 		return rootNode;
 	}
-	
+
 	public CodeRunningManager getCodeRunningManager() {
 		return codeRunningManager;
 	}
-	
+
 	public CodeWritingManager getCodeWritingManager() {
 		return codeWritingManager;
 	}
@@ -81,6 +81,10 @@ public class LevelManager {
 
 	public void takeSnapshot(Node n) {
 		codeRunningManager.getLogics().takeSnapshot(n);
+	}
+
+	public void clearCode() {
+		rootNode = new InitialBlockNode();
 	}
 
 	/********** identifier utilities **********/
@@ -112,6 +116,19 @@ public class LevelManager {
 	}
 
 	/********** refresh utilities **********/
+
+	/********** game utilities **********/
+
+	public boolean checkWin(int gameSnapShotNum){
+		return codeRunningManager.getLogics().checkWin(gameSnapShotNum);
+	}
+
+	public boolean checkLoss(int gameSnapShotNum){
+		return codeRunningManager.getLogics().checkLoss(gameSnapShotNum);
+	}
+
+	/********** game utilities **********/
+
 
 	public void SetterClick(Setter setter) {
 		codeWritingManager.SetterClick(setter);

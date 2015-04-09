@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.example.finalprojectapp"
+    android:key="preference_screen" >
+
+    <PreferenceCategory android:title="@string/graphics" >
+        <com.example.finalprojectapp.SeekBarPreference
+            android:defaultValue="20"
+            android:key="FPS"
+            android:max="60"
+            android:summary="frame per second rate"
+            android:title="FPS"
+            custom:interval="5"
+            custom:min="10" >
+        </com.example.finalprojectapp.SeekBarPreference>
+        <com.example.finalprojectapp.SeekBarPreference
+            android:defaultValue="2"
+            android:key="CPS"
+            android:max="4"
+            android:summary="command per second rate"
+            android:title="CPS"
+            custom:interval="1"
+            custom:min="1" >
+        </com.example.finalprojectapp.SeekBarPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/misc" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="LI"
+            android:summary="toggle level instructions"
+            android:summaryOff="@string/level_instructions_off"
+            android:summaryOn="@string/level_instructions_on"
+            android:title="level instructions" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

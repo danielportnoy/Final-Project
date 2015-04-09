@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.example.finalprojectapp.coderunning.adapter.CodeRunningLinesAdapter;
 import com.example.finalprojectapp.coderunning.snapshot.GameSnapshot;
-import com.example.finalprojectapp.scenario.MySurfaceView;
+import com.example.finalprojectapp.graphic_utils.MySurfaceView;
 
 public class CodeRunningGraphicUnit {
 

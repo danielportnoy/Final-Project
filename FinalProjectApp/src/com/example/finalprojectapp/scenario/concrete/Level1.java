@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
@@ -30,59 +31,77 @@ import com.example.finalprojectapp.codewriting.option.concrete.statement.ForOpti
 import com.example.finalprojectapp.codewriting.option.concrete.statement.IfThenOption;
 import com.example.finalprojectapp.codewriting.option.concrete.vardec.BoolVarDecOption;
 import com.example.finalprojectapp.codewriting.option.concrete.vardec.IntVarDecOption;
+import com.example.finalprojectapp.graphic_utils.MySurfaceView;
+import com.example.finalprojectapp.graphic_utils.maze.BoardSpriteSheet;
+import com.example.finalprojectapp.graphic_utils.maze.GoalSprite;
+import com.example.finalprojectapp.graphic_utils.maze.HeroSprite;
+import com.example.finalprojectapp.graphic_utils.maze.HeroSprite.heroDirection;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
-import com.example.finalprojectapp.scenario.MySurfaceView;
 import com.example.finalprojectapp.scenario.Scenario;
+import com.example.finalprojectapp.utilities.Android_Utils;
 
 public class Level1 extends Scenario {
 
-	final int SIZE = 6;	// TODO
+	private final int ROWS = 3;	// TODO
+	private final int COLS = 4;	// TODO
 
-	private int heroX=0,heroY=0,targetX=5,targetY=5;
+	private final int heroStartX=0, heroStartY=1;
+	private int heroCurrentX=heroStartX, heroCurrentY=heroStartY;	
+
+	private final int targetX=3,targetY=1;
+
+	private final String LEVEL1_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
+			"Hint: try the \"GoRight();\" option...";
 
 	@Override
 	public void initiateAvailableOptions() {
-		availableOptions.add(new BlockOption());
-		availableOptions.add(new IfThenOption());
-		availableOptions.add(new BoolVarDecOption());
-		availableOptions.add(new IntVarDecOption());
-		availableOptions.add(new ForOption());
+
+		addToAvailableOptions(new BlockOption());
+		addToAvailableOptions(new IfThenOption());
+		addToAvailableOptions(new BoolVarDecOption());
+		addToAvailableOptions(new IntVarDecOption());
+		addToAvailableOptions(new ForOption());
 
 		// literal
-		//availableOptions.add(new LiteralOption());	// TODO
-		availableOptions.add(new NumberOption());
-		availableOptions.add(new TrueOption());
-		availableOptions.add(new FalseOption());
+		//addToAvailableOptions(new LiteralOption());	// TODO
+		addToAvailableOptions(new NumberOption());
+		addToAvailableOptions(new TrueOption());
+		addToAvailableOptions(new FalseOption());
 
 
-		availableOptions.add(new PlusOption());
+		addToAvailableOptions(new PlusOption());
 
-		availableOptions.add(new SimpleAssignmentOption());
+		addToAvailableOptions(new SimpleAssignmentOption());
 
-		availableOptions.add(new EqualsOption());
-		availableOptions.add(new NotEqualsOption());
+		addToAvailableOptions(new EqualsOption());
+		addToAvailableOptions(new NotEqualsOption());
 
 		//custom options	// TODO
-		availableOptions.add(new GoRightOption());
+		addToAvailableOptions(new GoRightOption());
+	}
+
+	@Override
+	public void initiateLevelText() {
+		setLevelText(LEVEL1_TEXT);
 	}
 
 	@Override
 	public void reset() {
-		heroX=0;
-		heroY=0;
+		heroCurrentX=heroStartX;
+		heroCurrentY=heroStartY;
 	}
 
 	@Override
 	public GameSnapshot takeSnapshot() {
-		return new MyGameSnapshot(heroX, heroY);
+		return new MyGameSnapshot();
 	}
 
 	@Override
-	public MySurfaceView generateGameView(Context context) {
-		return new SurfaceView_Level1(context);
+	public MySurfaceView generateGameView(Context context, int fps) {
+		return new SurfaceView_Level1(context, fps);
 	}
 
 	/******************** Nested classes ********************/
@@ -92,9 +111,9 @@ public class Level1 extends Scenario {
 
 		private int heroX,heroY;
 
-		public MyGameSnapshot(int heroX,int heroY) {
-			this.heroX = heroX;
-			this.heroY = heroY;
+		public MyGameSnapshot() {
+			this.heroX = heroCurrentX;
+			this.heroY = heroCurrentY;
 		}
 
 		public int getHeroX() {
@@ -103,6 +122,17 @@ public class Level1 extends Scenario {
 
 		public int getHeroY() {
 			return heroY;
+		}
+
+		@Override
+		public boolean checkWin() {
+			return heroX == targetX && heroY == targetY;
+		}
+
+		@Override
+		public boolean checkLoss() {
+			// TODO Auto-generated method stub
+			return false;
 		}
 	}
 	/********** snapshot class **********/
@@ -125,8 +155,8 @@ public class Level1 extends Scenario {
 
 			LevelManager.getInstance().takeSnapshot(this);
 
-			if( heroX < SIZE - 1 )
-				heroX++;
+			if( heroCurrentX < COLS - 1 )
+				heroCurrentX++;
 
 			return new ReturnObject();
 		}
@@ -171,40 +201,46 @@ public class Level1 extends Scenario {
 	}
 	/********** special option class's **********/
 
+	/********** SurfaceView class **********/
+
 	class SurfaceView_Level1 extends MySurfaceView {
 
-		private Bitmap heroCurrentBitmap;
-		private Bitmap[] heroGoRightSprite;
-		private Bitmap heroStandBitmap;
-		private final int heroNumOfSprites = 8;
+		private HeroSprite heroSprite;
 		private int heroXpos, heroYpos;
-		private int heroXposLogic, heroYposLogic;
-		private int heroCurrentFrame;
+		private int heroXprevLogic, heroYprevLogic;
+		private int heroXcurrentLogic, heroYcurrentLogic;
+		private final double heroScaleHeightPercent = 0.9, heroScaleWidthPercent = 0.9;
+
+		private GoalSprite goalSprite;
+		private int goalXpos, goalYpos;
+		private final double goalScaleHeightPercent = 0.5, goalScaleWidthPercent = 0.5;
+
+		private BoardSpriteSheet boardSpriteSheet;
+		private int boardXpos, boardYpos;
+
+		private Bitmap heroCurrentBitmap;
+		private Bitmap heroStandBitmap;
+
+		private Bitmap goalCurrentBitmap;
 
 		private Bitmap boardBitmap;
-		private final int boardNumOfRows = 6,boardNumOfCols = 6;
-		private final int boardXstart = 0,boardYstart = 0;
-		private int boardXpos, boardYpos;		
 
-		public SurfaceView_Level1(Context context) {
-			super(context);
+		public SurfaceView_Level1(Context context, int fps) {
+			super(context, fps);
+
+			boardSpriteSheet = new BoardSpriteSheet(ROWS,COLS,BitmapFactory.decodeResource(getResources(),R.drawable.tile_set_two,Android_Utils.BitmapFactoryOptionsInScaled()));
+			boardBitmap = boardSpriteSheet.getBitmap();
+
+			goalSprite = new GoalSprite(BitmapFactory.decodeResource(getResources(),R.drawable.coin,Android_Utils.BitmapFactoryOptionsInScaled()),
+					Constants.GOAL_SPRITE_ROWS,Constants.GOAL_SPRITE_COLS,0,0);
+
+			goalCurrentBitmap = goalSprite.getBitmapByCoords(0, 0);
+
+			heroSprite = new HeroSprite(BitmapFactory.decodeResource(getResources(),R.drawable.hero_sprite,Android_Utils.BitmapFactoryOptionsInScaled()),
+					Constants.HERO_SPRITE_ROWS,Constants.HERO_SPRITE_COLS,Constants.HERO_SPRITE_DIRECTION_RIGHT_ROW,0);
+			heroStandBitmap = heroSprite.getBitmapByCoords(0, 3);
 
 			reset();
-
-			boardBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.level1_background);
-			
-			heroStandBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_1);
-
-			heroGoRightSprite = new Bitmap[] {
-					BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_1),
-					BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_2),
-					BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_3),
-					BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_4),
-					BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_5),
-					BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_6),
-					BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_7),
-					BitmapFactory.decodeResource(getResources(),R.drawable.level1_hero_8)
-			};
 		}
 
 		@Override
@@ -212,17 +248,20 @@ public class Level1 extends Scenario {
 			super.draw(canvas);
 
 			canvas.drawColor(Color.WHITE);		// TODO
+
 			canvas.drawBitmap(boardBitmap, boardXpos, boardYpos, null);
+			canvas.drawBitmap(goalCurrentBitmap, goalXpos, goalYpos, null);
 			canvas.drawBitmap(heroCurrentBitmap, heroXpos, heroYpos, null);
 		}
 
 		@Override
 		public void reset() {
 
-			heroXposLogic = 0;
-			heroYposLogic = 0;
+			heroXprevLogic = heroXcurrentLogic = heroStartX;
+			heroYprevLogic = heroYcurrentLogic = heroStartY;
 
-			heroCurrentFrame = 0;
+			heroSprite.reset();
+			goalSprite.reset();
 		}
 
 		@Override
@@ -231,57 +270,128 @@ public class Level1 extends Scenario {
 			int screenWidth = getWidth();
 			int screenHeight = getHeight();
 
-			int scaleBy =  (screenWidth > screenHeight) ? screenHeight : screenWidth;
+			int boardScaleWidth = boardBitmap.getWidth();
+			int boardScaleHeight = boardBitmap.getHeight();
 
-			int XShift = (screenWidth - scaleBy)/2;
-			int YShift = (screenHeight - scaleBy)/2;
+			if (boardScaleWidth > boardScaleHeight) {
+				// landscape
+				float ratio = (float) boardScaleWidth / screenWidth;
+				boardScaleWidth = screenWidth;
+				boardScaleHeight = (int)(boardScaleHeight / ratio);
+			} else if (boardScaleHeight > boardScaleWidth) {
+				// portrait
+				float ratio = (float) boardScaleHeight / screenHeight;
+				boardScaleHeight = screenHeight;
+				boardScaleWidth = (int)(boardScaleWidth / ratio);
+			} else {
+				// square
+				boardScaleHeight = screenHeight;
+				boardScaleWidth = screenWidth;
+			}
 
-			int tileHeight = scaleBy/boardNumOfRows;
-			int tileWidth = scaleBy/boardNumOfCols;
+			int tileHeight = boardScaleHeight/ROWS;
+			int tileWidth = boardScaleWidth/COLS;
 
-			int tileWidthSpriteInterval = tileWidth/heroNumOfSprites;
-			int tileHeightSpriteInterval = tileHeight/heroNumOfSprites;
+			int heroScaleWidth = (int) (tileWidth*heroScaleWidthPercent);
+			int heroScaleHeight = (int) (tileHeight*heroScaleHeightPercent);
 
-			boardXpos = boardXstart + XShift; boardYpos = boardYstart + YShift;
+			int shiftHeroX = (tileWidth - heroScaleWidth)/2;
+			int shiftHeroY = (tileHeight - heroScaleHeight)/2;
 
-			if (heroCurrentFrame + 1 < heroNumOfSprites){
-				
-				heroCurrentFrame++;
+			int goalScaleWidth = (int) (tileWidth*goalScaleWidthPercent);
+			int goalScaleHeight = (int) (tileHeight*goalScaleHeightPercent);
 
-				heroXpos = (heroXposLogic-1)*tileWidth + heroCurrentFrame*tileWidthSpriteInterval + XShift;
+			int shiftGoalX = (tileWidth - goalScaleWidth)/2;
+			int shiftGoalY = (tileHeight - goalScaleHeight)/2;
 
-				//(myGameSnapshot.getHeroY()-1)*tileHeight + heroCurrentFrame*tileHeightSpriteInterval;	
-				heroYpos = heroYposLogic*tileHeight + YShift; 
-				
-				heroCurrentBitmap = heroGoRightSprite[heroCurrentFrame];
+			int tileWidthSpriteInterval = tileWidth/heroSprite.getNumOfFrames();
+			int tileHeightSpriteInterval = tileHeight/heroSprite.getNumOfFrames();
 
+			int heroCurrentFrame = heroSprite.getFrameNumber();
+
+			boardXpos = 0;
+			boardYpos = screenHeight/2 - boardScaleHeight/2;
+
+			goalXpos = boardXpos + shiftGoalX + targetX*tileWidth; goalYpos = boardYpos + shiftGoalY + targetY*tileHeight;
+
+			goalSprite.update();
+			goalCurrentBitmap = goalSprite.getCurrentBitmap();
+
+			if (!heroSprite.isLooped()){
+
+				heroSprite.update();
+
+				heroXpos = boardXpos + heroXprevLogic*tileWidth + shiftHeroX;
+				heroYpos = boardYpos +heroYprevLogic*tileHeight + shiftHeroY;
+
+				switch (heroSprite.getDirection()) {
+				case Up:
+					heroYpos -= heroCurrentFrame*tileHeightSpriteInterval;
+					break;
+				case Left:
+					heroXpos -= heroCurrentFrame*tileWidthSpriteInterval;
+					break;
+				case Down:
+					heroYpos += heroCurrentFrame*tileHeightSpriteInterval;
+					break;
+				case Right:
+					heroXpos += heroCurrentFrame*tileWidthSpriteInterval;
+					break;
+
+				default:
+					break;
+				}
+
+				heroCurrentBitmap = heroSprite.getCurrentBitmap();
 			}
 			else{
-				heroXpos = heroXposLogic*tileWidth + XShift;
-				heroYpos = heroYposLogic*tileHeight + YShift;
-				
+
+				heroSprite.reset();
+
+				heroXpos = boardXpos + heroXcurrentLogic*tileWidth;
+				heroYpos = boardYpos + heroYcurrentLogic*tileHeight;
+
+				heroXprevLogic = heroXcurrentLogic;
+				heroYprevLogic = heroYcurrentLogic;
+
 				heroCurrentBitmap = heroStandBitmap;
 			}
-			
+
 			/* scaling bitmaps */	
-			boardBitmap = Bitmap.createScaledBitmap(boardBitmap, scaleBy, scaleBy, true);		
-			heroCurrentBitmap = Bitmap.createScaledBitmap(heroCurrentBitmap, tileWidth, tileHeight, true);		
+			boardBitmap = Bitmap.createScaledBitmap(boardBitmap, boardScaleWidth, boardScaleHeight, true);
+			goalCurrentBitmap = Bitmap.createScaledBitmap(goalCurrentBitmap, goalScaleWidth, goalScaleHeight, true);
+			heroCurrentBitmap = Bitmap.createScaledBitmap(heroCurrentBitmap, heroScaleWidth, heroScaleHeight, true);		
 			/* scaling bitmaps */
 		}
 
 		@Override
 		public void loadSnapshot(GameSnapshot gameSnapshot) {
 
-			MyGameSnapshot mgs = (MyGameSnapshot)gameSnapshot;;
+			MyGameSnapshot mgs = (MyGameSnapshot)gameSnapshot;
 
-			if(mgs.getHeroX() != heroXposLogic || mgs.getHeroY() != heroYposLogic){
-				heroXposLogic = mgs.getHeroX();
-				heroYposLogic = mgs.getHeroY();
-				heroCurrentFrame = 0;
-			}
+			heroSprite.reset();
+
+			if(mgs.getHeroX() - heroXprevLogic > 0)
+				heroSprite.setDirection(heroDirection.Right);
+			else if(mgs.getHeroX() - heroXprevLogic < 0)
+				heroSprite.setDirection(heroDirection.Left);
+			else if(mgs.getHeroY() - heroYprevLogic > 0)
+				heroSprite.setDirection(heroDirection.Down);
+			else if(mgs.getHeroY() - heroYprevLogic < 0)
+				heroSprite.setDirection(heroDirection.Up);
+			else
+				heroSprite.setDirection(heroDirection.Stand);
+
+			heroXprevLogic = heroXcurrentLogic;
+			heroYprevLogic = heroYcurrentLogic;
+
+			heroXcurrentLogic = mgs.getHeroX();
+			heroYcurrentLogic = mgs.getHeroY();
 		}
+
+		/********** SurfaceView class **********/
+
+		/******************** Nested classes ********************/
+
 	}
-
-	/******************** Nested classes ********************/
-
 }

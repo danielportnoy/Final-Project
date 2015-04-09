@@ -29,28 +29,19 @@
             android:orientation="vertical" >
 
             <Button
+                android:id="@+id/buttonCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:text="@string/code" />
+
+            <Button
                 android:id="@+id/buttonRun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:onClick="onClick"
                 android:text="@string/run" />
-
-            <Button
-                android:id="@+id/buttonCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="onClick"
-                android:text="@string/code" />
-
-            <Button
-                android:id="@+id/buttonReset"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="onClick"
-                android:text="@string/reset" />
         </LinearLayout>
     </LinearLayout>
 

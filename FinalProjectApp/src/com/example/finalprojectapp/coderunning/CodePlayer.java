@@ -1,10 +1,16 @@
 package com.example.finalprojectapp.coderunning;
 
+import android.app.AlertDialog;
+import android.widget.Button;
+
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
+import com.example.finalprojectapp.utilities.Android_Utils;
 
 public class CodePlayer {
-	
+
 	private CodeRunningActivity cra; 
+	private Button playPauseButton;
 
 	private int numberOfSnapshots;
 	private int currentSnapshotNumber;
@@ -13,21 +19,27 @@ public class CodePlayer {
 
 	private PlayerThread playerTheard;
 	
-	public CodePlayer(int numberOfSnapshots, CodeRunningActivity cra) {
+	private int sleepTime_mm;
+
+	public CodePlayer(int numberOfSnapshots, CodeRunningActivity cra, Button playPauseButton , int cps) {
 		this.numberOfSnapshots = numberOfSnapshots;
 		this.cra = cra;
+		this.playPauseButton = playPauseButton;
 		
+		sleepTime_mm = Math.round(1000/cps);
+
 		currentSnapshotNumber = 0;
-		
+
 		isPlaying = false;
-		
+		playPauseButton.setText("Play");
+
 		playerTheard = new PlayerThread();
 		playerTheard.setRunning(true);
 		playerTheard.start();
 	}
-	
+
 	public void destroy(){
-		
+
 		boolean retry = true;
 
 		playerTheard.setRunning(false);
@@ -49,12 +61,20 @@ public class CodePlayer {
 
 	public void display() {
 		cra.runOnUiThread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				LevelManager.getInstance().getCodeRunningManager().refresh(currentSnapshotNumber);
+				LevelManager.getInstance().refrashRunningScreen(currentSnapshotNumber);
+
+				//if last snapshot
+				if(currentSnapshotNumber == numberOfSnapshots - 1){
+					isPlaying = false;
+					playPauseButton.setText("Play");
+					handleEndGame();
+				}
 			}
-		});
+		});			
+
 	}
 
 	public void startSnapshot() {
@@ -63,19 +83,17 @@ public class CodePlayer {
 	}
 
 	public void prevSnapshot() {
-		if(currentSnapshotNumber > 0){
+		if(currentSnapshotNumber > 0)
 			currentSnapshotNumber--;
-			display();
-		}
+		display();
 	}
 
 	public void nextSnapshot() {
-		if(currentSnapshotNumber < numberOfSnapshots - 1){
+		if(currentSnapshotNumber < numberOfSnapshots - 1)
 			currentSnapshotNumber++;
-			display();
-		}
+		display();
 	}
-	
+
 	public void endSnapshot() {
 		currentSnapshotNumber = numberOfSnapshots - 1;
 		display();
@@ -83,13 +101,29 @@ public class CodePlayer {
 
 	public void togglePlay() {
 		isPlaying = !isPlaying;
+		
+		if(isPlaying())
+			playPauseButton.setText("Play");
+		else
+			playPauseButton.setText("Pause");
 	}
 
+	public void handleEndGame(){	// TODO
+
+		AlertDialog.Builder builder;
+
+		if(LevelManager.getInstance().checkWin(currentSnapshotNumber))
+			builder = Android_Utils.getEndGameDialog(cra, Constants.LEVEL_END_WIN_TITLE_TEXT, Constants.LEVEL_END_WIN_TEXT, Constants.LEVEL_END_WIN_POSITIVE_TEXT , true);
+		else
+			builder = Android_Utils.getEndGameDialog(cra, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_TEXT, Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
+
+		builder.create().show();
+	}
 
 	class PlayerThread extends Thread{
-		
+
 		private boolean isRunning = false;
-		
+
 		public void setRunning(boolean isRunning) {
 			this.isRunning = isRunning;
 		}
@@ -103,7 +137,7 @@ public class CodePlayer {
 					nextSnapshot();
 
 				try {
-					sleep(500);
+					sleep(sleepTime_mm);
 				} 
 				catch (InterruptedException e) {
 					e.printStackTrace();

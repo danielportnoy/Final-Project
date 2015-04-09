@@ -3,8 +3,7 @@
 
     <string name="app_name">FinalProjectApp</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="options">Options</string>
+    <string name="settings">Settings</string>
     <string name="play">Play</string>
     <string name="exit">Exit</string>
     <string name="title_activity_level_picking">LevelPickingActivity</string>
@@ -24,5 +23,13 @@
     <string name="next">></string>
     <string name="toEnd">>|</string>
     <string name="enter_text_here">Enter Text Here</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="graphics">graphics</string>
+    <string name="do_not_show_this_message_again">Do not show this message again</string>
+    <string name="misc">Misc</string>
+    <string name="level_instructions_off">Level instructions off</string>
+    <string name="level_instructions_on">Level instructions on</string>
+    <string name="clear">Clear</string>
 
 </resources>

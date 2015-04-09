@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,8 +36,21 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.level_picking, menu);
+		getMenuInflater().inflate(R.menu.level_picking_menu, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+	    case R.id.action_settings:
+	        // Settings option clicked.
+	    	Intent intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+	        return true;
+	    default:
+	        return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	@Override
@@ -46,29 +60,20 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 
 		switch (v.getId()) {
 		case R.id.buttonLEVEL1:
-			/*intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 1);
-			editor.putInt(Constants.LEVEL_NUMBER_EXTRA, 1);
-			editor.commit();*/
 
 			levelManager.reset();
 			levelManager.loadScenario(new Level1());
 
 			break;
 		case R.id.buttonLEVEL2:
-			/*intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 2);
-			editor.putInt(Constants.LEVEL_NUMBER_EXTRA, 2);
-			editor.commit();*/
-
+			
 			levelManager.reset();
-
+			
 			break;
 		case R.id.buttonLEVEL3:
-			/*intent.putExtra(Constants.LEVEL_NUMBER_EXTRA, 3);
-			editor.putInt(Constants.LEVEL_NUMBER_EXTRA, 3);
-			editor.commit();*/
-
+		
 			levelManager.reset();
-
+			
 			break;
 
 		default:
@@ -76,6 +81,17 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 		}
 
 		startActivity(intent);
+		//finish(); TODO 
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		
+		Intent intent = new Intent(this, MainManuActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		finish();
 	}
 
 }

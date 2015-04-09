@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 public class MainManuActivity extends Activity implements OnClickListener {
 
@@ -28,17 +27,22 @@ public class MainManuActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if( v.getId() == R.id.buttonPLAY){
-			//Toast.makeText(this, "play", Toast.LENGTH_SHORT).show();
 			Intent intent = new Intent(this, LevelPickingActivity.class);
 			startActivity(intent);
 		}
-		else if(v.getId() == R.id.buttonOPTIONS){
-			Toast.makeText(this, "options", Toast.LENGTH_SHORT).show();
+		else if(v.getId() == R.id.buttonSETTINGS){
+			Intent intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
 		}
 		else if(v.getId() == R.id.buttonEXIT){
-			//Toast.makeText(this, "exit", Toast.LENGTH_SHORT).show();
 			System.exit(0);
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		System.exit(0);
 	}
 
 }
