@@ -6,4 +6,5 @@ public abstract class GameSnapshot {
 
 	public abstract boolean checkLoss();
 
+	public abstract boolean equals(GameSnapshot other);
 }

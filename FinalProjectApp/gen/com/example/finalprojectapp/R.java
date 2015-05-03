@@ -118,6 +118,8 @@ containing a value of this type.
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
+        public static final int animation_off=0x7f06001e;
+        public static final int animation_on=0x7f06001f;
         public static final int app_name=0x7f060000;
         public static final int clear=0x7f06001d;
         public static final int code=0x7f06000b;

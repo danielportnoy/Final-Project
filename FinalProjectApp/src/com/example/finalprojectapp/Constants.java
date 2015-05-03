@@ -23,6 +23,10 @@ public class Constants {
 	public static final boolean DEFAULT_LI = true;
 	public static final String LI_KEY = "LI";
 
+	//ANIMATION
+	public static final boolean DEFAULT_ANIMATION = false;
+	public static final String ANIMATION_KEY = "ANIMATION";
+
 
 	// LEVEL1 HERO SPRITE
 	public static final int HERO_SPRITE_ROWS = 4;
@@ -42,7 +46,7 @@ public class Constants {
 	public static final String LEVEL_END_LOSS_TEXT = "You Lost!";
 	public static final String LEVEL_END_WIN_TITLE_TEXT = "Well played...";
 	public static final String LEVEL_END_LOSS_TITLE_TEXT = "Too bad...";
-	
+
 	public static final String LEVEL_END_WIN_POSITIVE_TEXT = "Continue";
 	public static final String LEVEL_END_LOSS_POSITIVE_TEXT = "Retry";
 

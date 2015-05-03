@@ -14,10 +14,14 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 	private int sleepTime_mm;
 
-	public MySurfaceView(Context context, int fps) {
+	private boolean isAnimating;
+
+	public MySurfaceView(Context context, int fps, boolean isAnimating) {
 		super(context);
 
 		sleepTime_mm = Math.round(1000/fps);
+
+		this.isAnimating = isAnimating;
 
 		holder = getHolder();
 		holder.addCallback(this);
@@ -33,15 +37,12 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 
-		if (gameLoopThread.getState() == Thread.State.TERMINATED) {
+		if (gameLoopThread.getState() == Thread.State.TERMINATED) 
 			gameLoopThread = new GameLoopThread(this);
-			gameLoopThread.setRunning(true);
-			gameLoopThread.start();
-		}
-		else {
-			gameLoopThread.setRunning(true);
-			gameLoopThread.start();
-		}
+
+		gameLoopThread.setRunning(true);
+		gameLoopThread.start();
+
 	}
 
 	@Override
@@ -65,8 +66,17 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 	// logical reset function
 	public abstract void reset();
 
-	// logical update function
-	public abstract void update();
+	// graphic, positions and mathematics function
+	public abstract void preCalculation();
+
+	// logical update for  animated mode function
+	public abstract void updateAnimated();
+
+	// logical update for non animated mode function
+	public abstract void updateNonAnimated();
+
+	// graphic rendering of images
+	public abstract void render();
 
 	public abstract void loadSnapshot(GameSnapshot gameSnapshot);
 
@@ -88,6 +98,8 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 		@Override
 		public void run() {
 
+			mySurfaceView.preCalculation();
+
 			while (running) {
 
 				if(!holder.getSurface().isValid())
@@ -98,7 +110,10 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 				try {
 					synchronized (holder){
 
-						mySurfaceView.update();
+						if(isAnimating)
+							mySurfaceView.updateAnimated();
+						else
+							mySurfaceView.updateNonAnimated();
 
 						c = holder.lockCanvas();
 						if(c!=null)

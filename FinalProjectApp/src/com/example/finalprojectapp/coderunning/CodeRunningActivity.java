@@ -45,8 +45,9 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 		SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
 		int cps = SP.getInt(Constants.CPS_KEY,Constants.DEFAULT_CPS);
+		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
 
-		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps);
+		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);
 		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		CodeRunningGraphicUnit graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter , gameView);

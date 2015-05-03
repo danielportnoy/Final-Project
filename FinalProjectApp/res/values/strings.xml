@@ -31,5 +31,7 @@
     <string name="level_instructions_off">Level instructions off</string>
     <string name="level_instructions_on">Level instructions on</string>
     <string name="clear">Clear</string>
+    <string name="animation_off">Animation off</string>
+    <string name="animation_on">Animation on</string>
 
 </resources>

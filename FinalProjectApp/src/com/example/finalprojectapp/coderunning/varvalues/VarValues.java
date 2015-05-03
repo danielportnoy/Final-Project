@@ -20,6 +20,36 @@ public class VarValues {
 		// TODO Auto-generated constructor stub
 	}
 
+	public boolean equals(VarValues other) {
+
+		if (intValues.size() != other.intValues.size() || boolValues.size() != other.boolValues.size())
+			return false;
+
+		Iterator<Entry<String, Integer>> thisIt1 = intValues.entrySet().iterator();
+		Iterator<Entry<String, Integer>> otherIt1 = other.intValues.entrySet().iterator();
+
+		for (int i = 0; i < intValues.size(); i++) {
+			Entry<String, Integer> thisEntry = thisIt1.next();
+			Entry<String, Integer> otherEntry = otherIt1.next();
+
+			if(thisEntry.getKey() != otherEntry.getKey() ||thisEntry.getValue() != otherEntry.getValue())
+				return false;
+		}
+
+		Iterator<Entry<String, Boolean>> thisIt2 = boolValues.entrySet().iterator();
+		Iterator<Entry<String, Boolean>> otherIt2 = other.boolValues.entrySet().iterator();
+
+		for (int i = 0; i < boolValues.size(); i++) {
+			Entry<String, Boolean> thisEntry = thisIt2.next();
+			Entry<String, Boolean> otherEntry = otherIt2.next();
+
+			if(thisEntry.getKey() != otherEntry.getKey() ||thisEntry.getValue() != otherEntry.getValue())
+				return false;
+		}
+
+		return true;
+	}
+
 	public Map<String, Integer> getIntValues() {
 		return intValues;
 	}
@@ -35,7 +65,7 @@ public class VarValues {
 			if(!identifiers.contains(entry.getKey()))
 				it.remove();
 		}
-		
+
 		for(Iterator<Map.Entry<String, Boolean>> it = boolValues.entrySet().iterator(); it.hasNext(); ) {
 			Entry<String, Boolean> entry = it.next();
 			if(!identifiers.contains(entry.getKey()))

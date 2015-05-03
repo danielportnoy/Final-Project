@@ -42,6 +42,6 @@ public abstract class Scenario {
 
 	public abstract GameSnapshot takeSnapshot();
 
-	public abstract MySurfaceView generateGameView(Context context, int fps);
+	public abstract MySurfaceView generateGameView(Context context, int fps, boolean isAnimation);
 
 }

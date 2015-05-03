@@ -100,8 +100,8 @@ public class Level1 extends Scenario {
 	}
 
 	@Override
-	public MySurfaceView generateGameView(Context context, int fps) {
-		return new SurfaceView_Level1(context, fps);
+	public MySurfaceView generateGameView(Context context, int fps, boolean isAnimation) {
+		return new SurfaceView_Level1(context, fps, isAnimation);
 	}
 
 	/******************** Nested classes ********************/
@@ -133,6 +133,13 @@ public class Level1 extends Scenario {
 		public boolean checkLoss() {
 			// TODO Auto-generated method stub
 			return false;
+		}
+		
+		@Override
+		public boolean equals(GameSnapshot other) {
+			
+			MyGameSnapshot other_mgs = (MyGameSnapshot)other;
+			return getHeroX() == other_mgs.getHeroX() && getHeroY() == other_mgs.getHeroY();
 		}
 	}
 	/********** snapshot class **********/
@@ -224,9 +231,23 @@ public class Level1 extends Scenario {
 		private Bitmap goalCurrentBitmap;
 
 		private Bitmap boardBitmap;
+		
+		// positions and measurements
+		private int boardScaleWidth;
+		private int boardScaleHeight;
+		private int goalScaleWidth;
+		private int goalScaleHeight;
+		private int heroScaleWidth;
+		private int heroScaleHeight;
+		private int tileWidth;
+		private int tileHeight;
+		private int shiftHeroX;
+		private int shiftHeroY;
+		private int tileHeightSpriteInterval;
+		private int tileWidthSpriteInterval;
 
-		public SurfaceView_Level1(Context context, int fps) {
-			super(context, fps);
+		public SurfaceView_Level1(Context context, int fps, boolean isAnimation) {
+			super(context, fps, isAnimation);
 
 			boardSpriteSheet = new BoardSpriteSheet(ROWS,COLS,BitmapFactory.decodeResource(getResources(),R.drawable.tile_set_two,Android_Utils.BitmapFactoryOptionsInScaled()));
 			boardBitmap = boardSpriteSheet.getBitmap();
@@ -234,18 +255,69 @@ public class Level1 extends Scenario {
 			goalSprite = new GoalSprite(BitmapFactory.decodeResource(getResources(),R.drawable.coin,Android_Utils.BitmapFactoryOptionsInScaled()),
 					Constants.GOAL_SPRITE_ROWS,Constants.GOAL_SPRITE_COLS,0,0);
 
-			goalCurrentBitmap = goalSprite.getBitmapByCoords(0, 0);
-
 			heroSprite = new HeroSprite(BitmapFactory.decodeResource(getResources(),R.drawable.hero_sprite,Android_Utils.BitmapFactoryOptionsInScaled()),
 					Constants.HERO_SPRITE_ROWS,Constants.HERO_SPRITE_COLS,Constants.HERO_SPRITE_DIRECTION_RIGHT_ROW,0);
+			
 			heroStandBitmap = heroSprite.getBitmapByCoords(0, 3);
 
 			reset();
+
+		}
+
+		@Override
+		public void preCalculation() {
+
+			int screenWidth = getWidth();
+			int screenHeight = getHeight();
+
+			boardScaleWidth = boardBitmap.getWidth();
+			boardScaleHeight = boardBitmap.getHeight();
+
+			if (boardScaleWidth > boardScaleHeight) {
+				// landscape
+				float ratio = (float) boardScaleWidth / screenWidth;
+				boardScaleWidth = screenWidth;
+				boardScaleHeight = (int)(boardScaleHeight / ratio);
+			} else if (boardScaleHeight > boardScaleWidth) {
+				// portrait
+				float ratio = (float) boardScaleHeight / screenHeight;
+				boardScaleHeight = screenHeight;
+				boardScaleWidth = (int)(boardScaleWidth / ratio);
+			} else {
+				// square
+				boardScaleHeight = screenHeight;
+				boardScaleWidth = screenWidth;
+			}
+
+			tileHeight = boardScaleHeight/ROWS;
+			tileWidth = boardScaleWidth/COLS;
+
+			heroScaleWidth = (int) (tileWidth*heroScaleWidthPercent);
+			heroScaleHeight = (int) (tileHeight*heroScaleHeightPercent);
+
+			shiftHeroX = (tileWidth - heroScaleWidth)/2;
+			shiftHeroY = (tileHeight - heroScaleHeight)/2;
+			
+			goalScaleWidth = (int) (tileWidth*goalScaleWidthPercent);
+			goalScaleHeight = (int) (tileHeight*goalScaleHeightPercent);
+
+			int shiftGoalX = (tileWidth - goalScaleWidth)/2;
+			int shiftGoalY = (tileHeight - goalScaleHeight)/2;
+
+			tileWidthSpriteInterval = tileWidth/heroSprite.getNumOfFrames();
+			tileHeightSpriteInterval = tileHeight/heroSprite.getNumOfFrames();
+
+			boardXpos = 0;
+			boardYpos = screenHeight/2 - boardScaleHeight/2;
+
+			goalXpos = boardXpos + shiftGoalX + targetX*tileWidth; goalYpos = boardYpos + shiftGoalY + targetY*tileHeight;
 		}
 
 		@Override
 		public void draw(Canvas canvas) {
 			super.draw(canvas);
+			
+			render();
 
 			canvas.drawColor(Color.WHITE);		// TODO
 
@@ -265,59 +337,13 @@ public class Level1 extends Scenario {
 		}
 
 		@Override
-		public void update() {
-
-			int screenWidth = getWidth();
-			int screenHeight = getHeight();
-
-			int boardScaleWidth = boardBitmap.getWidth();
-			int boardScaleHeight = boardBitmap.getHeight();
-
-			if (boardScaleWidth > boardScaleHeight) {
-				// landscape
-				float ratio = (float) boardScaleWidth / screenWidth;
-				boardScaleWidth = screenWidth;
-				boardScaleHeight = (int)(boardScaleHeight / ratio);
-			} else if (boardScaleHeight > boardScaleWidth) {
-				// portrait
-				float ratio = (float) boardScaleHeight / screenHeight;
-				boardScaleHeight = screenHeight;
-				boardScaleWidth = (int)(boardScaleWidth / ratio);
-			} else {
-				// square
-				boardScaleHeight = screenHeight;
-				boardScaleWidth = screenWidth;
-			}
-
-			int tileHeight = boardScaleHeight/ROWS;
-			int tileWidth = boardScaleWidth/COLS;
-
-			int heroScaleWidth = (int) (tileWidth*heroScaleWidthPercent);
-			int heroScaleHeight = (int) (tileHeight*heroScaleHeightPercent);
-
-			int shiftHeroX = (tileWidth - heroScaleWidth)/2;
-			int shiftHeroY = (tileHeight - heroScaleHeight)/2;
-
-			int goalScaleWidth = (int) (tileWidth*goalScaleWidthPercent);
-			int goalScaleHeight = (int) (tileHeight*goalScaleHeightPercent);
-
-			int shiftGoalX = (tileWidth - goalScaleWidth)/2;
-			int shiftGoalY = (tileHeight - goalScaleHeight)/2;
-
-			int tileWidthSpriteInterval = tileWidth/heroSprite.getNumOfFrames();
-			int tileHeightSpriteInterval = tileHeight/heroSprite.getNumOfFrames();
-
-			int heroCurrentFrame = heroSprite.getFrameNumber();
-
-			boardXpos = 0;
-			boardYpos = screenHeight/2 - boardScaleHeight/2;
-
-			goalXpos = boardXpos + shiftGoalX + targetX*tileWidth; goalYpos = boardYpos + shiftGoalY + targetY*tileHeight;
-
+		public void updateAnimated() {
 			goalSprite.update();
 			goalCurrentBitmap = goalSprite.getCurrentBitmap();
 
 			if (!heroSprite.isLooped()){
+				
+				int heroCurrentFrame = heroSprite.getFrameNumber();
 
 				heroSprite.update();
 
@@ -356,7 +382,21 @@ public class Level1 extends Scenario {
 
 				heroCurrentBitmap = heroStandBitmap;
 			}
-
+			
+		}
+		
+		@Override
+		public void updateNonAnimated() {
+			
+			goalCurrentBitmap = goalSprite.getBitmapByCoords(0, 4);
+			heroCurrentBitmap = heroStandBitmap;
+			
+			heroXpos = boardXpos + heroXcurrentLogic*tileWidth;
+			heroYpos = boardYpos + heroYcurrentLogic*tileHeight;
+		}
+		
+		@Override
+		public void render() {
 			/* scaling bitmaps */	
 			boardBitmap = Bitmap.createScaledBitmap(boardBitmap, boardScaleWidth, boardScaleHeight, true);
 			goalCurrentBitmap = Bitmap.createScaledBitmap(goalCurrentBitmap, goalScaleWidth, goalScaleHeight, true);
