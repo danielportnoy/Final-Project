@@ -28,7 +28,14 @@
             android:summary="toggle animation"
             android:summaryOff="@string/animation_off"
             android:summaryOn="@string/animation_on"
-            android:title="animation" />
+            android:title="Animation" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="SWIPE"
+            android:summary="toggle swipe mode"
+            android:summaryOff="@string/swipe_mode_off"
+            android:summaryOn="@string/swipe_mode_on"
+            android:title="Swipe Mode" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/misc" >
         <CheckBoxPreference
@@ -37,7 +44,7 @@
             android:summary="toggle level instructions"
             android:summaryOff="@string/level_instructions_off"
             android:summaryOn="@string/level_instructions_on"
-            android:title="level instructions" />
+            android:title="Level Instructions" />
     </PreferenceCategory>
 
 </PreferenceScreen>

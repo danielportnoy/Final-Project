@@ -3,7 +3,6 @@ package com.example.finalprojectapp.coderunning;
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
-import com.example.finalprojectapp.activities.LevelPickingActivity;
 import com.example.finalprojectapp.activities.ScenraioDisplyActivity;
 import com.example.finalprojectapp.activities.SettingsActivity;
 import com.example.finalprojectapp.coderunning.adapter.CodeRunningLinesAdapter;
@@ -30,6 +29,8 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 
 	private MySurfaceView gameView;
 	private CodePlayer player;
+	
+	private SharedPreferences SP;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,8 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 		CodeRunningLinesAdapter codeRunningLinesAdapter = new CodeRunningLinesAdapter(this, android.R.layout.simple_list_item_1, logics.getRunningCodeLines());
 		codeLines.setAdapter(codeRunningLinesAdapter);	
 
-		SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
-		int cps = SP.getInt(Constants.CPS_KEY,Constants.DEFAULT_CPS);
 		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
 
 		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);
@@ -55,14 +55,26 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 
 		LinearLayout gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_Running_Game);
 		gameViewLayout.addView(gameView);
+		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
+		int cps = SP.getInt(Constants.CPS_KEY,Constants.DEFAULT_CPS);
+		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
+		
+		gameView.setFps(fps);
+		gameView.setAnimating(animation);
+		
+		LevelManager.getInstance().runCode();
+		
+		player = new CodePlayer(LevelManager.getInstance().getNumOfSnapshots() , this, ((Button)findViewById(R.id.button_PlayPause)),cps);
 
-		LevelManager.getInstance().getScenario().reset();
-
-		LevelManager.getInstance().getRootNode().run();
-
-		player = new CodePlayer(LevelManager.getInstance().getCodeRunningManager().getLogics().getSnapshots().size() , this, ((Button)findViewById(R.id.button_PlayPause)),cps);
+		player.start();
 		player.display();
-
 	}
 
 	@Override
@@ -83,19 +95,6 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
-	}
-
-
-	public void gameFinished(boolean isWin){
-		Intent intent = null;
-		if(isWin)
-			intent = new Intent(this, LevelPickingActivity.class);
-		else
-			intent = new Intent(this, ScenraioDisplyActivity.class);
-		
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-		finish(); 
 	}
 
 	@Override

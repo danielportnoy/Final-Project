@@ -43,6 +43,13 @@ public class CodeWritingActivity extends Activity {
 		manager.refresh();
 				
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		LevelManager.getInstance().refrashWritingScreen();
+	}
 
 	@Override
 	public void onBackPressed() {

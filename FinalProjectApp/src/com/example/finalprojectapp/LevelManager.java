@@ -86,6 +86,10 @@ public class LevelManager {
 	public void clearCode() {
 		rootNode = new InitialBlockNode();
 	}
+	
+	public int getNumOfSnapshots(){
+		return getCodeRunningManager().getLogics().getSnapshots().size();
+	}
 
 	/********** identifier utilities **********/
 	public boolean getBooleanValueFromIdentifier(String identifier){
@@ -132,6 +136,12 @@ public class LevelManager {
 
 	public void SetterClick(Setter setter) {
 		codeWritingManager.SetterClick(setter);
+	}
+
+	public void runCode() {
+		getScenario().reset();
+		getCodeRunningManager().getLogics().reset();
+		getRootNode().run();
 	}
 
 	/******************* Utility *******************/

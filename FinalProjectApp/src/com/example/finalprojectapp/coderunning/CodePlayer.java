@@ -1,6 +1,8 @@
 package com.example.finalprojectapp.coderunning;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.util.Log;
 import android.widget.Button;
 
 import com.example.finalprojectapp.Constants;
@@ -9,7 +11,7 @@ import com.example.finalprojectapp.utilities.Android_Utils;
 
 public class CodePlayer {
 
-	private CodeRunningActivity cra; 
+	private Activity activity; 
 	private Button playPauseButton;
 
 	private int numberOfSnapshots;
@@ -18,21 +20,40 @@ public class CodePlayer {
 	private boolean isPlaying;
 
 	private PlayerThread playerTheard;
-	
-	private int sleepTime_mm;
 
-	public CodePlayer(int numberOfSnapshots, CodeRunningActivity cra, Button playPauseButton , int cps) {
+	private int cps;
+
+	public CodePlayer(int numberOfSnapshots, Activity activity, Button playPauseButton , int cps) {
 		this.numberOfSnapshots = numberOfSnapshots;
-		this.cra = cra;
+		this.activity = activity;
 		this.playPauseButton = playPauseButton;
-		
-		sleepTime_mm = Math.round(1000/cps);
+
+		this.cps = cps;
 
 		currentSnapshotNumber = 0;
 
 		isPlaying = false;
 		playPauseButton.setText("Play");
 
+	}
+	
+	public void setCurrentSnapshotNumber(int currentSnapshotNumber) {
+		this.currentSnapshotNumber = currentSnapshotNumber;
+	}
+	
+	public void setCps(int cps) {
+		this.cps = cps;
+	}
+	
+	public void setNumberOfSnapshots(int numberOfSnapshots) {
+		this.numberOfSnapshots = numberOfSnapshots;
+	}
+	
+	private int sleepInMM() {
+		return Math.round(1000/cps);
+	}
+
+	public void start() {
 		playerTheard = new PlayerThread();
 		playerTheard.setRunning(true);
 		playerTheard.start();
@@ -60,7 +81,7 @@ public class CodePlayer {
 	}
 
 	public void display() {
-		cra.runOnUiThread(new Runnable() {
+		activity.runOnUiThread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -101,7 +122,7 @@ public class CodePlayer {
 
 	public void togglePlay() {
 		isPlaying = !isPlaying;
-		
+
 		if(isPlaying())
 			playPauseButton.setText("Play");
 		else
@@ -113,9 +134,9 @@ public class CodePlayer {
 		AlertDialog.Builder builder;
 
 		if(LevelManager.getInstance().checkWin(currentSnapshotNumber))
-			builder = Android_Utils.getEndGameDialog(cra, Constants.LEVEL_END_WIN_TITLE_TEXT, Constants.LEVEL_END_WIN_TEXT, Constants.LEVEL_END_WIN_POSITIVE_TEXT , true);
+			builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_WIN_TITLE_TEXT, Constants.LEVEL_END_WIN_TEXT, Constants.LEVEL_END_WIN_POSITIVE_TEXT , true);
 		else
-			builder = Android_Utils.getEndGameDialog(cra, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_TEXT, Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
+			builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_TEXT, Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
 
 		builder.create().show();
 	}
@@ -135,9 +156,11 @@ public class CodePlayer {
 
 				if(isPlaying)
 					nextSnapshot();
+				
+				Log.d("aaa", isPlaying +"");
 
 				try {
-					sleep(sleepTime_mm);
+					sleep(sleepInMM());
 				} 
 				catch (InterruptedException e) {
 					e.printStackTrace();

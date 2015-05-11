@@ -25,6 +25,4 @@ public class CodeRunningManager {
 	public CodeRunningGraphicUnit getGraphics() {
 		return graphics;
 	}
-	
-	
 }

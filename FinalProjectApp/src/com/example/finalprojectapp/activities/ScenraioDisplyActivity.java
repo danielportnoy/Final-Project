@@ -25,15 +25,16 @@ import android.widget.LinearLayout.LayoutParams;
 public class ScenraioDisplyActivity extends Activity implements OnClickListener {
 
 	private MySurfaceView gameView;
+	
+	private SharedPreferences SP;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scenario_disply);
 
-		SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
-		boolean levelInstructions = SP.getBoolean(Constants.LI_KEY, Constants.DEFAULT_LI);
 		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
 
 		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);
@@ -41,13 +42,6 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 
 		LinearLayout gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_GameScreen);
 		gameViewLayout.addView(gameView);
-
-		if(levelInstructions){
-			AlertDialog.Builder builder = Android_Utils.getStartGameDialog(this,
-					Constants.LEVEL_START_TEXT, LevelManager.getInstance().getScenario().getLevelText());
-
-			builder.create().show();
-		}
 	}
 
 	@Override
@@ -83,6 +77,20 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 			b.setEnabled(true);
 
 		gameView.reset();
+		
+		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
+		boolean levelInstructions = SP.getBoolean(Constants.LI_KEY, Constants.DEFAULT_LI);
+		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
+		
+		gameView.setFps(fps);
+		gameView.setAnimating(animation);
+		
+		if(levelInstructions){
+			AlertDialog.Builder builder = Android_Utils.getStartGameDialog(this,
+					Constants.LEVEL_START_TEXT, LevelManager.getInstance().getScenario().getLevelText());
+
+			builder.create().show();
+		}	
 	}
 
 	@Override

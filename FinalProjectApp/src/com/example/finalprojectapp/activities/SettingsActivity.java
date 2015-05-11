@@ -23,15 +23,4 @@ public class SettingsActivity extends PreferenceActivity {
 			addPreferencesFromResource(R.xml.preferences);
 		}
 	}
-
-	/*@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-
-		Intent intent = new Intent(this, MainManuActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-		finish();
-	}*/
-
 }

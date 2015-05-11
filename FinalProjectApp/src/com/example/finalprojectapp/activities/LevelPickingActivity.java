@@ -1,12 +1,16 @@
 package com.example.finalprojectapp.activities;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
+import com.example.finalprojectapp.gamescreen.GameScreenActivity;
 import com.example.finalprojectapp.scenario.concrete.Level1;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +23,7 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 	private SharedPreferences settings;*/
 
 	private LevelManager levelManager = LevelManager.getInstance();
+	private SharedPreferences SP;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,9 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 
 		/*settings = 	getSharedPreferences(Constants.SHARED_PREFERANCES, MODE_PRIVATE);
 		editor = settings.edit();*/
-		
+
+		SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
 		// TODO temporary
 		((Button)findViewById(R.id.buttonLEVEL2)).setEnabled(false);
 		((Button)findViewById(R.id.buttonLEVEL3)).setEnabled(false);
@@ -39,24 +46,31 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 		getMenuInflater().inflate(R.menu.level_picking_menu, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-	    case R.id.action_settings:
-	        // Settings option clicked.
-	    	Intent intent = new Intent(this, SettingsActivity.class);
+		case R.id.action_settings:
+			// Settings option clicked.
+			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
-	        return true;
-	    default:
-	        return super.onOptionsItemSelected(item);
-	    }
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
 	public void onClick(View v) {
 
-		Intent intent = new Intent(this, ScenraioDisplyActivity.class);
+		Intent intent = null;
+		
+		boolean isSwipeMode = SP.getBoolean(Constants.SWIPE_KEY,Constants.DEFAULT_SWIPE);
+
+		if(isSwipeMode)
+			intent = new Intent(this, GameScreenActivity.class);
+		else
+			intent = new Intent(this, ScenraioDisplyActivity.class);
 
 		switch (v.getId()) {
 		case R.id.buttonLEVEL1:
@@ -66,14 +80,14 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 
 			break;
 		case R.id.buttonLEVEL2:
-			
+
 			levelManager.reset();
-			
+
 			break;
 		case R.id.buttonLEVEL3:
-		
+
 			levelManager.reset();
-			
+
 			break;
 
 		default:
@@ -81,13 +95,13 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 		}
 
 		startActivity(intent);
-		//finish(); TODO 
+		//finish(); //TODO 
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		
+
 		Intent intent = new Intent(this, MainManuActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);

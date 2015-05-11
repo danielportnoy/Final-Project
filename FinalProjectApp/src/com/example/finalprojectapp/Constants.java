@@ -27,6 +27,11 @@ public class Constants {
 	public static final boolean DEFAULT_ANIMATION = false;
 	public static final String ANIMATION_KEY = "ANIMATION";
 
+	//	SWIPE
+	public static final boolean DEFAULT_SWIPE = true;
+	public static final String 	SWIPE_KEY = "SWIPE";
+
+
 
 	// LEVEL1 HERO SPRITE
 	public static final int HERO_SPRITE_ROWS = 4;

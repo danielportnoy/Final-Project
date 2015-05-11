@@ -11,22 +11,28 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 	private SurfaceHolder holder;
 	private GameLoopThread gameLoopThread;
-
-	private int sleepTime_mm;
-
+	
+	private int fps;
 	private boolean isAnimating;
 
 	public MySurfaceView(Context context, int fps, boolean isAnimating) {
 		super(context);
 
-		sleepTime_mm = Math.round(1000/fps);
-
 		this.isAnimating = isAnimating;
+		this.fps = fps;
 
 		holder = getHolder();
 		holder.addCallback(this);
 
 		gameLoopThread = new GameLoopThread(this);
+	}
+	
+	public void setFps(int fps) {
+		this.fps = fps;
+	}
+	
+	public void setAnimating(boolean isAnimating) {
+		this.isAnimating = isAnimating;
 	}
 
 	@Override
@@ -61,6 +67,10 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 			catch (InterruptedException e) {
 			}
 		}
+	}
+	
+	private int sleepInMM(){
+		return Math.round(1000/fps);
 	}
 
 	// logical reset function
@@ -127,7 +137,7 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 				}
 
 				try {
-					sleep(sleepTime_mm);
+					sleep(sleepInMM());
 				} 
 				catch (InterruptedException e) {
 					e.printStackTrace();

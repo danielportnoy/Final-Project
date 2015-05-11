@@ -75,4 +75,9 @@ public class CodeRunningLogicUnit {
 	public boolean checkLoss(int gameSnapShotNum){
 		return snapshots.get(gameSnapShotNum).gameSnapshot.checkLoss();
 	}
+	
+	public void reset() {
+		values = new VarValues();
+		snapshots = new ArrayList<Snapshot>();
+	}
 }

@@ -2,12 +2,15 @@ package com.example.finalprojectapp.utilities;
 
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.R;
+import com.example.finalprojectapp.activities.LevelPickingActivity;
 import com.example.finalprojectapp.activities.ScenraioDisplyActivity;
-import com.example.finalprojectapp.coderunning.CodeRunningActivity;
+import com.example.finalprojectapp.gamescreen.GameScreenActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
@@ -56,15 +59,15 @@ public class Android_Utils {
 		return opts;
 	}
 
-	public static AlertDialog.Builder getEndGameDialog(final CodeRunningActivity cra,
+	public static AlertDialog.Builder getEndGameDialog(final Activity activity,
 			String title, String text , String textPositive, final boolean isWin){
 
 		// Creating and Building the Dialog 
-		AlertDialog.Builder builder = new AlertDialog.Builder(cra);
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
 		builder.setTitle(title);
 
-		LayoutInflater inflater = (LayoutInflater) cra.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		LayoutInflater inflater = (LayoutInflater) activity.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View view = inflater.inflate(R.layout.end_level_dialog, null);
 
 		TextView t = (TextView)view.findViewById(R.id.textView_gameEndText);
@@ -76,7 +79,26 @@ public class Android_Utils {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				cra.gameFinished(isWin);
+
+				SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(activity);
+				boolean isSwipeMode = SP.getBoolean(Constants.SWIPE_KEY,Constants.DEFAULT_SWIPE);
+
+				
+				Intent intent = null;
+				if(isWin || !isSwipeMode)
+				{
+					if(isWin)
+						intent = new Intent(activity, LevelPickingActivity.class);
+					else if(!isSwipeMode)
+						intent = new Intent(activity, ScenraioDisplyActivity.class);
+					
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					activity.startActivity(intent);
+					activity.finish(); 
+				}
+				else{
+					((GameScreenActivity)activity).setTab(0);
+				}
 			}
 		});
 
@@ -91,14 +113,14 @@ public class Android_Utils {
 		return builder;
 	}
 
-	public static AlertDialog.Builder getStartGameDialog(final ScenraioDisplyActivity sda, String title, String text){
+	public static AlertDialog.Builder getStartGameDialog(final Activity activity, String title, String text){
 
 		// Creating and Building the Dialog 
-		AlertDialog.Builder builder = new AlertDialog.Builder(sda);
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
 		builder.setTitle(title);
 
-		LayoutInflater inflater = (LayoutInflater) sda.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		LayoutInflater inflater = (LayoutInflater) activity.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View view = inflater.inflate(R.layout.start_level_dialog, null);
 
 		TextView t = (TextView)view.findViewById(R.id.textView_gameStartText);
@@ -111,7 +133,7 @@ public class Android_Utils {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(sda);
+				SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(activity);
 				Editor editor = SP.edit();
 
 				if ( isChecked )
