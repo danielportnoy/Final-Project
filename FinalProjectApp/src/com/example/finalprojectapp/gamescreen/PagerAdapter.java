@@ -2,9 +2,9 @@ package com.example.finalprojectapp.gamescreen;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class PagerAdapter extends FragmentPagerAdapter{
+public class PagerAdapter extends FragmentStatePagerAdapter{
 
 	//private FragmentManager fm;
 
@@ -14,12 +14,20 @@ public class PagerAdapter extends FragmentPagerAdapter{
 
 	private RunningFragment runningFragment;
 
+	private boolean disableRunningFragment;
+
 	public PagerAdapter(FragmentManager fm) {
 		super(fm);
 		//this.fm = fm;
 		displayFragment = new DisplayFragment();
 		codingFragment = new CodingFragment();
 		runningFragment = new RunningFragment();
+
+		disableRunningFragment = false;		
+	}
+
+	public void setDisableRunningFragment(boolean disableRunningFragment) {
+		this.disableRunningFragment = disableRunningFragment;
 	}
 
 	@Override
@@ -31,7 +39,10 @@ public class PagerAdapter extends FragmentPagerAdapter{
 		case 1:
 			return codingFragment;
 		case 2:
-			return runningFragment;
+			if (!disableRunningFragment)
+				return runningFragment;
+			else
+				return null;
 		default:
 			break;
 		}
@@ -40,7 +51,10 @@ public class PagerAdapter extends FragmentPagerAdapter{
 
 	@Override
 	public int getCount() {
-		return 3;
+		if(!disableRunningFragment)
+			return 3;
+		else 
+			return 2;
 	}
 
 	public void refresh(int position){
@@ -58,7 +72,4 @@ public class PagerAdapter extends FragmentPagerAdapter{
 			break;
 		}
 	}
-
-
-
 }

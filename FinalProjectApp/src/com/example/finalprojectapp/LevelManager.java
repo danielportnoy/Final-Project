@@ -144,6 +144,18 @@ public class LevelManager {
 		getRootNode().run();
 	}
 
+	public void setEditable(Node makerNode) {
+		codeWritingManager.getLogics().setCurrentMakerNode(makerNode);
+	}
+
+	public boolean isEditMode() {
+		return codeWritingManager.getLogics().isEditMode();
+	}
+
+	public void setEditMode(boolean b) {
+		codeWritingManager.getLogics().setEditMode(b);
+	}
+
 	/******************* Utility *******************/
 
 }

@@ -1,7 +1,9 @@
 package com.example.finalprojectapp.node.concrete.operators.relational;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
@@ -22,21 +24,78 @@ public class EqualsNode extends Node {
 	public EqualsNode() {
 		setType(Type.Bool);
 	}
+	
+	@Override
+	public boolean DeleteChildNode(Node childNode) {
+		
+		Set<String> used = new HashSet<String>();
+		
+		if(childNode.equals(left) && right!=null)
+			used.addAll(right.getUsedIdentifiers());
+		else if(childNode.equals(right))
+			used = new HashSet<String>();
 
+		Set<String> intersection = new HashSet<String>(used);
+		intersection.retainAll(childNode.getDeclaredIdentifiers());
+
+		if(intersection.isEmpty()){
+			if(childNode.equals(left))
+				left = null;
+			else if(childNode.equals(right))
+				right = null;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	@Override
+	public Set<String> getDeclaredIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(left!=null)
+			res.addAll(left.getDeclaredIdentifiers());
+		if(right!=null)
+			res.addAll(right.getDeclaredIdentifiers());
+		return res;
+	}
+
+	@Override
+	public Set<String> getUsedIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(left!=null)
+			res.addAll(left.getUsedIdentifiers());
+		if(right!=null)
+			res.addAll(right.getUsedIdentifiers());
+		return res;
+	}
+
+
+	@Override
+	public Node getFirstNode() {
+		if(left != null)
+			return left;
+		else if(right != null)
+			return right;
+		else
+			return null;
+	}
+	
 	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
 		if(left == null)
-			res.add(new CodeWritingPart(false, false, null, new LeftSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new LeftSetter(this), this));
 		else			
 			res.addAll(left.getCodeWritingParts());
 
-		res.add(new CodeWritingPart(false, false, "==", null));
+		res.add(new CodeWritingPart(false, false, "==", null, this));
 
 		if(right == null)
-			res.add(new CodeWritingPart(false, false, null, new RightSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new RightSetter(this), this));
 		else			
 			res.addAll(right.getCodeWritingParts());
 

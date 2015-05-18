@@ -10,8 +10,10 @@ import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.utilities.Android_Utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -60,22 +62,40 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 		for (final CodeWritingPart codeWritingPart : codeWritingParts) {
 
 			if(codeWritingPart.getSetter()!=null)
-				handleSetter(codeLineLinearLayout, codeWritingPart.getSetter());
+				handleSetter(codeLineLinearLayout, codeWritingPart.getSetter(), codeWritingPart);
 			else if(codeWritingPart.getText()!=null)
-				handleText(codeLineLinearLayout, codeWritingPart.getText());
+				handleText(codeLineLinearLayout, codeWritingPart.getText(), codeWritingPart);
 			else if(codeWritingPart.isTab())
 				handleTab(codeLineLinearLayout);
 		}
 
 	}
 
-	private void handleText(LinearLayout codeLineLinearLayout, final String textString) {
+	private void handleText(LinearLayout codeLineLinearLayout, final String textString, final CodeWritingPart codeWritingPart) {
 		TextView text = new TextView(context);
 
 		Android_Utils.setLayoutParams(text , context);
 
 		text.setText(textString);
 		text.setTextAppearance(context, android.R.style.TextAppearance_Small);
+
+		if(codeWritingPart.isEditable() && LevelManager.getInstance().isEditMode())
+			text.setBackgroundColor(Color.YELLOW);
+
+		/***** Testing *****/
+
+		text.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				LevelManager.getInstance().setEditMode(true);
+				LevelManager.getInstance().setEditable(codeWritingPart.getMakerNode());
+				LevelManager.getInstance().refrashWritingScreen();
+				return false;
+			}
+		});
+
+		/***** Testing *****/
 
 		codeLineLinearLayout.addView(text);
 	}
@@ -91,7 +111,7 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 		codeLineLinearLayout.addView(tab);
 	}
 
-	private void handleSetter(LinearLayout codeLineLinearLayout,final Setter setter) {
+	private void handleSetter(LinearLayout codeLineLinearLayout,final Setter setter, CodeWritingPart codeWritingPart) {
 		Button button = new Button(context);
 
 		//Android_Utils.setLayoutParams(button , context);	// TODO
@@ -112,17 +132,30 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 		android:shadowRadius="5"
 		 */
 
-		if(setter.isMandatory())
-			button.setBackgroundResource(R.drawable.mandatory_button);
-		else if(!setter.isMandatory())
-			button.setBackgroundResource(R.drawable.not_mandatory_button);
+		if(setter.isMandatory()){
+			if(codeWritingPart.isEditable() && LevelManager.getInstance().isEditMode())
+				button.setBackgroundResource(R.drawable.mandatory_button_highlighted);
+			else
+				button.setBackgroundResource(R.drawable.mandatory_button);
+		}
+		else if(!setter.isMandatory()){
+			if(codeWritingPart.isEditable() && LevelManager.getInstance().isEditMode())
+				button.setBackgroundResource(R.drawable.not_mandatory_button_highlighted);
+			else
+				button.setBackgroundResource(R.drawable.not_mandatory_button);
+		}
 
 		button.setText(setter.getText());
 		button.setTextAppearance(context, android.R.style.TextAppearance_Small);
 
+
 		button.setOnClickListener(new OnClickListener() {				
 			@Override
 			public void onClick(View v) {
+				LevelManager.getInstance().setEditMode(false);
+				LevelManager.getInstance().setEditable(null);
+				LevelManager.getInstance().refrashWritingScreen();
+
 				LevelManager.getInstance().SetterClick(setter);
 			}
 		});

@@ -1,7 +1,9 @@
 package com.example.finalprojectapp.scenario.concrete;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -152,9 +154,33 @@ public class Level1 extends Scenario {
 
 			List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-			res.add(new CodeWritingPart(false, false, "goRight();", null));
+			res.add(new CodeWritingPart(false, false, "goRight();", null, this));
 
 			return res;
+		}
+		
+		@Override
+		public boolean DeleteChildNode(Node childNode) {
+			return true;
+		}
+		
+		@Override
+		public Set<String> getDeclaredIdentifiers() {
+			
+			HashSet<String> res = new HashSet<String>();
+			return res;
+		}
+		
+		@Override
+		public Set<String> getUsedIdentifiers() {
+
+			HashSet<String> res = new HashSet<String>();
+			return res;
+		}
+		
+		@Override
+		public Node getFirstNode() {
+				return null;
 		}
 
 		@Override

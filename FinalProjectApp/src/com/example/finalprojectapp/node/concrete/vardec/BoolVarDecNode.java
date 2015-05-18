@@ -1,7 +1,9 @@
 package com.example.finalprojectapp.node.concrete.vardec;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
@@ -20,22 +22,69 @@ public class BoolVarDecNode extends Node {
 		this.identifier = identifier;
 		setType(Type.Statement);
 	}
+	
+	@Override
+	public boolean DeleteChildNode(Node childNode) {
+
+		Set<String> used = new HashSet<String>();
+
+		if(childNode.equals(initialValue))
+			used = new HashSet<String>();
+
+		Set<String> intersection = new HashSet<String>(used);
+		intersection.retainAll(childNode.getDeclaredIdentifiers());
+
+		if(intersection.isEmpty()){
+			if(childNode.equals(initialValue))
+				initialValue = null;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	@Override
+	public Set<String> getDeclaredIdentifiers() {
+		
+		HashSet<String> res = new HashSet<String>();
+		if(initialValue!=null)
+			res.addAll(initialValue.getDeclaredIdentifiers());
+		res.add(identifier);
+		return res;
+	}
+	
+	@Override
+	public Set<String> getUsedIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(initialValue!=null)
+			res.addAll(initialValue.getUsedIdentifiers());
+		return res;
+	}
+	
+	@Override
+	public Node getFirstNode() {
+		if(initialValue != null)
+			return initialValue;
+		else
+			return null;
+	}
 
 	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodeWritingPart(false, false, "boolean "+ identifier, null));
+		res.add(new CodeWritingPart(false, false, "boolean "+ identifier, null, this));
 
 		if(initialValue == null){
-			res.add(new CodeWritingPart(false, false, null, new InitialValueSetter(this)));
-			res.add(new CodeWritingPart(false, false, ";", null));
+			res.add(new CodeWritingPart(false, false, null, new InitialValueSetter(this), this));
+			res.add(new CodeWritingPart(false, false, ";", null, this));
 		}
 		else{
-			res.add(new CodeWritingPart(false, false, "=", null));
+			res.add(new CodeWritingPart(false, false, "=", null, this));
 			res.addAll(initialValue.getCodeWritingParts());
-			res.add(new CodeWritingPart(false, false, ";", null));
+			res.add(new CodeWritingPart(false, false, ";", null, this));
 		}
 
 		return res;

@@ -1,7 +1,9 @@
 package com.example.finalprojectapp.node.concrete.statements;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
@@ -24,45 +26,132 @@ public class ForNode extends Node{			// TODO
 	}
 
 	@Override
+	public boolean DeleteChildNode(Node childNode) {
+
+		Set<String> used = new HashSet<String>();
+
+		if(childNode.equals(init)){
+			if(condition != null)
+				used.addAll(condition.getUsedIdentifiers());
+			if(update != null)
+				used.addAll(update.getUsedIdentifiers());
+			if(body != null)
+				used.addAll(body.getUsedIdentifiers());
+		}
+		else if(childNode.equals(condition)){
+			if(update != null)
+				used.addAll(update.getUsedIdentifiers());
+			if(body != null)
+				used.addAll(body.getUsedIdentifiers());
+		}
+		else if(childNode.equals(update) && body != null)
+			used.addAll(body.getUsedIdentifiers());
+		else if(childNode.equals(body))
+			used = new HashSet<String>();
+
+
+		Set<String> intersection = new HashSet<String>(used);
+		intersection.retainAll(childNode.getDeclaredIdentifiers());
+
+		if(intersection.isEmpty()){
+			if(childNode.equals(init))
+				init = null;
+			else if(childNode.equals(condition))
+				condition = null;
+			else if(childNode.equals(update))
+				update = null;
+			else if(childNode.equals(body))
+				body = null;
+			return true;
+		}
+		else
+			return false;
+	}
+
+	@Override
+	public Set<String> getDeclaredIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(init!=null)
+			res.addAll(init.getDeclaredIdentifiers());
+		if(condition!=null)
+			res.addAll(condition.getDeclaredIdentifiers());
+		if(update!=null)
+			res.addAll(update.getDeclaredIdentifiers());
+		if(body!=null)
+			res.addAll(body.getDeclaredIdentifiers());
+		return res;
+	}
+
+	@Override
+	public Set<String> getUsedIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(init!=null)
+			res.addAll(init.getUsedIdentifiers());
+		if(condition!=null)
+			res.addAll(condition.getUsedIdentifiers());
+		if(update!=null)
+			res.addAll(update.getUsedIdentifiers());
+		if(body!=null)
+			res.addAll(body.getUsedIdentifiers());
+		return res;
+	}
+
+	@Override
+	public Node getFirstNode() {
+		if(init != null)
+			return init;
+		else if(condition != null)
+			return condition;
+		else if(update != null)
+			return update;
+		else if(body != null)
+			return body;
+		else
+			return null;
+	}
+
+	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodeWritingPart(false, false, "for (", null));
+		res.add(new CodeWritingPart(false, false, "for (", null, this));
 
 		if(init == null){
-			res.add(new CodeWritingPart(false, false, null, new InitSetter(this)));
-			res.add(new CodeWritingPart(false, false, ";", null));
+			res.add(new CodeWritingPart(false, false, null, new InitSetter(this), this));
+			res.add(new CodeWritingPart(false, false, ";", null, this));
 		}
 		else
 			res.addAll(init.getCodeWritingParts());
 
 		if(condition == null)
-			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this), this));
 		else
 			res.addAll(condition.getCodeWritingParts());
 
-		res.add(new CodeWritingPart(false, false, ";", null));
+		res.add(new CodeWritingPart(false, false, ";", null, this));
 
 		if(update == null)
-			res.add(new CodeWritingPart(false, false, null, new UpdateSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new UpdateSetter(this), this));
 		else
 			res.addAll(update.getCodeWritingParts());
 
-		res.add(new CodeWritingPart(false, false, ")", null));
+		res.add(new CodeWritingPart(false, false, ")", null, this));
 
 
 		if(body == null){
-			res.add(new CodeWritingPart(false, true, null, null));
-			res.add(new CodeWritingPart(true, false, null, null));
+			res.add(new CodeWritingPart(false, true, null, null, this));
+			res.add(new CodeWritingPart(true, false, null, null, this));
 
-			res.add(new CodeWritingPart(false, false, null, new BodySetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new BodySetter(this), this));
 		}
 		else{
 			if(body instanceof BlockNode)	//TODO
 				res.addAll(body.getCodeWritingParts());
 			else{
-				res.add(new CodeWritingPart(false, true, null, null));
+				res.add(new CodeWritingPart(false, true, null, null, this));
 				res.addAll(CodeWritingPart.tabber(body.getCodeWritingParts()));
 			}
 
@@ -112,7 +201,7 @@ public class ForNode extends Node{			// TODO
 			init.run();
 
 		if(condition!=null){
-			
+
 			while(condition.run().getBoolValue()){
 				body.run();
 

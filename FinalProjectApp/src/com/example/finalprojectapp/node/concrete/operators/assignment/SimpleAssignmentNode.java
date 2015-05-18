@@ -1,7 +1,9 @@
 package com.example.finalprojectapp.node.concrete.operators.assignment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
@@ -12,10 +14,10 @@ import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
 public class SimpleAssignmentNode extends Node {
-	
+
 	private Type typeOfIdentifier;
 	private String identifierName;
-	
+
 	private Node assignmentValue;
 
 	public SimpleAssignmentNode(Type typeOfIdentifier, String identifierName) {
@@ -23,22 +25,70 @@ public class SimpleAssignmentNode extends Node {
 		this.identifierName = identifierName;
 		setType(Type.Statement);
 	}
+	
+	@Override
+	public boolean DeleteChildNode(Node childNode) {
+		
+		Set<String> used = new HashSet<String>();
+		
+		if(childNode.equals(assignmentValue))
+			used = new HashSet<String>();
+
+		Set<String> intersection = new HashSet<String>(used);
+		intersection.retainAll(childNode.getDeclaredIdentifiers());
+
+		if(intersection.isEmpty()){
+			if(childNode.equals(assignmentValue))
+				assignmentValue = null;
+			return true;
+		}
+		else
+			return false;
+	}
+
+
+	@Override
+	public Set<String> getDeclaredIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(assignmentValue != null)
+			res.addAll(assignmentValue.getDeclaredIdentifiers());
+		return res;
+	}
+
+	@Override
+	public Set<String> getUsedIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(assignmentValue != null)
+			res.addAll(assignmentValue.getUsedIdentifiers());
+		res.add(identifierName);
+		return res;
+	}
+
+	@Override
+	public Node getFirstNode() {
+		if(assignmentValue != null)
+			return assignmentValue;
+		else
+			return null;
+	}
 
 	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {
-		
+
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodeWritingPart(false, false, identifierName , null));
-		res.add(new CodeWritingPart(false, false, "=", null));
+		res.add(new CodeWritingPart(false, false, identifierName , null, this));
+		res.add(new CodeWritingPart(false, false, "=", null, this));
 
 
 		if(assignmentValue == null)
-			res.add(new CodeWritingPart(false, false, null, new AssignmentValueSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new AssignmentValueSetter(this), this));
 		else			
 			res.addAll(assignmentValue.getCodeWritingParts());
-		
-		res.add(new CodeWritingPart(false, false, ";", null));
+
+		res.add(new CodeWritingPart(false, false, ";", null, this));
 
 		return res;
 	}
@@ -61,9 +111,9 @@ public class SimpleAssignmentNode extends Node {
 
 	@Override
 	public ReturnObject run() {
-		
+
 		LevelManager.getInstance().takeSnapshot(this);
-		
+
 		switch (typeOfIdentifier) {
 		case Bool:
 			LevelManager.getInstance().putBooleanValueToIdentifier(identifierName, assignmentValue.run().getBoolValue());
@@ -74,22 +124,22 @@ public class SimpleAssignmentNode extends Node {
 		default:
 			break;
 		}
-		
+
 		return new ReturnObject();
 	}
-	
+
 	class AssignmentValueSetter extends Setter{
 
 		final static int order = 0;
 
 		public AssignmentValueSetter(Node parent) {	// TODO	
 			super(null, true, parent, order);	
-			
+
 			if(typeOfIdentifier.equals(Type.Bool))
 				setText("< bool expr >");
 			else if(typeOfIdentifier.equals(Type.Int))
 				setText("< int expr >");
-			
+
 		}
 
 		@Override

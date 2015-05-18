@@ -42,9 +42,11 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020002;
         public static final int level1_background=0x7f020003;
         public static final int mandatory_button=0x7f020004;
-        public static final int not_mandatory_button=0x7f020005;
-        public static final int tile_set_one=0x7f020006;
-        public static final int tile_set_two=0x7f020007;
+        public static final int mandatory_button_highlighted=0x7f020005;
+        public static final int not_mandatory_button=0x7f020006;
+        public static final int not_mandatory_button_highlighted=0x7f020007;
+        public static final int tile_set_one=0x7f020008;
+        public static final int tile_set_two=0x7f020009;
     }
     public static final class id {
         public static final int LinearLayout_CodeItem=0x7f09001f;

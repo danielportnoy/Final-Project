@@ -2,7 +2,6 @@ package com.example.finalprojectapp.coderunning;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.util.Log;
 import android.widget.Button;
 
 import com.example.finalprojectapp.Constants;
@@ -157,8 +156,6 @@ public class CodePlayer {
 				if(isPlaying)
 					nextSnapshot();
 				
-				Log.d("aaa", isPlaying +"");
-
 				try {
 					sleep(sleepInMM());
 				} 

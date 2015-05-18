@@ -1,8 +1,8 @@
 package com.example.finalprojectapp.gamescreen;
 
+import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.activities.SettingsActivity;
-import com.example.finalprojectapp.node.Setter;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -19,8 +19,24 @@ public class GameScreenActivity extends FragmentActivity {
 
 	private ViewPager viewPager;
 	private PagerAdapter pagerAdapter;
-	
+
 	private boolean firstResume = true;
+
+	private Tab tab_Level, tab_Code, tab_Run;
+
+	public PagerAdapter getPagerAdapter() {
+		return pagerAdapter;
+	}
+
+	public void removeRunTab() {
+		if(getActionBar().getTabCount() == 3)
+			getActionBar().removeTab(tab_Run);
+	}
+
+	public void addRunTab() {
+		if(getActionBar().getTabCount() != 3)
+			getActionBar().addTab(tab_Run);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +63,8 @@ public class GameScreenActivity extends FragmentActivity {
 		// Create a tab listener that is called when the user changes tabs.
 		ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 
+			private int lastTab;
+
 			@Override
 			public void onTabReselected(Tab tab, FragmentTransaction ft) {
 				// probably ignore this event
@@ -56,19 +74,26 @@ public class GameScreenActivity extends FragmentActivity {
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 				// When the tab is selected, switch to the
 				// corresponding page in the ViewPager.
-				viewPager.setCurrentItem(tab.getPosition());
+				if(!LevelManager.getInstance().isCodeLinesValid() && tab.getPosition() == 2)
+					viewPager.setCurrentItem(lastTab);
+				else
+					viewPager.setCurrentItem(tab.getPosition());
 			}
 
 			@Override
 			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-				// hide the given tab
+				lastTab = tab.getPosition();
 			}
 		};
 
+		tab_Level = actionBar.newTab().setText("Level").setTabListener(tabListener);
+		tab_Code = actionBar.newTab().setText("Code").setTabListener(tabListener);
+		tab_Run = actionBar.newTab().setText("Run").setTabListener(tabListener);
+
 		// Add 3 tabs, specifying the tab's text and TabListener
-		actionBar.addTab(actionBar.newTab().setText("Level").setTabListener(tabListener));
-		actionBar.addTab(actionBar.newTab().setText("Code").setTabListener(tabListener));
-		actionBar.addTab(actionBar.newTab().setText("Run").setTabListener(tabListener));
+		actionBar.addTab(tab_Level);
+		actionBar.addTab(tab_Code);
+		actionBar.addTab(tab_Run);
 
 		viewPager.setOnPageChangeListener(
 				new ViewPager.SimpleOnPageChangeListener() {
@@ -80,7 +105,7 @@ public class GameScreenActivity extends FragmentActivity {
 						pagerAdapter.refresh(position);
 					}
 				});	
-				
+
 		viewPager.setOffscreenPageLimit(3);// TODO
 	}
 
@@ -90,31 +115,31 @@ public class GameScreenActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.game_screen, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-	    case R.id.action_settings:
-	        // Settings option clicked.
-	    	Intent intent = new Intent(this, SettingsActivity.class);
+		case R.id.action_settings:
+			// Settings option clicked.
+			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
-	        return true;
-	    default:
-	        return super.onOptionsItemSelected(item);
-	    }
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+
 		if(!firstResume)
 			pagerAdapter.refresh(viewPager.getCurrentItem());
-		
+
 		firstResume = false;
 	}
-	
+
 	public void setTab(int i){
 		viewPager.setCurrentItem(i);
 	}

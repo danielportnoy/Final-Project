@@ -1,7 +1,9 @@
 package com.example.finalprojectapp.node.concrete.statements;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
@@ -16,9 +18,66 @@ public class IfThenNode extends Node{
 
 	private Node condition;
 	private Node thenBody;
-	
+
 	public IfThenNode() {
 		setType(Type.Statement);
+	}
+
+	@Override
+	public boolean DeleteChildNode(Node childNode) {
+
+		Set<String> used = new HashSet<String>();
+
+		if(childNode.equals(condition) && thenBody != null)
+			used.addAll(thenBody.getUsedIdentifiers());
+		else if(childNode.equals(thenBody))
+			used = new HashSet<String>();
+
+		Set<String> intersection = new HashSet<String>(used);
+		intersection.retainAll(childNode.getDeclaredIdentifiers());
+
+		if(intersection.isEmpty()){
+			if(childNode.equals(condition))
+				condition = null;
+			else if(childNode.equals(thenBody))
+				thenBody = null;
+			return true;
+		}
+		else
+			return false;
+	}
+
+	@Override
+	public Set<String> getDeclaredIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(condition!=null)
+			res.addAll(condition.getDeclaredIdentifiers());
+		if(thenBody!=null)
+			res.addAll(thenBody.getDeclaredIdentifiers());
+		return res;
+	}
+
+	@Override
+	public Set<String> getUsedIdentifiers() {
+
+		HashSet<String> res = new HashSet<String>();
+		if(condition!=null)
+			res.addAll(condition.getUsedIdentifiers());
+		if(thenBody!=null)
+			res.addAll(thenBody.getUsedIdentifiers());
+		return res;
+	}
+
+
+	@Override
+	public Node getFirstNode() {
+		if(condition != null)
+			return condition;
+		else if(thenBody != null)
+			return thenBody;
+		else
+			return null;
 	}
 
 	@Override
@@ -26,26 +85,26 @@ public class IfThenNode extends Node{
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodeWritingPart(false, false, "if (", null));
+		res.add(new CodeWritingPart(false, false, "if (", null, this));
 
 		if(condition == null)
-			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this), this));
 		else
 			res.addAll(condition.getCodeWritingParts());
 
-		res.add(new CodeWritingPart(false, false, ")", null));
+		res.add(new CodeWritingPart(false, false, ")", null, this));
 
 		if(thenBody == null){
-			res.add(new CodeWritingPart(false, true, null, null));
-			res.add(new CodeWritingPart(true, false, null, null));
+			res.add(new CodeWritingPart(false, true, null, null, this));
+			res.add(new CodeWritingPart(true, false, null, null, this));
 
-			res.add(new CodeWritingPart(false, false, null, new ThenBodySetter(this)));
+			res.add(new CodeWritingPart(false, false, null, new ThenBodySetter(this), this));
 		}
 		else{
 			if(thenBody instanceof BlockNode)	//TODO
 				res.addAll(thenBody.getCodeWritingParts());
 			else{
-				res.add(new CodeWritingPart(false, true, null, null));
+				res.add(new CodeWritingPart(false, true, null, null, this));
 				res.addAll(CodeWritingPart.tabber(thenBody.getCodeWritingParts()));
 			}
 
@@ -57,7 +116,7 @@ public class IfThenNode extends Node{
 
 	@Override
 	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
-		
+
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
@@ -82,7 +141,7 @@ public class IfThenNode extends Node{
 
 		if(condition.run().getBoolValue())
 			thenBody.run();
-		
+
 		return new ReturnObject();
 	}
 

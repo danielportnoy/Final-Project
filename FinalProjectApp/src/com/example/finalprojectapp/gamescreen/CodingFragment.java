@@ -16,12 +16,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 public class CodingFragment extends Fragment {
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	
 		View myFragmentView = inflater.inflate(R.layout.coding_fragment_layout,container,false);
-		
+
 		CodeWritingLogicUnit logics = new CodeWritingLogicUnit();
 
 		ListView codeLines = (ListView)myFragmentView.findViewById(R.id.listView_Writing_Code);
@@ -30,11 +30,12 @@ public class CodingFragment extends Fragment {
 
 		ListView options = (ListView)myFragmentView.findViewById(R.id.listView_Options);
 		OptionsAdapter optionsAdapter = new OptionsAdapter(getActivity(), android.R.layout.simple_list_item_1, logics.getCurrentOptions());
-		options.setAdapter(optionsAdapter);	
-
+		options.setAdapter(optionsAdapter);		
+		
 		CodeWritingGraphicUnit graphics = new CodeWritingGraphicUnit(codeLinesAdapter, optionsAdapter);
 
 		CodeWritingManager manager = new CodeWritingManager(logics, graphics);
+		manager.setGameScreenActivity(getActivity());
 
 		LevelManager.getInstance().registerCodeWritingManager(manager);
 		
@@ -43,6 +44,8 @@ public class CodingFragment extends Fragment {
 	}
 
 	public void refresh() {
+		LevelManager.getInstance().setEditable(null);
+		LevelManager.getInstance().setEditMode(false);
 		LevelManager.getInstance().refrashWritingScreen();
 	}
 

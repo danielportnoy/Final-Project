@@ -1,6 +1,7 @@
 package com.example.finalprojectapp.node;
 
 import java.util.List;
+import java.util.Set;
 
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
@@ -55,5 +56,12 @@ public abstract class Node {
 	
 	public abstract ReturnObject run();
 
+	public abstract Node getFirstNode();
+	
+	public abstract Set<String> getDeclaredIdentifiers();
+
+	public abstract Set<String> getUsedIdentifiers();
+
+	public abstract boolean DeleteChildNode(Node childNode);
 
 }

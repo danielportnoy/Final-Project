@@ -41,20 +41,21 @@ public class CodeWritingActivity extends Activity {
 		LevelManager.getInstance().registerCodeWritingManager(manager);
 
 		manager.refresh();
-				
+
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+		LevelManager.getInstance().setEditMode(false);
+		LevelManager.getInstance().setEditable(null);
 		LevelManager.getInstance().refrashWritingScreen();
 	}
 
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		
+
 		Intent intent = new Intent(this, ScenraioDisplyActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
@@ -67,22 +68,22 @@ public class CodeWritingActivity extends Activity {
 		getMenuInflater().inflate(R.menu.code_screen_menu, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-	    case R.id.action_clear:
-	        // Clear option clicked.
-	    	LevelManager.getInstance().clearCode();
-	    	LevelManager.getInstance().refrashWritingScreen();
-	        return true;
-	    case R.id.action_settings:
-	        // Settings option clicked.
-	    	Intent intent = new Intent(this, SettingsActivity.class);
+		case R.id.action_clear:
+			// Clear option clicked.
+			LevelManager.getInstance().clearCode();
+			LevelManager.getInstance().refrashWritingScreen();
+			return true;
+		case R.id.action_settings:
+			// Settings option clicked.
+			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
-	        return true;
-	    default:
-	        return super.onOptionsItemSelected(item);
-	    }
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }
