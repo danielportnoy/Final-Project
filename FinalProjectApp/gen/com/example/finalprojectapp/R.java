@@ -62,8 +62,8 @@ containing a value of this type.
         public static final int LinearLayout_Screen=0x7f09001a;
         public static final int LinearLayout_Writing=0x7f09000c;
         public static final int LinearLayout_Writing_Code=0x7f09000d;
-        public static final int action_clear=0x7f09002d;
-        public static final int action_settings=0x7f09002c;
+        public static final int action_clear=0x7f09002e;
+        public static final int action_settings=0x7f09002d;
         public static final int buttonCode=0x7f09001d;
         public static final int buttonEXIT=0x7f090019;
         public static final int buttonLEVEL1=0x7f090013;
@@ -90,11 +90,12 @@ containing a value of this type.
         public static final int radioButton_negative=0x7f090026;
         public static final int radioButton_positive=0x7f090025;
         public static final int radioGroup_positive_negative=0x7f090024;
+        public static final int scrollView1=0x7f09002a;
         public static final int seekBarPrefBarContainer=0x7f090027;
         public static final int seekBarPrefSeekBar=0x7f090029;
         public static final int seekBarPrefValue=0x7f090028;
         public static final int textView_gameEndText=0x7f090020;
-        public static final int textView_gameStartText=0x7f09002a;
+        public static final int textView_gameStartText=0x7f09002c;
     }
     public static final class layout {
         public static final int activity_code_running=0x7f030000;

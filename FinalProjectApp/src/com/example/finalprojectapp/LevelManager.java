@@ -1,12 +1,18 @@
 package com.example.finalprojectapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
+import com.example.finalprojectapp.coderunning.snapshot.Snapshot;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.codewriting.managment.CodeWritingManager;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.concrete.block.InitialBlockNode;
+import com.example.finalprojectapp.scenario.Configuration;
 import com.example.finalprojectapp.scenario.Scenario;
+import com.example.finalprojectapp.scenario.TestCase;
 
 public class LevelManager {
 
@@ -115,33 +121,30 @@ public class LevelManager {
 		codeWritingManager.refresh();
 	}
 
-	public void refrashRunningScreen(int snapshotNum){
-		codeRunningManager.refresh(snapshotNum);
+	public void refrashRunningScreen(Snapshot snapshot){
+		codeRunningManager.refresh(snapshot);
 	}
 
 	/********** refresh utilities **********/
-
-	/********** game utilities **********/
-
-	public boolean checkWin(int gameSnapShotNum){
-		return codeRunningManager.getLogics().checkWin(gameSnapShotNum);
-	}
-
-	public boolean checkLoss(int gameSnapShotNum){
-		return codeRunningManager.getLogics().checkLoss(gameSnapShotNum);
-	}
-
-	/********** game utilities **********/
-
 
 	public void SetterClick(Setter setter) {
 		codeWritingManager.SetterClick(setter);
 	}
 
-	public void runCode() {
-		getScenario().reset();
-		getCodeRunningManager().getLogics().reset();
-		getRootNode().run();
+	public List<TestCase> runCodeTests() {
+		
+		List<TestCase> tests = new ArrayList<TestCase>();
+		
+		for (Configuration config : scenario.getConfigs()) {
+			getScenario().setCurrentConfig(config);
+			getScenario().reset();
+			getCodeRunningManager().getLogics().reset();
+			getRootNode().run();
+			
+			tests.add(new TestCase(config, getCodeRunningManager().getLogics().getValues(), getCodeRunningManager().getLogics().getSnapshots()));
+		}
+		
+		return tests;
 	}
 
 	public void setEditable(Node makerNode) {

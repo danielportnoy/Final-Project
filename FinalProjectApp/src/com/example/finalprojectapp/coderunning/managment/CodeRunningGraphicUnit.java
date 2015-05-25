@@ -27,6 +27,10 @@ public class CodeRunningGraphicUnit {
 	public View getGameView() {
 		return gameView;
 	}
+	
+	public void setGameView(MySurfaceView gameView) {
+		this.gameView = gameView;
+	}
 
 	public void updateGame(GameSnapshot gameSnapshot) {
 		gameView.loadSnapshot(gameSnapshot);

@@ -1,5 +1,7 @@
 package com.example.finalprojectapp.coderunning;
 
+import java.util.List;
+
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
@@ -10,6 +12,7 @@ import com.example.finalprojectapp.coderunning.managment.CodeRunningGraphicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningLogicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
 import com.example.finalprojectapp.graphic_utils.MySurfaceView;
+import com.example.finalprojectapp.scenario.TestCase;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -27,10 +30,14 @@ import android.widget.ListView;
 
 public class CodeRunningActivity extends Activity implements OnClickListener {
 
-	private MySurfaceView gameView;
 	private CodePlayer player;
-	
+
 	private SharedPreferences SP;
+
+	private LinearLayout gameViewLayout;
+	private MySurfaceView gameView;
+
+	private CodeRunningGraphicUnit graphics;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,34 +51,45 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 		codeLines.setAdapter(codeRunningLinesAdapter);	
 
 		SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
-		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
 
-		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);
-		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
-		CodeRunningGraphicUnit graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter , gameView);
+		graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter , gameView);
 		LevelManager.getInstance().registerCodeRunningManager(new CodeRunningManager(logics, graphics));
 
-		LinearLayout gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_Running_Game);
-		gameViewLayout.addView(gameView);
-		
+		gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_Running_Game);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
 		int cps = SP.getInt(Constants.CPS_KEY,Constants.DEFAULT_CPS);
 		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
+
+		TestCase testCaseToShow = null;
+
+		List<TestCase> tests = LevelManager.getInstance().runCodeTests();
+
+		for (TestCase testCase : tests) 
+			if(!testCase.isWin()){
+				testCaseToShow = testCase;
+				break;
+			}
+
+		if(testCaseToShow == null)
+			testCaseToShow = tests.get(0);
+
+		LevelManager.getInstance().getScenario().setCurrentConfig(testCaseToShow.getConfig());
+
+		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);;
+		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		
-		gameView.setFps(fps);
-		gameView.setAnimating(animation);
-		
-		LevelManager.getInstance().runCode();
-		
-		player = new CodePlayer(LevelManager.getInstance().getNumOfSnapshots() , this, ((Button)findViewById(R.id.button_PlayPause)),cps);
+		gameViewLayout.removeAllViews();
+		gameViewLayout.addView(gameView);
+
+		graphics.setGameView(gameView);
+
+		player = new CodePlayer(this, ((Button)findViewById(R.id.button_PlayPause)), cps, testCaseToShow);
 
 		player.start();
 		player.display();
@@ -83,18 +101,18 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 		getMenuInflater().inflate(R.menu.running_screen_menu, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-	    case R.id.action_settings:
-	        // Settings option clicked.
-	    	Intent intent = new Intent(this, SettingsActivity.class);
+		case R.id.action_settings:
+			// Settings option clicked.
+			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
-	        return true;
-	    default:
-	        return super.onOptionsItemSelected(item);
-	    }
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override

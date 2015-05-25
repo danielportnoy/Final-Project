@@ -45,6 +45,10 @@ public class CodeRunningLogicUnit {
 	public List<Snapshot> getSnapshots() {
 		return snapshots;
 	}
+	
+	public VarValues getValues() {
+		return values;
+	}
 
 	public List<CodeRunningLine> getRunningCodeLines() {
 		return codeRunningLines;
@@ -66,14 +70,6 @@ public class CodeRunningLogicUnit {
 		}	
 
 		codeRunningLines.add(temp);
-	}
-	
-	public boolean checkWin(int gameSnapShotNum){
-		return snapshots.get(gameSnapShotNum).gameSnapshot.checkWin();
-	}
-	
-	public boolean checkLoss(int gameSnapShotNum){
-		return snapshots.get(gameSnapShotNum).gameSnapshot.checkLoss();
 	}
 	
 	public void reset() {

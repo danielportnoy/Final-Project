@@ -42,21 +42,30 @@ import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
+import com.example.finalprojectapp.scenario.Configuration;
 import com.example.finalprojectapp.scenario.Scenario;
 import com.example.finalprojectapp.utilities.Android_Utils;
 
 public class Level1 extends Scenario {
 
-	private final int ROWS = 3;	// TODO
-	private final int COLS = 4;	// TODO
-
-	private final int heroStartX=0, heroStartY=1;
-	private int heroCurrentX=heroStartX, heroCurrentY=heroStartY;	
-
-	private final int targetX=3,targetY=1;
+	private int heroCurrentX,heroCurrentY;
 
 	private final String LEVEL1_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
-			"Hint: try the \"GoRight();\" option...";
+			"Hint: try the \"GoRight();\" option...\n\n" +
+			"Warning: the displayed level is just an example of the general problem.\n"+
+			"Try writing code which solves all of the cases.";
+
+	@Override
+	public void initiateTests() {
+
+		MyConfiguration cf = new MyConfiguration(3, 6, 0, 1, 5, 1);
+		setCurrentConfig(cf);
+
+		addToConfigs(cf);	
+		addToConfigs(new MyConfiguration(5, 8, 0, 2, 7, 2));
+		addToConfigs(new MyConfiguration(3, 4, 0, 1, 2, 1));	
+
+	}
 
 	@Override
 	public void initiateAvailableOptions() {
@@ -91,14 +100,15 @@ public class Level1 extends Scenario {
 	}
 
 	@Override
-	public void reset() {
-		heroCurrentX=heroStartX;
-		heroCurrentY=heroStartY;
+	public GameSnapshot takeSnapshot() {
+		return new MyGameSnapshot();
 	}
 
 	@Override
-	public GameSnapshot takeSnapshot() {
-		return new MyGameSnapshot();
+	public void reset() {
+		MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+		heroCurrentX = currentConfig.heroStartX;
+		heroCurrentY = currentConfig.heroStartY;
 	}
 
 	@Override
@@ -108,14 +118,53 @@ public class Level1 extends Scenario {
 
 	/******************** Nested classes ********************/
 
+	/********** config class **********/
+	class MyConfiguration extends Configuration{
+
+		public int rows;
+		public int cols;
+
+		public int heroStartX, heroStartY;
+
+		public int targetX,targetY;
+
+		public MyConfiguration(int rows, int cols, int heroStartX,int heroStartY,int targetX, int targetY) {
+			this.rows = rows;
+			this.cols = cols;
+			this.heroStartX = heroStartX;
+			this.heroStartY = heroStartY;
+			this.targetX = targetX;
+			this.targetY = targetY;
+		}
+
+		@Override
+		public Configuration copy() {
+			return new MyConfiguration(rows, cols, heroStartX, heroStartY, targetX, targetY);
+		}
+
+	}
+	/********** config class **********/
+
+
 	/********** snapshot class **********/
 	class MyGameSnapshot extends GameSnapshot{
 
 		private int heroX,heroY;
 
+		public MyGameSnapshot(MyGameSnapshot other) {
+			this.heroX = other.heroX;
+			this.heroY = other.heroY;
+		}
+
+
 		public MyGameSnapshot() {
 			this.heroX = heroCurrentX;
 			this.heroY = heroCurrentY;
+		}
+
+		@Override
+		public GameSnapshot copy(GameSnapshot other) {
+			return new MyGameSnapshot((MyGameSnapshot) other);
 		}
 
 		public int getHeroX() {
@@ -127,19 +176,14 @@ public class Level1 extends Scenario {
 		}
 
 		@Override
-		public boolean checkWin() {
-			return heroX == targetX && heroY == targetY;
+		public boolean checkWin(Configuration config) {
+			MyConfiguration currentConfig = (MyConfiguration) config;
+			return heroX == currentConfig.targetX && heroY == currentConfig.targetY;
 		}
 
 		@Override
-		public boolean checkLoss() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-		
-		@Override
 		public boolean equals(GameSnapshot other) {
-			
+
 			MyGameSnapshot other_mgs = (MyGameSnapshot)other;
 			return getHeroX() == other_mgs.getHeroX() && getHeroY() == other_mgs.getHeroY();
 		}
@@ -158,29 +202,29 @@ public class Level1 extends Scenario {
 
 			return res;
 		}
-		
+
 		@Override
 		public boolean DeleteChildNode(Node childNode) {
 			return true;
 		}
-		
+
 		@Override
 		public Set<String> getDeclaredIdentifiers() {
-			
+
 			HashSet<String> res = new HashSet<String>();
 			return res;
 		}
-		
+
 		@Override
 		public Set<String> getUsedIdentifiers() {
 
 			HashSet<String> res = new HashSet<String>();
 			return res;
 		}
-		
+
 		@Override
 		public Node getFirstNode() {
-				return null;
+			return null;
 		}
 
 		@Override
@@ -188,7 +232,9 @@ public class Level1 extends Scenario {
 
 			LevelManager.getInstance().takeSnapshot(this);
 
-			if( heroCurrentX < COLS - 1 )
+			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+
+			if( heroCurrentX < currentConfig.cols - 1 )
 				heroCurrentX++;
 
 			return new ReturnObject();
@@ -257,7 +303,7 @@ public class Level1 extends Scenario {
 		private Bitmap goalCurrentBitmap;
 
 		private Bitmap boardBitmap;
-		
+
 		// positions and measurements
 		private int boardScaleWidth;
 		private int boardScaleHeight;
@@ -275,7 +321,11 @@ public class Level1 extends Scenario {
 		public SurfaceView_Level1(Context context, int fps, boolean isAnimation) {
 			super(context, fps, isAnimation);
 
-			boardSpriteSheet = new BoardSpriteSheet(ROWS,COLS,BitmapFactory.decodeResource(getResources(),R.drawable.tile_set_two,Android_Utils.BitmapFactoryOptionsInScaled()));
+			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+
+			boardSpriteSheet = new BoardSpriteSheet(currentConfig.rows, currentConfig.cols, 
+					BitmapFactory.decodeResource(getResources(),R.drawable.tile_set_two,Android_Utils.BitmapFactoryOptionsInScaled()));
+
 			boardBitmap = boardSpriteSheet.getBitmap();
 
 			goalSprite = new GoalSprite(BitmapFactory.decodeResource(getResources(),R.drawable.coin,Android_Utils.BitmapFactoryOptionsInScaled()),
@@ -283,7 +333,7 @@ public class Level1 extends Scenario {
 
 			heroSprite = new HeroSprite(BitmapFactory.decodeResource(getResources(),R.drawable.hero_sprite,Android_Utils.BitmapFactoryOptionsInScaled()),
 					Constants.HERO_SPRITE_ROWS,Constants.HERO_SPRITE_COLS,Constants.HERO_SPRITE_DIRECTION_RIGHT_ROW,0);
-			
+
 			heroStandBitmap = heroSprite.getBitmapByCoords(0, 3);
 
 			reset();
@@ -299,31 +349,34 @@ public class Level1 extends Scenario {
 			boardScaleWidth = boardBitmap.getWidth();
 			boardScaleHeight = boardBitmap.getHeight();
 
-			if (boardScaleWidth > boardScaleHeight) {
-				// landscape
-				float ratio = (float) boardScaleWidth / screenWidth;
+			float imageRatio = (float) boardScaleWidth / boardScaleHeight;
+			float screenRatio = (float) screenWidth / screenHeight;
+
+			if(imageRatio >= screenRatio){
+				// Image is wider than the display (ratio)
 				boardScaleWidth = screenWidth;
-				boardScaleHeight = (int)(boardScaleHeight / ratio);
-			} else if (boardScaleHeight > boardScaleWidth) {
-				// portrait
-				float ratio = (float) boardScaleHeight / screenHeight;
+				boardScaleHeight = (int) (boardScaleWidth / imageRatio);
+			}
+			else{
+				// Image is taller than the display (ratio)
 				boardScaleHeight = screenHeight;
-				boardScaleWidth = (int)(boardScaleWidth / ratio);
-			} else {
-				// square
-				boardScaleHeight = screenHeight;
-				boardScaleWidth = screenWidth;
+				boardScaleWidth = (int) (boardScaleHeight * imageRatio);
 			}
 
-			tileHeight = boardScaleHeight/ROWS;
-			tileWidth = boardScaleWidth/COLS;
+			int XShift = (screenWidth - boardScaleWidth)/2;
+			int YShift = (screenHeight - boardScaleHeight)/2;
+
+			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+
+			tileHeight = boardScaleHeight/currentConfig.rows;
+			tileWidth = boardScaleWidth/currentConfig.cols;
 
 			heroScaleWidth = (int) (tileWidth*heroScaleWidthPercent);
 			heroScaleHeight = (int) (tileHeight*heroScaleHeightPercent);
 
 			shiftHeroX = (tileWidth - heroScaleWidth)/2;
 			shiftHeroY = (tileHeight - heroScaleHeight)/2;
-			
+
 			goalScaleWidth = (int) (tileWidth*goalScaleWidthPercent);
 			goalScaleHeight = (int) (tileHeight*goalScaleHeightPercent);
 
@@ -333,16 +386,17 @@ public class Level1 extends Scenario {
 			tileWidthSpriteInterval = tileWidth/heroSprite.getNumOfFrames();
 			tileHeightSpriteInterval = tileHeight/heroSprite.getNumOfFrames();
 
-			boardXpos = 0;
-			boardYpos = screenHeight/2 - boardScaleHeight/2;
+			boardXpos = XShift;
+			boardYpos = YShift;
 
-			goalXpos = boardXpos + shiftGoalX + targetX*tileWidth; goalYpos = boardYpos + shiftGoalY + targetY*tileHeight;
+			goalXpos = boardXpos + shiftGoalX + currentConfig.targetX*tileWidth; 
+			goalYpos = boardYpos + shiftGoalY + currentConfig.targetY*tileHeight;
 		}
 
 		@Override
 		public void draw(Canvas canvas) {
 			super.draw(canvas);
-			
+
 			render();
 
 			canvas.drawColor(Color.WHITE);		// TODO
@@ -355,8 +409,10 @@ public class Level1 extends Scenario {
 		@Override
 		public void reset() {
 
-			heroXprevLogic = heroXcurrentLogic = heroStartX;
-			heroYprevLogic = heroYcurrentLogic = heroStartY;
+			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+
+			heroXprevLogic = heroXcurrentLogic = currentConfig.heroStartX;
+			heroYprevLogic = heroYcurrentLogic = currentConfig.heroStartY;
 
 			heroSprite.reset();
 			goalSprite.reset();
@@ -368,7 +424,7 @@ public class Level1 extends Scenario {
 			goalCurrentBitmap = goalSprite.getCurrentBitmap();
 
 			if (!heroSprite.isLooped()){
-				
+
 				int heroCurrentFrame = heroSprite.getFrameNumber();
 
 				heroSprite.update();
@@ -408,19 +464,19 @@ public class Level1 extends Scenario {
 
 				heroCurrentBitmap = heroStandBitmap;
 			}
-			
+
 		}
-		
+
 		@Override
 		public void updateNonAnimated() {
-			
+
 			goalCurrentBitmap = goalSprite.getBitmapByCoords(0, 4);
 			heroCurrentBitmap = heroStandBitmap;
-			
+
 			heroXpos = boardXpos + heroXcurrentLogic*tileWidth;
 			heroYpos = boardYpos + heroYcurrentLogic*tileHeight;
 		}
-		
+
 		@Override
 		public void render() {
 			/* scaling bitmaps */	

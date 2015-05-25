@@ -36,7 +36,7 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 		SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
 		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
-
+		
 		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);
 		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 

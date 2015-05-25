@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
+import com.example.finalprojectapp.scenario.TestCase;
 import com.example.finalprojectapp.utilities.Android_Utils;
 
 public class CodePlayer {
@@ -22,12 +23,18 @@ public class CodePlayer {
 
 	private int cps;
 
-	public CodePlayer(int numberOfSnapshots, Activity activity, Button playPauseButton , int cps) {
-		this.numberOfSnapshots = numberOfSnapshots;
+	private TestCase testCase;
+
+	public CodePlayer(Activity activity, Button playPauseButton , int cps, TestCase testCase) {
+
+		numberOfSnapshots = testCase.getSnapshots().size();
+
 		this.activity = activity;
 		this.playPauseButton = playPauseButton;
 
 		this.cps = cps;
+
+		this.testCase = testCase;
 
 		currentSnapshotNumber = 0;
 
@@ -35,19 +42,19 @@ public class CodePlayer {
 		playPauseButton.setText("Play");
 
 	}
-	
+
 	public void setCurrentSnapshotNumber(int currentSnapshotNumber) {
 		this.currentSnapshotNumber = currentSnapshotNumber;
 	}
-	
+
 	public void setCps(int cps) {
 		this.cps = cps;
 	}
-	
+
 	public void setNumberOfSnapshots(int numberOfSnapshots) {
 		this.numberOfSnapshots = numberOfSnapshots;
 	}
-	
+
 	private int sleepInMM() {
 		return Math.round(1000/cps);
 	}
@@ -84,7 +91,7 @@ public class CodePlayer {
 
 			@Override
 			public void run() {
-				LevelManager.getInstance().refrashRunningScreen(currentSnapshotNumber);
+				LevelManager.getInstance().refrashRunningScreen(testCase.getSnapshots().get(currentSnapshotNumber));
 
 				//if last snapshot
 				if(currentSnapshotNumber == numberOfSnapshots - 1){
@@ -132,7 +139,7 @@ public class CodePlayer {
 
 		AlertDialog.Builder builder;
 
-		if(LevelManager.getInstance().checkWin(currentSnapshotNumber))
+		if(testCase.isWin())
 			builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_WIN_TITLE_TEXT, Constants.LEVEL_END_WIN_TEXT, Constants.LEVEL_END_WIN_POSITIVE_TEXT , true);
 		else
 			builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_TEXT, Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
@@ -155,7 +162,7 @@ public class CodePlayer {
 
 				if(isPlaying)
 					nextSnapshot();
-				
+
 				try {
 					sleep(sleepInMM());
 				} 

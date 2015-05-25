@@ -13,6 +13,16 @@ public class Snapshot {
 	public VarValues values;
 
 	public GameSnapshot gameSnapshot;
+	
+	public Snapshot(Snapshot other) {
+		
+		this.currentNode = other.currentNode;
+		this.values = new VarValues(other.values);
+		this.gameSnapshot = other.gameSnapshot;
+
+		List<String> ids = Scope.getIdentifiersRecursive(currentNode.getParent(), currentNode.getOrder());
+		values.removeExtra(ids);
+	}
 
 	public Snapshot(Node currentNode, VarValues values, GameSnapshot gameSnapshot) {
 		this.currentNode = currentNode;
@@ -21,7 +31,6 @@ public class Snapshot {
 
 		List<String> ids = Scope.getIdentifiersRecursive(currentNode.getParent(), currentNode.getOrder());
 		values.removeExtra(ids);
-
 	}
 
 	public boolean equals(Snapshot other) {

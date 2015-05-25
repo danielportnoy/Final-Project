@@ -1,5 +1,7 @@
 package com.example.finalprojectapp.coderunning.managment;
 
+import com.example.finalprojectapp.coderunning.snapshot.Snapshot;
+
 public class CodeRunningManager {
 
 	private CodeRunningLogicUnit logics;
@@ -10,12 +12,12 @@ public class CodeRunningManager {
 		this.graphics = graphics;	
 	}
 	
-	public void refresh(int snapshotNum){
+	public void refresh(Snapshot snapshot){
 		
-		logics.updateCodeRunningLines(logics.getSnapshots().get(snapshotNum).currentNode);
+		logics.updateCodeRunningLines(snapshot.currentNode);
 		graphics.updateCodeRunningLines();
 		
-		graphics.updateGame(logics.getSnapshots().get(snapshotNum).gameSnapshot);
+		graphics.updateGame(snapshot.gameSnapshot);
 	}
 
 	public CodeRunningLogicUnit getLogics() {

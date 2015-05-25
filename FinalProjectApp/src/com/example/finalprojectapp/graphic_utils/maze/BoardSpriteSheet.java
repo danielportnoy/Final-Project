@@ -1,5 +1,9 @@
 package com.example.finalprojectapp.graphic_utils.maze;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
@@ -12,16 +16,19 @@ public class BoardSpriteSheet extends SpriteSheet{
 	private int boardWidth, boardHeight;
 	private int rows, columns;
 
-	private Bitmap blockA = getBitmapByCoords(256, 192, TileWidth, TileHeight);
-	private Bitmap blockB = getBitmapByCoords(320, 192, TileWidth, TileHeight);
-	private Bitmap blockC = getBitmapByCoords(384, 192, TileWidth, TileHeight);
-	private Bitmap blockD = getBitmapByCoords(448, 192, TileWidth, TileHeight);
+	private Bitmap rockys_stones = getBitmapByCoords(0, 352, TileWidth, TileHeight);
+	private Bitmap grass = getBitmapByCoords(384, 32, TileWidth, TileHeight);
+	private Bitmap round_bricks_gray = getBitmapByCoords(256, 32, TileWidth, TileHeight);
+	
+	private List<List<Bitmap>> boardMatrixRandom;
 
-	private Bitmap[][] boardMatrix = { 
-			{blockA,blockA,blockA,blockA},
-			{blockB,blockB,blockB,blockB},
-			{blockC,blockC,blockC,blockC},
-			{blockD,blockD,blockD,blockD}
+	private Bitmap[][] boardMatrixStatic = { 
+			{rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones},
+			{grass,grass,grass,grass,grass,grass,grass,grass,grass,grass},
+			{round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray},
+			{rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones,rockys_stones},
+			{grass,grass,grass,grass,grass,grass,grass,grass,grass,grass},
+			{round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray,round_bricks_gray},
 	};
 
 
@@ -33,6 +40,35 @@ public class BoardSpriteSheet extends SpriteSheet{
 
 		boardWidth = TileWidth*columns;
 		boardHeight = TileHeight*rows;
+
+		boardMatrixRandom = new ArrayList<List<Bitmap>>();
+		Random rand = new Random();
+
+		for (int i = 0; i < rows; i++) {
+			
+			List<Bitmap> row = new ArrayList<Bitmap>();
+			
+			for (int j = 0; j < columns; j++) {
+				int randomNum = rand.nextInt((3 - 1) + 1) + 1;
+				
+				switch (randomNum) {
+				case 1:
+					row.add(rockys_stones);
+					break;
+				case 2:
+					row.add(grass);
+					break;
+				case 3:
+					row.add(round_bricks_gray);
+					break;
+
+				default:
+					break;
+				}
+			}
+			
+			boardMatrixRandom.add(row);
+		}
 	}
 
 	public Bitmap getBitmap() {
@@ -45,9 +81,15 @@ public class BoardSpriteSheet extends SpriteSheet{
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				canvas.drawBitmap(boardMatrix[i][j], j*TileWidth, i*TileHeight, null);
+				canvas.drawBitmap(boardMatrixStatic[i][j], j*TileWidth, i*TileHeight, null);
 			}
 		}
+		
+		/*for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				canvas.drawBitmap(boardMatrixRandom.get(i).get(j), j*TileWidth, i*TileHeight, null);
+			}
+		}*/
 
 		return board;
 	}

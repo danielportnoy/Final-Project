@@ -54,6 +54,9 @@ public class GameScreenActivity extends FragmentActivity {
 		viewPager.setAdapter(pagerAdapter);
 
 		final ActionBar actionBar = getActionBar();
+		
+		//actionBar.hide(); TODO
+		
 		actionBar.setDisplayShowHomeEnabled(false);             
 		actionBar.setDisplayShowTitleEnabled(false);
 

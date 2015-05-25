@@ -1,5 +1,7 @@
 package com.example.finalprojectapp.gamescreen;
 
+import java.util.List;
+
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
@@ -9,6 +11,7 @@ import com.example.finalprojectapp.coderunning.managment.CodeRunningGraphicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningLogicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
 import com.example.finalprojectapp.graphic_utils.MySurfaceView;
+import com.example.finalprojectapp.scenario.TestCase;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,11 +28,16 @@ import android.widget.LinearLayout.LayoutParams;
 
 public class RunningFragment extends Fragment implements OnClickListener{
 
-	private MySurfaceView gameView;
+	private Button playButton;
+	
 	private CodePlayer player;
 
 	private SharedPreferences SP;
-	private Button playButton;
+
+	private LinearLayout gameViewLayout;
+	private MySurfaceView gameView;
+
+	private CodeRunningGraphicUnit graphics;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,18 +52,10 @@ public class RunningFragment extends Fragment implements OnClickListener{
 
 		SP = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
-		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
-		int cps = SP.getInt(Constants.CPS_KEY,Constants.DEFAULT_CPS);
-		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
-
-		gameView = LevelManager.getInstance().getScenario().generateGameView(getActivity(), fps, animation);
-		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
-		CodeRunningGraphicUnit graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter , gameView);
+		graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter , gameView);
 		LevelManager.getInstance().registerCodeRunningManager(new CodeRunningManager(logics, graphics));
 
-		LinearLayout gameViewLayout = (LinearLayout)myFragmentView.findViewById(R.id.LinearLayout_Running_Game);
-		gameViewLayout.addView(gameView);
+		gameViewLayout = (LinearLayout)myFragmentView.findViewById(R.id.LinearLayout_Running_Game);
 
 		playButton = (Button)myFragmentView.findViewById(R.id.button_PlayPause);
 
@@ -64,10 +64,6 @@ public class RunningFragment extends Fragment implements OnClickListener{
 		myFragmentView.findViewById(R.id.button_PlayPause).setOnClickListener(this);
 		myFragmentView.findViewById(R.id.button_prevSnapshot).setOnClickListener(this);
 		myFragmentView.findViewById(R.id.button_startSnapshot).setOnClickListener(this);
-		
-		LevelManager.getInstance().runCode();
-
-		player = new CodePlayer(LevelManager.getInstance().getNumOfSnapshots(), getActivity(), playButton, cps);
 
 		return myFragmentView;
 	}
@@ -115,15 +111,31 @@ public class RunningFragment extends Fragment implements OnClickListener{
 		int cps = SP.getInt(Constants.CPS_KEY,Constants.DEFAULT_CPS);
 		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
 
-		gameView.setFps(fps);
-		gameView.setAnimating(animation);
-		
-		LevelManager.getInstance().runCode();
+		TestCase testCaseToShow = null;
 
-		player.setNumberOfSnapshots(LevelManager.getInstance().getNumOfSnapshots());
-		player.setCps(cps);
-		player.setCurrentSnapshotNumber(0);
+		List<TestCase> tests = LevelManager.getInstance().runCodeTests();
+
+		for (TestCase testCase : tests) 
+			if(!testCase.isWin()){
+				testCaseToShow = testCase;
+				break;
+			}
+
+		if(testCaseToShow == null)
+			testCaseToShow = tests.get(0);
+
+		LevelManager.getInstance().getScenario().setCurrentConfig(testCaseToShow.getConfig());
+
+		gameView = LevelManager.getInstance().getScenario().generateGameView(getActivity(), fps, animation);;
+		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		
+		gameViewLayout.removeAllViews();
+		gameViewLayout.addView(gameView);
+
+		graphics.setGameView(gameView);
+
+		player = new CodePlayer(getActivity(), playButton, cps, testCaseToShow);
+
 		player.start();
 		player.display();
 	}
