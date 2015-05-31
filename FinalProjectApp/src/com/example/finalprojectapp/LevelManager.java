@@ -3,8 +3,10 @@ package com.example.finalprojectapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
 import com.example.finalprojectapp.coderunning.snapshot.Snapshot;
+import com.example.finalprojectapp.coderunning.varvalues.VarValues;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.codewriting.managment.CodeWritingManager;
 import com.example.finalprojectapp.node.Node;
@@ -127,6 +129,14 @@ public class LevelManager {
 
 	/********** refresh utilities **********/
 
+	/********** game utilities **********/
+
+	public boolean checkWin(TestCase testCase){
+		return scenario.checkWin(testCase.getConfig(), testCase.getSnapshots().get(testCase.getSnapshots().size() - 1).gameSnapshot);
+	}
+	
+	/********** game utilities **********/
+	
 	public void SetterClick(Setter setter) {
 		codeWritingManager.SetterClick(setter);
 	}
@@ -139,9 +149,21 @@ public class LevelManager {
 			getScenario().setCurrentConfig(config);
 			getScenario().reset();
 			getCodeRunningManager().getLogics().reset();
-			getRootNode().run();
 			
-			tests.add(new TestCase(config, getCodeRunningManager().getLogics().getValues(), getCodeRunningManager().getLogics().getSnapshots()));
+			VarValues varValues = getCodeRunningManager().getLogics().getValues();
+			List<Snapshot> snapshots = getCodeRunningManager().getLogics().getSnapshots();
+			
+			MyException exception = null;
+			
+			try {
+				getRootNode().run();
+			} catch (MyException e) {
+				exception = e;
+			}
+
+			TestCase t = new TestCase(config, varValues, snapshots, exception);
+					
+			tests.add(t);
 		}
 		
 		return tests;

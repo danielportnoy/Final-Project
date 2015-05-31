@@ -13,9 +13,9 @@ public abstract class Scenario {
 
 	private List<Configuration> configs = new ArrayList<Configuration>();
 	private Configuration currentConfig;
-	
+
 	private List<Option> availableOptions = new ArrayList<Option>();
-	
+
 	private String levelText;
 
 	public Scenario() {
@@ -39,31 +39,33 @@ public abstract class Scenario {
 	public String getLevelText() {
 		return levelText;
 	}
-	
+
 	public void setLevelText(String levelText) {
 		this.levelText = levelText;
 	}
-	
+
 	public List<Configuration> getConfigs() {
 		return configs;
 	}
-	
+
 	public void addToConfigs(Configuration cf){
 		configs.add(cf);
 	}
-	
+
 	public Configuration getCurrentConfig() {
 		return currentConfig;
 	}
-	
+
 	public void setCurrentConfig(Configuration currentConfig) {
 		this.currentConfig = currentConfig;
 	}
-	
+
 	public abstract void reset();
 
 	public abstract GameSnapshot takeSnapshot();
 
 	public abstract MySurfaceView generateGameView(Context context, int fps, boolean isAnimation);
+
+	public abstract boolean checkWin(Configuration config, GameSnapshot gameSnapshot);
 
 }

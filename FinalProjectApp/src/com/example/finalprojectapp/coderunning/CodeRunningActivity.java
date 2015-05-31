@@ -8,6 +8,7 @@ import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.activities.ScenraioDisplyActivity;
 import com.example.finalprojectapp.activities.SettingsActivity;
 import com.example.finalprojectapp.coderunning.adapter.CodeRunningLinesAdapter;
+import com.example.finalprojectapp.coderunning.codeplayer.CodePlayer;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningGraphicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningLogicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
@@ -71,7 +72,7 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 		List<TestCase> tests = LevelManager.getInstance().runCodeTests();
 
 		for (TestCase testCase : tests) 
-			if(!testCase.isWin()){
+			if(!LevelManager.getInstance().checkWin(testCase)){
 				testCaseToShow = testCase;
 				break;
 			}

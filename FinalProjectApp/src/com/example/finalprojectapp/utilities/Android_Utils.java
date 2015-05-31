@@ -60,7 +60,7 @@ public class Android_Utils {
 	}
 
 	public static AlertDialog.Builder getEndGameDialog(final Activity activity,
-			String title, String text , String textPositive, final boolean isWin){
+			String title, String headerText, String text , String textPositive, final boolean isWin){
 
 		// Creating and Building the Dialog 
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -70,8 +70,11 @@ public class Android_Utils {
 		LayoutInflater inflater = (LayoutInflater) activity.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View view = inflater.inflate(R.layout.end_level_dialog, null);
 
-		TextView t = (TextView)view.findViewById(R.id.textView_gameEndText);
-		t.setText(text);
+		TextView headerTV = (TextView)view.findViewById(R.id.textView_gameEndTextHeader);
+		headerTV.setText(headerText);
+		
+		TextView textTV = (TextView)view.findViewById(R.id.textView_gameEndText);
+		textTV.setText(text);
 
 		builder.setView(view);
 

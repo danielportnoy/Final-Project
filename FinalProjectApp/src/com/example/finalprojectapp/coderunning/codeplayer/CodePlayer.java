@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.coderunning;
+package com.example.finalprojectapp.coderunning.codeplayer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -137,12 +137,19 @@ public class CodePlayer {
 
 	public void handleEndGame(){	// TODO
 
-		AlertDialog.Builder builder;
+		AlertDialog.Builder builder = null;
 
-		if(testCase.isWin())
-			builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_WIN_TITLE_TEXT, Constants.LEVEL_END_WIN_TEXT, Constants.LEVEL_END_WIN_POSITIVE_TEXT , true);
-		else
-			builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_TEXT, Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
+		if(testCase.getException() != null)			
+			builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_HEADER_TEXT,
+					testCase.getException().getMessage(), Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
+		else{
+			if(LevelManager.getInstance().checkWin(testCase))
+				builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_WIN_TITLE_TEXT, Constants.LEVEL_END_WIN_HEADER_TEXT,
+						Constants.LEVEL_END_WIN_TEXT, Constants.LEVEL_END_WIN_POSITIVE_TEXT , true);
+			else
+				builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_HEADER_TEXT,
+						Constants.LEVEL_END_LOSS_TEXT, Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
+		}
 
 		builder.create().show();
 	}

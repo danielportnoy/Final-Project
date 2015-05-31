@@ -31,8 +31,6 @@ public class Constants {
 	public static final boolean DEFAULT_SWIPE = true;
 	public static final String 	SWIPE_KEY = "SWIPE";
 
-
-
 	// LEVEL1 HERO SPRITE
 	public static final int HERO_SPRITE_ROWS = 4;
 	public static final int HERO_SPRITE_COLS = 9;
@@ -47,13 +45,26 @@ public class Constants {
 
 	//TEXTS
 	public static final String LEVEL_START_TEXT = "Before you jump in...";
-	public static final String LEVEL_END_WIN_TEXT = "You Won!";
-	public static final String LEVEL_END_LOSS_TEXT = "You Lost!";
+	
+	public static final String LEVEL_END_WIN_HEADER_TEXT = "You Won!";
+	public static final String LEVEL_END_WIN_TEXT = "great!";
+
+	public static final String LEVEL_END_LOSS_HEADER_TEXT = "You Lost!";
+	public static final String LEVEL_END_LOSS_TEXT = "maybe next time...";
+	
 	public static final String LEVEL_END_WIN_TITLE_TEXT = "Well played...";
 	public static final String LEVEL_END_LOSS_TITLE_TEXT = "Too bad...";
 
 	public static final String LEVEL_END_WIN_POSITIVE_TEXT = "Continue";
 	public static final String LEVEL_END_LOSS_POSITIVE_TEXT = "Retry";
+	
+	public static final String LEVEL1_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
+			"Hint: try the \"GoRight();\" option...\n\n" +
+			"Warning: the displayed level is just an example of the general problem.\n"+
+			"Try writing code which solves all of the cases.";
+
+	//EECEPTIONS TEXTS
+	public static final String MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT = "Exception : The character moved out of the maze limits.";	// TODO
 
 
 }

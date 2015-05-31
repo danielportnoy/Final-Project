@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
@@ -118,7 +119,7 @@ public class NotEqualsNode extends Node {
 	}
 
 	@Override
-	public ReturnObject run() {
+	public ReturnObject run() throws MyException {
 
 		LevelManager.getInstance().takeSnapshot(this);
 

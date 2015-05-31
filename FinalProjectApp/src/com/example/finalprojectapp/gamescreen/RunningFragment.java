@@ -5,8 +5,8 @@ import java.util.List;
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
-import com.example.finalprojectapp.coderunning.CodePlayer;
 import com.example.finalprojectapp.coderunning.adapter.CodeRunningLinesAdapter;
+import com.example.finalprojectapp.coderunning.codeplayer.CodePlayer;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningGraphicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningLogicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
@@ -116,7 +116,7 @@ public class RunningFragment extends Fragment implements OnClickListener{
 		List<TestCase> tests = LevelManager.getInstance().runCodeTests();
 
 		for (TestCase testCase : tests) 
-			if(!testCase.isWin()){
+			if(!LevelManager.getInstance().checkWin(testCase)){
 				testCaseToShow = testCase;
 				break;
 			}

@@ -4,11 +4,19 @@
     android:layout_height="match_parent" >
 
     <TextView
+        android:id="@+id/textView_gameEndTextHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
         android:id="@+id/textView_gameEndText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_gameEndTextHeader"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

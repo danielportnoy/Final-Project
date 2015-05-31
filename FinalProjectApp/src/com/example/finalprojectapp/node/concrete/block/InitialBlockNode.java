@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
@@ -104,10 +105,15 @@ public class InitialBlockNode extends Node{
 	}
 
 	@Override
-	public ReturnObject run() {
+	public ReturnObject run() throws MyException {
 
 		for (Node n : innerNodes){
-			n.run();
+			try {
+				n.run();
+			} catch (MyException e) {
+				LevelManager.getInstance().takeSnapshot(this);	// TODO
+				throw e;
+			}	
 		}
 
 		LevelManager.getInstance().takeSnapshot(this);	// TODO

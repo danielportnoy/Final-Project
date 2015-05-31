@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 
 public abstract class Node {
@@ -54,7 +55,7 @@ public abstract class Node {
 	public abstract List<CodeRunningPart> getCodeRunningParts(Node target , boolean isHighlighted);
 
 	
-	public abstract ReturnObject run();
+	public abstract ReturnObject run() throws MyException;
 
 	public abstract Node getFirstNode();
 	

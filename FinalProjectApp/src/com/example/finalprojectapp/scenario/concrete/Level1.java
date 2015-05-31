@@ -18,6 +18,7 @@ import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
+import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.coderunning.snapshot.GameSnapshot;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.codewriting.option.Option;
@@ -50,21 +51,20 @@ public class Level1 extends Scenario {
 
 	private int heroCurrentX,heroCurrentY;
 
-	private final String LEVEL1_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
-			"Hint: try the \"GoRight();\" option...\n\n" +
-			"Warning: the displayed level is just an example of the general problem.\n"+
-			"Try writing code which solves all of the cases.";
-
 	@Override
 	public void initiateTests() {
 
-		MyConfiguration cf = new MyConfiguration(3, 6, 0, 1, 5, 1);
+		MyConfiguration cf = new MyConfiguration(3, 6, 0, 1, 5, 1);	// TODO
 		setCurrentConfig(cf);
 
 		addToConfigs(cf);	
 		addToConfigs(new MyConfiguration(5, 8, 0, 2, 7, 2));
-		addToConfigs(new MyConfiguration(3, 4, 0, 1, 2, 1));	
+		addToConfigs(new MyConfiguration(3, 4, 0, 1, 2, 1));
 
+		/*MyConfiguration cf = new MyConfiguration(1, 3, 0, 0, 1, 0);
+		setCurrentConfig(cf);
+
+		addToConfigs(cf);	*/
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class Level1 extends Scenario {
 
 	@Override
 	public void initiateLevelText() {
-		setLevelText(LEVEL1_TEXT);
+		setLevelText(Constants.LEVEL1_TEXT);
 	}
 
 	@Override
@@ -116,7 +116,28 @@ public class Level1 extends Scenario {
 		return new SurfaceView_Level1(context, fps, isAnimation);
 	}
 
+	@Override
+	public boolean checkWin(Configuration config, GameSnapshot gameSnapshot) {
+
+		MyConfiguration currentConfig = (MyConfiguration) config;
+		MyGameSnapshot mgs = (MyGameSnapshot)gameSnapshot;
+
+		return mgs.heroX == currentConfig.targetX && mgs.heroY == currentConfig.targetY;
+	}
+
 	/******************** Nested classes ********************/
+
+	/********** exception class **********/
+	@SuppressWarnings("serial")
+	class MoveOutOfLimitsException extends MyException{
+
+		public MoveOutOfLimitsException() {
+			super(Constants.MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT);
+		}
+
+	}
+	/********** exception class **********/
+
 
 	/********** config class **********/
 	class MyConfiguration extends Configuration{
@@ -176,12 +197,6 @@ public class Level1 extends Scenario {
 		}
 
 		@Override
-		public boolean checkWin(Configuration config) {
-			MyConfiguration currentConfig = (MyConfiguration) config;
-			return heroX == currentConfig.targetX && heroY == currentConfig.targetY;
-		}
-
-		@Override
 		public boolean equals(GameSnapshot other) {
 
 			MyGameSnapshot other_mgs = (MyGameSnapshot)other;
@@ -228,7 +243,7 @@ public class Level1 extends Scenario {
 		}
 
 		@Override
-		public ReturnObject run() {
+		public ReturnObject run() throws MyException {
 
 			LevelManager.getInstance().takeSnapshot(this);
 
@@ -236,6 +251,8 @@ public class Level1 extends Scenario {
 
 			if( heroCurrentX < currentConfig.cols - 1 )
 				heroCurrentX++;
+			else
+				throw new MoveOutOfLimitsException(); 
 
 			return new ReturnObject();
 		}
