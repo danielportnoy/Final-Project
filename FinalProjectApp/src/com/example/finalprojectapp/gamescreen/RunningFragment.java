@@ -29,7 +29,7 @@ import android.widget.LinearLayout.LayoutParams;
 public class RunningFragment extends Fragment implements OnClickListener{
 
 	private Button playButton;
-	
+
 	private CodePlayer player;
 
 	private SharedPreferences SP;
@@ -68,14 +68,19 @@ public class RunningFragment extends Fragment implements OnClickListener{
 		return myFragmentView;
 	}
 
-	/*@Override
+/*	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 
 		super.setUserVisibleHint(isVisibleToUser);
 
 		if(isVisibleToUser){
-			player.start();
-			player.display();
+			if(player!=null){
+				player.display();
+			}
+		}
+		else{ 
+			if(player!=null)
+				player.destroy();
 		}
 	}*/
 
@@ -128,15 +133,14 @@ public class RunningFragment extends Fragment implements OnClickListener{
 
 		gameView = LevelManager.getInstance().getScenario().generateGameView(getActivity(), fps, animation);;
 		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		
+
 		gameViewLayout.removeAllViews();
 		gameViewLayout.addView(gameView);
 
 		graphics.setGameView(gameView);
 
-		player = new CodePlayer(getActivity(), playButton, cps, testCaseToShow);
+		player = new CodePlayer(getActivity(), playButton, cps, testCaseToShow, gameView);
 
-		player.start();
 		player.display();
 	}
 

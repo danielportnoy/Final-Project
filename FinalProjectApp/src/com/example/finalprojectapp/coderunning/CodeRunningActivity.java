@@ -90,9 +90,8 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 
 		graphics.setGameView(gameView);
 
-		player = new CodePlayer(this, ((Button)findViewById(R.id.button_PlayPause)), cps, testCaseToShow);
+		player = new CodePlayer(this, ((Button)findViewById(R.id.button_PlayPause)), cps, testCaseToShow, gameView);
 
-		player.start();
 		player.display();
 	}
 

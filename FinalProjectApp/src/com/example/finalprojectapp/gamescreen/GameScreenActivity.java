@@ -109,7 +109,7 @@ public class GameScreenActivity extends FragmentActivity {
 					}
 				});	
 
-		viewPager.setOffscreenPageLimit(3);// TODO
+		//viewPager.setOffscreenPageLimit(3);// TODO
 	}
 
 	@Override

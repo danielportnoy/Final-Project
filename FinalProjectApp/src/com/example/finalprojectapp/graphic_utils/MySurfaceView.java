@@ -11,7 +11,7 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 	private SurfaceHolder holder;
 	private GameLoopThread gameLoopThread;
-	
+
 	private int fps;
 	private boolean isAnimating;
 
@@ -26,11 +26,11 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 		gameLoopThread = new GameLoopThread(this);
 	}
-	
+
 	public void setFps(int fps) {
 		this.fps = fps;
 	}
-	
+
 	public void setAnimating(boolean isAnimating) {
 		this.isAnimating = isAnimating;
 	}
@@ -68,8 +68,8 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 			}
 		}
 	}
-	
-	private int sleepInMM(){
+
+	private int sleepInMS(){
 		return Math.round(1000/fps);
 	}
 
@@ -112,6 +112,8 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 			while (running) {
 
+				long StartTimeInMS= System.currentTimeMillis();
+
 				if(!holder.getSurface().isValid())
 					continue;
 
@@ -136,14 +138,21 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 						holder.unlockCanvasAndPost(c);
 				}
 
-				try {
-					sleep(sleepInMM());
-				} 
-				catch (InterruptedException e) {
-					e.printStackTrace();
+				long EndTimeInMS= System.currentTimeMillis();
+
+				long sleepTime = sleepInMS() - (EndTimeInMS - StartTimeInMS);
+
+				if(sleepTime>0){
+					try {
+						sleep(sleepTime);
+					} 
+					catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
 	}
 
+	public abstract boolean isStillAnimating();
 }

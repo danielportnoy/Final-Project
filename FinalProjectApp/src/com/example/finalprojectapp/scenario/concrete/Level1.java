@@ -301,6 +301,8 @@ public class Level1 extends Scenario {
 
 	class SurfaceView_Level1 extends MySurfaceView {
 
+		private boolean isStillAnimating = false;
+
 		private HeroSprite heroSprite;
 		private int heroXpos, heroYpos;
 		private int heroXprevLogic, heroYprevLogic;
@@ -355,6 +357,11 @@ public class Level1 extends Scenario {
 
 			reset();
 
+		}
+
+		@Override
+		public boolean isStillAnimating() {
+			return isStillAnimating;
 		}
 
 		@Override
@@ -426,6 +433,8 @@ public class Level1 extends Scenario {
 		@Override
 		public void reset() {
 
+			isStillAnimating = false;
+
 			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
 
 			heroXprevLogic = heroXcurrentLogic = currentConfig.heroStartX;
@@ -440,7 +449,7 @@ public class Level1 extends Scenario {
 			goalSprite.update();
 			goalCurrentBitmap = goalSprite.getCurrentBitmap();
 
-			if (!heroSprite.isLooped()){
+			if (isStillAnimating){
 
 				int heroCurrentFrame = heroSprite.getFrameNumber();
 
@@ -468,9 +477,11 @@ public class Level1 extends Scenario {
 				}
 
 				heroCurrentBitmap = heroSprite.getCurrentBitmap();
+
+				if(heroSprite.isLooped())
+					isStillAnimating = false;
 			}
 			else{
-
 				heroSprite.reset();
 
 				heroXpos = boardXpos + heroXcurrentLogic*tileWidth;
@@ -486,6 +497,8 @@ public class Level1 extends Scenario {
 
 		@Override
 		public void updateNonAnimated() {
+
+			isStillAnimating = false;
 
 			goalCurrentBitmap = goalSprite.getBitmapByCoords(0, 4);
 			heroCurrentBitmap = heroStandBitmap;
@@ -510,16 +523,26 @@ public class Level1 extends Scenario {
 
 			heroSprite.reset();
 
-			if(mgs.getHeroX() - heroXprevLogic > 0)
+			if(mgs.getHeroX() - heroXprevLogic > 0){
 				heroSprite.setDirection(heroDirection.Right);
-			else if(mgs.getHeroX() - heroXprevLogic < 0)
+				isStillAnimating = true;
+			}
+			else if(mgs.getHeroX() - heroXprevLogic < 0){
 				heroSprite.setDirection(heroDirection.Left);
-			else if(mgs.getHeroY() - heroYprevLogic > 0)
+				isStillAnimating = true;
+			}
+			else if(mgs.getHeroY() - heroYprevLogic > 0){
 				heroSprite.setDirection(heroDirection.Down);
-			else if(mgs.getHeroY() - heroYprevLogic < 0)
+				isStillAnimating = true;
+			}
+			else if(mgs.getHeroY() - heroYprevLogic < 0){
 				heroSprite.setDirection(heroDirection.Up);
-			else
+				isStillAnimating = true;
+			}
+			else{
 				heroSprite.setDirection(heroDirection.Stand);
+				isStillAnimating = false;
+			}
 
 			heroXprevLogic = heroXcurrentLogic;
 			heroYprevLogic = heroYcurrentLogic;

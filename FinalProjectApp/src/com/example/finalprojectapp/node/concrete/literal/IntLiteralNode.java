@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;

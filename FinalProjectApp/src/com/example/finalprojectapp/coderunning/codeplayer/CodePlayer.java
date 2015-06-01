@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
+import com.example.finalprojectapp.graphic_utils.MySurfaceView;
 import com.example.finalprojectapp.scenario.TestCase;
 import com.example.finalprojectapp.utilities.Android_Utils;
 
@@ -17,7 +18,8 @@ public class CodePlayer {
 	private int numberOfSnapshots;
 	private int currentSnapshotNumber;
 
-	private boolean isPlaying;
+	private static boolean isPlaying;
+	private static boolean lastIsPlaying;
 
 	private PlayerThread playerTheard;
 
@@ -25,7 +27,9 @@ public class CodePlayer {
 
 	private TestCase testCase;
 
-	public CodePlayer(Activity activity, Button playPauseButton , int cps, TestCase testCase) {
+	private MySurfaceView gameView;
+
+	public CodePlayer(Activity activity, Button playPauseButton , int cps, TestCase testCase, MySurfaceView gameView) {
 
 		numberOfSnapshots = testCase.getSnapshots().size();
 
@@ -35,6 +39,8 @@ public class CodePlayer {
 		this.cps = cps;
 
 		this.testCase = testCase;
+
+		this.gameView = gameView;
 
 		currentSnapshotNumber = 0;
 
@@ -55,7 +61,7 @@ public class CodePlayer {
 		this.numberOfSnapshots = numberOfSnapshots;
 	}
 
-	private int sleepInMM() {
+	private int sleepInMS() {
 		return Math.round(1000/cps);
 	}
 
@@ -91,13 +97,26 @@ public class CodePlayer {
 
 			@Override
 			public void run() {
+
+				long StartTimeInMS = System.currentTimeMillis();
+
 				LevelManager.getInstance().refrashRunningScreen(testCase.getSnapshots().get(currentSnapshotNumber));
 
 				//if last snapshot
 				if(currentSnapshotNumber == numberOfSnapshots - 1){
 					isPlaying = false;
 					playPauseButton.setText("Play");
+					destroy();
 					handleEndGame();
+				}
+
+				long EndTimeInMS = System.currentTimeMillis();
+
+				long sleepTime = sleepInMS() - (EndTimeInMS - StartTimeInMS);
+
+				if(playerTheard != null){
+					playerTheard.setSleepTime(sleepTime);
+					playerTheard.setSleep(true);
 				}
 			}
 		});			
@@ -129,10 +148,14 @@ public class CodePlayer {
 	public void togglePlay() {
 		isPlaying = !isPlaying;
 
-		if(isPlaying())
+		if(isPlaying()){
 			playPauseButton.setText("Play");
-		else
+			start();
+		}
+		else{
 			playPauseButton.setText("Pause");
+			destroy();
+		}
 	}
 
 	public void handleEndGame(){	// TODO
@@ -156,7 +179,19 @@ public class CodePlayer {
 
 	class PlayerThread extends Thread{
 
+		private boolean sleep = false;
+
+		private long sleepTime = 0;
+
 		private boolean isRunning = false;
+
+		public void setSleep(boolean sleep) {
+			this.sleep = sleep;
+		}
+
+		public void setSleepTime(long sleepTime) {
+			this.sleepTime = sleepTime;
+		}
 
 		public void setRunning(boolean isRunning) {
 			this.isRunning = isRunning;
@@ -167,14 +202,22 @@ public class CodePlayer {
 
 			while (isRunning) {
 
-				if(isPlaying)
+				if(isPlaying && !gameView.isStillAnimating()){
+					lastIsPlaying = isPlaying;
+					isPlaying = false;
 					nextSnapshot();
+				}
 
-				try {
-					sleep(sleepInMM());
-				} 
-				catch (InterruptedException e) {
-					e.printStackTrace();
+				if(sleep){
+					sleep = false;
+
+					try {
+						sleep(sleepTime);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
+					isPlaying = lastIsPlaying;
 				}
 			}
 		}
