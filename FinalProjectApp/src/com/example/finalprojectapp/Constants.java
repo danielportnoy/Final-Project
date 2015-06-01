@@ -11,7 +11,6 @@ public class Constants {
 	public static final int MIN_FPS = 10;
 	public static final int FPS_INTERVAL = 5;
 	public static final String FPS_KEY = "FPS";
-	
 
 	//CPS
 	public static final int DEFAULT_CPS = 2;

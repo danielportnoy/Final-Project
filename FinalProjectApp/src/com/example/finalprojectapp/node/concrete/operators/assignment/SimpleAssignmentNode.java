@@ -150,6 +150,8 @@ public class SimpleAssignmentNode extends Node {
 			assignmentValue = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
+			
+			toSet.setHideSemicolon(true);
 		}
 
 		@Override

@@ -142,6 +142,8 @@ public class IntVarDecNode extends Node {
 			initialValue = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
+			
+			toSet.setHideSemicolon(true);
 		}
 
 		@Override

@@ -12,9 +12,9 @@ public abstract class Node {
 	private Node parent;
 	private int order;
 	private Type type;
-	
+
 	private Scope scope;
-	
+
 	private boolean hideSemicolon = false;
 
 	public Node() {
@@ -52,22 +52,32 @@ public abstract class Node {
 	public void setScope(Scope scope) {
 		this.scope = scope;
 	}
-	
+
 	public boolean isHideSemicolon() {
-		return hideSemicolon;
+		if(hideSemicolon)
+			return true;
+
+		Node parent = getParent();
+		while (parent != null) {
+			if(parent.isHideSemicolon())
+				return true;
+			parent = parent.getParent();
+		}
+
+		return false;
 	}
-	
+
 	public void setHideSemicolon(boolean hideSemicolon) {
 		this.hideSemicolon = hideSemicolon;
 	}
 
 	public abstract List<CodeWritingPart> getCodeWritingParts();
 	public abstract List<CodeRunningPart> getCodeRunningParts(Node target , boolean isHighlighted);
-	
+
 	public abstract ReturnObject run() throws MyException;
 
 	public abstract Node getFirstNode();
-	
+
 	public abstract Set<String> getDeclaredIdentifiers();
 
 	public abstract Set<String> getUsedIdentifiers();
