@@ -26,6 +26,7 @@ import com.example.finalprojectapp.codewriting.option.concrete.block.BlockOption
 import com.example.finalprojectapp.codewriting.option.concrete.literal.FalseOption;
 import com.example.finalprojectapp.codewriting.option.concrete.literal.NumberOption;
 import com.example.finalprojectapp.codewriting.option.concrete.literal.TrueOption;
+import com.example.finalprojectapp.codewriting.option.concrete.operation.arithmetic.IncrementOption;
 import com.example.finalprojectapp.codewriting.option.concrete.operation.arithmetic.PlusOption;
 import com.example.finalprojectapp.codewriting.option.concrete.operation.assignment.SimpleAssignmentOption;
 import com.example.finalprojectapp.codewriting.option.concrete.operation.relational.EqualsOption;
@@ -89,6 +90,8 @@ public class Level1 extends Scenario {
 
 		addToAvailableOptions(new EqualsOption());
 		addToAvailableOptions(new NotEqualsOption());
+		
+		addToAvailableOptions(new IncrementOption());
 
 		//custom options	// TODO
 		addToAvailableOptions(new GoRightOption());

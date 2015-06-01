@@ -60,7 +60,7 @@ public class CodeRunningLogicUnit {
 
 		CodeRunningLine temp = new CodeRunningLine();
 
-		for (CodeRunningPart codePart : LevelManager.getInstance().getRootNode().getCodeRunningParts(target,false)) {
+		for (CodeRunningPart codePart : LevelManager.getInstance().getRootNode().getCodeRunningParts(target, false)) {
 			if(!codePart.isNewline())
 				temp.getCodeRunningParts().add(codePart);
 			else{

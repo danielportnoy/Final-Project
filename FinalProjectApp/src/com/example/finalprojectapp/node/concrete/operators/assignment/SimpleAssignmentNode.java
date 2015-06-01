@@ -26,12 +26,12 @@ public class SimpleAssignmentNode extends Node {
 		this.identifierName = identifierName;
 		setType(Type.Statement);
 	}
-	
+
 	@Override
 	public boolean DeleteChildNode(Node childNode) {
-		
+
 		Set<String> used = new HashSet<String>();
-		
+
 		if(childNode.equals(assignmentValue))
 			used = new HashSet<String>();
 
@@ -89,7 +89,8 @@ public class SimpleAssignmentNode extends Node {
 		else			
 			res.addAll(assignmentValue.getCodeWritingParts());
 
-		res.add(new CodeWritingPart(false, false, ";", null, this));
+		if(!isHideSemicolon())
+			res.add(new CodeWritingPart(false, false, ";", null, this));
 
 		return res;
 	}
@@ -103,9 +104,10 @@ public class SimpleAssignmentNode extends Node {
 		res.add(new CodeRunningPart(false, false,isHighlighted, identifierName));
 		res.add(new CodeRunningPart(false, false,isHighlighted, "="));
 
-		res.addAll(assignmentValue.getCodeRunningParts(target,isHighlighted));
+		res.addAll(assignmentValue.getCodeRunningParts(target, isHighlighted));
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
+		if(!isHideSemicolon())
+			res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
 
 		return res;
 	}

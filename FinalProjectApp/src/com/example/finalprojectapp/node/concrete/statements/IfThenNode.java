@@ -122,14 +122,14 @@ public class IfThenNode extends Node{
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
 		res.add(new CodeRunningPart(false, false,isHighlighted, "if ("));
-		res.addAll(condition.getCodeRunningParts(target,isHighlighted));
+		res.addAll(condition.getCodeRunningParts(target, isHighlighted));
 		res.add(new CodeRunningPart(false, false,isHighlighted, ")"));
 
 		if(thenBody instanceof BlockNode)	//TODO
-			res.addAll(thenBody.getCodeRunningParts(target,isHighlighted));
+			res.addAll(thenBody.getCodeRunningParts(target, isHighlighted));
 		else{
 			res.add(new CodeRunningPart(false, true, isHighlighted, null));
-			res.addAll(CodeRunningPart.tabber(thenBody.getCodeRunningParts(target,isHighlighted)));
+			res.addAll(CodeRunningPart.tabber(thenBody.getCodeRunningParts(target, isHighlighted)));
 		}
 
 		return res;

@@ -120,12 +120,12 @@ public class ForNode extends Node{			// TODO
 
 		res.add(new CodeWritingPart(false, false, "for (", null, this));
 
-		if(init == null){
+		if(init == null)
 			res.add(new CodeWritingPart(false, false, null, new InitSetter(this), this));
-			res.add(new CodeWritingPart(false, false, ";", null, this));
-		}
 		else
 			res.addAll(init.getCodeWritingParts());
+		
+		res.add(new CodeWritingPart(false, false, ";", null, this));
 
 		if(condition == null)
 			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this), this));
@@ -171,23 +171,23 @@ public class ForNode extends Node{			// TODO
 		res.add(new CodeRunningPart(false, false,isHighlighted, "for ("));
 
 		if(init != null)
-			res.addAll(init.getCodeRunningParts(target,isHighlighted));
+			res.addAll(init.getCodeRunningParts(target, isHighlighted));
 		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
 
 		if(condition != null)
-			res.addAll(condition.getCodeRunningParts(target,isHighlighted));
+			res.addAll(condition.getCodeRunningParts(target, isHighlighted));
 		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
 
 		if(update != null)
-			res.addAll(update.getCodeRunningParts(target,isHighlighted));	
+			res.addAll(update.getCodeRunningParts(target, isHighlighted));	
 		res.add(new CodeRunningPart(false, false,isHighlighted, ")"));
 
 
 		if(body instanceof BlockNode)	//TODO
-			res.addAll(body.getCodeRunningParts(target,isHighlighted));
+			res.addAll(body.getCodeRunningParts(target, isHighlighted));
 		else{
 			res.add(new CodeRunningPart(false, true,isHighlighted, null));
-			res.addAll(CodeRunningPart.tabber(body.getCodeRunningParts(target,isHighlighted)));
+			res.addAll(CodeRunningPart.tabber(body.getCodeRunningParts(target, isHighlighted)));
 		}
 
 		return res;
@@ -227,6 +227,8 @@ public class ForNode extends Node{			// TODO
 			init = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
+			
+			toSet.setHideSemicolon(true);
 		}
 
 		@Override
@@ -253,6 +255,8 @@ public class ForNode extends Node{			// TODO
 			condition = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
+			
+			toSet.setHideSemicolon(true);
 		}
 
 		@Override
@@ -278,6 +282,8 @@ public class ForNode extends Node{			// TODO
 			update = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
+			
+			toSet.setHideSemicolon(true);
 		}
 
 		@Override

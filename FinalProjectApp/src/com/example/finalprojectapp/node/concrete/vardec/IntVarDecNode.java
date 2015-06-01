@@ -80,12 +80,16 @@ public class IntVarDecNode extends Node {
 
 		if(initialValue == null){
 			res.add(new CodeWritingPart(false, false, null, new InitialValueSetter(this), this));
-			res.add(new CodeWritingPart(false, false, ";", null, this));
+
+			if(!isHideSemicolon())
+				res.add(new CodeWritingPart(false, false, ";", null, this));
 		}
 		else{
 			res.add(new CodeWritingPart(false, false, "=", null, this));
 			res.addAll(initialValue.getCodeWritingParts());
-			res.add(new CodeWritingPart(false, false, ";", null, this));
+
+			if(!isHideSemicolon())
+				res.add(new CodeWritingPart(false, false, ";", null, this));
 		}
 
 		return res;
@@ -101,10 +105,11 @@ public class IntVarDecNode extends Node {
 
 		if(initialValue != null){
 			res.add(new CodeRunningPart(false, false,isHighlighted, "="));
-			res.addAll(initialValue.getCodeRunningParts(target,isHighlighted));
+			res.addAll(initialValue.getCodeRunningParts(target, isHighlighted));
 		}
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
+		if(!isHideSemicolon())
+			res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
 
 		return res;
 	}

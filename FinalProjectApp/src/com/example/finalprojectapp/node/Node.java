@@ -14,6 +14,8 @@ public abstract class Node {
 	private Type type;
 	
 	private Scope scope;
+	
+	private boolean hideSemicolon = false;
 
 	public Node() {
 		scope = new Scope();
@@ -50,10 +52,17 @@ public abstract class Node {
 	public void setScope(Scope scope) {
 		this.scope = scope;
 	}
+	
+	public boolean isHideSemicolon() {
+		return hideSemicolon;
+	}
+	
+	public void setHideSemicolon(boolean hideSemicolon) {
+		this.hideSemicolon = hideSemicolon;
+	}
 
 	public abstract List<CodeWritingPart> getCodeWritingParts();
 	public abstract List<CodeRunningPart> getCodeRunningParts(Node target , boolean isHighlighted);
-
 	
 	public abstract ReturnObject run() throws MyException;
 

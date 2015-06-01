@@ -105,11 +105,11 @@ public class PlusNode extends Node{
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
-		res.addAll(left.getCodeRunningParts(target,isHighlighted));
+		res.addAll(left.getCodeRunningParts(target, isHighlighted));
 
 		res.add(new CodeRunningPart(false, false,isHighlighted, "+"));
 
-		res.addAll(right.getCodeRunningParts(target,isHighlighted));
+		res.addAll(right.getCodeRunningParts(target, isHighlighted));
 
 		return res;
 	}

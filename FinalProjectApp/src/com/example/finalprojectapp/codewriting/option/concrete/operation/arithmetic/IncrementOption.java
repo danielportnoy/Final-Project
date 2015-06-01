@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.codewriting.option.concrete.operation.assignment;
+package com.example.finalprojectapp.codewriting.option.concrete.operation.arithmetic;
 
 import java.util.List;
 
@@ -13,24 +13,23 @@ import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Scope;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
-import com.example.finalprojectapp.node.concrete.operators.assignment.SimpleAssignmentNode;
+import com.example.finalprojectapp.node.concrete.operators.arithmetic.IncrementNode;
 
-public class SimpleAssignmentOption extends Option{
-
+public class IncrementOption extends Option{
+	
 	private AlertDialog dialog;
 
-	private Type typeOfIdentifiver;
 	private String identifierName;
 
 	@Override
 	public boolean isType(Type type) {
-		return type == Type.Statement || type == Type.ForInit ||  type == Type.ForUpdate;
+		return type == Type.Int || type == Type.Statement || type == Type.ForUpdate;
 	}
 
 	@Override
 	public void setButton(final Context context, Button optionButton, final Setter setter) {
 
-		optionButton.setText("=");	//TODO
+		optionButton.setText("++");	//TODO
 
 		optionButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -42,7 +41,7 @@ public class SimpleAssignmentOption extends Option{
 				builder.setTitle("Select The Left Side");	// TODO
 
 				// get all identifiers
-				List<String> alllIds = Scope.getIdentifiersRecursive(setter.getParent(), setter.getOrder());
+				List<String> alllIds = Scope.getIntegerIdentifiersRecursive(setter.getParent(), setter.getOrder());
 
 				// Strings to Show In Dialog with Radio Buttons
 				final String[] items = alllIds.toArray(new String[alllIds.size()]);
@@ -51,7 +50,6 @@ public class SimpleAssignmentOption extends Option{
 					public void onClick(DialogInterface dialog, int item) {
 						
 						identifierName = items[item];
-						typeOfIdentifiver = Scope.getTypeByIdentifier(setter.getParent(), setter.getOrder(), identifierName); 
 														
 						((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
 					}
@@ -60,7 +58,7 @@ public class SimpleAssignmentOption extends Option{
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int id) {
-						setter.setChildNode(new SimpleAssignmentNode(typeOfIdentifiver, identifierName));
+						setter.setChildNode(new IncrementNode(identifierName));
 						refresh();
 					}
 				});
@@ -78,5 +76,5 @@ public class SimpleAssignmentOption extends Option{
 			}
 		});
 	}
-}
 
+}
