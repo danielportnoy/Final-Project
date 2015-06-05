@@ -13,18 +13,19 @@ public abstract class Scenario {
 
 	private List<Configuration> configs = new ArrayList<Configuration>();
 	private Configuration currentConfig;
+	private Configuration defaultConfig;
 
 	private List<Option> availableOptions = new ArrayList<Option>();
 
 	private String levelText;
 
 	public Scenario() {
-		initiateTests();
+		initiateConfigurations();
 		initiateAvailableOptions();
 		initiateLevelText();
 	}
 
-	public abstract void initiateTests();
+	public abstract void initiateConfigurations();
 	public abstract void initiateAvailableOptions();
 	public abstract void initiateLevelText();
 
@@ -58,6 +59,14 @@ public abstract class Scenario {
 
 	public void setCurrentConfig(Configuration currentConfig) {
 		this.currentConfig = currentConfig;
+	}
+	
+	public Configuration getDefaultConfig() {
+		return defaultConfig;
+	}
+	
+	public void setDefaultConfig(Configuration defaultConfig) {
+		this.defaultConfig = defaultConfig;
 	}
 
 	public abstract void reset();

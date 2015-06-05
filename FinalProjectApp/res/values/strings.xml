@@ -35,5 +35,6 @@
     <string name="animation_on">Animation on</string>
     <string name="swipe_mode_on">Swipe mode on</string>
     <string name="swipe_mode_off">Swipe mode off</string>
+    <string name="variables_">Variables:</string>
 
 </resources>

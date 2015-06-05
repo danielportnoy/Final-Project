@@ -27,6 +27,8 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 	private MySurfaceView gameView;
 	
 	private SharedPreferences SP;
+	
+	private LinearLayout gameViewLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);
 		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		LinearLayout gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_GameScreen);
+		gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_GameScreen);
 		gameViewLayout.addView(gameView);
 	}
 
@@ -75,16 +77,19 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 			b.setEnabled(false);
 		else
 			b.setEnabled(true);
-
-		gameView.reset();
+		
+		LevelManager.getInstance().getScenario().setCurrentConfig(LevelManager.getInstance().getScenario().getDefaultConfig());
 		
 		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
 		boolean levelInstructions = SP.getBoolean(Constants.LI_KEY, Constants.DEFAULT_LI);
 		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
 		
-		gameView.setFps(fps);
-		gameView.setAnimating(animation);
+		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);
+		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		
+		gameViewLayout.removeAllViews();
+		gameViewLayout.addView(gameView);
+
 		if(levelInstructions){
 			AlertDialog.Builder builder = Android_Utils.getStartGameDialog(this,
 					Constants.LEVEL_START_TEXT, LevelManager.getInstance().getScenario().getLevelText());

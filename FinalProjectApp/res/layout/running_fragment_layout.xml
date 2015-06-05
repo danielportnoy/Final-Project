@@ -9,28 +9,28 @@
         android:id="@+id/LinearLayout_Running"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:weightSum="1" >
 
         <LinearLayout
-            android:id="@+id/LinearLayout_Running_Screen"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.85"
+            android:id="@+id/LinearLayout_Code_Screen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
             android:orientation="vertical" >
 
             <LinearLayout
-                android:id="@+id/LinearLayout_Running2"
+                android:id="@+id/LinearLayout_Code_Screen_Container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:weightSum="1" >
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout_Running_Code"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
+                    android:id="@+id/LinearLayout_Code"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.75"
                     android:orientation="vertical" >
 
                     <ListView
@@ -38,60 +38,115 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:divider="@android:color/transparent"
-                        android:dividerHeight="1dp" >
+                        android:dividerHeight="1dp"
+                        android:fadeScrollbars="false" >
                     </ListView>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout_Running_Game"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
+                    android:id="@+id/LinearLayout_Running_VarValues"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25"
+                    android:background="@android:color/white"
                     android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textView_Variables"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/variables_"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <ListView
+                        android:id="@+id/listView_Running_VarValues"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="1dp"
+                        android:fadeScrollbars="false" >
+                    </ListView>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/LinearLayout_Running_Watch"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:id="@+id/LinearLayout_Watch_Screen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
             android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/button_startSnapshot"
+            <LinearLayout
+                android:id="@+id/LinearLayout_Watch_Screen_Container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/toBeginning" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1" >
 
-            <Button
-                android:id="@+id/button_prevSnapshot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/previous" />
+                <LinearLayout
+                    android:id="@+id/LinearLayout_Game"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.85"
+                    android:orientation="vertical" >
+                </LinearLayout>
 
-            <Button
-                android:id="@+id/button_PlayPause"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <LinearLayout
+                    android:id="@+id/LinearLayout_Running_Player"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.15"
+                    android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/button_nextSnapshot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/next" />
+                    <LinearLayout
+                        android:id="@+id/LinearLayout_Running_Watch_Player_Buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/button_endSnapshot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/toEnd" />
+                        <Button
+                            android:id="@+id/button_startSnapshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:text="@string/toBeginning" />
+
+                        <Button
+                            android:id="@+id/button_prevSnapshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:text="@string/previous" />
+
+                        <Button
+                            android:id="@+id/button_PlayPause"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick" />
+
+                        <Button
+                            android:id="@+id/button_nextSnapshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:text="@string/next" />
+
+                        <Button
+                            android:id="@+id/button_endSnapshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:text="@string/toEnd" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

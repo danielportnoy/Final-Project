@@ -3,6 +3,8 @@ package com.example.finalprojectapp.coderunning.managment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Pair;
+
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningLine;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
@@ -16,12 +18,16 @@ public class CodeRunningLogicUnit {
 	private List<Snapshot> snapshots;
 
 	private List<CodeRunningLine> codeRunningLines;
-
+	
+	private List<Pair<String, String>> valuesList;
+	
 	public CodeRunningLogicUnit() {
 		values = new VarValues();
 		snapshots = new ArrayList<Snapshot>();
 
 		codeRunningLines = new ArrayList<CodeRunningLine>();
+		
+		valuesList = new ArrayList<Pair<String,String>>();
 	}
 
 	public void takeSnapshot(Node n){
@@ -45,9 +51,13 @@ public class CodeRunningLogicUnit {
 	public List<Snapshot> getSnapshots() {
 		return snapshots;
 	}
-	
+
 	public VarValues getValues() {
 		return values;
+	}
+	
+	public List<Pair<String, String>> getValuesList() {
+		return valuesList;
 	}
 
 	public List<CodeRunningLine> getRunningCodeLines() {
@@ -71,9 +81,17 @@ public class CodeRunningLogicUnit {
 
 		codeRunningLines.add(temp);
 	}
-	
+
 	public void reset() {
 		values = new VarValues();
 		snapshots = new ArrayList<Snapshot>();
+	}
+
+	public void updateVarValues(List<Pair<String, String>> valuesList) {
+		this.valuesList.clear();
+		
+		for (Pair<String, String> pair : valuesList) {
+			this.valuesList.add(pair);
+		}
 	}
 }

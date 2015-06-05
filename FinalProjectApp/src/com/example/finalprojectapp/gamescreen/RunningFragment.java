@@ -6,6 +6,7 @@ import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.coderunning.adapter.CodeRunningLinesAdapter;
+import com.example.finalprojectapp.coderunning.adapter.VarValuesAdapter;
 import com.example.finalprojectapp.coderunning.codeplayer.CodePlayer;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningGraphicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningLogicUnit;
@@ -49,13 +50,17 @@ public class RunningFragment extends Fragment implements OnClickListener{
 		ListView codeLines = (ListView)myFragmentView.findViewById(R.id.listView_Running_Code);
 		CodeRunningLinesAdapter codeRunningLinesAdapter = new CodeRunningLinesAdapter(getActivity(), android.R.layout.simple_list_item_1, logics.getRunningCodeLines());
 		codeLines.setAdapter(codeRunningLinesAdapter);	
+		
+		ListView listView_VarValues= (ListView)myFragmentView.findViewById(R.id.listView_Running_VarValues);
+		VarValuesAdapter varValuesLinesAdapter = new VarValuesAdapter(getActivity(), android.R.layout.simple_list_item_1, logics.getValuesList());
+		listView_VarValues.setAdapter(varValuesLinesAdapter);	
 
 		SP = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
-		graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter , gameView);
+		graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter, varValuesLinesAdapter, gameView);
 		LevelManager.getInstance().registerCodeRunningManager(new CodeRunningManager(logics, graphics));
 
-		gameViewLayout = (LinearLayout)myFragmentView.findViewById(R.id.LinearLayout_Running_Game);
+		gameViewLayout = (LinearLayout)myFragmentView.findViewById(R.id.LinearLayout_Game);
 
 		playButton = (Button)myFragmentView.findViewById(R.id.button_PlayPause);
 

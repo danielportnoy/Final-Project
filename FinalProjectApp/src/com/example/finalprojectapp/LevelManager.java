@@ -6,7 +6,6 @@ import java.util.List;
 import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
 import com.example.finalprojectapp.coderunning.snapshot.Snapshot;
-import com.example.finalprojectapp.coderunning.varvalues.VarValues;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.codewriting.managment.CodeWritingManager;
 import com.example.finalprojectapp.node.Node;
@@ -150,7 +149,6 @@ public class LevelManager {
 			getScenario().reset();
 			getCodeRunningManager().getLogics().reset();
 			
-			VarValues varValues = getCodeRunningManager().getLogics().getValues();
 			List<Snapshot> snapshots = getCodeRunningManager().getLogics().getSnapshots();
 			
 			MyException exception = null;
@@ -161,7 +159,7 @@ public class LevelManager {
 				exception = e;
 			}
 
-			TestCase t = new TestCase(config, varValues, snapshots, exception);
+			TestCase t = new TestCase(config, snapshots, exception);
 					
 			tests.add(t);
 		}

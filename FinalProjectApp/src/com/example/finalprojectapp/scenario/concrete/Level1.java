@@ -53,12 +53,12 @@ public class Level1 extends Scenario {
 	private int heroCurrentX,heroCurrentY;
 
 	@Override
-	public void initiateTests() {
+	public void initiateConfigurations() {
 
-		MyConfiguration cf = new MyConfiguration(3, 6, 0, 1, 5, 1);	// TODO
-		setCurrentConfig(cf);
+		setDefaultConfig(new MyConfiguration(3, 6, 0, 1, 5, 1));	// TODO
+		setCurrentConfig(getDefaultConfig());
 
-		addToConfigs(cf);	
+		addToConfigs(getDefaultConfig());	
 		addToConfigs(new MyConfiguration(5, 8, 0, 2, 7, 2));
 		addToConfigs(new MyConfiguration(3, 4, 0, 1, 2, 1));
 

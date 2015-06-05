@@ -27,14 +27,6 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 		gameLoopThread = new GameLoopThread(this);
 	}
 
-	public void setFps(int fps) {
-		this.fps = fps;
-	}
-
-	public void setAnimating(boolean isAnimating) {
-		this.isAnimating = isAnimating;
-	}
-
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,int height) {
 		// TODO Auto-generated method stub

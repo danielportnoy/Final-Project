@@ -24,7 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@android:color/transparent"
-                android:dividerHeight="1dp" >
+                android:dividerHeight="1dp"
+                android:fadeScrollbars="false" >
             </ListView>
         </LinearLayout>
 
@@ -39,7 +40,8 @@
                 android:id="@+id/listView_Options"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#cccccc" >
+                android:background="#cccccc"
+                android:fadeScrollbars="false" >
             </ListView>
         </LinearLayout>
     </LinearLayout>

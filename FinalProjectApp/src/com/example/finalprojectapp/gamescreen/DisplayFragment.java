@@ -22,6 +22,8 @@ public class DisplayFragment extends Fragment {
 	private MySurfaceView gameView;
 
 	private SharedPreferences SP;
+	
+	private LinearLayout gameViewLayout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class DisplayFragment extends Fragment {
 		gameView = LevelManager.getInstance().getScenario().generateGameView(getActivity(), fps, animation);
 		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		LinearLayout gameViewLayout = (LinearLayout)myFragmentView.findViewById(R.id.LinearLayout_GameScreen);
+		gameViewLayout = (LinearLayout)myFragmentView.findViewById(R.id.LinearLayout_GameScreen);
 		gameViewLayout.addView(gameView);
 
 		if(levelInstructions){
@@ -51,13 +53,18 @@ public class DisplayFragment extends Fragment {
 	}
 
 	public void refresh() {
+		
+		LevelManager.getInstance().getScenario().setCurrentConfig(LevelManager.getInstance().getScenario().getDefaultConfig());
 
 		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
 		boolean levelInstructions = SP.getBoolean(Constants.LI_KEY, Constants.DEFAULT_LI);
 		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
 
-		gameView.setFps(fps);
-		gameView.setAnimating(animation);
+		gameView = LevelManager.getInstance().getScenario().generateGameView(getActivity(), fps, animation);
+		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
+		gameViewLayout.removeAllViews();
+		gameViewLayout.addView(gameView);
 
 		if(levelInstructions){
 			AlertDialog.Builder builder = Android_Utils.getStartGameDialog(getActivity(),

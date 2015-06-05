@@ -15,7 +15,10 @@ public class CodeRunningManager {
 	public void refresh(Snapshot snapshot){
 		
 		logics.updateCodeRunningLines(snapshot.currentNode);
+		logics.updateVarValues(snapshot.values.toList());
+		
 		graphics.updateCodeRunningLines();
+		graphics.updateVarValues();
 		
 		graphics.updateGame(snapshot.gameSnapshot);
 	}

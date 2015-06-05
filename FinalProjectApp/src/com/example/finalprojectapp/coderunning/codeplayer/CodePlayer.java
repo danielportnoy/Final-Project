@@ -49,18 +49,6 @@ public class CodePlayer {
 
 	}
 
-	public void setCurrentSnapshotNumber(int currentSnapshotNumber) {
-		this.currentSnapshotNumber = currentSnapshotNumber;
-	}
-
-	public void setCps(int cps) {
-		this.cps = cps;
-	}
-
-	public void setNumberOfSnapshots(int numberOfSnapshots) {
-		this.numberOfSnapshots = numberOfSnapshots;
-	}
-
 	private int sleepInMS() {
 		return Math.round(1000/cps);
 	}
@@ -72,6 +60,9 @@ public class CodePlayer {
 	}
 
 	public void destroy(){
+		
+		if(playerTheard == null)
+			return;
 
 		boolean retry = true;
 

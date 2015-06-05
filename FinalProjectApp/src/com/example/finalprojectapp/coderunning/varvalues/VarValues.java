@@ -1,10 +1,13 @@
 package com.example.finalprojectapp.coderunning.varvalues;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import android.util.Pair;
 
 public class VarValues {
 
@@ -71,6 +74,23 @@ public class VarValues {
 			if(!identifiers.contains(entry.getKey()))
 				it.remove();
 		}
+	}
+	
+	public List<Pair<String, String>> toList(){
+		
+		List<Pair<String, String>> res = new ArrayList<Pair<String,String>>();
+		
+		for(Iterator<Map.Entry<String, Integer>> it = intValues.entrySet().iterator(); it.hasNext(); ) {
+			Entry<String, Integer> entry = it.next();
+			res.add(new Pair<String, String>(entry.getKey(), entry.getValue().toString()));
+		}
+
+		for(Iterator<Map.Entry<String, Boolean>> it = boolValues.entrySet().iterator(); it.hasNext(); ) {
+			Entry<String, Boolean> entry = it.next();
+			res.add(new Pair<String, String>(entry.getKey(), entry.getValue().toString()));
+		}
+		
+		return res;		
 	}
 
 }

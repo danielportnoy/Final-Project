@@ -8,6 +8,7 @@ import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.activities.ScenraioDisplyActivity;
 import com.example.finalprojectapp.activities.SettingsActivity;
 import com.example.finalprojectapp.coderunning.adapter.CodeRunningLinesAdapter;
+import com.example.finalprojectapp.coderunning.adapter.VarValuesAdapter;
 import com.example.finalprojectapp.coderunning.codeplayer.CodePlayer;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningGraphicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningLogicUnit;
@@ -39,24 +40,29 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 	private MySurfaceView gameView;
 
 	private CodeRunningGraphicUnit graphics;
+	private CodeRunningLogicUnit logics;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_code_running);
 
-		CodeRunningLogicUnit logics = new CodeRunningLogicUnit();
+		logics = new CodeRunningLogicUnit();
 
 		ListView codeLines = (ListView)findViewById(R.id.listView_Running_Code);
 		CodeRunningLinesAdapter codeRunningLinesAdapter = new CodeRunningLinesAdapter(this, android.R.layout.simple_list_item_1, logics.getRunningCodeLines());
 		codeLines.setAdapter(codeRunningLinesAdapter);	
+		
+		ListView listView_VarValues= (ListView)findViewById(R.id.listView_Running_VarValues);
+		VarValuesAdapter varValuesLinesAdapter = new VarValuesAdapter(this, android.R.layout.simple_list_item_1, logics.getValuesList());
+		listView_VarValues.setAdapter(varValuesLinesAdapter);	
 
 		SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-		graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter , gameView);
+		graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter, varValuesLinesAdapter, gameView);
 		LevelManager.getInstance().registerCodeRunningManager(new CodeRunningManager(logics, graphics));
 
-		gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_Running_Game);
+		gameViewLayout = (LinearLayout) findViewById(R.id.LinearLayout_Game);
 	}
 
 	@Override
@@ -82,7 +88,7 @@ public class CodeRunningActivity extends Activity implements OnClickListener {
 
 		LevelManager.getInstance().getScenario().setCurrentConfig(testCaseToShow.getConfig());
 
-		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);;
+		gameView = LevelManager.getInstance().getScenario().generateGameView(this, fps, animation);
 		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		
 		gameViewLayout.removeAllViews();
