@@ -20,7 +20,7 @@ public class Snapshot {
 		this.values = new VarValues(other.values);
 		this.gameSnapshot = other.gameSnapshot;
 
-		List<String> ids = Scope.getIdentifiersRecursive(currentNode.getParent(), currentNode.getOrder());
+		List<String> ids = Scope.getPrevIdentifiers(currentNode.getParent(), currentNode.getOrder());
 		values.removeExtra(ids);
 	}
 
@@ -29,7 +29,7 @@ public class Snapshot {
 		this.values = new VarValues(values);
 		this.gameSnapshot = gameSnapshot;
 
-		List<String> ids = Scope.getIdentifiersRecursive(currentNode.getParent(), currentNode.getOrder());
+		List<String> ids = Scope.getPrevIdentifiers(currentNode.getParent(), currentNode.getOrder());
 		values.removeExtra(ids);
 	}
 

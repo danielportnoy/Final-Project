@@ -23,6 +23,11 @@ public class BoolIdentifier extends Node{
 	}
 	
 	@Override
+	public List<Node> getChildNodes() {
+		return null;
+	}
+	
+	@Override
 	public boolean DeleteChildNode(Node childNode) {
 		return true;
 	}

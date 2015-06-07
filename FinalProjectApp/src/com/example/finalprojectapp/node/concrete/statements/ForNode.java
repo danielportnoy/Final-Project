@@ -27,6 +27,19 @@ public class ForNode extends Node{			// TODO
 	}
 
 	@Override
+	public List<Node> getChildNodes() {
+		List<Node> res = new ArrayList<Node>();
+
+		res.add(init);
+		res.add(condition);
+		res.add(update);
+		res.add(body);
+
+		return res;
+	}
+
+
+	@Override
 	public boolean DeleteChildNode(Node childNode) {
 
 		Set<String> used = new HashSet<String>();
@@ -54,15 +67,24 @@ public class ForNode extends Node{			// TODO
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
-		if(intersection.isEmpty()){
-			if(childNode.equals(init))
+		if(intersection.isEmpty()){	
+
+			if(childNode.equals(init)){
+				removeFromScope(init);
 				init = null;
-			else if(childNode.equals(condition))
+			}
+			else if(childNode.equals(condition)){
+				removeFromScope(condition);
 				condition = null;
-			else if(childNode.equals(update))
+			}
+			else if(childNode.equals(update)){
+				removeFromScope(update);
 				update = null;
-			else if(childNode.equals(body))
+			}
+			else if(childNode.equals(body)){
+				removeFromScope(body);
 				body = null;
+			}
 			return true;
 		}
 		else
@@ -124,7 +146,7 @@ public class ForNode extends Node{			// TODO
 			res.add(new CodeWritingPart(false, false, null, new InitSetter(this), this));
 		else
 			res.addAll(init.getCodeWritingParts());
-		
+
 		res.add(new CodeWritingPart(false, false, ";", null, this));
 
 		if(condition == null)
@@ -219,7 +241,7 @@ public class ForNode extends Node{			// TODO
 		static final int order = 0;
 
 		public InitSetter(Node parent) {
-			super("+", false, parent ,order);	//TODO
+			super(/*"+", */false, parent ,order);	//TODO
 		}
 
 		@Override
@@ -227,7 +249,7 @@ public class ForNode extends Node{			// TODO
 			init = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-			
+
 			toSet.setHideSemicolon(true);
 		}
 
@@ -247,7 +269,7 @@ public class ForNode extends Node{			// TODO
 		final static int order = 1;
 
 		public ConditionSetter(Node parent) {
-			super("< bool expr >", false, parent, order);	//TODO
+			super(/*"< bool expr >", */false, parent, order);	//TODO
 		}
 
 		@Override
@@ -255,7 +277,7 @@ public class ForNode extends Node{			// TODO
 			condition = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-			
+
 			toSet.setHideSemicolon(true);
 		}
 
@@ -274,7 +296,7 @@ public class ForNode extends Node{			// TODO
 		static final int order = 2;
 
 		public UpdateSetter(Node parent) {
-			super("+", false, parent ,order);	//TODO
+			super(/*"+", */false, parent ,order);	//TODO
 		}
 
 		@Override
@@ -282,7 +304,7 @@ public class ForNode extends Node{			// TODO
 			update = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-			
+
 			toSet.setHideSemicolon(true);
 		}
 
@@ -302,7 +324,7 @@ public class ForNode extends Node{			// TODO
 		static final int order = 4;
 
 		public BodySetter(Node parent) {
-			super("+", true, parent ,order);	//TODO
+			super(/*"+", */true, parent ,order);	//TODO
 		}
 
 		@Override

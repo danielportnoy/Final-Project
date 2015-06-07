@@ -2,6 +2,7 @@ package com.example.finalprojectapp.node;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.coderunning.exception.MyException;
@@ -83,5 +84,23 @@ public abstract class Node {
 	public abstract Set<String> getUsedIdentifiers();
 
 	public abstract boolean DeleteChildNode(Node childNode);
+
+	public abstract List<Node> getChildNodes();
+
+	public void removeFromScope(Node n){
+
+		for (int i = n.getOrder() + 1 ; i < n.getParent().getChildNodes().size(); i++)
+			if(n.getParent().getChildNodes().get(i) != null)
+				n.getParent().getChildNodes().get(i).setOrder(i-1);
+
+		getScope().removeIdentifier(n.getOrder());
+		reOrderScope(n.getOrder(), -1);
+
+	}
+
+	public void reOrderScope(int from, int val){
+		for (Entry<String, Integer> entry : getScope().getIntegerIdentifiers().entrySet()) {			if(entry.getValue() >= from)				getScope().getIntegerIdentifiers().put(entry.getKey(), entry.getValue() + val);		}
+		for (Entry<String, Integer> entry : getScope().getBooleanIdentifiers().entrySet()) {			if(entry.getValue() >= from)				getScope().getBooleanIdentifiers().put(entry.getKey(), entry.getValue() + val);		}
+	}
 
 }

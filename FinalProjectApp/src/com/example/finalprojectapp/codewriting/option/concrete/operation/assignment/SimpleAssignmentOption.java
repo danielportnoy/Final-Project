@@ -42,7 +42,7 @@ public class SimpleAssignmentOption extends Option{
 				builder.setTitle("Select The Left Side");	// TODO
 
 				// get all identifiers
-				List<String> alllIds = Scope.getIdentifiersRecursive(setter.getParent(), setter.getOrder());
+				List<String> alllIds = Scope.getPrevIdentifiers(setter.getParent(), setter.getOrder());
 
 				// Strings to Show In Dialog with Radio Buttons
 				final String[] items = alllIds.toArray(new String[alllIds.size()]);

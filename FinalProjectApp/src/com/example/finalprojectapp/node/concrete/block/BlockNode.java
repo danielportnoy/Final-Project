@@ -23,6 +23,11 @@ public class BlockNode extends Node {
 	}
 
 	@Override
+	public List<Node> getChildNodes() {
+		return innerNodes;
+	}
+
+	@Override
 	public boolean DeleteChildNode(Node childNode) {
 		int startingPosition = 0;
 
@@ -38,6 +43,7 @@ public class BlockNode extends Node {
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
 		if(intersection.isEmpty()){
+			removeFromScope(innerNodes.get(startingPosition));
 			innerNodes.remove(startingPosition);
 			return true;
 		}
@@ -83,13 +89,20 @@ public class BlockNode extends Node {
 		res.add(new CodeWritingPart(false, false, "{", null, this));
 		res.add(new CodeWritingPart(false, true, null, null, this));
 
-		for (Node innerNode : innerNodes){
+		for (int i = 0; i < innerNodes.size(); i++) {
+
+			Node innerNode = innerNodes.get(i);
+
+			res.add(new CodeWritingPart(true, false, null, null, this));
+			res.add(new CodeWritingPart(false, false, null, new BlockSetter(this, i), this));	// add more 
+			res.add(new CodeWritingPart(false, true, null, null, this));
+
 			res.addAll(CodeWritingPart.tabber(innerNode.getCodeWritingParts()));
 			res.add(new CodeWritingPart(false, true, null, null, this));
 		}
 
 		res.add(new CodeWritingPart(true, false, null, null, this));
-		res.add(new CodeWritingPart(false, false, null, new BlockSetter(this), this));	// add more 
+		res.add(new CodeWritingPart(false, false, null, new BlockSetter(this, innerNodes.size()), this));	// add more 
 
 		res.add(new CodeWritingPart(false, true, null, null, this));
 		res.add(new CodeWritingPart(false, false, "}", null, this));
@@ -129,15 +142,20 @@ public class BlockNode extends Node {
 
 	class BlockSetter extends Setter{
 
-		public BlockSetter(Node parent) {
-			super("+",false,parent,innerNodes.size());	//TODO
+		public BlockSetter(Node parent, int order) {
+			super(/*"+",*/false,parent,order);	//TODO
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
-			toSet.setOrder(innerNodes.size());	
+			toSet.setOrder(getOrder());	
 			toSet.setParent(getParent());
-			innerNodes.add(toSet);
+
+			innerNodes.add(getOrder(), toSet);
+
+			for (int i = getOrder() + 1 ; i < innerNodes.size(); i++)
+				innerNodes.get(i).setOrder(i);
+
 		}
 
 		@Override

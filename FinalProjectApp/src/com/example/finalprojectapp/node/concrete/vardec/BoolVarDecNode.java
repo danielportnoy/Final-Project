@@ -23,6 +23,16 @@ public class BoolVarDecNode extends Node {
 		this.identifier = identifier;
 		setType(Type.Statement);
 	}
+	
+	@Override
+	public List<Node> getChildNodes() {
+		List<Node> res = new ArrayList<Node>();
+		
+		res.add(initialValue);
+		
+		return res;
+	}
+
 
 	@Override
 	public boolean DeleteChildNode(Node childNode) {
@@ -36,8 +46,10 @@ public class BoolVarDecNode extends Node {
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
 		if(intersection.isEmpty()){
-			if(childNode.equals(initialValue))
+			if(childNode.equals(initialValue)){
+				removeFromScope(initialValue);
 				initialValue = null;
+			}
 			return true;
 		}
 		else
@@ -132,7 +144,7 @@ public class BoolVarDecNode extends Node {
 		static final int order = 0;
 
 		public InitialValueSetter(Node parent) {
-			super("< = bool expr >", false ,parent , order);
+			super(/*"< = bool expr >", */false ,parent , order);
 		}
 
 		@Override

@@ -21,6 +21,11 @@ public class IncrementNode extends Node {
 		this.identifierName = identifierName;
 		setType(Type.Int);
 	}
+	
+	@Override
+	public List<Node> getChildNodes() {
+		return null;
+	}
 
 	@Override
 	public boolean DeleteChildNode(Node childNode) {

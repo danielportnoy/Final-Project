@@ -91,6 +91,7 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 				LevelManager.getInstance().setEditMode(true);
 				LevelManager.getInstance().setEditable(codeWritingPart.getMakerNode());
 				LevelManager.getInstance().refrashWritingScreen();
+
 				return false;
 			}
 		});
@@ -145,7 +146,8 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 				button.setBackgroundResource(R.drawable.not_mandatory_button);
 		}
 
-		button.setText(setter.getText());
+		//button.setText(setter.getText());	TODO
+		button.setText("+");
 		button.setTextAppearance(context, android.R.style.TextAppearance_Small);
 
 

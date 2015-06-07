@@ -24,6 +24,11 @@ public class InitialBlockNode extends Node{
 	}
 
 	@Override
+	public List<Node> getChildNodes() {
+		return innerNodes;
+	}
+
+	@Override
 	public boolean DeleteChildNode(Node childNode) {
 		int startingPosition = 0;
 
@@ -39,6 +44,7 @@ public class InitialBlockNode extends Node{
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
 		if(intersection.isEmpty()){
+			removeFromScope(innerNodes.get(startingPosition));
 			innerNodes.remove(startingPosition);
 			return true;
 		}
@@ -81,12 +87,18 @@ public class InitialBlockNode extends Node{
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		for (Node innerNode : innerNodes){
+		for (int i = 0; i < innerNodes.size(); i++) {
+
+			Node innerNode = innerNodes.get(i);
+
+			res.add(new CodeWritingPart(false, false, null, new InitialBlockSetter(this, i), this));// add more 
+			res.add(new CodeWritingPart(false, true, null, null, this));
+
 			res.addAll(innerNode.getCodeWritingParts());
 			res.add(new CodeWritingPart(false, true, null, null, this));
 		}
 
-		res.add(new CodeWritingPart(false, false, null, new InitialBlockSetter(this), this));// add more 
+		res.add(new CodeWritingPart(false, false, null, new InitialBlockSetter(this, innerNodes.size()), this));// add more 
 
 		return res;
 	}
@@ -123,15 +135,20 @@ public class InitialBlockNode extends Node{
 
 	class InitialBlockSetter extends Setter{
 
-		public InitialBlockSetter(Node parent) {
-			super("+" , false, parent, innerNodes.size());	//TODO
+		public InitialBlockSetter(Node parent, int order) {
+			super(/*"+" , */false, parent, order);	//TODO
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
-			toSet.setOrder(innerNodes.size());	
+			toSet.setOrder(getOrder());	
 			toSet.setParent(getParent());
-			innerNodes.add(toSet);
+
+			innerNodes.add(getOrder(), toSet);
+
+			for (int i = getOrder() + 1 ; i < innerNodes.size(); i++)
+				innerNodes.get(i).setOrder(i);
+
 		}
 
 		@Override

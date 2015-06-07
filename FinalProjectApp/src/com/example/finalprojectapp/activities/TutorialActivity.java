@@ -15,9 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 
-public class LevelPickingActivity extends Activity implements OnClickListener{
+public class TutorialActivity extends Activity implements OnClickListener{
 
 	/*private SharedPreferences.Editor editor;
 	private SharedPreferences settings;*/
@@ -28,22 +27,19 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_level_picking);
+		setContentView(R.layout.activity_tutorial);
 
 		/*settings = 	getSharedPreferences(Constants.SHARED_PREFERANCES, MODE_PRIVATE);
 		editor = settings.edit();*/
 
 		SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-		// TODO temporary
-		((Button)findViewById(R.id.buttonLEVEL2)).setEnabled(false);
-		((Button)findViewById(R.id.buttonLEVEL3)).setEnabled(false);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.level_picking_menu, menu);
+		getMenuInflater().inflate(R.menu.tutorial_menu, menu);
 		return true;
 	}
 
@@ -64,7 +60,7 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 
 		Intent intent = null;
-		
+
 		boolean isSwipeMode = SP.getBoolean(Constants.SWIPE_KEY,Constants.DEFAULT_SWIPE);
 
 		if(isSwipeMode)
@@ -73,13 +69,13 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 			intent = new Intent(this, ScenraioDisplyActivity.class);
 
 		switch (v.getId()) {
-		case R.id.buttonLEVEL1:
+		case R.id.button_tutorial_LEVEL1:
 
 			levelManager.reset();
 			levelManager.loadScenario(new Level1());
 
 			break;
-		case R.id.buttonLEVEL2:
+		/*case R.id.buttonLEVEL2:
 
 			levelManager.reset();
 
@@ -89,7 +85,7 @@ public class LevelPickingActivity extends Activity implements OnClickListener{
 			levelManager.reset();
 
 			break;
-
+*/
 		default:
 			break;
 		}

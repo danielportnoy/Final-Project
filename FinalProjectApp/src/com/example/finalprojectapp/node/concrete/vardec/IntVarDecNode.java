@@ -25,6 +25,16 @@ public class IntVarDecNode extends Node {
 	}
 
 	@Override
+	public List<Node> getChildNodes() {
+		List<Node> res = new ArrayList<Node>();
+
+		res.add(initialValue);
+
+		return res;
+	}
+
+
+	@Override
 	public boolean DeleteChildNode(Node childNode) {
 
 		Set<String> used = new HashSet<String>();
@@ -36,8 +46,11 @@ public class IntVarDecNode extends Node {
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
 		if(intersection.isEmpty()){
-			if(childNode.equals(initialValue))
-				initialValue = null;
+			if(childNode.equals(initialValue)){
+				removeFromScope(initialValue);
+			}
+			initialValue = null;
+
 			return true;
 		}
 		else
@@ -134,7 +147,7 @@ public class IntVarDecNode extends Node {
 		final static int order = 0;
 
 		public InitialValueSetter(Node parent) {
-			super("< = int expr >", false, parent, order);
+			super(/*"< = int expr >", */false, parent, order);
 		}
 
 		@Override
@@ -142,7 +155,7 @@ public class IntVarDecNode extends Node {
 			initialValue = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-			
+
 			toSet.setHideSemicolon(true);
 		}
 

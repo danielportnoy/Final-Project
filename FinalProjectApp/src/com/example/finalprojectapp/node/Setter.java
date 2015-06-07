@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Setter {
 
-	private String text;
+	/*private String text;*/	//TODO
 	private boolean mandatory;
 
 	private Node parent;
@@ -23,8 +23,9 @@ public abstract class Setter {
 		parent.getScope().getIntegerIdentifiers().put(identifier, order);
 	}
 
-	public Setter(String text, boolean mandatory,  Node parent , int order) {
-		this.text = text;
+	//TODO
+	public Setter(/*String text, */boolean mandatory,  Node parent , int order) {
+		/*this.text = text;*/
 		this.mandatory = mandatory;
 		this.parent = parent;
 		this.order = order;
@@ -34,13 +35,15 @@ public abstract class Setter {
 		return mandatory;
 	}
 
-	public String getText() {
+	//TODO
+	/*public String getText() {
 		return text;
 	}
 	
+	//TODO
 	public void setText(String text) {
 		this.text = text;
-	}
+	}*/
 
 	public Node getParent() {
 		return parent;

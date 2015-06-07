@@ -25,6 +25,17 @@ public class IfThenNode extends Node{
 	}
 
 	@Override
+	public List<Node> getChildNodes() {
+		List<Node> res = new ArrayList<Node>();
+
+		res.add(condition);
+		res.add(thenBody);
+
+		return res;
+	}
+
+
+	@Override
 	public boolean DeleteChildNode(Node childNode) {
 
 		Set<String> used = new HashSet<String>();
@@ -38,10 +49,14 @@ public class IfThenNode extends Node{
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
 		if(intersection.isEmpty()){
-			if(childNode.equals(condition))
+			if(childNode.equals(condition)){
+				removeFromScope(condition);
 				condition = null;
-			else if(childNode.equals(thenBody))
+			}
+			else if(childNode.equals(thenBody)){
+				removeFromScope(thenBody);
 				thenBody = null;
+			}
 			return true;
 		}
 		else
@@ -151,7 +166,7 @@ public class IfThenNode extends Node{
 		final static int order = 0;
 
 		public ConditionSetter(Node parent) {
-			super("< bool expr >", true, parent, order);	//TODO
+			super(/*"< bool expr >", */true, parent, order);	//TODO
 		}
 
 		@Override
@@ -176,7 +191,7 @@ public class IfThenNode extends Node{
 		static final int order = 1;
 
 		public ThenBodySetter(Node parent) {
-			super("+", true, parent ,order);	//TODO
+			super(/*"+", */true, parent ,order);	//TODO
 		}
 
 		@Override

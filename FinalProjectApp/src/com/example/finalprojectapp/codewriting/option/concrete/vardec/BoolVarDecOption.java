@@ -59,11 +59,14 @@ public class BoolVarDecOption extends Option {
 						String text = input.getText().toString();
 
 						if(text.isEmpty() || !text.matches(reg))
-							Toast.makeText(context, "Failed - not a valid identifier", Toast.LENGTH_LONG).show();
-						else if(Scope.getIdentifiersRecursive(setter.getParent(), setter.getOrder()).contains(text))
-							Toast.makeText(context, "Failed - identifier allready declared", Toast.LENGTH_LONG).show();
+							Toast.makeText(context, "Failed - not a valid identifier.", Toast.LENGTH_LONG).show();
+						else if(Scope.getPrevIdentifiers(setter.getParent(), setter.getOrder()).contains(text))
+							Toast.makeText(context, "Failed - identifier allready declared.", Toast.LENGTH_LONG).show();
+						else if(Scope.getNextIdentifiers(setter.getParent(), setter.getOrder()).contains(text))
+							Toast.makeText(context, "Failed - identifier declared afterwards.", Toast.LENGTH_LONG).show();
 						else{
 							setter.setChildNode(new BoolVarDecNode(text));
+							setter.getParent().reOrderScope(setter.getOrder(), 1);
 							setter.addToBooleanScope(text);
 							refresh();
 						}

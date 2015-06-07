@@ -212,7 +212,7 @@ public class CodeWritingLogicUnit {
 								LevelManager.getInstance().refrashWritingScreen();
 							}
 							else
-								Toast.makeText(context, "Failed - ...", Toast.LENGTH_LONG).show(); // TODO	
+								Toast.makeText(context, "Failed - invalid removal attempt.", Toast.LENGTH_LONG).show(); // TODO	
 						}
 						else{
 							LevelManager.getInstance().clearCode();

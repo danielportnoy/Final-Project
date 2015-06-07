@@ -21,16 +21,27 @@ public class EqualsNode extends Node {
 
 	private Node right;
 	private Type right_type;
-	
+
 	public EqualsNode() {
 		setType(Type.Bool);
 	}
-	
+
+	@Override
+	public List<Node> getChildNodes() {
+		List<Node> res = new ArrayList<Node>();
+
+		res.add(left);
+		res.add(right);
+
+		return res;
+	}
+
+
 	@Override
 	public boolean DeleteChildNode(Node childNode) {
-		
+
 		Set<String> used = new HashSet<String>();
-		
+
 		if(childNode.equals(left) && right!=null)
 			used.addAll(right.getUsedIdentifiers());
 		else if(childNode.equals(right))
@@ -40,16 +51,20 @@ public class EqualsNode extends Node {
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
 		if(intersection.isEmpty()){
-			if(childNode.equals(left))
-				left = null;
-			else if(childNode.equals(right))
+			if(childNode.equals(left)){
+				removeFromScope(left);
+				left= null;
+			}
+			else if(childNode.equals(right)){
+				removeFromScope(right);
 				right = null;
+			}
 			return true;
 		}
 		else
 			return false;
 	}
-	
+
 	@Override
 	public Set<String> getDeclaredIdentifiers() {
 
@@ -82,7 +97,7 @@ public class EqualsNode extends Node {
 		else
 			return null;
 	}
-	
+
 	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {
 
@@ -127,7 +142,7 @@ public class EqualsNode extends Node {
 			return new ReturnObject(left.run().getBoolValue() == right.run().getBoolValue());
 		else if(left_type == Type.Int && right_type == Type.Int)
 			return new ReturnObject(left.run().getIntValue() == right.run().getIntValue());
-		
+
 		return new ReturnObject();	// TODO
 	}
 
@@ -136,7 +151,7 @@ public class EqualsNode extends Node {
 		final static int order = 0;
 
 		public LeftSetter(Node parent) {	// TODO	
-			super("< expr >", true, parent, order);	
+			super(/*"< expr >", */true, parent, order);	
 		}
 
 		@Override
@@ -144,7 +159,7 @@ public class EqualsNode extends Node {
 			left = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-			
+
 			left_type = toSet.getType();
 		}
 
@@ -162,13 +177,13 @@ public class EqualsNode extends Node {
 			return possibilities;
 		}
 	}
-	
+
 	class RightSetter extends Setter{
 
 		final static int order = 0;
 
 		public RightSetter(Node parent) {	// TODO	
-			super("< expr >", true, parent, order);	
+			super(/*"< expr >", */true, parent, order);	
 		}
 
 		@Override
@@ -176,7 +191,7 @@ public class EqualsNode extends Node {
 			right = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-			
+
 			right_type = toSet.getType();
 		}
 

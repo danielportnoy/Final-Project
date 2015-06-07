@@ -2,10 +2,10 @@ package com.example.finalprojectapp.node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 
 public class Scope {
 
@@ -15,6 +15,24 @@ public class Scope {
 	public Scope() {
 		IntegerIdentifiers = new HashMap<String, Integer>();
 		BooleanIdentifiers = new HashMap<String, Integer>();
+	}
+
+	public void removeIdentifier(int order){
+
+		for(Iterator<Entry<String, Integer>> it = IntegerIdentifiers.entrySet().iterator(); it.hasNext(); ) {
+			Map.Entry<String, Integer> entry = it.next();
+			if(entry.getValue().equals(order)) {
+				it.remove();
+			}
+		}
+
+		for(Iterator<Entry<String, Integer>> it = BooleanIdentifiers.entrySet().iterator(); it.hasNext(); ) {
+			Map.Entry<String, Integer> entry = it.next();
+			if(entry.getValue().equals(order)) {
+				it.remove();
+			}
+		}
+
 	}
 
 	public Map<String, Integer> getIntegerIdentifiers() {
@@ -45,7 +63,7 @@ public class Scope {
 		return ids;
 	}
 
-	public static List<String> getIdentifiersRecursive(Node n , int order){
+	public static List<String> getPrevIdentifiers(Node n , int order){
 
 		List<String> identifiers = new ArrayList<String>();
 
@@ -53,6 +71,29 @@ public class Scope {
 		identifiers.addAll(getIntegerIdentifiersRecursive(n,order));
 
 		return identifiers;
+	}
+
+	public static List<String> getNextIdentifiers(Node perent , int order){
+
+		List<String> ids = new ArrayList<String>();
+
+		for (Node n : perent.getChildNodes())
+			if(n != null && n.getOrder() >= order){
+				for (Entry<String, Integer> entry : n.getScope().IntegerIdentifiers.entrySet())
+					ids.add(entry.getKey());
+				for (Entry<String, Integer> entry : n.getScope().BooleanIdentifiers.entrySet())
+					ids.add(entry.getKey());
+			}
+
+		for (Entry<String, Integer> entry : perent.getScope().IntegerIdentifiers.entrySet())
+			if(entry.getValue() >= order)
+				ids.add(entry.getKey());
+
+		for (Entry<String, Integer> entry : perent.getScope().BooleanIdentifiers.entrySet())
+			if(entry.getValue() >= order)
+				ids.add(entry.getKey());
+
+		return ids;	
 	}
 
 	public static List<String> getBooleanIdentifiersRecursive(Node n , int order){
@@ -80,14 +121,14 @@ public class Scope {
 
 		return identifiers;
 	}
-	
+
 	public static Type getTypeByIdentifier(Node n, int order, String identifier){
-		
+
 		if(getBooleanIdentifiersRecursive(n, order).contains(identifier))
 			return Type.Bool;
 		else if(getIntegerIdentifiersRecursive(n, order).contains(identifier))
 			return Type.Int;
-		
+
 		return null;	// TODO
 
 	}

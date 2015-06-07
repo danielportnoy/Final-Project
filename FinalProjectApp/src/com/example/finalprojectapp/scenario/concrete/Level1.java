@@ -220,6 +220,11 @@ public class Level1 extends Scenario {
 
 			return res;
 		}
+		
+		@Override
+		public List<Node> getChildNodes() {
+			return null;
+		}
 
 		@Override
 		public boolean DeleteChildNode(Node childNode) {

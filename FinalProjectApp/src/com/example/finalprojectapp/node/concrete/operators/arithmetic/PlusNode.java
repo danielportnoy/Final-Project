@@ -24,6 +24,16 @@ public class PlusNode extends Node{
 	}
 
 	@Override
+	public List<Node> getChildNodes() {
+		List<Node> res = new ArrayList<Node>();
+
+		res.add(left);
+		res.add(right);
+
+		return res;
+	}
+
+	@Override
 	public boolean DeleteChildNode(Node childNode) {
 
 		Set<String> used = new HashSet<String>();
@@ -37,10 +47,14 @@ public class PlusNode extends Node{
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
 		if(intersection.isEmpty()){
-			if(childNode.equals(left))
+			if(childNode.equals(left)){
+				removeFromScope(left);
 				left = null;
-			else if(childNode.equals(right))
+			}
+			else if(childNode.equals(right)){
+				removeFromScope(right);
 				right = null;
+			}
 			return true;
 		}
 		else
@@ -126,7 +140,7 @@ public class PlusNode extends Node{
 		final static int order = 0;
 
 		public LeftSetter(Node parent) {
-			super("< int expr >", true, parent, order);	// TODO	
+			super(/*"< int expr >", */true, parent, order);	// TODO	
 		}
 
 		@Override
@@ -150,7 +164,7 @@ public class PlusNode extends Node{
 		final static int order = 0;
 
 		public RightSetter(Node parent) {
-			super("< int expr >", true, parent, order);	// TODO
+			super(/*"< int expr >", */true, parent, order);	// TODO
 
 		}
 

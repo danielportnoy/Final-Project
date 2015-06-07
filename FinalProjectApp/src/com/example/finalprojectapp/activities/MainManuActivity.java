@@ -27,7 +27,7 @@ public class MainManuActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if( v.getId() == R.id.buttonPLAY){
-			Intent intent = new Intent(this, LevelPickingActivity.class);
+			Intent intent = new Intent(this, WingPickingActivity.class);
 			startActivity(intent);
 		}
 		else if(v.getId() == R.id.buttonSETTINGS){

@@ -26,6 +26,11 @@ public class SimpleAssignmentNode extends Node {
 		this.identifierName = identifierName;
 		setType(Type.Statement);
 	}
+	
+	@Override
+	public List<Node> getChildNodes() {
+		return null;
+	}
 
 	@Override
 	public boolean DeleteChildNode(Node childNode) {
@@ -136,12 +141,13 @@ public class SimpleAssignmentNode extends Node {
 		final static int order = 0;
 
 		public AssignmentValueSetter(Node parent) {	// TODO	
-			super(null, true, parent, order);	
+			super(/*null, */true, parent, order);	
 
-			if(typeOfIdentifier.equals(Type.Bool))
+			// TODO	
+			/*if(typeOfIdentifier.equals(Type.Bool))
 				setText("< bool expr >");
 			else if(typeOfIdentifier.equals(Type.Int))
-				setText("< int expr >");
+				setText("< int expr >");*/
 
 		}
 

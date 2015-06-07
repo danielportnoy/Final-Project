@@ -2,7 +2,7 @@ package com.example.finalprojectapp.utilities;
 
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.R;
-import com.example.finalprojectapp.activities.LevelPickingActivity;
+import com.example.finalprojectapp.activities.TutorialActivity;
 import com.example.finalprojectapp.activities.ScenraioDisplyActivity;
 import com.example.finalprojectapp.gamescreen.GameScreenActivity;
 
@@ -91,7 +91,7 @@ public class Android_Utils {
 				if(isWin || !isSwipeMode)
 				{
 					if(isWin)
-						intent = new Intent(activity, LevelPickingActivity.class);
+						intent = new Intent(activity, TutorialActivity.class);
 					else if(!isSwipeMode)
 						intent = new Intent(activity, ScenraioDisplyActivity.class);
 					

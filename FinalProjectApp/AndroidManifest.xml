@@ -25,8 +25,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.finalprojectapp.activities.LevelPickingActivity"
-            android:label="@string/title_activity_level_picking"
+            android:name="com.example.finalprojectapp.activities.TutorialActivity"
+            android:label="@string/title_activity_tutorial"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
@@ -57,6 +57,12 @@
             android:name="com.example.finalprojectapp.gamescreen.GameScreenActivity"
             android:label="@string/title_activity_game_screen"
             android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.example.finalprojectapp.activities.WingPickingActivity"
+            android:label="@string/title_activity_wing_picking"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
     </application>
 
