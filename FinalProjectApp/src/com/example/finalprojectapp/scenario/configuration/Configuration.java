@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.scenario;
+package com.example.finalprojectapp.scenario.configuration;
 
 public abstract class Configuration {
 	

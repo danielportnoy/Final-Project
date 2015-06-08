@@ -106,6 +106,58 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal" >
 
+                        <!--
+                        <ImageButton
+                            android:id="@+id/button_startSnapshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/previous" >
+                        </ImageButton>
+
+                        <ImageButton
+                            android:id="@+id/button_prevSnapshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/temp2" >
+                        </ImageButton>
+
+                        <ImageButton
+                            android:id="@+id/button_PlayPause"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/play" >
+                        </ImageButton>
+
+                        <ImageButton
+                            android:id="@+id/button_nextSnapshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/temp1" >
+                        </ImageButton>
+
+                        <ImageButton
+                            android:id="@+id/button_endSnapshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onClick"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/next" >
+                        </ImageButton>
+                        -->
+
                         <Button
                             android:id="@+id/button_startSnapshot"
                             android:layout_width="match_parent"

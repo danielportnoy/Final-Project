@@ -44,10 +44,15 @@ containing a value of this type.
         public static final int level1_background=0x7f020004;
         public static final int mandatory_button=0x7f020005;
         public static final int mandatory_button_highlighted=0x7f020006;
-        public static final int not_mandatory_button=0x7f020007;
-        public static final int not_mandatory_button_highlighted=0x7f020008;
-        public static final int tile_set_one=0x7f020009;
-        public static final int tile_set_two=0x7f02000a;
+        public static final int next=0x7f020007;
+        public static final int not_mandatory_button=0x7f020008;
+        public static final int not_mandatory_button_highlighted=0x7f020009;
+        public static final int play=0x7f02000a;
+        public static final int previous=0x7f02000b;
+        public static final int temp1=0x7f02000c;
+        public static final int temp2=0x7f02000d;
+        public static final int tile_set_one=0x7f02000e;
+        public static final int tile_set_two=0x7f02000f;
     }
     public static final class id {
         public static final int LinearLayout_Code=0x7f090003;
@@ -173,6 +178,9 @@ containing a value of this type.
         public static final int graphics=0x7f060015;
         public static final int hello_world=0x7f060014;
         public static final int if_=0x7f060024;
+        public static final int level_1=0x7f060027;
+        public static final int level_2=0x7f060028;
+        public static final int level_3=0x7f060029;
         public static final int level_instructions_off=0x7f060018;
         public static final int level_instructions_on=0x7f060019;
         public static final int maze_wing=0x7f060022;

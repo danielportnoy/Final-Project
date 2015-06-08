@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.graphic_utils.maze;
+package com.example.finalprojectapp.graphic_utils.archetype.maze;
 
 import android.graphics.Bitmap;
 

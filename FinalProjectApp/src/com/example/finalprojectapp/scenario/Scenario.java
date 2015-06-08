@@ -8,6 +8,7 @@ import android.content.Context;
 import com.example.finalprojectapp.coderunning.snapshot.GameSnapshot;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.graphic_utils.MySurfaceView;
+import com.example.finalprojectapp.scenario.configuration.Configuration;
 
 public abstract class Scenario {
 

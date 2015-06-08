@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="" />
+                    android:text="@string/level_1" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL2"
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="" />
+                    android:text="@string/level_2" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL3"
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="" />
+                    android:text="@string/level_3" />
             </TableRow>
 
             <TextView

@@ -1,11 +1,11 @@
-package com.example.finalprojectapp.graphic_utils.maze;
+package com.example.finalprojectapp.graphic_utils.archetype.maze;
 
 import android.graphics.Bitmap;
 
 import com.example.finalprojectapp.graphic_utils.Sprite;
 
 public class HeroSprite extends Sprite {
-	
+
 	public static enum heroDirection{	
 		Stand,
 		Up,
@@ -13,18 +13,20 @@ public class HeroSprite extends Sprite {
 		Down,
 		Right
 	}
-	
+
+	public static final double[] ARC_ARRAY_9_FRAMES = {0, 0.6, 0.8, 0.9, 1, 0.9, 0.8, 0.6, 0};
+
 	private heroDirection direction;
-	
+
 	public HeroSprite(Bitmap sourceBitmap, int sourceRows, int sourceCols,int currentRow, int currentCol) {
 		super(sourceBitmap, sourceRows, sourceCols, currentRow, currentCol);
-		reset();
+		reset();		
 	}
-	
+
 	public int getNumOfFrames() {
 		return sourceCols;
 	}
-	
+
 	public void reset() {
 		setDirection(heroDirection.Stand);
 		currentCol = 0;
@@ -64,6 +66,10 @@ public class HeroSprite extends Sprite {
 				break;
 			}
 		}
+	}
+
+	public Bitmap getFirstFrameBitmap(){
+		return getBitmapByCoords(0, currentRow);
 	}
 
 }

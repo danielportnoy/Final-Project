@@ -1,10 +1,11 @@
-package com.example.finalprojectapp.scenario;
+package com.example.finalprojectapp.coderunning.testcase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.coderunning.snapshot.Snapshot;
+import com.example.finalprojectapp.scenario.configuration.Configuration;
 
 public class TestCase {
 

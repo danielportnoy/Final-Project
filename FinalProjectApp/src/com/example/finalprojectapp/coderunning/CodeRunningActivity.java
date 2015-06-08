@@ -13,8 +13,8 @@ import com.example.finalprojectapp.coderunning.codeplayer.CodePlayer;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningGraphicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningLogicUnit;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
+import com.example.finalprojectapp.coderunning.testcase.TestCase;
 import com.example.finalprojectapp.graphic_utils.MySurfaceView;
-import com.example.finalprojectapp.scenario.TestCase;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;

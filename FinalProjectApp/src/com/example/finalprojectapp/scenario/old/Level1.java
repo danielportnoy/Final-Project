@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.scenario.concrete;
+/*package com.example.finalprojectapp.scenario.old;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,10 +36,10 @@ import com.example.finalprojectapp.codewriting.option.concrete.statement.IfThenO
 import com.example.finalprojectapp.codewriting.option.concrete.vardec.BoolVarDecOption;
 import com.example.finalprojectapp.codewriting.option.concrete.vardec.IntVarDecOption;
 import com.example.finalprojectapp.graphic_utils.MySurfaceView;
-import com.example.finalprojectapp.graphic_utils.maze.BoardSpriteSheet;
-import com.example.finalprojectapp.graphic_utils.maze.GoalSprite;
-import com.example.finalprojectapp.graphic_utils.maze.HeroSprite;
-import com.example.finalprojectapp.graphic_utils.maze.HeroSprite.heroDirection;
+import com.example.finalprojectapp.graphic_utils.archetype.BoardSpriteSheet;
+import com.example.finalprojectapp.graphic_utils.archetype.GoalSprite;
+import com.example.finalprojectapp.graphic_utils.archetype.HeroSprite;
+import com.example.finalprojectapp.graphic_utils.archetype.HeroSprite.heroDirection;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
@@ -62,10 +62,10 @@ public class Level1 extends Scenario {
 		addToConfigs(new MyConfiguration(5, 8, 0, 2, 7, 2));
 		addToConfigs(new MyConfiguration(3, 4, 0, 1, 2, 1));
 
-		/*MyConfiguration cf = new MyConfiguration(1, 3, 0, 0, 1, 0);
+		MyConfiguration cf = new MyConfiguration(1, 3, 0, 0, 1, 0);
 		setCurrentConfig(cf);
 
-		addToConfigs(cf);	*/
+		addToConfigs(cf);	
 	}
 
 	@Override
@@ -128,9 +128,9 @@ public class Level1 extends Scenario {
 		return mgs.heroX == currentConfig.targetX && mgs.heroY == currentConfig.targetY;
 	}
 
-	/******************** Nested classes ********************/
+	*//******************** Nested classes ********************//*
 
-	/********** exception class **********/
+	*//********** exception class **********//*
 	@SuppressWarnings("serial")
 	class MoveOutOfLimitsException extends MyException{
 
@@ -139,10 +139,10 @@ public class Level1 extends Scenario {
 		}
 
 	}
-	/********** exception class **********/
+	*//********** exception class **********//*
 
 
-	/********** config class **********/
+	*//********** config class **********//*
 	class MyConfiguration extends Configuration{
 
 		public int rows;
@@ -167,10 +167,10 @@ public class Level1 extends Scenario {
 		}
 
 	}
-	/********** config class **********/
+	*//********** config class **********//*
 
 
-	/********** snapshot class **********/
+	*//********** snapshot class **********//*
 	class MyGameSnapshot extends GameSnapshot{
 
 		private int heroX,heroY;
@@ -206,9 +206,9 @@ public class Level1 extends Scenario {
 			return getHeroX() == other_mgs.getHeroX() && getHeroY() == other_mgs.getHeroY();
 		}
 	}
-	/********** snapshot class **********/
+	*//********** snapshot class **********//*
 
-	/********** special nodes class's **********/
+	*//********** special nodes class's **********//*
 	class GoRightNode extends Node{
 
 		@Override
@@ -277,9 +277,9 @@ public class Level1 extends Scenario {
 		}
 
 	}
-	/********** special nodes class's **********/
+	*//********** special nodes class's **********//*
 
-	/********** special option class's **********/
+	*//********** special option class's **********//*
 	class GoRightOption extends Option{
 
 		@Override
@@ -303,9 +303,9 @@ public class Level1 extends Scenario {
 		}
 
 	}
-	/********** special option class's **********/
+	*//********** special option class's **********//*
 
-	/********** SurfaceView class **********/
+	*//********** SurfaceView class **********//*
 
 	class SurfaceView_Level1 extends MySurfaceView {
 
@@ -517,11 +517,11 @@ public class Level1 extends Scenario {
 
 		@Override
 		public void render() {
-			/* scaling bitmaps */	
+			 scaling bitmaps 	
 			boardBitmap = Bitmap.createScaledBitmap(boardBitmap, boardScaleWidth, boardScaleHeight, true);
 			goalCurrentBitmap = Bitmap.createScaledBitmap(goalCurrentBitmap, goalScaleWidth, goalScaleHeight, true);
 			heroCurrentBitmap = Bitmap.createScaledBitmap(heroCurrentBitmap, heroScaleWidth, heroScaleHeight, true);		
-			/* scaling bitmaps */
+			 scaling bitmaps 
 		}
 
 		@Override
@@ -559,9 +559,10 @@ public class Level1 extends Scenario {
 			heroYcurrentLogic = mgs.getHeroY();
 		}
 
-		/********** SurfaceView class **********/
+		*//********** SurfaceView class **********//*
 
-		/******************** Nested classes ********************/
+		*//******************** Nested classes ********************//*
 
 	}
 }
+*/

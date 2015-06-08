@@ -6,14 +6,14 @@ import java.util.List;
 import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.coderunning.managment.CodeRunningManager;
 import com.example.finalprojectapp.coderunning.snapshot.Snapshot;
+import com.example.finalprojectapp.coderunning.testcase.TestCase;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.codewriting.managment.CodeWritingManager;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.concrete.block.InitialBlockNode;
-import com.example.finalprojectapp.scenario.Configuration;
 import com.example.finalprojectapp.scenario.Scenario;
-import com.example.finalprojectapp.scenario.TestCase;
+import com.example.finalprojectapp.scenario.configuration.Configuration;
 
 public class LevelManager {
 
