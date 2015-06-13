@@ -16,7 +16,7 @@ import com.example.finalprojectapp.node.Type;
 
 public class InitialBlockNode extends Node{
 
-	private List<Node> innerNodes;
+	public List<Node> innerNodes;
 
 	public InitialBlockNode() {
 		innerNodes = new ArrayList<Node>();

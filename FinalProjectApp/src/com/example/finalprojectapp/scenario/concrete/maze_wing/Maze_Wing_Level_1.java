@@ -1,8 +1,8 @@
-package com.example.finalprojectapp.scenario.concrete.tutorial;
+package com.example.finalprojectapp.scenario.concrete.maze_wing;
 
 import com.example.finalprojectapp.scenario.archetype.MazeScenarioArchetype;
 
-public class Totorial_Level_1 extends MazeScenarioArchetype {
+public class Maze_Wing_Level_1 extends MazeScenarioArchetype {
 
 	// TODO
 	/*public static final String TOTORIAL_LEVEL1_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
@@ -10,7 +10,7 @@ public class Totorial_Level_1 extends MazeScenarioArchetype {
 			"Warning: the displayed level is just an example of the general problem.\n"+
 			"Try writing code which solves all of the cases.";*/
 
-	public static final String TUTORIAL_LEVEL1_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
+	public static final String MAZE_LEVEL1_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
 			"Hint: try the \"GoRight();\" option...\n\n" +
 			"Warning: be careful not to go out of the maze borders.";
 
@@ -39,7 +39,7 @@ public class Totorial_Level_1 extends MazeScenarioArchetype {
 
 	@Override
 	public void initiateLevelText() {
-		setLevelText(TUTORIAL_LEVEL1_TEXT);
+		setLevelText(MAZE_LEVEL1_TEXT);
 	}
 
 }

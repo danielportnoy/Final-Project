@@ -6,6 +6,7 @@ import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.gamescreen.GameScreenActivity;
 import com.example.finalprojectapp.scenario.Scenario;
 import com.example.finalprojectapp.scenario.concrete.tutorial.*;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
@@ -63,6 +64,8 @@ public class TutorialActivity extends Activity implements OnClickListener{
 
 		Scenario scenario = null;
 
+		levelManager.reset();
+		
 		boolean isSwipeMode = SP.getBoolean(Constants.SWIPE_KEY,Constants.DEFAULT_SWIPE);
 
 		if(isSwipeMode)
@@ -71,13 +74,12 @@ public class TutorialActivity extends Activity implements OnClickListener{
 			intent = new Intent(this, ScenraioDisplyActivity.class);
 
 		if(v.getId() ==  R.id.button_tutorial_LEVEL1)
-			scenario = new Totorial_Level_1();
+			scenario = new Tutorial_Level_1();
 		else if(v.getId() ==  R.id.button_tutorial_LEVEL2)
-			scenario = new Totorial_Level_2();
+			scenario = new Tutorial_Level_2();
 		else if(v.getId() ==  R.id.button_tutorial_LEVEL3)
-			scenario = new Totorial_Level_3();
+			scenario = new Tutorial_Level_3();
 
-		levelManager.reset();
 		levelManager.loadScenario(scenario);
 
 		startActivity(intent);

@@ -128,12 +128,12 @@ public class CodeWritingLogicUnit {
 		List<String> identifiers;
 
 		if(setter.possibleTypes().contains(Type.Bool)){
-			identifiers = Scope.getBooleanIdentifiersRecursive(setter.getParent(), setter.getOrder());
+			identifiers = Scope.getPrevBooleanIdentifiersRecursive(setter.getParent(), setter.getOrder());
 			for (String id : identifiers)
 				currentOptions.add(new BoolIdentifierOption(id));
 		}
 		if(setter.possibleTypes().contains(Type.Int)){
-			identifiers = Scope.getIntegerIdentifiersRecursive(setter.getParent(), setter.getOrder());
+			identifiers = Scope.getPrevIntegerIdentifiersRecursive(setter.getParent(), setter.getOrder());
 			for (String id : identifiers)
 				currentOptions.add(new IntIdentifierOption(id));
 		}
@@ -205,8 +205,13 @@ public class CodeWritingLogicUnit {
 					@Override
 					public void onClick(View v) {
 						if(currentMakerNode.getParent() != null){
-
-							if(currentMakerNode.getParent().DeleteChildNode(currentMakerNode)){							
+							
+							if(!currentMakerNode.isErasable()){
+								LevelManager.getInstance().setEditMode(false);
+								LevelManager.getInstance().setEditable(null);
+								LevelManager.getInstance().refrashWritingScreen();
+							}
+							else if(currentMakerNode.getParent().DeleteChildNode(currentMakerNode)){							
 								LevelManager.getInstance().setEditMode(false);
 								LevelManager.getInstance().setEditable(null);
 								LevelManager.getInstance().refrashWritingScreen();

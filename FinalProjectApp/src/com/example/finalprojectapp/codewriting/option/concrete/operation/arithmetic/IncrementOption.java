@@ -41,7 +41,7 @@ public class IncrementOption extends Option{
 				builder.setTitle("Select The Left Side");	// TODO
 
 				// get all identifiers
-				List<String> alllIds = Scope.getIntegerIdentifiersRecursive(setter.getParent(), setter.getOrder());
+				List<String> alllIds = Scope.getPrevIntegerIdentifiersRecursive(setter.getParent(), setter.getOrder());
 
 				// Strings to Show In Dialog with Radio Buttons
 				final String[] items = alllIds.toArray(new String[alllIds.size()]);

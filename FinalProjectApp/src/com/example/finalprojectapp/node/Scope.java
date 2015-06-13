@@ -51,6 +51,14 @@ public class Scope {
 		return getIdentifiersUntil(BooleanIdentifiers, until);
 	}
 
+	private List<String> getIntegerIdentifiersFrom(int until) {
+		return getIdentifiersFrom(IntegerIdentifiers, until);
+	}
+
+	private List<String> getBooleanIdentifiersFrom(int until) {
+		return getIdentifiersFrom(BooleanIdentifiers, until);
+	}
+
 	private List<String> getIdentifiersUntil(Map<String, Integer> map , int until){
 
 		List<String> ids = new ArrayList<String>();
@@ -63,60 +71,109 @@ public class Scope {
 		return ids;
 	}
 
+	private List<String> getIdentifiersFrom(Map<String, Integer> map , int until){
+
+		List<String> ids = new ArrayList<String>();
+
+		for (Entry<String, Integer> entry : map.entrySet()) {
+			if(entry.getValue() >= until)
+				ids.add(entry.getKey());
+		}
+
+		return ids;
+	}
+
+
 	public static List<String> getPrevIdentifiers(Node n , int order){
 
 		List<String> identifiers = new ArrayList<String>();
 
-		identifiers.addAll(getBooleanIdentifiersRecursive(n,order));
-		identifiers.addAll(getIntegerIdentifiersRecursive(n,order));
+		identifiers.addAll(getPrevBooleanIdentifiersRecursive(n,order));
+		identifiers.addAll(getPrevIntegerIdentifiersRecursive(n,order));
 
 		return identifiers;
 	}
 
 	public static List<String> getNextIdentifiers(Node perent , int order){
 
-		List<String> ids = new ArrayList<String>();
+		List<String> identifiers = new ArrayList<String>();
 
-		for (Node n : perent.getChildNodes())
-			if(n != null && n.getOrder() >= order){
-				for (Entry<String, Integer> entry : n.getScope().IntegerIdentifiers.entrySet())
-					ids.add(entry.getKey());
-				for (Entry<String, Integer> entry : n.getScope().BooleanIdentifiers.entrySet())
-					ids.add(entry.getKey());
-			}
+		identifiers.addAll(getNextBooleanIdentifiersRecursive(perent,order));
+		identifiers.addAll(getNextIntegerIdentifiersRecursive(perent,order));
 
-		for (Entry<String, Integer> entry : perent.getScope().IntegerIdentifiers.entrySet())
-			if(entry.getValue() >= order)
-				ids.add(entry.getKey());
-
-		for (Entry<String, Integer> entry : perent.getScope().BooleanIdentifiers.entrySet())
-			if(entry.getValue() >= order)
-				ids.add(entry.getKey());
-
-		return ids;	
+		return identifiers;
 	}
 
-	public static List<String> getBooleanIdentifiersRecursive(Node n , int order){
+	public static List<String> getNextBooleanIdentifiersRecursive(Node n , int order){
+
+		List<String> identifiers = new ArrayList<String>();
+
+		if(n == null)
+			return identifiers;
+
+		List<Node> childNodes = n.getChildNodes();
+
+		if(childNodes != null){
+			for (Node node : n.getChildNodes())
+				if(n.getOrder() >= order)
+					identifiers.addAll(getNextBooleanIdentifiersRecursive(node, 0));
+		}
+
+		for (Entry<String, Integer> entry : n.getScope().BooleanIdentifiers.entrySet())
+			if(entry.getValue() >= order)
+				identifiers.add(entry.getKey());
+
+		identifiers.addAll(n.getScope().getBooleanIdentifiersFrom(order));
+
+		return identifiers;
+	}
+
+	public static List<String> getNextIntegerIdentifiersRecursive(Node n , int order){
 
 		List<String> identifiers = new ArrayList<String>();
 
 		if(n==null)
 			return identifiers;
 
-		identifiers.addAll(getBooleanIdentifiersRecursive(n.getParent(),n.getOrder()));
+		List<Node> childNodes = n.getChildNodes();
+
+		if(childNodes != null){
+			for (Node node : n.getChildNodes())
+				if(n.getOrder() >= order)
+					identifiers.addAll(getNextIntegerIdentifiersRecursive(node, 0));
+		}
+
+		for (Entry<String, Integer> entry : n.getScope().IntegerIdentifiers.entrySet())
+			if(entry.getValue() >= order)
+				identifiers.add(entry.getKey());
+
+		identifiers.addAll(n.getScope().getIntegerIdentifiersFrom(order));
+
+		return identifiers;
+	}
+
+
+	public static List<String> getPrevBooleanIdentifiersRecursive(Node n , int order){
+
+		List<String> identifiers = new ArrayList<String>();
+
+		if(n==null)
+			return identifiers;
+
+		identifiers.addAll(getPrevBooleanIdentifiersRecursive(n.getParent(),n.getOrder()));
 		identifiers.addAll(n.getScope().getBooleanIdentifiersUntil(order));
 
 		return identifiers;
 	}
 
-	public static List<String> getIntegerIdentifiersRecursive(Node n , int order){
+	public static List<String> getPrevIntegerIdentifiersRecursive(Node n , int order){
 
 		List<String> identifiers = new ArrayList<String>();
 
 		if(n==null)
 			return identifiers;
 
-		identifiers.addAll(getIntegerIdentifiersRecursive(n.getParent(),n.getOrder()));
+		identifiers.addAll(getPrevIntegerIdentifiersRecursive(n.getParent(),n.getOrder()));
 		identifiers.addAll(n.getScope().getIntegerIdentifiersUntil(order));
 
 		return identifiers;
@@ -124,9 +181,9 @@ public class Scope {
 
 	public static Type getTypeByIdentifier(Node n, int order, String identifier){
 
-		if(getBooleanIdentifiersRecursive(n, order).contains(identifier))
+		if(getPrevBooleanIdentifiersRecursive(n, order).contains(identifier))
 			return Type.Bool;
-		else if(getIntegerIdentifiersRecursive(n, order).contains(identifier))
+		else if(getPrevIntegerIdentifiersRecursive(n, order).contains(identifier))
 			return Type.Int;
 
 		return null;	// TODO

@@ -1,10 +1,17 @@
-package com.example.finalprojectapp.scenario.concrete.tutorial;
+package com.example.finalprojectapp.scenario.concrete.maze_wing;
 
+/*import com.example.finalprojectapp.codewriting.option.concrete.block.*;
+import com.example.finalprojectapp.codewriting.option.concrete.statement.*;
+import com.example.finalprojectapp.codewriting.option.concrete.literal.*;
+import com.example.finalprojectapp.codewriting.option.concrete.operation.arithmetic.*;
+import com.example.finalprojectapp.codewriting.option.concrete.operation.assignment.*;
+import com.example.finalprojectapp.codewriting.option.concrete.operation.relational.*;
+import com.example.finalprojectapp.codewriting.option.concrete.vardec.*;*/
 import com.example.finalprojectapp.scenario.archetype.MazeScenarioArchetype;
 
-public class Totorial_Level_3 extends MazeScenarioArchetype {
+public class Maze_Wing_Level_3 extends MazeScenarioArchetype {
 
-	public static final String TUTORIAL_LEVEL3_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
+	public static final String MAZE_LEVEL3_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
 			"Hint: try ALL of the movment options...\n\n" +
 			"Warning: be careful not to go out of the maze borders.";
 
@@ -45,11 +52,12 @@ public class Totorial_Level_3 extends MazeScenarioArchetype {
 		addToAvailableOptions(new JumpLeftOption());
 		addToAvailableOptions(new JumpUpOption());
 		addToAvailableOptions(new JumpDownOption());
+
 	}
 
 	@Override
 	public void initiateLevelText() {
-		setLevelText(TUTORIAL_LEVEL3_TEXT);
+		setLevelText(MAZE_LEVEL3_TEXT);
 	}
 
 }

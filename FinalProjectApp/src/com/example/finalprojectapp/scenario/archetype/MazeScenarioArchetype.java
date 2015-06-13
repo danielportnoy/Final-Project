@@ -193,6 +193,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 		public MovementNode(String codeText) {
 			this.codeText = codeText;
+			setType(Type.Statement);
 		}
 
 		public abstract MovementNode newInstance();

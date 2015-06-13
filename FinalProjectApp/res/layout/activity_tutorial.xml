@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="16dp"
-        android:fadeScrollbars="false" >
+        android:fadeScrollbars="false"
+        android:paddingBottom="16dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:paddingTop="16dp" >
 
         <TableLayout
             android:id="@+id/tableLayout_tutorial"
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="@string/level_1" />
+                    android:text="@string/numbers" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL2"
@@ -53,15 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="@string/level_2" />
-
-                <Button
-                    android:id="@+id/button_tutorial_LEVEL3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onClick"
-                    android:text="@string/level_3" />
+                    android:text="@string/booleans" />
             </TableRow>
 
             <TextView
@@ -78,12 +70,12 @@
                 android:layout_height="wrap_content" >
 
                 <Button
-                    android:id="@+id/button_tutorial_LEVEL4"
+                    android:id="@+id/button_tutorial_LEVEL3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="" />
+                    android:text="@string/variables" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL5"

@@ -17,6 +17,8 @@ public abstract class Node {
 	private Scope scope;
 
 	private boolean hideSemicolon = false;
+	
+	private boolean isErasable = false;
 
 	public Node() {
 		scope = new Scope();
@@ -70,6 +72,14 @@ public abstract class Node {
 
 	public void setHideSemicolon(boolean hideSemicolon) {
 		this.hideSemicolon = hideSemicolon;
+	}
+	
+	public boolean isErasable() {
+		return isErasable;
+	}
+	
+	public void setErasable(boolean isErasable) {
+		this.isErasable = isErasable;
 	}
 
 	public abstract List<CodeWritingPart> getCodeWritingParts();
