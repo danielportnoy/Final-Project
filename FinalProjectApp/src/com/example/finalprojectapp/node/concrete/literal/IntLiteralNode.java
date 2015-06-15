@@ -22,6 +22,11 @@ public class IntLiteralNode extends Node {
 	}
 	
 	@Override
+	public boolean addChild(Node child, int order) {
+		return false;
+	}
+	
+	@Override
 	public List<Node> getChildNodes() {
 		return null;
 	}

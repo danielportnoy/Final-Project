@@ -64,6 +64,12 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
+        <activity
+            android:name="com.example.finalprojectapp.activities.MazeWingActivity"
+            android:label="@string/title_activity_maze_wing"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+        </activity>
     </application>
 
 </manifest>

@@ -79,6 +79,11 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 		text.setText(textString);
 		text.setTextAppearance(context, android.R.style.TextAppearance_Small);
 
+		if(!codeWritingPart.getMakerNode().isErasable())
+			text.setTextColor(0xff6E6E6E);
+		else
+			text.setTextColor(Color.BLACK);
+
 		if(codeWritingPart.isEditable() && LevelManager.getInstance().isEditMode())
 			text.setBackgroundColor(Color.YELLOW);
 
@@ -88,10 +93,13 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 
 			@Override
 			public boolean onLongClick(View v) {
-				LevelManager.getInstance().setEditMode(true);
-				LevelManager.getInstance().setEditable(codeWritingPart.getMakerNode());
-				LevelManager.getInstance().refrashWritingScreen();
 
+				if(codeWritingPart.getMakerNode().isErasable()){
+					
+					LevelManager.getInstance().setEditMode(true);
+					LevelManager.getInstance().setEditable(codeWritingPart.getMakerNode());
+					LevelManager.getInstance().refrashWritingScreen();
+				}
 				return false;
 			}
 		});

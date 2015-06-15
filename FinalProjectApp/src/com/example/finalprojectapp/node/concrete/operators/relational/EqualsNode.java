@@ -27,6 +27,20 @@ public class EqualsNode extends Node {
 	}
 
 	@Override
+	public boolean addChild(Node child, int order) {
+
+		if(order > getChildNodes().size() - 1)
+			return false;
+		else{
+			if(order == 0)
+				left = child;
+			else if(order == 1)
+				right = child;
+		}
+		return true;
+	}
+
+	@Override
 	public List<Node> getChildNodes() {
 		List<Node> res = new ArrayList<Node>();
 

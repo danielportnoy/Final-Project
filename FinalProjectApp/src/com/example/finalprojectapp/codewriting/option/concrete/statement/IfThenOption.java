@@ -27,6 +27,7 @@ public class IfThenOption extends Option {
 			@Override
 			public void onClick(View v) {
 				setter.setChildNode(new IfThenNode());
+				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}
 		});

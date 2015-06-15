@@ -25,6 +25,20 @@ public class IfThenNode extends Node{
 	}
 
 	@Override
+	public boolean addChild(Node child, int order) {
+
+		if(order > getChildNodes().size() - 1)
+			return false;
+		else{
+			if(order == 0)
+				condition = child;
+			else if(order == 1)
+				thenBody = child;
+		}
+		return true;
+	}
+	
+	@Override
 	public List<Node> getChildNodes() {
 		List<Node> res = new ArrayList<Node>();
 
@@ -33,7 +47,6 @@ public class IfThenNode extends Node{
 
 		return res;
 	}
-
 
 	@Override
 	public boolean DeleteChildNode(Node childNode) {

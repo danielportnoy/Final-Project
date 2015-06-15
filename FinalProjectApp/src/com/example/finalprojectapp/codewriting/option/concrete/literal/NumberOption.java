@@ -60,6 +60,8 @@ public class NumberOption extends Option{
 							setter.setChildNode(new IntLiteralNode(-numberPicker.getValue()));
 						else
 							setter.setChildNode(new IntLiteralNode(numberPicker.getValue()));
+						
+						setter.getParent().reOrderScope(setter.getOrder(), 1);
 
 						refresh();
 					}

@@ -43,5 +43,12 @@
     <string name="numbers">Numbers</string>
     <string name="booleans">Booleans</string>
     <string name="variables">Variables</string>
+    <string name="assignment">Assignment</string>
+    <string name="inc_dec">Inc / Dec</string>
+    <string name="title_activity_maze_wing">MazeWingActivity</string>
+    <string name="moves">Moves</string>
+    <string name="basic_move">Basic move</string>
+    <string name="more_moves">More moves</string>
+    <string name="all_moves">All moves</string>
 
 </resources>

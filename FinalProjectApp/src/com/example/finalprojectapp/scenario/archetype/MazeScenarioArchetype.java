@@ -37,6 +37,8 @@ import com.example.finalprojectapp.scenario.configuration.Configuration;
 import com.example.finalprojectapp.utilities.Android_Utils;
 
 public abstract class  MazeScenarioArchetype extends Scenario {
+	
+	public static final String MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT = "Exception : The character moved out of the maze limits.";
 
 	public static enum BoardTilesTypesEnum{
 		Rockys_stones,
@@ -71,7 +73,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 				}
 			}
 		}
-		
+
 		return randomMap;
 	}
 
@@ -108,7 +110,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 	protected class MoveOutOfLimitsException extends MyException{
 
 		public MoveOutOfLimitsException() {
-			super(Constants.MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT);
+			super(MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT);
 		}
 
 	}
@@ -208,6 +210,11 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			res.add(new CodeWritingPart(false, false, codeText, null, this));
 
 			return res;
+		}
+
+		@Override
+		public boolean addChild(Node child, int order) {
+			return false;
 		}
 
 		@Override
@@ -472,6 +479,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 				@Override
 				public void onClick(View v) {
 					setter.setChildNode(node.newInstance());
+					setter.getParent().reOrderScope(setter.getOrder(), 1);
 					refresh();
 				}
 			});
@@ -774,7 +782,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 					if (heroSprite.getDirection() == heroDirection.Left || heroSprite.getDirection() == heroDirection.Right )
 						heroYpos -= (tileHeight/2)*HeroSprite.ARC_ARRAY_9_FRAMES[heroCurrentFrame-1];
-					
+
 					heroCurrentBitmap = heroSprite.getFirstFrameBitmap();
 
 				}

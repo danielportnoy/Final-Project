@@ -28,6 +28,7 @@ public class BlockOption extends Option {
 			@Override
 			public void onClick(View v) {
 				setter.setChildNode(new BlockNode());
+				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}
 		});

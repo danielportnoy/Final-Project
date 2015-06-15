@@ -20,17 +20,22 @@ public class BoolLiteralNode extends Node {
 		this.value = value;
 		setType(Type.Bool);
 	}
-	
+
+	@Override
+	public boolean addChild(Node child, int order) {
+		return false;
+	}
+
 	@Override
 	public List<Node> getChildNodes() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean DeleteChildNode(Node childNode) {
 		return true;
 	}
-	
+
 	@Override
 	public Set<String> getDeclaredIdentifiers() {
 
@@ -40,11 +45,11 @@ public class BoolLiteralNode extends Node {
 
 	@Override
 	public Set<String> getUsedIdentifiers() {
-		
+
 		HashSet<String> res = new HashSet<String>();
 		return res;
 	}
-	
+
 	@Override
 	public Node getFirstNode() {
 		return null;
@@ -59,10 +64,10 @@ public class BoolLiteralNode extends Node {
 
 		return res;
 	}
-	
+
 	@Override
 	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
-		
+
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
@@ -71,7 +76,7 @@ public class BoolLiteralNode extends Node {
 		return res;
 	}
 
-	
+
 	@Override
 	public ReturnObject run() throws MyException {	
 		//LevelManager.getInstance().takeSnapshot(this); //TODO

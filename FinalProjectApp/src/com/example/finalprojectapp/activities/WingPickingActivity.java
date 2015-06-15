@@ -45,9 +45,8 @@ public class WingPickingActivity extends Activity implements OnClickListener{
 			startActivity(intent);
 		}
 		else if(v.getId() == R.id.button_Maze_Wing){
-			//TODO
-			//Intent intent = new Intent(this, WingPickingActivity.class);
-			//startActivity(intent);
+			Intent intent = new Intent(this, MazeWingActivity.class);
+			startActivity(intent);
 		}
 		else if(v.getId() == R.id.button_TBD_Wing){
 			//TODO

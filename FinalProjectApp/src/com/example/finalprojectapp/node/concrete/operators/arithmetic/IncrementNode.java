@@ -21,7 +21,12 @@ public class IncrementNode extends Node {
 		this.identifierName = identifierName;
 		setType(Type.Int);
 	}
-	
+
+	@Override
+	public boolean addChild(Node child, int order) {
+		return false;
+	}
+
 	@Override
 	public List<Node> getChildNodes() {
 		return null;
@@ -31,40 +36,40 @@ public class IncrementNode extends Node {
 	public boolean DeleteChildNode(Node childNode) {
 		return true;
 	}
-	
+
 	@Override
 	public Set<String> getDeclaredIdentifiers() {
 
 		HashSet<String> res = new HashSet<String>();
 		return res;
 	}
-	
+
 	@Override
 	public Set<String> getUsedIdentifiers() {
-		
+
 		HashSet<String> res = new HashSet<String>();
 		res.add(identifierName);
 		return res;
 	}
-	
+
 	@Override
 	public Node getFirstNode() {
 		return null;
 	}
-	
+
 	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {
-		
+
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
 		res.add(new CodeWritingPart(false, false, identifierName+"++", null, this));
 
 		if(!isHideSemicolon())
 			res.add(new CodeWritingPart(false, false, ";", null, this));
-		
+
 		return res;
 	}
-	
+
 	@Override
 	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
 
@@ -78,13 +83,13 @@ public class IncrementNode extends Node {
 
 		return res;
 	}
-	
+
 	@Override
 	public ReturnObject run() throws MyException {
 		LevelManager.getInstance().takeSnapshot(this);
-		
+
 		int result = LevelManager.getInstance().getInegerValueFromIdentifier(identifierName) + 1;
-		
+
 		LevelManager.getInstance().putIntegerValueToIdentifier(identifierName, result);
 		return new ReturnObject(result);
 	}

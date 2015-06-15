@@ -26,7 +26,18 @@ public class SimpleAssignmentNode extends Node {
 		this.identifierName = identifierName;
 		setType(Type.Statement);
 	}
-	
+
+	@Override
+	public boolean addChild(Node child, int order) {
+
+		if(order > getChildNodes().size() - 1)
+			return false;
+		else{
+			assignmentValue = child;
+		}
+		return true;
+	}
+
 	@Override
 	public List<Node> getChildNodes() {
 		return null;
@@ -156,7 +167,7 @@ public class SimpleAssignmentNode extends Node {
 			assignmentValue = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-			
+
 			toSet.setHideSemicolon(true);
 		}
 

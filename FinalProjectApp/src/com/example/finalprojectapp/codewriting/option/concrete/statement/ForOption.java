@@ -27,6 +27,7 @@ public class ForOption extends Option {			// TODO
 			@Override
 			public void onClick(View v) {
 				setter.setChildNode(new ForNode());
+				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}
 		});

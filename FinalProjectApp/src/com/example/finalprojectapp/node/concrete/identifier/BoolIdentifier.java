@@ -14,24 +14,29 @@ import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Type;
 
 public class BoolIdentifier extends Node{
-	
+
 	private String name;
-	
+
 	public BoolIdentifier(String name) {
 		this.name = name;
 		setType(Type.Bool);
 	}
-	
+
+	@Override
+	public boolean addChild(Node child, int order) {
+		return false;
+	}
+
 	@Override
 	public List<Node> getChildNodes() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean DeleteChildNode(Node childNode) {
 		return true;
 	}
-	
+
 	@Override
 	public Set<String> getDeclaredIdentifiers() {
 
@@ -41,7 +46,7 @@ public class BoolIdentifier extends Node{
 
 	@Override
 	public Set<String> getUsedIdentifiers() {
-		
+
 		HashSet<String> res = new HashSet<String>();
 		res.add(name);
 		return res;
@@ -49,22 +54,22 @@ public class BoolIdentifier extends Node{
 
 	@Override
 	public List<CodeWritingPart> getCodeWritingParts() {
-		
+
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
 		res.add(new CodeWritingPart(false, false, name, null, this));
 
 		return res;
 	}
-	
+
 	@Override
 	public Node getFirstNode() {
 		return null;
 	}
-	
+
 	@Override
 	public List<CodeRunningPart> getCodeRunningParts(Node target,boolean isHighlighted) {
-		
+
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 

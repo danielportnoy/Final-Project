@@ -17,8 +17,8 @@ public abstract class Node {
 	private Scope scope;
 
 	private boolean hideSemicolon = false;
-	
-	private boolean isErasable = false;
+
+	private boolean isErasable = true;
 
 	public Node() {
 		scope = new Scope();
@@ -73,11 +73,11 @@ public abstract class Node {
 	public void setHideSemicolon(boolean hideSemicolon) {
 		this.hideSemicolon = hideSemicolon;
 	}
-	
+
 	public boolean isErasable() {
 		return isErasable;
 	}
-	
+
 	public void setErasable(boolean isErasable) {
 		this.isErasable = isErasable;
 	}
@@ -97,6 +97,8 @@ public abstract class Node {
 
 	public abstract List<Node> getChildNodes();
 
+	public abstract boolean addChild(Node child, int order);
+
 	public void removeFromScope(Node n){
 
 		for (int i = n.getOrder() + 1 ; i < n.getParent().getChildNodes().size(); i++)
@@ -112,5 +114,4 @@ public abstract class Node {
 		for (Entry<String, Integer> entry : getScope().getIntegerIdentifiers().entrySet()) {			if(entry.getValue() >= from)				getScope().getIntegerIdentifiers().put(entry.getKey(), entry.getValue() + val);		}
 		for (Entry<String, Integer> entry : getScope().getBooleanIdentifiers().entrySet()) {			if(entry.getValue() >= from)				getScope().getBooleanIdentifiers().put(entry.getKey(), entry.getValue() + val);		}
 	}
-
 }

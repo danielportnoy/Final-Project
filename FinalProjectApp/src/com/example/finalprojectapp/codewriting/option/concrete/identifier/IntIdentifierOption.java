@@ -36,6 +36,7 @@ public class IntIdentifierOption extends Option {
 			public void onClick(View v) {
 
 				setter.setChildNode(new IntIdentifier(name));
+				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}
 		});

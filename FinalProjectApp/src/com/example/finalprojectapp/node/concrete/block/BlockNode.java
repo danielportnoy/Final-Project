@@ -21,6 +21,17 @@ public class BlockNode extends Node {
 		innerNodes = new ArrayList<Node>();
 		setType(Type.Statement);
 	}
+	
+	@Override
+	public boolean addChild(Node child, int order) {
+		// TODO
+		/*if(order > getChildNodes().size() - 1)
+			return false;
+		else*/
+			innerNodes.add(order, child);
+		
+		return true;
+	}
 
 	@Override
 	public List<Node> getChildNodes() {

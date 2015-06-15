@@ -23,16 +23,26 @@ public class BoolVarDecNode extends Node {
 		this.identifier = identifier;
 		setType(Type.Statement);
 	}
-	
+
+	@Override
+	public boolean addChild(Node child, int order) {
+
+		if(order > getChildNodes().size() - 1)
+			return false;
+		else
+			initialValue = child;
+
+		return true;
+	}
+
 	@Override
 	public List<Node> getChildNodes() {
 		List<Node> res = new ArrayList<Node>();
-		
+
 		res.add(initialValue);
-		
+
 		return res;
 	}
-
 
 	@Override
 	public boolean DeleteChildNode(Node childNode) {
@@ -152,7 +162,7 @@ public class BoolVarDecNode extends Node {
 			initialValue = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-			
+
 			toSet.setHideSemicolon(true);
 		}
 

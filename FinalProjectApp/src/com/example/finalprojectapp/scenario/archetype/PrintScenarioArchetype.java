@@ -70,32 +70,30 @@ public abstract class PrintScenarioArchetype extends Scenario {
 	protected class MyConfiguration extends Configuration{
 
 		private String headerText;
+		private String subHeaderText;
 		private String winText;
 
-		public MyConfiguration(String headerText, String winText) {
+		public MyConfiguration(String headerText, String subHeaderText, String winText) {
 			this.headerText = headerText;
+			this.subHeaderText = subHeaderText;
 			this.winText = winText;
 		}
 
 		public String getHeaderText() {
 			return headerText;
 		}
-		
-		public void setHeaderText(String headerText) {
-			this.headerText = headerText;
+
+		public String getSubHeaderText() {
+			return subHeaderText;
 		}
 
 		public String getWinText() {
 			return winText;
 		}
-		
-		public void setWinText(String winText) {
-			this.winText = winText;
-		}
 
 		@Override
 		public Configuration copy() {
-			return new MyConfiguration(headerText, winText);
+			return new MyConfiguration(headerText,subHeaderText, winText);
 		}
 
 	}
@@ -140,6 +138,11 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 		public PrintNode() {
 			setType(Type.Statement);
+		}
+
+		@Override
+		public boolean addChild(Node child, int order) {
+			return false;
 		}
 
 		@Override
@@ -295,6 +298,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 				@Override
 				public void onClick(View v) {
 					setter.setChildNode(new PrintNode());
+					setter.getParent().reOrderScope(setter.getOrder(), 1);
 					refresh();
 				}
 			});
@@ -314,7 +318,21 @@ public abstract class PrintScenarioArchetype extends Scenario {
 		private String currentHeaderToPrint = ((MyConfiguration)getCurrentConfig()).getHeaderText();
 		private Paint headerTextPaint;
 
-		private int screenWidth ,screenHeight;
+		private int subHeaderTextXpos, subHeaderTextYpos;
+		private String currentSubHeaderToPrint = ((MyConfiguration)getCurrentConfig()).getSubHeaderText();
+		private Paint subHeaderTextPaint;
+
+		private static final double SCALE_WIDTH_COEFFICIENT = 0.9;
+		private static final double SCALE_HEIGHT_COEFFICIENT = 0.8;
+
+		private static final double HEADER_HEIGHT_RELATIVE = 1.0/4.0, SUB_HEADER_HEIGHT_RELATIVE = 1.0/4.0 , TEXT_HEIGHT_RELATIVE = 1.0/4.0;
+		private static final double HEADER_HEIGHT_RELATIVE_POS = 1.0/4.0, SUB_HEADER_HEIGHT_RELATIVE_POS = 7.0/16.0 , TEXT_HEIGHT_RELATIVE_POS = 3.0/4.0;
+
+		private int midWidth;
+		private int screenRectWidth;
+
+		private int textHeight;
+		private int textRectHeight;
 
 		public SurfaceView_Board(Context context, int fps, boolean isAnimation) {
 			super(context, fps, isAnimation);
@@ -329,6 +347,9 @@ public abstract class PrintScenarioArchetype extends Scenario {
 			canvas.drawColor(Color.WHITE);		// TODO
 
 			canvas.drawText(currentHeaderToPrint, headerTextXpos, headerTextYpos, headerTextPaint);
+
+			canvas.drawText(currentSubHeaderToPrint, subHeaderTextXpos, subHeaderTextYpos, subHeaderTextPaint);
+
 
 			if(currentTextToPrint != null)
 				canvas.drawText(currentTextToPrint, textXpos, textYpos, textPaint);
@@ -345,57 +366,73 @@ public abstract class PrintScenarioArchetype extends Scenario {
 		@Override
 		public void preCalculation() {
 
-			screenWidth = getWidth();
-			screenHeight = getHeight();
+			int screenWidth = getWidth();
+			int screenHeight = getHeight();
+
+			midWidth = screenWidth / 2 ;
+			screenRectWidth = (int)(screenWidth * SCALE_WIDTH_COEFFICIENT);
+
+			int headerRectHeight = (int)((screenHeight * HEADER_HEIGHT_RELATIVE) * SCALE_HEIGHT_COEFFICIENT);
+
+			int subHeaderRectHeight = (int)((screenHeight * SUB_HEADER_HEIGHT_RELATIVE) * SCALE_HEIGHT_COEFFICIENT);
+
+			textRectHeight = (int)((screenHeight * TEXT_HEIGHT_RELATIVE) * SCALE_HEIGHT_COEFFICIENT);
+
+			int headerHeight = (int) (screenHeight * HEADER_HEIGHT_RELATIVE_POS);
+			int subHeaderHeight = (int) (screenHeight * SUB_HEADER_HEIGHT_RELATIVE_POS);
+			
+			textHeight = (int) (screenHeight * TEXT_HEIGHT_RELATIVE_POS);
 
 			textPaint = new Paint();
 			textPaint.setColor(Color.RED);
 
 			headerTextPaint = new Paint();
-			headerTextPaint.setTextSize(determineMaxTextSize(currentHeaderToPrint, screenWidth, (screenHeight/4) ));
+			headerTextPaint.setTextSize(determineMaxTextSize(currentHeaderToPrint, screenRectWidth, headerRectHeight));
 
-			Rect bounds = new Rect();
-			headerTextPaint.getTextBounds(currentHeaderToPrint, 0, currentHeaderToPrint.length(), bounds);
+			Rect headerBounds = new Rect();
 
-			headerTextXpos = (screenWidth / 2) - (bounds.width() / 2);
-			headerTextYpos = (screenHeight / 4) /*- (bounds.height() / 2)*/;
+			headerTextPaint.getTextBounds(currentHeaderToPrint, 0, currentHeaderToPrint.length(), headerBounds);
+
+			subHeaderTextPaint = new Paint();
+			subHeaderTextPaint.setTextSize(determineMaxTextSize(currentSubHeaderToPrint, screenRectWidth, subHeaderRectHeight));
+
+			Rect subHeaderBounds = new Rect();
+
+			subHeaderTextPaint.getTextBounds(currentSubHeaderToPrint, 0, currentSubHeaderToPrint.length(), subHeaderBounds);
+
+			headerTextXpos = midWidth - (headerBounds.width() / 2);
+			headerTextYpos = headerHeight;
+
+			subHeaderTextXpos = midWidth - (subHeaderBounds.width() / 2);
+			subHeaderTextYpos = subHeaderHeight;
 		}
 
 		@Override
 		public void updateAnimated() {
 
-			if(currentTextToPrint == null){
-				textXpos = (screenWidth / 2);
-				textYpos = (screenHeight / 2);
-			}
-			else{
+			if(currentTextToPrint != null){
 
 				Rect bounds = new Rect();
 				textPaint.getTextBounds(currentTextToPrint, 0, currentTextToPrint.length(), bounds);
-				textPaint.setTextSize(determineMaxTextSize(currentTextToPrint, screenWidth, (screenHeight/4) ));
+				textPaint.setTextSize(determineMaxTextSize(currentTextToPrint, screenRectWidth, textRectHeight));
 
-				textXpos = (screenWidth / 2) - (bounds.width() / 2);
-				textYpos = 3*(screenHeight / 4)/* - (bounds.height() / 2)*/;
+				textXpos = midWidth - (bounds.width() / 2);
+				textYpos = textHeight /* - (bounds.height() / 2)*/;
 			}
 		}
 
 		@Override
 		public void updateNonAnimated() {
 
-			if(currentTextToPrint == null){
-				textXpos = (screenWidth / 2);
-				textYpos = (screenHeight / 2);
-			}
-			else{
+			if(currentTextToPrint != null){
 
 				Rect bounds = new Rect();
 				textPaint.getTextBounds(currentTextToPrint, 0, currentTextToPrint.length(), bounds);
-				textPaint.setTextSize(determineMaxTextSize(currentTextToPrint, screenWidth, (screenHeight/4) ));
+				textPaint.setTextSize(determineMaxTextSize(currentTextToPrint, screenRectWidth, textRectHeight));
 
-				textXpos = (screenWidth / 2) - (bounds.width() / 2);
-				textYpos = 3*(screenHeight / 4)/* - (bounds.height() / 2)*/;
+				textXpos = midWidth - (bounds.width() / 2);
+				textYpos = textHeight /* - (bounds.height() / 2)*/;
 			}
-
 		}
 
 		@Override
@@ -433,7 +470,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 				paint.getTextBounds(str, 0, str.length(), bounds);
 			} 
 
-			return size - 5;
+			return size;
 		} //End getMaxTextSize()
 	}
 	/********** SurfaceView class **********/

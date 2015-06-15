@@ -23,6 +23,17 @@ public class IntVarDecNode extends Node {
 		this.identifier = identifier;
 		setType(Type.Statement);
 	}
+	
+	@Override
+	public boolean addChild(Node child, int order) {
+
+		if(order > getChildNodes().size() - 1)
+			return false;
+		else
+			initialValue = child;
+
+		return true;
+	}
 
 	@Override
 	public List<Node> getChildNodes() {
@@ -32,7 +43,6 @@ public class IntVarDecNode extends Node {
 
 		return res;
 	}
-
 
 	@Override
 	public boolean DeleteChildNode(Node childNode) {

@@ -27,6 +27,7 @@ public class FalseOption extends Option{
 			@Override
 			public void onClick(View v) {
 				setter.setChildNode(new BoolLiteralNode(false));
+				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}
 		});

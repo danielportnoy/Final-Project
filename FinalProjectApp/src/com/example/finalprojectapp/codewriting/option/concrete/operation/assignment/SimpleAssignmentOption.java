@@ -61,6 +61,7 @@ public class SimpleAssignmentOption extends Option{
 
 					public void onClick(DialogInterface dialog, int id) {
 						setter.setChildNode(new SimpleAssignmentNode(typeOfIdentifiver, identifierName));
+						setter.getParent().reOrderScope(setter.getOrder(), 1);
 						refresh();
 					}
 				});

@@ -59,6 +59,7 @@ public class IncrementOption extends Option{
 
 					public void onClick(DialogInterface dialog, int id) {
 						setter.setChildNode(new IncrementNode(identifierName));
+						setter.getParent().reOrderScope(setter.getOrder(), 1);
 						refresh();
 					}
 				});

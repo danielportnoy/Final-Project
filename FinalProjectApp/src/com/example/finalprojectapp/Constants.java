@@ -58,8 +58,8 @@ public class Constants {
 	public static final String LEVEL_END_WIN_POSITIVE_TEXT = "Continue";
 	public static final String LEVEL_END_LOSS_POSITIVE_TEXT = "Retry";
 
-	//EECEPTIONS TEXTS
-	public static final String MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT = "Exception : The character moved out of the maze limits.";
+	//EXCEPTIONS TEXTS
+	public static final String DIVISION_BY_ZERO_EXCEPTION_TEXT = "Exception : Can not devide by zero.";
 
 
 }

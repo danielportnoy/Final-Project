@@ -11,7 +11,7 @@ public class Tutorial_Level_2 extends PrintScenarioArchetype {
 	@Override
 	public void initiateConfigurations() {
 
-		setDefaultConfig(new MyConfiguration("Are you AMAZING ?", true+""));
+		setDefaultConfig(new MyConfiguration("Are you AMAZING ?", "we both know the answear =]", true+""));
 		setCurrentConfig(getDefaultConfig());
 
 		addToConfigs(getDefaultConfig());

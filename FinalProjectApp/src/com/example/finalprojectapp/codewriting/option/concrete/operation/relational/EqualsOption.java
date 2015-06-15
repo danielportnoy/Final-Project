@@ -27,6 +27,7 @@ public class EqualsOption extends Option{
 			@Override
 			public void onClick(View v) {
 				setter.setChildNode(new EqualsNode());
+				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}
 		});

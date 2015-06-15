@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.codewriting.option.concrete.operation.relational;
+package com.example.finalprojectapp.codewriting.option.concrete.operation.arithmetic;
 
 import android.content.Context;
 import android.view.View;
@@ -8,25 +8,25 @@ import android.widget.Button;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
-import com.example.finalprojectapp.node.concrete.operators.relational.NotEqualsNode;
+import com.example.finalprojectapp.node.concrete.operators.arithmetic.MultiplicationNode;
 
-public class NotEqualsOption extends Option{
+public class MultiplicationOption extends Option{
 
 	@Override
 	public boolean isType(Type type) {
-		return type == Type.Bool;
+		return type == Type.Int;
 	}
 
 	@Override
 	public void setButton(Context context, Button optionButton, final Setter setter) {
 		
-		optionButton.setText("!=");	//TODO
+		optionButton.setText("*");	//TODO
 
 		optionButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				setter.setChildNode(new NotEqualsNode());
+				setter.setChildNode(new MultiplicationNode());
 				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}

@@ -5,7 +5,7 @@ import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.gamescreen.GameScreenActivity;
 import com.example.finalprojectapp.scenario.Scenario;
-import com.example.finalprojectapp.scenario.concrete.tutorial.*;
+import com.example.finalprojectapp.scenario.concrete.maze_wing.*;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,8 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class TutorialActivity extends Activity implements OnClickListener{
-
+public class MazeWingActivity extends Activity implements OnClickListener {
+	
 	/*private SharedPreferences.Editor editor;
 	private SharedPreferences settings;*/
 
@@ -28,7 +28,7 @@ public class TutorialActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_tutorial);
+		setContentView(R.layout.activity_maze_wing);
 
 		/*settings = 	getSharedPreferences(Constants.SHARED_PREFERANCES, MODE_PRIVATE);
 		editor = settings.edit();*/
@@ -40,7 +40,7 @@ public class TutorialActivity extends Activity implements OnClickListener{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.tutorial_menu, menu);
+		getMenuInflater().inflate(R.menu.maze_wing, menu);
 		return true;
 	}
 
@@ -73,14 +73,12 @@ public class TutorialActivity extends Activity implements OnClickListener{
 		else
 			intent = new Intent(this, ScenraioDisplyActivity.class);
 
-		if(v.getId() ==  R.id.button_tutorial_LEVEL1)
-			scenario = new Tutorial_Level_1();
-		else if(v.getId() ==  R.id.button_tutorial_LEVEL2)
-			scenario = new Tutorial_Level_2();
-		else if(v.getId() ==  R.id.button_tutorial_LEVEL3)
-			scenario = new Tutorial_Level_3();
-		else if(v.getId() ==  R.id.button_tutorial_LEVEL4)
-			scenario = new Tutorial_Level_4();
+		if(v.getId() ==  R.id.button_maze_wing_LEVEL1)
+			scenario = new Maze_Wing_Level_1();
+		else if(v.getId() ==  R.id.button_maze_wing_LEVEL2)
+			scenario = new Maze_Wing_Level_2();
+		else if(v.getId() ==  R.id.button_maze_wing_LEVEL3)
+			scenario = new Maze_Wing_Level_3();
 	
 		levelManager.loadScenario(scenario);
 

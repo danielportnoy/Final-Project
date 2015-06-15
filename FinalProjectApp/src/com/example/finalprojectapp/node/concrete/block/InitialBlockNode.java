@@ -16,11 +16,23 @@ import com.example.finalprojectapp.node.Type;
 
 public class InitialBlockNode extends Node{
 
-	public List<Node> innerNodes;
+	private List<Node> innerNodes;
 
 	public InitialBlockNode() {
 		innerNodes = new ArrayList<Node>();
 		setType(Type.Statement);
+	}
+	
+	@Override
+	public boolean addChild(Node child, int order) {
+
+		// TODO
+		/*if(order > getChildNodes().size() - 1)
+			return false;
+		else*/
+			innerNodes.add(order, child);
+		
+		return true;
 	}
 
 	@Override

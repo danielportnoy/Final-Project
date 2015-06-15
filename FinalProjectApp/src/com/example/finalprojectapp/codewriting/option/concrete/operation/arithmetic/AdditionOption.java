@@ -8,9 +8,9 @@ import android.widget.Button;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
-import com.example.finalprojectapp.node.concrete.operators.arithmetic.PlusNode;
+import com.example.finalprojectapp.node.concrete.operators.arithmetic.AdditionNode;
 
-public class PlusOption extends Option{
+public class AdditionOption extends Option{
 
 	@Override
 	public boolean isType(Type type) {
@@ -26,7 +26,8 @@ public class PlusOption extends Option{
 
 			@Override
 			public void onClick(View v) {
-				setter.setChildNode(new PlusNode());
+				setter.setChildNode(new AdditionNode());
+				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}
 		});

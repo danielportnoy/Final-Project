@@ -27,6 +27,7 @@ public class TrueOption extends Option{
 			@Override
 			public void onClick(View v) {
 				setter.setChildNode(new BoolLiteralNode(true));
+				setter.getParent().reOrderScope(setter.getOrder(), 1);
 				refresh();
 			}
 		});

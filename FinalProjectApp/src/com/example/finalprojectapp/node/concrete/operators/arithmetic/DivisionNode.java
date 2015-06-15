@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.node.concrete.operators.relational;
+package com.example.finalprojectapp.node.concrete.operators.arithmetic;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,34 +8,22 @@ import java.util.Set;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.coderunning.exception.MyException;
+import com.example.finalprojectapp.coderunning.exception.concrete.DivisionByZeroException;
 import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritingPart;
 import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
-public class NotEqualsNode extends Node {
+public class DivisionNode extends Node{
 
 	private Node left;
-	private Type left_type;
-
 	private Node right;
-	private Type right_type;
 
-	public NotEqualsNode() {
-		setType(Type.Bool);
+	public DivisionNode() {
+		setType(Type.Int);
 	}
 
-	@Override
-	public List<Node> getChildNodes() {
-		List<Node> res = new ArrayList<Node>();
-
-		res.add(left);
-		res.add(right);
-
-		return res;
-	}
-	
 	@Override
 	public boolean addChild(Node child, int order) {
 
@@ -51,11 +39,21 @@ public class NotEqualsNode extends Node {
 	}
 
 	@Override
+	public List<Node> getChildNodes() {
+		List<Node> res = new ArrayList<Node>();
+
+		res.add(left);
+		res.add(right);
+
+		return res;
+	}
+
+	@Override
 	public boolean DeleteChildNode(Node childNode) {
 
 		Set<String> used = new HashSet<String>();
 
-		if(childNode.equals(left) && right!=null)
+		if(childNode.equals(left) && right != null)
 			used.addAll(right.getUsedIdentifiers());
 		else if(childNode.equals(right))
 			used = new HashSet<String>();
@@ -100,7 +98,6 @@ public class NotEqualsNode extends Node {
 		return res;
 	}
 
-
 	@Override
 	public Node getFirstNode() {
 		if(left != null)
@@ -118,10 +115,10 @@ public class NotEqualsNode extends Node {
 
 		if(left == null)
 			res.add(new CodeWritingPart(false, false, null, new LeftSetter(this), this));
-		else			
+		else
 			res.addAll(left.getCodeWritingParts());
 
-		res.add(new CodeWritingPart(false, false, "!=", null, this));
+		res.add(new CodeWritingPart(false, false, "/", null, this));
 
 		if(right == null)
 			res.add(new CodeWritingPart(false, false, null, new RightSetter(this), this));
@@ -132,39 +129,43 @@ public class NotEqualsNode extends Node {
 	}
 
 	@Override
-	public List<CodeRunningPart> getCodeRunningParts(Node target,boolean isHighlighted) {
+	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
 
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
 		res.addAll(left.getCodeRunningParts(target, isHighlighted));
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, "!="));
+		res.add(new CodeRunningPart(false, false,isHighlighted, "/"));
 
 		res.addAll(right.getCodeRunningParts(target, isHighlighted));
 
 		return res;
 	}
 
+
 	@Override
 	public ReturnObject run() throws MyException {
-
 		LevelManager.getInstance().takeSnapshot(this);
 
-		if(left_type == Type.Bool && right_type == Type.Bool)
-			return new ReturnObject(left.run().getBoolValue() != right.run().getBoolValue());
-		else if(left_type == Type.Int && right_type == Type.Int)
-			return new ReturnObject(left.run().getIntValue() != right.run().getIntValue());
+		int res;
 
-		return new ReturnObject();	// TODO
+		try {	
+			res = left.run().getIntValue() / right.run().getIntValue();
+		}
+		catch (ArithmeticException e) {
+			throw new DivisionByZeroException();
+		}
+
+		return new ReturnObject(res);
 	}
 
 	class LeftSetter extends Setter{
 
 		final static int order = 0;
 
-		public LeftSetter(Node parent) {	// TODO	
-			super(/*"< expr >", */true, parent, order);	
+		public LeftSetter(Node parent) {
+			super(/*"< int expr >", */true, parent, order);	// TODO	
 		}
 
 		@Override
@@ -172,20 +173,12 @@ public class NotEqualsNode extends Node {
 			left = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-
-			left_type = toSet.getType();
 		}
 
 		@Override
 		public List<Type> possibleTypes() {
 			List<Type> possibilities = new ArrayList<Type>();
-
-			if(right_type == null){
-				possibilities.add(Type.Bool);
-				possibilities.add(Type.Int);
-			}
-			else
-				possibilities.add(right_type);
+			possibilities.add(Type.Int);
 
 			return possibilities;
 		}
@@ -195,8 +188,9 @@ public class NotEqualsNode extends Node {
 
 		final static int order = 0;
 
-		public RightSetter(Node parent) {	// TODO	
-			super(/*"< expr >", */true, parent, order);	
+		public RightSetter(Node parent) {
+			super(/*"< int expr >", */true, parent, order);	// TODO
+
 		}
 
 		@Override
@@ -204,20 +198,12 @@ public class NotEqualsNode extends Node {
 			right = toSet;
 			toSet.setOrder(order);
 			toSet.setParent(getParent());
-
-			right_type = toSet.getType();
 		}
 
 		@Override
 		public List<Type> possibleTypes() {
 			List<Type> possibilities = new ArrayList<Type>();
-
-			if(left_type == null){
-				possibilities.add(Type.Bool);
-				possibilities.add(Type.Int);
-			}
-			else
-				possibilities.add(left_type);
+			possibilities.add(Type.Int);
 
 			return possibilities;
 		}

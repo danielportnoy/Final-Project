@@ -14,13 +14,27 @@ import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
-public class PlusNode extends Node{
+public class AdditionNode extends Node{
 
 	private Node left;
 	private Node right;
 
-	public PlusNode() {
+	public AdditionNode() {
 		setType(Type.Int);
+	}
+
+	@Override
+	public boolean addChild(Node child, int order) {
+
+		if(order > getChildNodes().size() - 1)
+			return false;
+		else{
+			if(order == 0)
+				left = child;
+			else if(order == 1)
+				right = child;
+		}
+		return true;
 	}
 
 	@Override
