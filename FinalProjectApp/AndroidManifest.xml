@@ -70,6 +70,12 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
+        <activity
+            android:name="com.example.finalprojectapp.activities.InventoryWingActivity"
+            android:label="@string/title_activity_inventory_wing"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+        </activity>
     </application>
 
 </manifest>

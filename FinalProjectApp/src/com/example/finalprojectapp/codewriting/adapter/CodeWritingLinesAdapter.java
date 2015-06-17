@@ -59,32 +59,32 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 
 		List<CodeWritingPart> codeWritingParts = item.getCodeWritingParts();
 
-		for (final CodeWritingPart codeWritingPart : codeWritingParts) {
+		for (final CodeWritingPart CODE_WRITING_PART : codeWritingParts) {
 
-			if(codeWritingPart.getSetter()!=null)
-				handleSetter(codeLineLinearLayout, codeWritingPart.getSetter(), codeWritingPart);
-			else if(codeWritingPart.getText()!=null)
-				handleText(codeLineLinearLayout, codeWritingPart.getText(), codeWritingPart);
-			else if(codeWritingPart.isTab())
+			if(CODE_WRITING_PART.getSetter()!=null)
+				handleSetter(codeLineLinearLayout, CODE_WRITING_PART.getSetter(), CODE_WRITING_PART);
+			else if(CODE_WRITING_PART.getText()!=null)
+				handleText(codeLineLinearLayout, CODE_WRITING_PART.getText(), CODE_WRITING_PART);
+			else if(CODE_WRITING_PART.isTab())
 				handleTab(codeLineLinearLayout);
 		}
 
 	}
 
-	private void handleText(LinearLayout codeLineLinearLayout, final String textString, final CodeWritingPart codeWritingPart) {
+	private void handleText(LinearLayout codeLineLinearLayout, final String TEXT_STRING, final CodeWritingPart CODE_WRITING_PART) {
 		TextView text = new TextView(context);
 
 		Android_Utils.setLayoutParams(text , context);
 
-		text.setText(textString);
+		text.setText(TEXT_STRING);
 		text.setTextAppearance(context, android.R.style.TextAppearance_Small);
 
-		if(!codeWritingPart.getMakerNode().isErasable())
+		if(!CODE_WRITING_PART.getMakerNode().isErasable())
 			text.setTextColor(0xff6E6E6E);
 		else
 			text.setTextColor(Color.BLACK);
 
-		if(codeWritingPart.isEditable() && LevelManager.getInstance().isEditMode())
+		if(CODE_WRITING_PART.isEditable() && LevelManager.getInstance().isEditMode())
 			text.setBackgroundColor(Color.YELLOW);
 
 		/***** Testing *****/
@@ -94,10 +94,10 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 			@Override
 			public boolean onLongClick(View v) {
 
-				if(codeWritingPart.getMakerNode().isErasable()){
+				if(CODE_WRITING_PART.getMakerNode().isErasable()){
 					
 					LevelManager.getInstance().setEditMode(true);
-					LevelManager.getInstance().setEditable(codeWritingPart.getMakerNode());
+					LevelManager.getInstance().setEditable(CODE_WRITING_PART.getMakerNode());
 					LevelManager.getInstance().refrashWritingScreen();
 				}
 				return false;
@@ -120,7 +120,7 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 		codeLineLinearLayout.addView(tab);
 	}
 
-	private void handleSetter(LinearLayout codeLineLinearLayout,final Setter setter, CodeWritingPart codeWritingPart) {
+	private void handleSetter(LinearLayout codeLineLinearLayout,final Setter SETTER, CodeWritingPart codeWritingPart) {
 		Button button = new Button(context);
 
 		//Android_Utils.setLayoutParams(button , context);	// TODO
@@ -141,13 +141,13 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 		android:shadowRadius="5"
 		 */
 
-		if(setter.isMandatory()){
+		if(SETTER.isMandatory()){
 			if(codeWritingPart.isEditable() && LevelManager.getInstance().isEditMode())
 				button.setBackgroundResource(R.drawable.mandatory_button_highlighted);
 			else
 				button.setBackgroundResource(R.drawable.mandatory_button);
 		}
-		else if(!setter.isMandatory()){
+		else if(!SETTER.isMandatory()){
 			if(codeWritingPart.isEditable() && LevelManager.getInstance().isEditMode())
 				button.setBackgroundResource(R.drawable.not_mandatory_button_highlighted);
 			else
@@ -166,7 +166,7 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 				LevelManager.getInstance().setEditable(null);
 				LevelManager.getInstance().refrashWritingScreen();
 
-				LevelManager.getInstance().SetterClick(setter);
+				LevelManager.getInstance().SetterClick(SETTER);
 			}
 		});
 

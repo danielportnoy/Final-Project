@@ -24,7 +24,7 @@ public class IntIdentifierOption extends Option {
 	}
 
 	@Override
-	public void setButton(Context context, Button optionButton, final Setter setter) {
+	public void setButton(Context context, Button optionButton, final Setter SETTER) {
 
 		optionButton.setText(name);	//TODO
 		
@@ -35,8 +35,8 @@ public class IntIdentifierOption extends Option {
 			@Override
 			public void onClick(View v) {
 
-				setter.setChildNode(new IntIdentifier(name));
-				setter.getParent().reOrderScope(setter.getOrder(), 1);
+				SETTER.setChildNode(new IntIdentifier(name));
+				SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 				refresh();
 			}
 		});

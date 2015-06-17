@@ -1,5 +1,6 @@
 package com.example.finalprojectapp.activities;
 
+import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 
 import android.os.Bundle;
@@ -43,13 +44,20 @@ public class WingPickingActivity extends Activity implements OnClickListener{
 		if( v.getId() == R.id.button_Tutorial){
 			Intent intent = new Intent(this, TutorialActivity.class);
 			startActivity(intent);
+			
+			LevelManager.lastWingActivityClass = TutorialActivity.class;
 		}
 		else if(v.getId() == R.id.button_Maze_Wing){
 			Intent intent = new Intent(this, MazeWingActivity.class);
 			startActivity(intent);
+			
+			LevelManager.lastWingActivityClass = MazeWingActivity.class;
 		}
-		else if(v.getId() == R.id.button_TBD_Wing){
-			//TODO
+		else if(v.getId() == R.id.button_Inventory_Wing){
+			Intent intent = new Intent(this, InventoryWingActivity.class);
+			startActivity(intent);
+			
+			LevelManager.lastWingActivityClass = InventoryWingActivity.class;
 		}
 	}
 

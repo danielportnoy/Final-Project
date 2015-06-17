@@ -3,7 +3,6 @@ package com.example.finalprojectapp.scenario.archetype;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import android.content.Context;
@@ -35,9 +34,10 @@ import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.scenario.Scenario;
 import com.example.finalprojectapp.scenario.configuration.Configuration;
 import com.example.finalprojectapp.utilities.Android_Utils;
+import com.example.finalprojectapp.utilities.Logic_Utils;
 
 public abstract class  MazeScenarioArchetype extends Scenario {
-	
+
 	public static final String MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT = "Exception : The character moved out of the maze limits.";
 
 	public static enum BoardTilesTypesEnum{
@@ -51,11 +51,10 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 	public BoardTilesTypesEnum[][] randomizeBoardTiles(int rows , int columns){
 
 		BoardTilesTypesEnum[][] randomMap = new BoardTilesTypesEnum[rows][columns];
-		Random rand = new Random();
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				int randomNum = rand.nextInt(BoardTilesTypesEnum.values().length) + 1;
+				int randomNum = Logic_Utils.randInt(1 , BoardTilesTypesEnum.values().length);
 
 				switch (randomNum) {
 				case 1:
@@ -79,7 +78,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 	@Override
 	public GameSnapshot takeSnapshot() {
-		return new MyGameSnapshot();
+		return new MyGameSnapshot(heroCurrentX, heroCurrentY);
 	}
 
 	@Override
@@ -104,6 +103,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 	}
 
 	/******************** Nested classes ********************/
+
 
 	/********** exception class **********/
 	@SuppressWarnings("serial")
@@ -161,9 +161,9 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		}
 
 
-		public MyGameSnapshot() {
-			this.heroX = heroCurrentX;
-			this.heroY = heroCurrentY;
+		public MyGameSnapshot(int heroX, int heroY) {
+			this.heroX = heroX;
+			this.heroY = heroY;
 		}
 
 		@Override
@@ -187,6 +187,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		}
 	}
 	/********** snapshot class **********/
+
 
 	/********** special nodes class's **********/
 	protected abstract class MovementNode extends Node{
@@ -452,6 +453,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 	}
 	/********** special nodes class's **********/
 
+
 	/********** special option class's **********/
 	protected abstract class MovementOption extends Option{
 
@@ -470,7 +472,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		}
 
 		@Override
-		public void setButton(Context context, Button optionButton,final Setter setter) {
+		public void setButton(Context context, Button optionButton,final Setter SETTER) {
 
 			optionButton.setText(optionText);	//TODO
 
@@ -478,8 +480,8 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 				@Override
 				public void onClick(View v) {
-					setter.setChildNode(node.newInstance());
-					setter.getParent().reOrderScope(setter.getOrder(), 1);
+					SETTER.setChildNode(node.newInstance());
+					SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 					refresh();
 				}
 			});
@@ -559,8 +561,8 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 	}
 	/********** special option class's **********/
 
-	/********** SurfaceView class **********/
 
+	/********** SurfaceView class **********/
 	protected class SurfaceView_Maze extends MySurfaceView {
 
 		private boolean isStillAnimating = false;
@@ -571,11 +573,12 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		private int heroXpos, heroYpos;
 		private int heroXprevLogic, heroYprevLogic;
 		private int heroXcurrentLogic, heroYcurrentLogic;
-		private final double heroScaleHeightPercent = 0.9, heroScaleWidthPercent = 0.9;
+		
+		private final double HERO_SCALE_HEIGHT_PERCENT = 0.9, HERO_SCALE_WIDTH_PERCENT = 0.9;
 
 		private GoalSprite goalSprite;
 		private int goalXpos, goalYpos;
-		private final double goalScaleHeightPercent = 0.5, goalScaleWidthPercent = 0.5;
+		private final double GOAL_SCALE_HEIGHT_PERCENT = 0.5, GOAL_SCALE_WIDTH_PERCENT = 0.5;
 
 		private BoardSpriteSheet boardSpriteSheet;
 		private int boardXpos, boardYpos;
@@ -625,7 +628,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 					BitmapFactory.decodeResource(
 							getResources(),
-							R.drawable.coin,
+							R.drawable.coin_sprite,
 							Android_Utils.BitmapFactoryOptionsInScaled()
 							),
 
@@ -691,14 +694,14 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			tileHeight = boardScaleHeight/currentConfig.rows;
 			tileWidth = boardScaleWidth/currentConfig.cols;
 
-			heroScaleWidth = (int) (tileWidth*heroScaleWidthPercent);
-			heroScaleHeight = (int) (tileHeight*heroScaleHeightPercent);
+			heroScaleWidth = (int) (tileWidth * HERO_SCALE_WIDTH_PERCENT);
+			heroScaleHeight = (int) (tileHeight * HERO_SCALE_HEIGHT_PERCENT);
 
 			shiftHeroX = (tileWidth - heroScaleWidth)/2;
 			shiftHeroY = (tileHeight - heroScaleHeight)/2;
 
-			goalScaleWidth = (int) (tileWidth*goalScaleWidthPercent);
-			goalScaleHeight = (int) (tileHeight*goalScaleHeightPercent);
+			goalScaleWidth = (int) (tileWidth * GOAL_SCALE_WIDTH_PERCENT);
+			goalScaleHeight = (int) (tileHeight * GOAL_SCALE_HEIGHT_PERCENT);
 
 			int shiftGoalX = (tileWidth - goalScaleWidth)/2;
 			int shiftGoalY = (tileHeight - goalScaleHeight)/2;
@@ -793,7 +796,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			else{
 				heroSprite.reset();
 
-				heroXpos = boardXpos + heroXcurrentLogic*tileWidth +shiftHeroX;
+				heroXpos = boardXpos + heroXcurrentLogic*tileWidth + shiftHeroX;
 				heroYpos = boardYpos + heroYcurrentLogic*tileHeight + shiftHeroY;
 
 				heroXprevLogic = heroXcurrentLogic;
@@ -812,8 +815,8 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			goalCurrentBitmap = goalSprite.getBitmapByCoords(0, 4);
 			heroCurrentBitmap = heroStandBitmap;
 
-			heroXpos = boardXpos + heroXcurrentLogic*tileWidth;
-			heroYpos = boardYpos + heroYcurrentLogic*tileHeight;
+			heroXpos = boardXpos + heroXcurrentLogic*tileWidth + shiftHeroX;
+			heroYpos = boardYpos + heroYcurrentLogic*tileHeight + shiftHeroY;
 		}
 
 		@Override
@@ -867,10 +870,9 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			heroXcurrentLogic = mgs.getHeroX();
 			heroYcurrentLogic = mgs.getHeroY();
 		}
-
 		/********** SurfaceView class **********/
 
-		/******************** Nested classes ********************/
 
+		/******************** Nested classes ********************/
 	}
 }

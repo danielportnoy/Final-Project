@@ -176,16 +176,16 @@ public class IfThenNode extends Node{
 
 	class ConditionSetter extends Setter{
 
-		final static int order = 0;
+		final static int ORDER = 0;
 
 		public ConditionSetter(Node parent) {
-			super(/*"< bool expr >", */true, parent, order);	//TODO
+			super(/*"< bool expr >", */true, parent, ORDER);	//TODO
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			condition = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 		}
 
@@ -201,16 +201,16 @@ public class IfThenNode extends Node{
 
 	class ThenBodySetter extends Setter{
 
-		static final int order = 1;
+		static final int ORDER = 1;
 
 		public ThenBodySetter(Node parent) {
-			super(/*"+", */true, parent ,order);	//TODO
+			super(/*"+", */true, parent ,ORDER);	//TODO
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			thenBody = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 		}
 

@@ -125,7 +125,7 @@ public class ScenraioDisplyActivity extends Activity implements OnClickListener 
 	public void onBackPressed() {
 		super.onBackPressed();
 		
-		Intent intent = new Intent(this, TutorialActivity.class);
+		Intent intent = new Intent(this, LevelManager.lastWingActivityClass);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		finish();

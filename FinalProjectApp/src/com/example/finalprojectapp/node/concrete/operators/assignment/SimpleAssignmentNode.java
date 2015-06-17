@@ -149,10 +149,10 @@ public class SimpleAssignmentNode extends Node {
 
 	class AssignmentValueSetter extends Setter{
 
-		final static int order = 0;
+		final static int ORDER = 0;
 
 		public AssignmentValueSetter(Node parent) {	// TODO	
-			super(/*null, */true, parent, order);	
+			super(/*null, */true, parent, ORDER);	
 
 			// TODO	
 			/*if(typeOfIdentifier.equals(Type.Bool))
@@ -165,7 +165,7 @@ public class SimpleAssignmentNode extends Node {
 		@Override
 		public void setChildNode(Node toSet) {
 			assignmentValue = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 
 			toSet.setHideSemicolon(true);

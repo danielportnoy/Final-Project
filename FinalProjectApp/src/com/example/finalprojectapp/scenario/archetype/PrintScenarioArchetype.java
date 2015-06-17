@@ -27,6 +27,7 @@ import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.scenario.Scenario;
 import com.example.finalprojectapp.scenario.configuration.Configuration;
+import com.example.finalprojectapp.utilities.Logic_Utils;
 
 public abstract class PrintScenarioArchetype extends Scenario {
 
@@ -39,7 +40,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 	@Override
 	public GameSnapshot takeSnapshot() {
-		return new MyGameSnapshot();
+		return new MyGameSnapshot(currentTextToPrint);
 	}
 
 	@Override
@@ -61,6 +62,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 	/******************** Nested classes ********************/
 
+
 	/********** exception class **********/
 
 	/********** exception class **********/
@@ -72,6 +74,12 @@ public abstract class PrintScenarioArchetype extends Scenario {
 		private String headerText;
 		private String subHeaderText;
 		private String winText;
+
+		public MyConfiguration(MyConfiguration other) {
+			this.headerText = other.headerText;
+			this.subHeaderText = other.subHeaderText;
+			this.winText = other.winText;
+		}
 
 		public MyConfiguration(String headerText, String subHeaderText, String winText) {
 			this.headerText = headerText;
@@ -99,6 +107,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 	}
 	/********** config class **********/
 
+
 	/********** snapshot class **********/
 	protected class MyGameSnapshot extends GameSnapshot{
 
@@ -108,8 +117,8 @@ public abstract class PrintScenarioArchetype extends Scenario {
 			this.textToPrint = other.textToPrint;
 		}
 
-		public MyGameSnapshot() {
-			this.textToPrint = currentTextToPrint;
+		public MyGameSnapshot(String textToPrint) {
+			this.textToPrint = textToPrint;
 		}
 
 		@Override
@@ -195,7 +204,10 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 		@Override
 		public Node getFirstNode() {
-			return toPrint;
+			if(toPrint != null)
+				return toPrint;
+			else
+				return null;
 		}
 
 		@Override
@@ -251,16 +263,16 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 		class ToPrintSetter extends Setter{
 
-			final static int order = 0;
+			final static int ORDER = 0;
 
 			public ToPrintSetter(Node parent) {
-				super(/*"< expr >", */true, parent, order);	//TODO
+				super(/*"< expr >", */true, parent, ORDER);	//TODO
 			}
 
 			@Override
 			public void setChildNode(Node toSet) {
 				toPrint = toSet;
-				toSet.setOrder(order);
+				toSet.setOrder(ORDER);
 				toSet.setParent(getParent());
 			}
 
@@ -289,7 +301,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 		}
 
 		@Override
-		public void setButton(Context context, Button optionButton,final Setter setter) {
+		public void setButton(Context context, Button optionButton,final Setter SETTER) {
 
 			optionButton.setText("print");	//TODO
 
@@ -297,8 +309,8 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 				@Override
 				public void onClick(View v) {
-					setter.setChildNode(new PrintNode());
-					setter.getParent().reOrderScope(setter.getOrder(), 1);
+					SETTER.setChildNode(new PrintNode());
+					SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 					refresh();
 				}
 			});
@@ -344,6 +356,8 @@ public abstract class PrintScenarioArchetype extends Scenario {
 		public void draw(Canvas canvas) {
 			super.draw(canvas);
 
+			render();
+
 			canvas.drawColor(Color.WHITE);		// TODO
 
 			canvas.drawText(currentHeaderToPrint, headerTextXpos, headerTextYpos, headerTextPaint);
@@ -357,9 +371,6 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 		@Override
 		public void reset() {
-			textXpos = 0;
-			textYpos = 0;
-
 			currentTextToPrint = null;
 		}
 
@@ -380,21 +391,21 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 			int headerHeight = (int) (screenHeight * HEADER_HEIGHT_RELATIVE_POS);
 			int subHeaderHeight = (int) (screenHeight * SUB_HEADER_HEIGHT_RELATIVE_POS);
-			
+
 			textHeight = (int) (screenHeight * TEXT_HEIGHT_RELATIVE_POS);
 
 			textPaint = new Paint();
 			textPaint.setColor(Color.RED);
 
 			headerTextPaint = new Paint();
-			headerTextPaint.setTextSize(determineMaxTextSize(currentHeaderToPrint, screenRectWidth, headerRectHeight));
+			headerTextPaint.setTextSize(Logic_Utils.determineMaxTextSize(currentHeaderToPrint, screenRectWidth, headerRectHeight));
 
 			Rect headerBounds = new Rect();
 
 			headerTextPaint.getTextBounds(currentHeaderToPrint, 0, currentHeaderToPrint.length(), headerBounds);
 
 			subHeaderTextPaint = new Paint();
-			subHeaderTextPaint.setTextSize(determineMaxTextSize(currentSubHeaderToPrint, screenRectWidth, subHeaderRectHeight));
+			subHeaderTextPaint.setTextSize(Logic_Utils.determineMaxTextSize(currentSubHeaderToPrint, screenRectWidth, subHeaderRectHeight));
 
 			Rect subHeaderBounds = new Rect();
 
@@ -414,7 +425,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 				Rect bounds = new Rect();
 				textPaint.getTextBounds(currentTextToPrint, 0, currentTextToPrint.length(), bounds);
-				textPaint.setTextSize(determineMaxTextSize(currentTextToPrint, screenRectWidth, textRectHeight));
+				textPaint.setTextSize(Logic_Utils.determineMaxTextSize(currentTextToPrint, screenRectWidth, textRectHeight));
 
 				textXpos = midWidth - (bounds.width() / 2);
 				textYpos = textHeight /* - (bounds.height() / 2)*/;
@@ -428,7 +439,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 				Rect bounds = new Rect();
 				textPaint.getTextBounds(currentTextToPrint, 0, currentTextToPrint.length(), bounds);
-				textPaint.setTextSize(determineMaxTextSize(currentTextToPrint, screenRectWidth, textRectHeight));
+				textPaint.setTextSize(Logic_Utils.determineMaxTextSize(currentTextToPrint, screenRectWidth, textRectHeight));
 
 				textXpos = midWidth - (bounds.width() / 2);
 				textYpos = textHeight /* - (bounds.height() / 2)*/;
@@ -453,27 +464,9 @@ public abstract class PrintScenarioArchetype extends Scenario {
 			// TODO Auto-generated method stub
 			return false;
 		}
-
-		private int determineMaxTextSize(String str, float maxWidth, float maxHeight)
-		{
-			int size = 0; 
-
-			Paint paint = new Paint();
-			paint.setTextSize(size);
-
-			Rect bounds = new Rect();
-
-			paint.getTextBounds(str, 0, str.length(), bounds);		        
-
-			while(bounds.width() < maxWidth && bounds.height() < maxHeight){
-				paint.setTextSize(++ size);
-				paint.getTextBounds(str, 0, str.length(), bounds);
-			} 
-
-			return size;
-		} //End getMaxTextSize()
 	}
 	/********** SurfaceView class **********/
+
 
 	/******************** Nested classes ********************/
 

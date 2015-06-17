@@ -26,7 +26,7 @@ public class NumberOption extends Option{
 	}
 
 	@Override
-	public void setButton(final Context context, Button optionButton, final Setter setter) {
+	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
 		optionButton.setText("Number");
 
@@ -35,20 +35,20 @@ public class NumberOption extends Option{
 			@Override
 			public void onClick(View v) { 
 
-				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
 
 				builder.setTitle("Select The Number");
-				LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+				LayoutInflater inflater = (LayoutInflater) CONTEXT.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 				View view = inflater.inflate(R.layout.pick_number_dialog, null);
 
-				final NumberPicker numberPicker = (NumberPicker)view.findViewById(R.id.numberPicker_intLiteral);
-				numberPicker.setMinValue(0);
-				numberPicker.setMaxValue(9999);
-				numberPicker.setValue(0);
+				final NumberPicker NUMBER_PICKER = (NumberPicker)view.findViewById(R.id.numberPicker_intLiteral);
+				NUMBER_PICKER.setMinValue(0);
+				NUMBER_PICKER.setMaxValue(9999);
+				NUMBER_PICKER.setValue(0);
 
 				RadioButton radioButtonPositive =(RadioButton) view.findViewById(R.id.radioButton_positive);  
 				radioButtonPositive.setChecked(true);
-				final RadioButton radioButtonNegative =(RadioButton) view.findViewById(R.id.radioButton_negative); 
+				final RadioButton RADIO_BUTTON_NEGATIVE =(RadioButton) view.findViewById(R.id.radioButton_negative); 
 
 				builder.setView(view);
 
@@ -56,12 +56,12 @@ public class NumberOption extends Option{
 
 					public void onClick(DialogInterface dialog, int id) {
 
-						if(radioButtonNegative.isChecked())
-							setter.setChildNode(new IntLiteralNode(-numberPicker.getValue()));
+						if(RADIO_BUTTON_NEGATIVE.isChecked())
+							SETTER.setChildNode(new IntLiteralNode(- NUMBER_PICKER.getValue()));
 						else
-							setter.setChildNode(new IntLiteralNode(numberPicker.getValue()));
+							SETTER.setChildNode(new IntLiteralNode(NUMBER_PICKER.getValue()));
 						
-						setter.getParent().reOrderScope(setter.getOrder(), 1);
+						SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 
 						refresh();
 					}

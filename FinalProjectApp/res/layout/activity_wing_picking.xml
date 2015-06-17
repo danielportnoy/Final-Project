@@ -37,12 +37,11 @@
             android:text="@string/maze_wing" />
 
         <Button
-            android:id="@+id/button_TBD_Wing"
+            android:id="@+id/button_Inventory_Wing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:onClick="onClick"
-            android:text="TBD" />
+            android:text="@string/inventory_wing" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -18,7 +18,7 @@ public class IfThenOption extends Option {
 	}
 
 	@Override
-	public void setButton(Context context, Button optionButton, final Setter setter) {
+	public void setButton(Context context, Button optionButton, final Setter SETTER) {
 
 		optionButton.setText("if then");	//TODO
 
@@ -26,8 +26,8 @@ public class IfThenOption extends Option {
 
 			@Override
 			public void onClick(View v) {
-				setter.setChildNode(new IfThenNode());
-				setter.getParent().reOrderScope(setter.getOrder(), 1);
+				SETTER.setChildNode(new IfThenNode());
+				SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 				refresh();
 			}
 		});

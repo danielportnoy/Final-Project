@@ -12,8 +12,8 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 	private SurfaceHolder holder;
 	private GameLoopThread gameLoopThread;
 
-	private int fps;
-	private boolean isAnimating;
+	protected int fps;
+	protected boolean isAnimating;
 
 	public MySurfaceView(Context context, int fps, boolean isAnimating) {
 		super(context);

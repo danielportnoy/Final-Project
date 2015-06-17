@@ -151,16 +151,16 @@ public class BoolVarDecNode extends Node {
 
 	class InitialValueSetter extends Setter{
 
-		static final int order = 0;
+		static final int ORDER = 0;
 
 		public InitialValueSetter(Node parent) {
-			super(/*"< = bool expr >", */false ,parent , order);
+			super(/*"< = bool expr >", */false ,parent , ORDER);
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			initialValue = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 
 			toSet.setHideSemicolon(true);

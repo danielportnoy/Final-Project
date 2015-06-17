@@ -18,7 +18,7 @@ public class FalseOption extends Option{
 	}
 
 	@Override
-	public void setButton(final Context context, Button optionButton, final Setter setter) {
+	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
 		optionButton.setText("False");
 
@@ -26,8 +26,8 @@ public class FalseOption extends Option{
 
 			@Override
 			public void onClick(View v) {
-				setter.setChildNode(new BoolLiteralNode(false));
-				setter.getParent().reOrderScope(setter.getOrder(), 1);
+				SETTER.setChildNode(new BoolLiteralNode(false));
+				SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 				refresh();
 			}
 		});

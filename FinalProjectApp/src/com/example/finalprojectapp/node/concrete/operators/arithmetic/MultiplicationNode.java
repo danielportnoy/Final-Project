@@ -151,16 +151,16 @@ public class MultiplicationNode extends Node{
 
 	class LeftSetter extends Setter{
 
-		final static int order = 0;
+		final static int ORDER = 0;
 
 		public LeftSetter(Node parent) {
-			super(/*"< int expr >", */true, parent, order);	// TODO	
+			super(/*"< int expr >", */true, parent, ORDER);	// TODO	
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			left = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 		}
 
@@ -175,17 +175,17 @@ public class MultiplicationNode extends Node{
 
 	class RightSetter extends Setter{
 
-		final static int order = 0;
+		final static int ORDER = 1;
 
 		public RightSetter(Node parent) {
-			super(/*"< int expr >", */true, parent, order);	// TODO
+			super(/*"< int expr >", */true, parent, ORDER);	// TODO
 
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			right = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 		}
 

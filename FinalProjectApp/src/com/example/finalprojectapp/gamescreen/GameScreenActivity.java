@@ -53,15 +53,15 @@ public class GameScreenActivity extends FragmentActivity {
 
 		viewPager.setAdapter(pagerAdapter);
 
-		final ActionBar actionBar = getActionBar();
+		final ActionBar ACTION_BAR = getActionBar();
 		
 		//actionBar.hide(); TODO
 		
-		actionBar.setDisplayShowHomeEnabled(false);             
-		actionBar.setDisplayShowTitleEnabled(false);
+		ACTION_BAR.setDisplayShowHomeEnabled(false);             
+		ACTION_BAR.setDisplayShowTitleEnabled(false);
 
 		// Specify that tabs should be displayed in the action bar.
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		ACTION_BAR.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		// Create a tab listener that is called when the user changes tabs.
 		ActionBar.TabListener tabListener = new ActionBar.TabListener() {
@@ -89,14 +89,14 @@ public class GameScreenActivity extends FragmentActivity {
 			}
 		};
 
-		tab_Level = actionBar.newTab().setText("Level").setTabListener(tabListener);
-		tab_Code = actionBar.newTab().setText("Code").setTabListener(tabListener);
-		tab_Run = actionBar.newTab().setText("Run").setTabListener(tabListener);
+		tab_Level = ACTION_BAR.newTab().setText("Level").setTabListener(tabListener);
+		tab_Code = ACTION_BAR.newTab().setText("Code").setTabListener(tabListener);
+		tab_Run = ACTION_BAR.newTab().setText("Run").setTabListener(tabListener);
 
 		// Add 3 tabs, specifying the tab's text and TabListener
-		actionBar.addTab(tab_Level);
-		actionBar.addTab(tab_Code);
-		actionBar.addTab(tab_Run);
+		ACTION_BAR.addTab(tab_Level);
+		ACTION_BAR.addTab(tab_Code);
+		ACTION_BAR.addTab(tab_Run);
 
 		viewPager.setOnPageChangeListener(
 				new ViewPager.SimpleOnPageChangeListener() {

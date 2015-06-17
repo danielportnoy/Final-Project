@@ -25,6 +25,8 @@ public class LevelManager {
 	private CodeRunningManager codeRunningManager;
 
 	private static LevelManager instance = new LevelManager();
+	
+	public static Class<?> lastWingActivityClass;
 
 	private LevelManager() {
 		reset();

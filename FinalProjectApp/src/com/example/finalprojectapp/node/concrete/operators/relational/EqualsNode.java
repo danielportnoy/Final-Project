@@ -162,16 +162,16 @@ public class EqualsNode extends Node {
 
 	class LeftSetter extends Setter{
 
-		final static int order = 0;
+		final static int ORDER = 0;
 
 		public LeftSetter(Node parent) {	// TODO	
-			super(/*"< expr >", */true, parent, order);	
+			super(/*"< expr >", */true, parent, ORDER);	
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			left = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 
 			left_type = toSet.getType();
@@ -194,16 +194,16 @@ public class EqualsNode extends Node {
 
 	class RightSetter extends Setter{
 
-		final static int order = 0;
+		final static int ORDER = 1;
 
 		public RightSetter(Node parent) {	// TODO	
-			super(/*"< expr >", */true, parent, order);	
+			super(/*"< expr >", */true, parent, ORDER);	
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			right = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 
 			right_type = toSet.getType();

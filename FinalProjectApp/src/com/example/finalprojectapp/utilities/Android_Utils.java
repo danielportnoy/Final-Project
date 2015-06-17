@@ -59,15 +59,15 @@ public class Android_Utils {
 		return opts;
 	}
 
-	public static AlertDialog.Builder getEndGameDialog(final Activity activity,
-			String title, String headerText, String text , String textPositive, final boolean isWin){
+	public static AlertDialog.Builder getEndGameDialog(final Activity ACTIVITY,
+			String title, String headerText, String text , String textPositive, final boolean IS_WIN){
 
 		// Creating and Building the Dialog 
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+		AlertDialog.Builder builder = new AlertDialog.Builder(ACTIVITY);
 
 		builder.setTitle(title);
 
-		LayoutInflater inflater = (LayoutInflater) activity.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		LayoutInflater inflater = (LayoutInflater) ACTIVITY.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View view = inflater.inflate(R.layout.end_level_dialog, null);
 
 		TextView headerTV = (TextView)view.findViewById(R.id.textView_gameEndTextHeader);
@@ -83,24 +83,24 @@ public class Android_Utils {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 
-				SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(activity);
+				SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(ACTIVITY);
 				boolean isSwipeMode = SP.getBoolean(Constants.SWIPE_KEY,Constants.DEFAULT_SWIPE);
 
 				
 				Intent intent = null;
-				if(isWin || !isSwipeMode)
+				if(IS_WIN || !isSwipeMode)
 				{
-					if(isWin)
-						intent = new Intent(activity, TutorialActivity.class);
+					if(IS_WIN)
+						intent = new Intent(ACTIVITY, TutorialActivity.class);
 					else if(!isSwipeMode)
-						intent = new Intent(activity, ScenraioDisplyActivity.class);
+						intent = new Intent(ACTIVITY, ScenraioDisplyActivity.class);
 					
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					activity.startActivity(intent);
-					activity.finish(); 
+					ACTIVITY.startActivity(intent);
+					ACTIVITY.finish(); 
 				}
 				else{
-					((GameScreenActivity)activity).setTab(0);
+					((GameScreenActivity)ACTIVITY).setTab(0);
 				}
 			}
 		});
@@ -116,14 +116,14 @@ public class Android_Utils {
 		return builder;
 	}
 
-	public static AlertDialog.Builder getStartGameDialog(final Activity activity, String title, String text){
+	public static AlertDialog.Builder getStartGameDialog(final Activity ACTIVITY, String title, String text){
 
 		// Creating and Building the Dialog 
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+		AlertDialog.Builder builder = new AlertDialog.Builder(ACTIVITY);
 
 		builder.setTitle(title);
 
-		LayoutInflater inflater = (LayoutInflater) activity.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		LayoutInflater inflater = (LayoutInflater) ACTIVITY.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View view = inflater.inflate(R.layout.start_level_dialog, null);
 
 		TextView t = (TextView)view.findViewById(R.id.textView_gameStartText);
@@ -136,7 +136,7 @@ public class Android_Utils {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(activity);
+				SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(ACTIVITY);
 				Editor editor = SP.edit();
 
 				if ( isChecked )

@@ -27,7 +27,7 @@ public class IntVarDecOption extends Option {
 	}
 
 	@Override
-	public void setButton(final Context context, Button optionButton, final Setter setter) {
+	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
 		optionButton.setText("int var dec");	//TODO
 
@@ -37,13 +37,13 @@ public class IntVarDecOption extends Option {
 			public void onClick(View v) {
 
 				// Creating and Building the Dialog 
-				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
 
 				builder.setTitle("Select The Identifier Name");
 
-				final EditText input = new EditText(context);
+				final EditText INPUT = new EditText(CONTEXT);
 
-				builder.setView(input);
+				builder.setView(INPUT);
 
 				//TODO
 				/*LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -56,18 +56,18 @@ public class IntVarDecOption extends Option {
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 
-						String text = input.getText().toString();
+						String text = INPUT.getText().toString();
 
 						if(text.isEmpty() || !text.matches(reg))
-							Toast.makeText(context, "Failed - not a valid identifier", Toast.LENGTH_LONG).show();
-						else if(Scope.getPrevIdentifiers(setter.getParent(), setter.getOrder()).contains(text))
-							Toast.makeText(context, "Failed - identifier allready declared", Toast.LENGTH_LONG).show();
-						else if(Scope.getNextIdentifiers(setter.getParent(), setter.getOrder()).contains(text))
-							Toast.makeText(context, "Failed - identifier declared afterwards", Toast.LENGTH_LONG).show();
+							Toast.makeText(CONTEXT, "Failed - not a valid identifier", Toast.LENGTH_LONG).show();
+						else if(Scope.getPrevIdentifiers(SETTER.getParent(), SETTER.getOrder()).contains(text))
+							Toast.makeText(CONTEXT, "Failed - identifier allready declared", Toast.LENGTH_LONG).show();
+						else if(Scope.getNextIdentifiers(SETTER.getParent(), SETTER.getOrder()).contains(text))
+							Toast.makeText(CONTEXT, "Failed - identifier declared afterwards", Toast.LENGTH_LONG).show();
 						else{
-							setter.setChildNode(new IntVarDecNode(text));
-							setter.getParent().reOrderScope(setter.getOrder(), 1);
-							setter.addToIntegerScope(text);
+							SETTER.setChildNode(new IntVarDecNode(text));
+							SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
+							SETTER.addToIntegerScope(text);
 							refresh();
 						}
 

@@ -18,7 +18,7 @@ public class TrueOption extends Option{
 	}
 
 	@Override
-	public void setButton(final Context context, Button optionButton, final Setter setter) {
+	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
 		optionButton.setText("True");
 
@@ -26,8 +26,8 @@ public class TrueOption extends Option{
 
 			@Override
 			public void onClick(View v) {
-				setter.setChildNode(new BoolLiteralNode(true));
-				setter.getParent().reOrderScope(setter.getOrder(), 1);
+				SETTER.setChildNode(new BoolLiteralNode(true));
+				SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 				refresh();
 			}
 		});

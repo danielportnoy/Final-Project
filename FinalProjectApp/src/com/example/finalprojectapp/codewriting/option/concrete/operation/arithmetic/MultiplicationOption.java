@@ -18,7 +18,7 @@ public class MultiplicationOption extends Option{
 	}
 
 	@Override
-	public void setButton(Context context, Button optionButton, final Setter setter) {
+	public void setButton(Context context, Button optionButton, final Setter SETTER) {
 		
 		optionButton.setText("*");	//TODO
 
@@ -26,8 +26,8 @@ public class MultiplicationOption extends Option{
 
 			@Override
 			public void onClick(View v) {
-				setter.setChildNode(new MultiplicationNode());
-				setter.getParent().reOrderScope(setter.getOrder(), 1);
+				SETTER.setChildNode(new MultiplicationNode());
+				SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 				refresh();
 			}
 		});

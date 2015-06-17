@@ -154,16 +154,16 @@ public class IntVarDecNode extends Node {
 
 	class InitialValueSetter extends Setter{
 
-		final static int order = 0;
+		final static int ORDER = 0;
 
 		public InitialValueSetter(Node parent) {
-			super(/*"< = int expr >", */false, parent, order);
+			super(/*"< = int expr >", */false, parent, ORDER);
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			initialValue = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 
 			toSet.setHideSemicolon(true);

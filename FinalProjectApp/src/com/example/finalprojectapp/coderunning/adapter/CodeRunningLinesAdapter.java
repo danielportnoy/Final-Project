@@ -54,22 +54,22 @@ public class CodeRunningLinesAdapter extends ArrayAdapter<CodeRunningLine>{
 
 		List<CodeRunningPart> codeRunningParts = item.getCodeRunningParts();
 
-		for (final CodeRunningPart codeRunningPart : codeRunningParts) {
+		for (final CodeRunningPart CODE_RUNNING_PART : codeRunningParts) {
 
-			if(codeRunningPart.getText()!=null)
-				handleText(codeLineLinearLayout, codeRunningPart.getText() , codeRunningPart.isHighlighted());
-			else if(codeRunningPart.isTab())
+			if(CODE_RUNNING_PART.getText()!=null)
+				handleText(codeLineLinearLayout, CODE_RUNNING_PART.getText() , CODE_RUNNING_PART.isHighlighted());
+			else if(CODE_RUNNING_PART.isTab())
 				handleTab(codeLineLinearLayout);
 		}
 
 	}
 
-	private void handleText(LinearLayout codeLineLinearLayout, final String textString, boolean isHighlighted) {
+	private void handleText(LinearLayout codeLineLinearLayout, final String TEXT_STRING, boolean isHighlighted) {
 		TextView text = new TextView(context);
 
 		Android_Utils.setLayoutParams(text , context);
 
-		text.setText(textString);
+		text.setText(TEXT_STRING);
 		text.setTextAppearance(context, android.R.style.TextAppearance_Small);
 		
 		if(isHighlighted)	//TODO

@@ -19,7 +19,7 @@ public class BlockOption extends Option {
 	}
 
 	@Override
-	public void setButton(Context context, Button optionButton , final Setter setter) {
+	public void setButton(Context context, Button optionButton , final Setter SETTER) {
 
 		optionButton.setText("block");	//TODO
 		
@@ -27,8 +27,8 @@ public class BlockOption extends Option {
 			
 			@Override
 			public void onClick(View v) {
-				setter.setChildNode(new BlockNode());
-				setter.getParent().reOrderScope(setter.getOrder(), 1);
+				SETTER.setChildNode(new BlockNode());
+				SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 				refresh();
 			}
 		});

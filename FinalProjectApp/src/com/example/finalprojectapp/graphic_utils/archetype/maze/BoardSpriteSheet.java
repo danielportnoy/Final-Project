@@ -9,13 +9,13 @@ import com.example.finalprojectapp.scenario.archetype.MazeScenarioArchetype.Boar
 
 public class BoardSpriteSheet extends SpriteSheet{
 
-	private final int TileWidth = 64, TileHeight = 64;
+	private final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 	private int boardWidth, boardHeight;
 	private int rows, columns;
 
-	private Bitmap rockys_stones = getBitmapByCoords(0, 352, TileWidth, TileHeight);
-	private Bitmap grass = getBitmapByCoords(384, 32, TileWidth, TileHeight);
-	private Bitmap round_bricks_gray = getBitmapByCoords(256, 32, TileWidth, TileHeight);
+	private Bitmap rockys_stones = getBitmapByCoords(0, 352, TILE_WIDTH, TILE_HEIGHT);
+	private Bitmap grass = getBitmapByCoords(384, 32, TILE_WIDTH, TILE_HEIGHT);
+	private Bitmap round_bricks_gray = getBitmapByCoords(256, 32, TILE_WIDTH, TILE_HEIGHT);
 
 	private Bitmap[][] boardMatrix;
 
@@ -26,8 +26,8 @@ public class BoardSpriteSheet extends SpriteSheet{
 		this.rows = rows;
 		this.columns = columns;
 
-		boardWidth = TileWidth*columns;
-		boardHeight = TileHeight*rows;
+		boardWidth = TILE_WIDTH*columns;
+		boardHeight = TILE_HEIGHT*rows;
 
 		boardMatrix = new Bitmap[rows][columns];
 
@@ -62,7 +62,7 @@ public class BoardSpriteSheet extends SpriteSheet{
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				canvas.drawBitmap(boardMatrix[i][j], j*TileWidth, i*TileHeight, null);
+				canvas.drawBitmap(boardMatrix[i][j], j*TILE_WIDTH, i*TILE_HEIGHT, null);
 			}
 		}
 

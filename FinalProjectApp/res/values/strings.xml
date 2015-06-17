@@ -50,5 +50,8 @@
     <string name="basic_move">Basic move</string>
     <string name="more_moves">More moves</string>
     <string name="all_moves">All moves</string>
+    <string name="title_activity_inventory_wing">InventoryWingActivity</string>
+    <string name="inventory_wing">Inventory wing</string>
+    <string name="swap">Swap</string>
 
 </resources>

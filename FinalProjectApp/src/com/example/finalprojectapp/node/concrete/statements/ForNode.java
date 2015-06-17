@@ -255,16 +255,16 @@ public class ForNode extends Node{			// TODO
 
 	class InitSetter extends Setter{
 
-		static final int order = 0;
+		static final int ORDER = 0;
 
 		public InitSetter(Node parent) {
-			super(/*"+", */false, parent ,order);	//TODO
+			super(/*"+", */false, parent ,ORDER);	//TODO
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			init = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 
 			toSet.setHideSemicolon(true);
@@ -283,16 +283,16 @@ public class ForNode extends Node{			// TODO
 
 	class ConditionSetter extends Setter{
 
-		final static int order = 1;
+		final static int ORDER = 1;
 
 		public ConditionSetter(Node parent) {
-			super(/*"< bool expr >", */false, parent, order);	//TODO
+			super(/*"< bool expr >", */false, parent, ORDER);	//TODO
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			condition = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 
 			toSet.setHideSemicolon(true);
@@ -310,16 +310,16 @@ public class ForNode extends Node{			// TODO
 
 	class UpdateSetter extends Setter{
 
-		static final int order = 2;
+		static final int ORDER = 2;
 
 		public UpdateSetter(Node parent) {
-			super(/*"+", */false, parent ,order);	//TODO
+			super(/*"+", */false, parent ,ORDER);	//TODO
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			update = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 
 			toSet.setHideSemicolon(true);
@@ -338,16 +338,16 @@ public class ForNode extends Node{			// TODO
 
 	class BodySetter extends Setter{
 
-		static final int order = 4;
+		static final int ORDER = 4;
 
 		public BodySetter(Node parent) {
-			super(/*"+", */true, parent ,order);	//TODO
+			super(/*"+", */true, parent ,ORDER);	//TODO
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
 			body = toSet;
-			toSet.setOrder(order);
+			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
 		}
 

@@ -197,7 +197,7 @@ public class CodeWritingLogicUnit {
 		currentOptions.add(new Option() {
 
 			@Override
-			public void setButton(final Context context, Button optionButton, Setter setter) {
+			public void setButton(final Context CONTEXT, Button optionButton, Setter setter) {
 				optionButton.setText("delete");
 
 				optionButton.setOnClickListener(new OnClickListener() {
@@ -217,7 +217,7 @@ public class CodeWritingLogicUnit {
 								LevelManager.getInstance().refrashWritingScreen();
 							}
 							else
-								Toast.makeText(context, "Failed - invalid removal attempt.", Toast.LENGTH_LONG).show(); // TODO	
+								Toast.makeText(CONTEXT, "Failed - invalid removal attempt.", Toast.LENGTH_LONG).show(); // TODO	
 						}
 						else{
 							LevelManager.getInstance().clearCode();

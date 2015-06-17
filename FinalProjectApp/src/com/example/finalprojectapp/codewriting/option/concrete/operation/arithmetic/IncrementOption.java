@@ -27,7 +27,7 @@ public class IncrementOption extends Option{
 	}
 
 	@Override
-	public void setButton(final Context context, Button optionButton, final Setter setter) {
+	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
 		optionButton.setText("++");	//TODO
 
@@ -36,20 +36,20 @@ public class IncrementOption extends Option{
 			public void onClick(View v) { 
 
 				// Creating and Building the Dialog 
-				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
 
 				builder.setTitle("Select The Left Side");	// TODO
 
 				// get all identifiers
-				List<String> alllIds = Scope.getPrevIntegerIdentifiersRecursive(setter.getParent(), setter.getOrder());
+				List<String> alllIds = Scope.getPrevIntegerIdentifiersRecursive(SETTER.getParent(), SETTER.getOrder());
 
 				// Strings to Show In Dialog with Radio Buttons
-				final String[] items = alllIds.toArray(new String[alllIds.size()]);
+				final String[] ITEMS = alllIds.toArray(new String[alllIds.size()]);
 
-				builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+				builder.setSingleChoiceItems(ITEMS, -1, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
 						
-						identifierName = items[item];
+						identifierName = ITEMS[item];
 														
 						((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
 					}
@@ -58,8 +58,8 @@ public class IncrementOption extends Option{
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int id) {
-						setter.setChildNode(new IncrementNode(identifierName));
-						setter.getParent().reOrderScope(setter.getOrder(), 1);
+						SETTER.setChildNode(new IncrementNode(identifierName));
+						SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 						refresh();
 					}
 				});

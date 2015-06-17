@@ -1,6 +1,7 @@
 package com.example.finalprojectapp.utilities;
 
-import java.util.Random;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class Logic_Utils {
 
@@ -20,7 +21,26 @@ public class Logic_Utils {
 
 		return true;
 	}
-	
+
+	public static int determineMaxTextSize(String str, float maxWidth, float maxHeight)
+	{
+		int size = 0; 
+
+		Paint paint = new Paint();
+		paint.setTextSize(size);
+
+		Rect bounds = new Rect();
+
+		paint.getTextBounds(str, 0, str.length(), bounds);		        
+
+		while(bounds.width() < maxWidth && bounds.height() < maxHeight){
+			paint.setTextSize(++ size);
+			paint.getTextBounds(str, 0, str.length(), bounds);
+		} 
+
+		return size;
+	}
+
 	/**
 	 * Returns a pseudo-random number between min and max, inclusive.
 	 * The difference between min and max can be at most
@@ -33,14 +53,17 @@ public class Logic_Utils {
 	 */
 	public static int randInt(int min, int max) {
 
-	    // NOTE: Usually this should be a field rather than a method
-	    // variable so that it is not re-seeded every call.
-	    Random rand = new Random();
+		// NOTE: Usually this should be a field rather than a method
+		// variable so that it is not re-seeded every call.
+		//Random rand = new Random();
 
-	    // nextInt is normally exclusive of the top value,
-	    // so add 1 to make it inclusive
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
+		// nextInt is normally exclusive of the top value,
+		// so add 1 to make it inclusive
+		int scope = max - min;
 
-	    return randomNum;
+		//int randomNum = rand.nextInt((max - min) + 1) + min; 
+		int randomNum = (int) (Math.random() * (scope + 1)) + min;
+
+		return randomNum;
 	}
 }
