@@ -1,4 +1,4 @@
-package com.example.finalprojecttestapp;
+package com.example.prototypeapp;
 
 public class Constants {
 	

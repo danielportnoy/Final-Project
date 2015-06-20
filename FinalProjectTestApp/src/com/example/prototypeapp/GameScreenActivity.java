@@ -1,6 +1,6 @@
-package com.example.finalprojecttestapp;
+package com.example.prototypeapp;
 
-import com.example.finalprojecttestapp.R;
+import com.example.prototypeapp.R;
 
 import grammarModuleTest2.logics.game.level1.Level1;
 import grammarModuleTest2.logics.game.level1.infrastructure.Coordinate;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.finalprojecttestapp"
+    package="com.example.prototypeapp"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         <activity
-            android:name="com.example.finalprojecttestapp.MainManuActivity"
+            android:name="com.example.prototypeapp.MainManuActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -24,12 +24,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.finalprojecttestapp.LevelPickingActivity"
+            android:name="com.example.prototypeapp.LevelPickingActivity"
             android:label="@string/title_activity_level_picking"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.example.finalprojecttestapp.GameScreenActivity"
+            android:name="com.example.prototypeapp.GameScreenActivity"
             android:label="@string/title_activity_game_screen"
             android:screenOrientation="landscape" >
         </activity>

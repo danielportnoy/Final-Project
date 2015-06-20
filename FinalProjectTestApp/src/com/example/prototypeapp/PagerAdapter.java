@@ -1,4 +1,4 @@
-package com.example.finalprojecttestapp;
+package com.example.prototypeapp;
 
 import grammarModuleTest2.logics.game.scenario.Scenario;
 

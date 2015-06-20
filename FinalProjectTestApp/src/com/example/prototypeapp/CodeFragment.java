@@ -1,4 +1,4 @@
-package com.example.finalprojecttestapp;
+package com.example.prototypeapp;
 
 import grammarModuleTest2.logics.game.level1.Level1;
 import grammarModuleTest2.logics.game.level1.infrastructure.stmt.GoRightStmt;
@@ -17,7 +17,7 @@ import grammarModuleTest2.logics.grammar.statement.statement_expression.Stmt_Exp
 import grammarModuleTest2.logics.grammar.statement.varDec.asgn.concrete.Var_Dec_Asgn_For_Int;
 import java.util.LinkedList;
 
-import com.example.finalprojecttestapp.R;
+import com.example.prototypeapp.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

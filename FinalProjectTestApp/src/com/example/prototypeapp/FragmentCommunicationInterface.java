@@ -1,4 +1,4 @@
-package com.example.finalprojecttestapp;
+package com.example.prototypeapp;
 
 import grammarModuleTest2.logics.grammar.statement.Block_Stmt;
 
