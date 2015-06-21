@@ -30,7 +30,7 @@ public class Snapshot {
 		this.gameSnapshot = gameSnapshot;
 
 		List<String> ids = Scope.getPrevIdentifiers(currentNode.getParent(), currentNode.getOrder());
-		values.removeExtra(ids);
+		this.values.removeExtra(ids);
 	}
 
 	public boolean equals(Snapshot other) {

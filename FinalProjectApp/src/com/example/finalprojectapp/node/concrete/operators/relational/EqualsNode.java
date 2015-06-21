@@ -17,10 +17,10 @@ import com.example.finalprojectapp.node.Type;
 public class EqualsNode extends Node {
 
 	private Node left;
-	private Type left_type;
+	public Type left_type;
 
 	private Node right;
-	private Type right_type;
+	public Type right_type;
 
 	public EqualsNode() {
 		setType(Type.Bool);

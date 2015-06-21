@@ -478,7 +478,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 		private static final int SWAP_CLIMB_NUM_OF_FRAMES = 10;
 		private static final int SWAP_MOVE_NUM_OF_FRAMES = 20;
 
-		private static final double SWING_HEIGHT_AMPLITUDE_RELATIVE = 0.2;
+		private static final double SWING_HEIGHT_AMPLITUDE_RELATIVE = 0.30;
 
 		private static final double ITEM_AMOUNT_RELATIVE_X_POS = 0.65, ITEM_AMOUNT_RELATIVE_Y_POS = 0.65;
 		private static final double ITEM_AMOUNT_RELATIVE_TEXT_SIZE = 0.6;
@@ -631,9 +631,11 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			swingHeightAmplitude = (int) (( (slotHeight - itemScaleHeight) / 2 ) * SWING_HEIGHT_AMPLITUDE_RELATIVE);
 
 			if(isAnimating){
-				// randomize starting offsets TODO
-				for (int i = 0; i < items.size(); i++)
-					items.get(i).itemYPosOffset = Logic_Utils.randInt(- swingHeightAmplitude, swingHeightAmplitude);
+				// randomize starting Y offsets TODO
+				for (int i = 0; i < items.size(); i++){
+					items.get(i).itemInitialYPosOffset = Logic_Utils.randInt(- swingHeightAmplitude, swingHeightAmplitude);
+					items.get(i).itemYPosOffset = items.get(i).itemInitialYPosOffset;
+				}
 			}
 		}
 
@@ -831,14 +833,22 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 			private int itemXPosOffset, itemYPosOffset;
 
+			private int itemInitialXPosOffset, itemInitialYPosOffset;
+
 			public Item() {
 				reset();
+
+				this.itemInitialXPosOffset = this.itemInitialYPosOffset = 0;
 			}
 
 			private void reset() {
 				this.bitmap = null;
+
 				this.itemXpos = this.itemYpos = 0;
-				this.itemXPosOffset = this.itemYPosOffset = 0;
+
+				this.itemXPosOffset = itemInitialXPosOffset;
+				this.itemYPosOffset = itemInitialYPosOffset;
+
 				this.isMovingDown = this.isMovingRight = false;
 			}
 		}

@@ -1,4 +1,4 @@
-package com.example.finalprojectapp.node.concrete.operators.assignment;
+package com.example.finalprojectapp.node.concrete.operators.logical;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,26 +14,22 @@ import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
-public class SimpleAssignmentNode extends Node {
+public class NotNode extends Node {
 
-	private Type typeOfIdentifier;
-	private String identifierName;
+	private Node innerNode;
 
-	private Node assignmentValue;
-
-	public SimpleAssignmentNode(Type typeOfIdentifier, String identifierName) {
-		this.typeOfIdentifier = typeOfIdentifier;
-		this.identifierName = identifierName;
-		setType(Type.Statement);
+	public NotNode() {
+		setType(Type.Bool);
 	}
 
 	@Override
 	public boolean addChild(Node child, int order) {
-
+		
 		if(order > getChildNodes().size() - 1)
 			return false;
 		else{
-			assignmentValue = child;
+			if(order == 0)
+				innerNode = child;
 		}
 		return true;
 	}
@@ -42,7 +38,7 @@ public class SimpleAssignmentNode extends Node {
 	public List<Node> getChildNodes() {
 		List<Node> res = new ArrayList<Node>();
 
-		res.add(assignmentValue);
+		res.add(innerNode);
 
 		return res;
 	}
@@ -52,28 +48,30 @@ public class SimpleAssignmentNode extends Node {
 
 		Set<String> used = new HashSet<String>();
 
-		if(childNode.equals(assignmentValue))
+		if(childNode.equals(innerNode))
 			used = new HashSet<String>();
 
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
 		if(intersection.isEmpty()){
-			if(childNode.equals(assignmentValue))
-				assignmentValue = null;
+			if(childNode.equals(innerNode)){
+				removeFromScope(innerNode);
+				innerNode = null;
+			}
 			return true;
 		}
 		else
 			return false;
 	}
 
-
 	@Override
 	public Set<String> getDeclaredIdentifiers() {
 
 		HashSet<String> res = new HashSet<String>();
-		if(assignmentValue != null)
-			res.addAll(assignmentValue.getDeclaredIdentifiers());
+		if(innerNode!=null)
+			res.addAll(innerNode.getDeclaredIdentifiers());
+		
 		return res;
 	}
 
@@ -81,16 +79,16 @@ public class SimpleAssignmentNode extends Node {
 	public Set<String> getUsedIdentifiers() {
 
 		HashSet<String> res = new HashSet<String>();
-		if(assignmentValue != null)
-			res.addAll(assignmentValue.getUsedIdentifiers());
-		res.add(identifierName);
+		if(innerNode!=null)
+			res.addAll(innerNode.getUsedIdentifiers());
+	
 		return res;
 	}
 
 	@Override
 	public Node getFirstNode() {
-		if(assignmentValue != null)
-			return assignmentValue;
+		if(innerNode != null)
+			return innerNode;
 		else
 			return null;
 	}
@@ -99,15 +97,13 @@ public class SimpleAssignmentNode extends Node {
 	public List<CodeWritingPart> getCodeWritingParts() {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
-
-		res.add(new CodeWritingPart(false, false, identifierName , null, this));
-		res.add(new CodeWritingPart(false, false, "=", null, this));
-
-
-		if(assignmentValue == null)
-			res.add(new CodeWritingPart(false, false, null, new AssignmentValueSetter(this), this));
-		else			
-			res.addAll(assignmentValue.getCodeWritingParts());
+		
+		res.add(new CodeWritingPart(false, false, "! ", null, this));
+		
+		if(innerNode == null)
+			res.add(new CodeWritingPart(false, false, null, new InnerNodeSetter(this), this));
+		else
+			res.addAll(innerNode.getCodeWritingParts());
 
 		if(!isHideSemicolon())
 			res.add(new CodeWritingPart(false, false, ";", null, this));
@@ -116,15 +112,14 @@ public class SimpleAssignmentNode extends Node {
 	}
 
 	@Override
-	public List<CodeRunningPart> getCodeRunningParts(Node target,boolean isHighlighted) {
+	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
 
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, identifierName));
-		res.add(new CodeRunningPart(false, false,isHighlighted, "="));
-
-		res.addAll(assignmentValue.getCodeRunningParts(target, isHighlighted));
+		res.add(new CodeRunningPart(false, false,isHighlighted, "! "));
+		
+		res.addAll(innerNode.getCodeRunningParts(target, isHighlighted));
 
 		if(!isHideSemicolon())
 			res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
@@ -134,51 +129,29 @@ public class SimpleAssignmentNode extends Node {
 
 	@Override
 	public ReturnObject run() throws MyException {
-
 		LevelManager.getInstance().takeSnapshot(this);
-
-		switch (typeOfIdentifier) {
-		case Bool:
-			LevelManager.getInstance().putBooleanValueToIdentifier(identifierName, assignmentValue.run().getBoolValue());
-			break;
-		case Int:
-			LevelManager.getInstance().putIntegerValueToIdentifier(identifierName, assignmentValue.run().getIntValue());
-			break;
-		default:
-			break;
-		}
-
-		return new ReturnObject();
+		return new ReturnObject(!innerNode.run().getBoolValue());
 	}
 
-	class AssignmentValueSetter extends Setter{
+	class InnerNodeSetter extends Setter{
 
 		final static int ORDER = 0;
 
-		public AssignmentValueSetter(Node parent) {	// TODO	
-			super(/*null, */true, parent, ORDER);	
-
-			// TODO	
-			/*if(typeOfIdentifier.equals(Type.Bool))
-				setText("< bool expr >");
-			else if(typeOfIdentifier.equals(Type.Int))
-				setText("< int expr >");*/
-
+		public InnerNodeSetter(Node parent) {
+			super(/*"< bool expr >", */true, parent, ORDER);	// TODO	
 		}
 
 		@Override
 		public void setChildNode(Node toSet) {
-			assignmentValue = toSet;
+			innerNode = toSet;
 			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
-
-			toSet.setHideSemicolon(true);
 		}
 
 		@Override
 		public List<Type> possibleTypes() {
 			List<Type> possibilities = new ArrayList<Type>();
-			possibilities.add(typeOfIdentifier);
+			possibilities.add(Type.Bool);
 
 			return possibilities;
 		}

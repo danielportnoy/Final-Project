@@ -84,7 +84,7 @@ public class Level1 extends Scenario {
 		addToAvailableOptions(new FalseOption());
 
 
-		addToAvailableOptions(new AdditionOption());
+		addToAvailableOptions(new NotOption());
 
 		addToAvailableOptions(new SimpleAssignmentOption());
 
