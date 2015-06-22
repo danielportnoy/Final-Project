@@ -26,11 +26,11 @@ import com.example.finalprojectapp.codewriting.option.concrete.block.BlockOption
 import com.example.finalprojectapp.codewriting.option.concrete.literal.FalseOption;
 import com.example.finalprojectapp.codewriting.option.concrete.literal.NumberOption;
 import com.example.finalprojectapp.codewriting.option.concrete.literal.TrueOption;
-import com.example.finalprojectapp.codewriting.option.concrete.operation.arithmetic.IncrementOption;
-import com.example.finalprojectapp.codewriting.option.concrete.operation.arithmetic.AdditionOption;
-import com.example.finalprojectapp.codewriting.option.concrete.operation.assignment.SimpleAssignmentOption;
-import com.example.finalprojectapp.codewriting.option.concrete.operation.relational.EqualsOption;
-import com.example.finalprojectapp.codewriting.option.concrete.operation.relational.NotEqualsOption;
+import com.example.finalprojectapp.codewriting.option.concrete.operators.arithmetic.IncrementOption;
+import com.example.finalprojectapp.codewriting.option.concrete.operators.arithmetic.AdditionOption;
+import com.example.finalprojectapp.codewriting.option.concrete.operators.assignment.SimpleAssignmentOption;
+import com.example.finalprojectapp.codewriting.option.concrete.operators.relational.EqualsOption;
+import com.example.finalprojectapp.codewriting.option.concrete.operators.relational.NotEqualsOption;
 import com.example.finalprojectapp.codewriting.option.concrete.statement.ForOption;
 import com.example.finalprojectapp.codewriting.option.concrete.statement.IfThenOption;
 import com.example.finalprojectapp.codewriting.option.concrete.vardec.BoolVarDecOption;

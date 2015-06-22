@@ -1,5 +1,8 @@
 package com.example.finalprojectapp.graphic_utils.archetype.maze;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.util.DisplayMetrics;
@@ -17,10 +20,10 @@ public class BoardSpriteSheet extends SpriteSheet{
 	private Bitmap grass = getBitmapByCoords(384, 32, TILE_WIDTH, TILE_HEIGHT);
 	private Bitmap round_bricks_gray = getBitmapByCoords(256, 32, TILE_WIDTH, TILE_HEIGHT);
 
-	private Bitmap[][] boardMatrix;
+	private List<List<Bitmap>> boardMatrix;
 
 
-	public BoardSpriteSheet(int rows, int columns, Bitmap boardMap, BoardTilesTypesEnum[][] boardTiles) {
+	public BoardSpriteSheet(int rows, int columns, Bitmap boardMap, List<List<BoardTilesTypesEnum>> boardTiles) {
 		super(boardMap);
 
 		this.rows = rows;
@@ -29,26 +32,30 @@ public class BoardSpriteSheet extends SpriteSheet{
 		boardWidth = TILE_WIDTH*columns;
 		boardHeight = TILE_HEIGHT*rows;
 
-		boardMatrix = new Bitmap[rows][columns];
+		boardMatrix = new ArrayList<List<Bitmap>>();
 
 		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < columns; j++) {
+			
+			List<Bitmap> bitmapRow = new ArrayList<Bitmap>();
 
-				switch (boardTiles[i][j]) {
+			for (int j = 0; j < columns; j++) {
+				switch (boardTiles.get(i).get(j)) {
 				case Rockys_stones:
-					boardMatrix[i][j] = rockys_stones;
+					bitmapRow.add(j, rockys_stones);
 					break;
 				case Grass:
-					boardMatrix[i][j] = grass;
+					bitmapRow.add(j, grass);
 					break;
 				case Round_bricks_gray:
-					boardMatrix[i][j] = round_bricks_gray;
+					bitmapRow.add(j, round_bricks_gray);
 					break;
 
 				default:
 					break;
 				}
 			}
+			
+			boardMatrix.add(i, bitmapRow);		
 		}
 	}
 
@@ -62,7 +69,7 @@ public class BoardSpriteSheet extends SpriteSheet{
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				canvas.drawBitmap(boardMatrix[i][j], j*TILE_WIDTH, i*TILE_HEIGHT, null);
+				canvas.drawBitmap(boardMatrix.get(i).get(j), j*TILE_WIDTH, i*TILE_HEIGHT, null);
 			}
 		}
 

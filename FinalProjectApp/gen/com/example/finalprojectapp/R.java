@@ -38,22 +38,23 @@ containing a value of this type.
     }
     public static final class drawable {
         public static final int coin_sprite=0x7f020000;
-        public static final int hero_sprite=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int ic_launcher_2=0x7f020003;
-        public static final int inventory_items_set=0x7f020004;
-        public static final int inventory_slot=0x7f020005;
-        public static final int mandatory_button=0x7f020006;
-        public static final int mandatory_button_highlighted=0x7f020007;
-        public static final int next=0x7f020008;
-        public static final int not_mandatory_button=0x7f020009;
-        public static final int not_mandatory_button_highlighted=0x7f02000a;
-        public static final int play=0x7f02000b;
-        public static final int previous=0x7f02000c;
-        public static final int temp1=0x7f02000d;
-        public static final int temp2=0x7f02000e;
-        public static final int tile_set_one=0x7f02000f;
-        public static final int tile_set_two=0x7f020010;
+        public static final int fire_sprite=0x7f020001;
+        public static final int hero_sprite=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int ic_launcher_2=0x7f020004;
+        public static final int inventory_items_set=0x7f020005;
+        public static final int inventory_slot=0x7f020006;
+        public static final int mandatory_button=0x7f020007;
+        public static final int mandatory_button_highlighted=0x7f020008;
+        public static final int next=0x7f020009;
+        public static final int not_mandatory_button=0x7f02000a;
+        public static final int not_mandatory_button_highlighted=0x7f02000b;
+        public static final int play=0x7f02000c;
+        public static final int previous=0x7f02000d;
+        public static final int temp1=0x7f02000e;
+        public static final int temp2=0x7f02000f;
+        public static final int tile_set_one=0x7f020010;
+        public static final int tile_set_two=0x7f020011;
     }
     public static final class id {
         public static final int LinearLayout_Code=0x7f090003;
@@ -187,10 +188,13 @@ containing a value of this type.
         public static final int clear=0x7f06001a;
         public static final int code=0x7f060008;
         public static final int dat_loop_=0x7f060026;
+        public static final int diagonal=0x7f060034;
         public static final int do_not_show_this_message_again=0x7f060016;
+        public static final int don_t_play_with_fire=0x7f060036;
         public static final int eat_your_variables_=0x7f060025;
         public static final int enter_text_here=0x7f060012;
         public static final int exit=0x7f060004;
+        public static final int firewall=0x7f060035;
         public static final int graphics=0x7f060015;
         public static final int hello_world=0x7f060014;
         public static final int if_=0x7f060024;

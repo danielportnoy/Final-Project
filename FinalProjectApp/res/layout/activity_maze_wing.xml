@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="TBD"
+                android:text="@string/don_t_play_with_fire"
                 android:textAppearance="@android:style/TextAppearance.Large" />
 
             <TableRow
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="" />
+                    android:text="@string/firewall" />
 
                 <Button
                     android:id="@+id/button_maze_wing_LEVEL5"
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="" />
+                    android:text="@string/diagonal" />
 
                 <Button
                     android:id="@+id/button_maze_wing_LEVEL6"

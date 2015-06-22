@@ -79,6 +79,10 @@ public class MazeWingActivity extends Activity implements OnClickListener {
 			scenario = new Maze_Wing_Level_2();
 		else if(v.getId() ==  R.id.button_maze_wing_LEVEL3)
 			scenario = new Maze_Wing_Level_3();
+		else if(v.getId() ==  R.id.button_maze_wing_LEVEL4)
+			scenario = new Maze_Wing_Level_4();
+		else if(v.getId() ==  R.id.button_maze_wing_LEVEL5)
+			scenario = new Maze_Wing_Level_5();
 	
 		levelManager.loadScenario(scenario);
 

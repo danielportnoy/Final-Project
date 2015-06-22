@@ -53,5 +53,8 @@
     <string name="title_activity_inventory_wing">InventoryWingActivity</string>
     <string name="inventory_wing">Inventory wing</string>
     <string name="swap">Swap</string>
+    <string name="diagonal">Diagonal</string>
+    <string name="firewall">FireWall</string>
+    <string name="don_t_play_with_fire">Don\'t play with fire</string>
 
 </resources>

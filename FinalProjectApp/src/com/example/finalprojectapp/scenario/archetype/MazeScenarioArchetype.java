@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Pair;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.example.finalprojectapp.codewriting.codewriting_components.CodeWritin
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.graphic_utils.MySurfaceView;
 import com.example.finalprojectapp.graphic_utils.archetype.maze.BoardSpriteSheet;
+import com.example.finalprojectapp.graphic_utils.archetype.maze.FireSprite;
 import com.example.finalprojectapp.graphic_utils.archetype.maze.GoalSprite;
 import com.example.finalprojectapp.graphic_utils.archetype.maze.HeroSprite;
 import com.example.finalprojectapp.graphic_utils.archetype.maze.HeroSprite.heroDirection;
@@ -39,7 +41,7 @@ import com.example.finalprojectapp.utilities.Logic_Utils;
 public abstract class  MazeScenarioArchetype extends Scenario {
 
 	public static final String MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT = "Exception : The character moved out of the maze limits.";
-
+	public static final String STEP_ON_FIRE_EXCEPTION_TEXT = "Exception : The character steped on fire.";
 	public static enum BoardTilesTypesEnum{
 		Rockys_stones,
 		Grass,
@@ -48,29 +50,34 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 	private int heroCurrentX,heroCurrentY;
 
-	public BoardTilesTypesEnum[][] randomizeBoardTiles(int rows , int columns){
+	public List<List<BoardTilesTypesEnum>> randomizeBoardTiles(int rows , int columns){
 
-		BoardTilesTypesEnum[][] randomMap = new BoardTilesTypesEnum[rows][columns];
+		List<List<BoardTilesTypesEnum>> randomMap = new ArrayList<List<BoardTilesTypesEnum>>();
 
 		for (int i = 0; i < rows; i++) {
+			
+			List<BoardTilesTypesEnum> randomMapRow = new ArrayList<MazeScenarioArchetype.BoardTilesTypesEnum>();
+			
 			for (int j = 0; j < columns; j++) {
 				int randomNum = Logic_Utils.randInt(1 , BoardTilesTypesEnum.values().length);
 
 				switch (randomNum) {
 				case 1:
-					randomMap[i][j] = BoardTilesTypesEnum.Rockys_stones;
+					randomMapRow.add(j, BoardTilesTypesEnum.Rockys_stones);
 					break;
 				case 2:
-					randomMap[i][j] = BoardTilesTypesEnum.Grass;
+					randomMapRow.add(j, BoardTilesTypesEnum.Grass);
 					break;
 				case 3:
-					randomMap[i][j] = BoardTilesTypesEnum.Round_bricks_gray;
+					randomMapRow.add(j, BoardTilesTypesEnum.Round_bricks_gray);
 					break;
 
 				default:
 					break;
 				}
 			}
+			
+			randomMap.add(i, randomMapRow);
 		}
 
 		return randomMap;
@@ -114,6 +121,15 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		}
 
 	}
+
+	@SuppressWarnings("serial")
+	protected class StepOnFireException extends MyException{
+
+		public StepOnFireException() {
+			super(STEP_ON_FIRE_EXCEPTION_TEXT);
+		}
+
+	}
 	/********** exception class **********/
 
 
@@ -127,9 +143,12 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 		public int targetX,targetY;
 
-		public BoardTilesTypesEnum[][] boardTiles;
+		public List<List<BoardTilesTypesEnum>> boardTiles;
 
-		public MyConfiguration(int rows, int cols, int heroStartX,int heroStartY,int targetX, int targetY, BoardTilesTypesEnum[][] boardTiles) {
+		public List<List<Boolean>> fireTiles;
+
+		public MyConfiguration(int rows, int cols, int heroStartX,int heroStartY,int targetX, int targetY,
+				List<List<BoardTilesTypesEnum>> boardTiles, List<List<Boolean>> fireTiles) {
 			this.rows = rows;
 			this.cols = cols;
 			this.heroStartX = heroStartX;
@@ -138,12 +157,13 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			this.targetY = targetY;
 
 			this.boardTiles = boardTiles;
+			this.fireTiles = fireTiles;
 
 		}
 
 		@Override
 		public Configuration copy() {
-			return new MyConfiguration(rows, cols, heroStartX, heroStartY, targetX, targetY, boardTiles);
+			return new MyConfiguration(rows, cols, heroStartX, heroStartY, targetX, targetY, boardTiles, fireTiles);
 		}
 
 	}
@@ -190,6 +210,123 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 
 	/********** special nodes class's **********/
+	protected abstract class NumberOfNode extends Node{
+
+		private String codeText;
+
+		public NumberOfNode(String codeText) {
+			this.codeText = codeText;
+			setType(Type.Int);
+		}
+
+		public abstract NumberOfNode newInstance();
+		
+		@Override
+		public List<CodeWritingPart> getCodeWritingParts() {
+
+			List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
+
+			res.add(new CodeWritingPart(false, false, codeText, null, this));
+
+			return res;
+		}
+
+		@Override
+		public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
+
+			isHighlighted = target.equals(this) || isHighlighted;
+			List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+			res.add(new CodeRunningPart(false, false,isHighlighted, codeText));
+
+			return res;
+		}
+
+		@Override
+		public Node getFirstNode() {
+			return null;
+		}
+
+		@Override
+		public Set<String> getDeclaredIdentifiers() {
+
+			HashSet<String> res = new HashSet<String>();
+			return res;
+		}
+
+		@Override
+		public Set<String> getUsedIdentifiers() {
+
+			HashSet<String> res = new HashSet<String>();
+			return res;
+		}
+
+		@Override
+		public boolean DeleteChildNode(Node childNode) {
+			return true;
+		}
+
+		@Override
+		public List<Node> getChildNodes() {
+			return null;
+		}
+
+		@Override
+		public boolean addChild(Node child, int order) {
+			return false;
+		}
+	}
+
+	protected class NumberOfRowsNode extends NumberOfNode{
+
+		public static final String NUMBER_OF_ROWS_CODE_TEXT = "numberOfRows";
+
+		public NumberOfRowsNode() {
+			super(NUMBER_OF_ROWS_CODE_TEXT);
+		}
+		
+		@Override
+		public NumberOfNode newInstance() {
+			return new NumberOfRowsNode();
+		}
+
+		@Override
+		public ReturnObject run() throws MyException {
+
+			//TODO
+			//LevelManager.getInstance().takeSnapshot(this);
+			
+			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+
+			return new ReturnObject(currentConfig.rows);
+		}	
+	}
+
+	protected class NumberOfColumnsNode extends NumberOfNode{
+
+		public static final String NUMBER_OF_COLUMNS_CODE_TEXT = "numberOfColumns";
+
+		public NumberOfColumnsNode() {
+			super(NUMBER_OF_COLUMNS_CODE_TEXT);
+		}
+
+		@Override
+		public NumberOfNode newInstance() {
+			return new NumberOfColumnsNode();
+		}
+
+		@Override
+		public ReturnObject run() throws MyException {
+
+			//TODO
+			//LevelManager.getInstance().takeSnapshot(this);
+
+			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+
+			return new ReturnObject(currentConfig.cols);
+		}	
+	}
+
 	protected abstract class MovementNode extends Node{
 
 		private String codeText;
@@ -260,6 +397,9 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			catch (MyException e) {
 				throw e;
 			}
+
+			if(currentConfig.fireTiles.get(heroCurrentY).get(heroCurrentX))
+				throw new StepOnFireException();
 
 			return new ReturnObject();
 		}
@@ -455,6 +595,59 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 
 	/********** special option class's **********/
+	protected abstract class NumberOfOption extends Option{
+		
+		private String optionText;
+
+		private NumberOfNode node;
+
+		public NumberOfOption(String optionText, NumberOfNode node) {
+			this.optionText = optionText;
+			this.node = node;
+		}
+
+		@Override
+		public boolean isType(Type type) {
+			return type == Type.Int;
+		}
+
+		@Override
+		public void setButton(Context context, Button optionButton,final Setter SETTER) {
+
+			optionButton.setText(optionText);	//TODO
+
+			optionButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					SETTER.setChildNode(node.newInstance());
+					SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
+					refresh();
+				}
+			});
+		}
+	}
+	
+	protected class NumberOfRowsOption extends NumberOfOption{
+
+		public static final String NUMBER_OF_ROWS_OPTION_TEXT = "numberOfRows";
+
+		public NumberOfRowsOption() {
+			super(NUMBER_OF_ROWS_OPTION_TEXT, new NumberOfRowsNode());
+		}
+		
+	}
+	
+	protected class NumberOfColumnsOption extends NumberOfOption{
+
+		public static final String NUMBER_OF_Columns_OPTION_TEXT = "numberOfColumns";
+
+		public NumberOfColumnsOption() {
+			super(NUMBER_OF_Columns_OPTION_TEXT, new NumberOfColumnsNode());
+		}
+		
+	}
+	
 	protected abstract class MovementOption extends Option{
 
 		private String optionText;
@@ -573,12 +766,16 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		private int heroXpos, heroYpos;
 		private int heroXprevLogic, heroYprevLogic;
 		private int heroXcurrentLogic, heroYcurrentLogic;
-		
+
 		private final double HERO_SCALE_HEIGHT_PERCENT = 0.9, HERO_SCALE_WIDTH_PERCENT = 0.9;
 
 		private GoalSprite goalSprite;
 		private int goalXpos, goalYpos;
 		private final double GOAL_SCALE_HEIGHT_PERCENT = 0.5, GOAL_SCALE_WIDTH_PERCENT = 0.5;
+
+		private FireSprite fireSprite;
+		private List<Pair<Integer, Integer>> fireXYpos;
+		private final double FIRE_SCALE_HEIGHT_PERCENT = 1, FIRE_SCALE_WIDTH_PERCENT = 1;
 
 		private BoardSpriteSheet boardSpriteSheet;
 		private int boardXpos, boardYpos;
@@ -588,6 +785,8 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 		private Bitmap goalCurrentBitmap;
 
+		private Bitmap fireCurrentBitmap;
+
 		private Bitmap boardBitmap;
 
 		// positions and measurements
@@ -595,6 +794,8 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		private int boardScaleHeight;
 		private int goalScaleWidth;
 		private int goalScaleHeight;
+		private int fireScaleWidth;
+		private int fireScaleHeight;
 		private int heroScaleWidth;
 		private int heroScaleHeight;
 		private int tileWidth;
@@ -623,6 +824,21 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 					);
 
 			boardBitmap = boardSpriteSheet.getBitmap();
+
+			fireXYpos = new ArrayList<Pair<Integer,Integer>>();
+			fireSprite = new FireSprite(
+
+					BitmapFactory.decodeResource(
+							getResources(),
+							R.drawable.fire_sprite,
+							Android_Utils.BitmapFactoryOptionsInScaled()
+							),
+
+							Constants.MAZE_ARCHETYPE_FIRE_SPRITE_ROWS,
+							Constants.MAZE_ARCHETYPE_FIRE_SPRITE_COLS,
+							0,
+							0
+					);
 
 			goalSprite = new GoalSprite(
 
@@ -706,6 +922,12 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			int shiftGoalX = (tileWidth - goalScaleWidth)/2;
 			int shiftGoalY = (tileHeight - goalScaleHeight)/2;
 
+			fireScaleWidth = (int) (tileWidth * FIRE_SCALE_WIDTH_PERCENT);
+			fireScaleHeight = (int) (tileHeight * FIRE_SCALE_HEIGHT_PERCENT);
+
+			int shiftFireX = (tileWidth - fireScaleWidth)/2;
+			int shiftFireY = (tileHeight - fireScaleHeight)/2;
+
 			tileWidthSpriteInterval = tileWidth/heroSprite.getNumOfFrames();
 			tileHeightSpriteInterval = tileHeight/heroSprite.getNumOfFrames();
 
@@ -714,6 +936,22 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 			goalXpos = boardXpos + shiftGoalX + currentConfig.targetX*tileWidth; 
 			goalYpos = boardYpos + shiftGoalY + currentConfig.targetY*tileHeight;
+
+			if(currentConfig.fireTiles != null){
+
+				for (int i = 0; i < currentConfig.fireTiles.size(); i++) {
+					for (int j = 0; j < currentConfig.fireTiles.get(i).size(); j++) {
+
+						if(currentConfig.fireTiles.get(i).get(j)){
+
+							int fireXpos = boardXpos + shiftFireX + tileWidth*j;
+							int fireYpos = boardYpos + shiftFireY + tileHeight*i;
+
+							fireXYpos.add(new Pair<Integer, Integer>(fireXpos, fireYpos));
+						}
+					}
+				}
+			}
 		}
 
 		@Override
@@ -725,6 +963,11 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			canvas.drawColor(Color.WHITE);		// TODO
 
 			canvas.drawBitmap(boardBitmap, boardXpos, boardYpos, null);
+
+			for (Pair<Integer, Integer> coord : fireXYpos) {
+				canvas.drawBitmap(fireCurrentBitmap, coord.first, coord.second, null);
+			}
+
 			canvas.drawBitmap(goalCurrentBitmap, goalXpos, goalYpos, null);
 			canvas.drawBitmap(heroCurrentBitmap, heroXpos, heroYpos, null);
 		}
@@ -741,12 +984,15 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 			heroSprite.reset();
 			goalSprite.reset();
+			fireSprite.reset();
 		}
 
 		@Override
 		public void updateAnimated() {
 			goalSprite.update();
+			fireSprite.update();
 			goalCurrentBitmap = goalSprite.getCurrentBitmap();
+			fireCurrentBitmap = fireSprite.getCurrentBitmap();
 
 			int distanceMultiplier;
 
@@ -813,6 +1059,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			isStillAnimating = false;
 
 			goalCurrentBitmap = goalSprite.getBitmapByCoords(0, 4);
+			fireCurrentBitmap = fireSprite.getBitmapByCoords(0, 0);
 			heroCurrentBitmap = heroStandBitmap;
 
 			heroXpos = boardXpos + heroXcurrentLogic*tileWidth + shiftHeroX;
@@ -824,6 +1071,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			/* scaling bitmaps */	
 			boardBitmap = Bitmap.createScaledBitmap(boardBitmap, boardScaleWidth, boardScaleHeight, true);
 			goalCurrentBitmap = Bitmap.createScaledBitmap(goalCurrentBitmap, goalScaleWidth, goalScaleHeight, true);
+			fireCurrentBitmap = Bitmap.createScaledBitmap(fireCurrentBitmap, fireScaleWidth, fireScaleHeight, true);
 			heroCurrentBitmap = Bitmap.createScaledBitmap(heroCurrentBitmap, heroScaleWidth, heroScaleHeight, true);		
 			/* scaling bitmaps */
 		}

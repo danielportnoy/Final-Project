@@ -43,15 +43,19 @@ public class Constants {
 	public static final int MAZE_ARCHETYPE_GOAL_SPRITE_ROWS = 8;
 	public static final int MAZE_ARCHETYPE_GOAL_SPRITE_COLS = 8;
 
+	// MAZE ARCHETYPE FIRE SPRITE
+	public static final int MAZE_ARCHETYPE_FIRE_SPRITE_ROWS = 8;
+	public static final int MAZE_ARCHETYPE_FIRE_SPRITE_COLS = 8;
+
 	// TEXTS
 	public static final String LEVEL_START_TEXT = "Before you jump in...";
-	
+
 	public static final String LEVEL_END_WIN_HEADER_TEXT = "You Won!";
 	public static final String LEVEL_END_WIN_TEXT = "great!";
 
 	public static final String LEVEL_END_LOSS_HEADER_TEXT = "You Lost!";
 	public static final String LEVEL_END_LOSS_TEXT = "maybe next time...";
-	
+
 	public static final String LEVEL_END_WIN_TITLE_TEXT = "Well played...";
 	public static final String LEVEL_END_LOSS_TITLE_TEXT = "Too bad...";
 

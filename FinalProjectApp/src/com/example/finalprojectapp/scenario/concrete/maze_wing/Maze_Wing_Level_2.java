@@ -1,5 +1,9 @@
 package com.example.finalprojectapp.scenario.concrete.maze_wing;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.example.finalprojectapp.scenario.archetype.MazeScenarioArchetype;
 
 public class Maze_Wing_Level_2 extends MazeScenarioArchetype {
@@ -8,20 +12,19 @@ public class Maze_Wing_Level_2 extends MazeScenarioArchetype {
 			"Hint: now you can try more of the movment options...\n\n" +
 			"Warning: be careful not to go out of the maze borders.";
 	
-	public static final BoardTilesTypesEnum[][] TUTORIAL_LEVEL2_BOARD_TILES = new BoardTilesTypesEnum[][]
-			{
+	@SuppressWarnings("serial")
+	public static final List<List<BoardTilesTypesEnum>> MAZE_LEVEL2_BOARD_TILES = new ArrayList<List<BoardTilesTypesEnum>>(){
 		{
-			BoardTilesTypesEnum.Grass,BoardTilesTypesEnum.Grass
-		},
-		{
-			BoardTilesTypesEnum.Grass,BoardTilesTypesEnum.Grass
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
 		}
-			};
+	};
+
 
 	@Override
 	public void initiateConfigurations() {
 		
-		setDefaultConfig(new MyConfiguration(2, 2, 0, 0, 1, 1, TUTORIAL_LEVEL2_BOARD_TILES));
+		setDefaultConfig(new MyConfiguration(2, 2, 0, 0, 1, 1, MAZE_LEVEL2_BOARD_TILES, null));
 		setCurrentConfig(getDefaultConfig());
 
 		addToConfigs(getDefaultConfig());	
