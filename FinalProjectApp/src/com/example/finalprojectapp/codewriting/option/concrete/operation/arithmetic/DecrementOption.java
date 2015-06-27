@@ -9,14 +9,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Scope;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.node.concrete.operators.arithmetic.DecrementNode;
 
+/**
+ * Option that represents a Decrement Node.
+ * @author daniel portnoy
+ *
+ */
 public class DecrementOption extends Option{
-	
+
 	private AlertDialog dialog;
 
 	private String identifierName;
@@ -29,8 +35,10 @@ public class DecrementOption extends Option{
 	@Override
 	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
-		optionButton.setText("--");	//TODO
+		// Set the button text.
+		optionButton.setText(Constants.DECREMENT_OPTION_TEXT);
 
+		// Set the button listener.
 		optionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) { 
@@ -38,7 +46,8 @@ public class DecrementOption extends Option{
 				// Creating and Building the Dialog 
 				AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
 
-				builder.setTitle("Select The Left Side");	// TODO
+				// Set the dialog view.
+				builder.setTitle("Select The Left Side");
 
 				// get all identifiers
 				List<String> alllIds = Scope.getPrevIntegerIdentifiersRecursive(SETTER.getParent(), SETTER.getOrder());
@@ -48,15 +57,20 @@ public class DecrementOption extends Option{
 
 				builder.setSingleChoiceItems(ITEMS, -1, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
-						
+
+						// get the picked identifier name.
 						identifierName = ITEMS[item];
-														
+
 						((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
 					}
 				});
 
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
+					
+					/*
+					 * Create the decrement node.		
+					 * use the identifierName to know what identifier to pick.
+					 */
 					public void onClick(DialogInterface dialog, int id) {
 						SETTER.setChildNode(new DecrementNode(identifierName));
 						SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
@@ -72,7 +86,7 @@ public class DecrementOption extends Option{
 
 				dialog = builder.create();
 				dialog.show();
-				
+
 				dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 			}
 		});

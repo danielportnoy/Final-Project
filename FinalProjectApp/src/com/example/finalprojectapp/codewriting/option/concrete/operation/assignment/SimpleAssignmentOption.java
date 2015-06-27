@@ -9,12 +9,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Scope;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.node.concrete.operators.assignment.SimpleAssignmentNode;
 
+/**
+ * Option that represents a Simple Assignment Node.
+ * @author daniel portnoy
+ *
+ */
 public class SimpleAssignmentOption extends Option{
 
 	private AlertDialog dialog;
@@ -30,8 +36,10 @@ public class SimpleAssignmentOption extends Option{
 	@Override
 	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
-		optionButton.setText("=");	//TODO
+		// Set the button text.
+		optionButton.setText(Constants.ASSIGNMENT_OPTION_TEXT);
 
+		// Set the button listener.
 		optionButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) { 
@@ -39,7 +47,8 @@ public class SimpleAssignmentOption extends Option{
 				// Creating and Building the Dialog 
 				AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
 
-				builder.setTitle("Select The Left Side");	// TODO
+				// Set the dialog view.
+				builder.setTitle("Select The Left Side");
 
 				// get all identifiers
 				List<String> alllIds = Scope.getPrevIdentifiers(SETTER.getParent(), SETTER.getOrder());
@@ -49,16 +58,21 @@ public class SimpleAssignmentOption extends Option{
 
 				builder.setSingleChoiceItems(ITEMS, -1, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
-						
+
+						// get the picked identifier name.
 						identifierName = ITEMS[item];
 						typeOfIdentifiver = Scope.getTypeByIdentifier(SETTER.getParent(), SETTER.getOrder(), identifierName); 
-														
+
 						((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
 					}
 				});
 
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
+					/*
+					 * Create the simple assignment node.		
+					 * use the identifierName to know what identifier to pick.
+					 */
 					public void onClick(DialogInterface dialog, int id) {
 						SETTER.setChildNode(new SimpleAssignmentNode(typeOfIdentifiver, identifierName));
 						SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
@@ -74,7 +88,7 @@ public class SimpleAssignmentOption extends Option{
 
 				dialog = builder.create();
 				dialog.show();
-				
+
 				dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 			}
 		});

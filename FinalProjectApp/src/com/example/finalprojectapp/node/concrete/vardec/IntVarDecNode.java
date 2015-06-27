@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.coderunning.exception.MyException;
@@ -14,6 +15,11 @@ import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
+/**
+ * Holds the Logical data and functionality of a Integer Variable Deceleration Node 'Code part'.
+ * @author daniel portnoy
+ *
+ */
 public class IntVarDecNode extends Node {
 
 	private String identifier;
@@ -49,13 +55,18 @@ public class IntVarDecNode extends Node {
 
 		Set<String> used = new HashSet<String>();
 
+		// Find any used identifiers after childNode.
 		if(childNode.equals(initialValue))
 			used = new HashSet<String>();
 
+		// Find any declared identifiers in childNode.
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
+		// Check if deletion is valid.
 		if(intersection.isEmpty()){
+			
+			// delete the childNode.
 			if(childNode.equals(initialValue)){
 				removeFromScope(initialValue);
 			}
@@ -99,8 +110,10 @@ public class IntVarDecNode extends Node {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodeWritingPart(false, false, "int "+ identifier, null, this));
+		// Add the identifier name and Type.
+		res.add(new CodeWritingPart(false, false, Constants.INTEGER_CODE_TEXT + " " + identifier, null, this));
 
+		// Add the initial Value Node or add '+' setter.
 		if(initialValue == null){
 			res.add(new CodeWritingPart(false, false, null, new InitialValueSetter(this), this));
 
@@ -124,8 +137,10 @@ public class IntVarDecNode extends Node {
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, "int "+ identifier));
+		// Add the identifier name and Type.
+		res.add(new CodeRunningPart(false, false,isHighlighted, Constants.INTEGER_CODE_TEXT + " " + identifier));
 
+		// Add the initial Value Node.
 		if(initialValue != null){
 			res.add(new CodeRunningPart(false, false,isHighlighted, "="));
 			res.addAll(initialValue.getCodeRunningParts(target, isHighlighted));
@@ -151,13 +166,17 @@ public class IntVarDecNode extends Node {
 		return new ReturnObject();
 	}
 
-
+	/**
+	 * Logical and Graphic data and functionality of the Initial Value button for a BoolVarDec 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class InitialValueSetter extends Setter{
 
 		final static int ORDER = 0;
 
 		public InitialValueSetter(Node parent) {
-			super(/*"< = int expr >", */false, parent, ORDER);
+			super(false, parent, ORDER);
 		}
 
 		@Override

@@ -21,10 +21,21 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Bridges between the CodeLines data and the display.
+ * @author daniel portnoy
+ *
+ */
 public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 
 	private Context context = null;
 
+	/**
+	 * 
+	 * @param context
+	 * @param resource
+	 * @param codeWritingLines
+	 */
 	public CodeWritingLinesAdapter(Context context, int resource, List<CodeWritingLine> codeWritingLines) {
 		super(context, resource, codeWritingLines);
 		this.context = context;
@@ -32,6 +43,8 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+
+		// Inflating the codeWritingLine item.
 
 		LinearLayout codeLineLinearLayout = null;
 		View view = null;
@@ -55,6 +68,11 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 
 	}
 
+	/**
+	 * Handles the showing of a CodeWritingLine item.
+	 * @param item - CodeWritingLine item to show.
+	 * @param codeLineLinearLayout - the item layout.
+	 */
 	private void handleCodeWritingLine(CodeWritingLine item, LinearLayout codeLineLinearLayout) {
 
 		List<CodeWritingPart> codeWritingParts = item.getCodeWritingParts();
@@ -71,31 +89,40 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 
 	}
 
+	/**
+	 * Handles the showing of a CodeRunningLine text item.
+	 * @param codeLineLinearLayout - item layout. 
+	 * @param TEXT_STRING - text to show.
+	 * @param CODE_WRITING_PART - item itself.
+	 */
 	private void handleText(LinearLayout codeLineLinearLayout, final String TEXT_STRING, final CodeWritingPart CODE_WRITING_PART) {
 		TextView text = new TextView(context);
 
 		Android_Utils.setLayoutParams(text , context);
 
+		//Set the text and its appearance.
+
 		text.setText(TEXT_STRING);
 		text.setTextAppearance(context, android.R.style.TextAppearance_Small);
 
+		//Set the erasable appearance.
 		if(!CODE_WRITING_PART.getMakerNode().isErasable())
 			text.setTextColor(0xff6E6E6E);
 		else
 			text.setTextColor(Color.BLACK);
 
+		//Set the text highlight.
 		if(CODE_WRITING_PART.isEditable() && LevelManager.getInstance().isEditMode())
 			text.setBackgroundColor(Color.YELLOW);
 
-		/***** Testing *****/
-
+		//Set the long click listener.
 		text.setOnLongClickListener(new OnLongClickListener() {
 
 			@Override
 			public boolean onLongClick(View v) {
 
 				if(CODE_WRITING_PART.getMakerNode().isErasable()){
-					
+
 					LevelManager.getInstance().setEditMode(true);
 					LevelManager.getInstance().setEditable(CODE_WRITING_PART.getMakerNode());
 					LevelManager.getInstance().refrashWritingScreen();
@@ -104,13 +131,17 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 			}
 		});
 
-		/***** Testing *****/
-
 		codeLineLinearLayout.addView(text);
 	}
 
+	/**
+	 * Handles the showing of a CodeWritingLine tab item.
+	 * @param codeLineLinearLayout - item layout.
+	 */
 	private void handleTab(LinearLayout codeLineLinearLayout) {
 		TextView tab = new TextView(context);
+
+		//Set the text and its appearance.
 
 		Android_Utils.setLayoutParams(tab , context);
 
@@ -120,26 +151,18 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 		codeLineLinearLayout.addView(tab);
 	}
 
+	/**
+	 * Handles the showing of a CodeWritingLine item setter button.
+	 * @param codeLineLinearLayout - item layout.
+	 * @param SETTER - the code setter object.
+	 * @param codeWritingPart - item itself.
+	 */
 	private void handleSetter(LinearLayout codeLineLinearLayout,final Setter SETTER, CodeWritingPart codeWritingPart) {
 		Button button = new Button(context);
 
-		//Android_Utils.setLayoutParams(button , context);	// TODO
+		//Set the setter button and its appearance.
 
 		Android_Utils.setSetterLayoutParams(button , context);
-
-		/*
-		android:text="Button"
-		android:textColor="#FFFFFF"
-		android:textSize="30sp"
-
-		android:layout_width="270dp"
-		android:layout_height="60dp"
-		android:background="@drawable/buttonshape"
-		android:shadowColor="#A8A8A8"
-		android:shadowDx="0"
-		android:shadowDy="0"
-		android:shadowRadius="5"
-		 */
 
 		if(SETTER.isMandatory()){
 			if(codeWritingPart.isEditable() && LevelManager.getInstance().isEditMode())
@@ -154,10 +177,10 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 				button.setBackgroundResource(R.drawable.not_mandatory_button);
 		}
 
-		//button.setText(setter.getText());	TODO
 		button.setText("+");
 		button.setTextAppearance(context, android.R.style.TextAppearance_Small);
 
+		//Set the click listener.
 
 		button.setOnClickListener(new OnClickListener() {				
 			@Override
@@ -171,25 +194,5 @@ public class CodeWritingLinesAdapter extends ArrayAdapter<CodeWritingLine>{
 		});
 
 		codeLineLinearLayout.addView(button);
-
-		/*
-		Button button = new Button(context);
-
-		Android_Utils.setSetterLayoutParams(button , context);
-
-		if(setter.isMandatory())
-			button.setBackgroundResource(R.drawable.mandatory);
-		else if(!setter.isMandatory())
-			button.setBackgroundResource(R.drawable.not_mandatory);
-
-		button.setOnClickListener(new OnClickListener() {				
-			@Override
-			public void onClick(View v) {
-				LevelManager.getInstance().getCodeWritingManager().SetterClick(setter);
-			}
-		});
-
-		codeLineLinearLayout.addView(button);
-		 */
 	}
 }

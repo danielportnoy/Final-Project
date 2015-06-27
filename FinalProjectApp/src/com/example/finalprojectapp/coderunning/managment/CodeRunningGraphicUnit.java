@@ -7,6 +7,11 @@ import com.example.finalprojectapp.coderunning.adapter.VarValuesAdapter;
 import com.example.finalprojectapp.coderunning.snapshot.GameSnapshot;
 import com.example.finalprojectapp.graphic_utils.MySurfaceView;
 
+/**
+ * Manages all code running graphic visualization and display.
+ * @author daniel portnoy
+ *
+ */
 public class CodeRunningGraphicUnit {
 
 	private CodeRunningLinesAdapter codeLinesAdapter;
@@ -20,6 +25,9 @@ public class CodeRunningGraphicUnit {
 		this.gameView = gameView;
 	}
 
+	/**
+	 * Displays the code running lines on the screen.
+	 */
 	public void updateCodeRunningLines() {
 		codeLinesAdapter.notifyDataSetChanged();
 	}
@@ -44,6 +52,10 @@ public class CodeRunningGraphicUnit {
 		this.gameView = gameView;
 	}
 
+	/**
+	 * Update the gameView with the gameSnapshot.
+	 * @param gameSnapshot
+	 */
 	public void updateGame(GameSnapshot gameSnapshot) {
 		gameView.loadSnapshot(gameSnapshot);
 	}

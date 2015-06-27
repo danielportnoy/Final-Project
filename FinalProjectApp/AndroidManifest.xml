@@ -53,6 +53,7 @@
             android:label="@string/title_activity_settings"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         </activity>
+        <!-- android:theme="@style/PreferencesTheme" -->
         <activity
             android:name="com.example.finalprojectapp.gamescreen.GameScreenActivity"
             android:label="@string/title_activity_game_screen"

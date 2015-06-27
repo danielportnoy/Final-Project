@@ -7,13 +7,20 @@ import android.util.Pair;
 import com.example.finalprojectapp.codewriting.option.concrete.literal.NumberOption;
 import com.example.finalprojectapp.scenario.archetype.InventoryScenarioArchetype;
 
+/**
+ * Instance of the Inventory game scenario - Level 1.
+ * @author daniel portnoy
+ *
+ */
 public class Inventory_Wing_Level_1 extends InventoryScenarioArchetype {
 
-	public static final String INVENTORY_LEVEL1_TEXT = "";
+	// hint text.
+	public static final String INVENTORY_LEVEL1_TEXT = "Hello, travler! you'r goal is to sort the inventory from the lowest to the highest. go ahead and try.... \n\n" +
+			"Hint: try the \"Swap( X , Y );\" option...\n\n" +
+			"Warning: be careful not to exceed the limits of th inventory.";
 
 	public Inventory_Wing_Level_1() {
 
-		// TODO temporary
 		/*
 		InitialBlockNode root = LevelManager.getInstance().getRootNode();
 
@@ -61,35 +68,60 @@ public class Inventory_Wing_Level_1 extends InventoryScenarioArchetype {
 		 */
 	}
 
+	// Specific definitions.
+
+	public static final int INVENTORY_LEVEL1_INVENTORY_SIZE = 3;
+
+	
+	/***** Inventory *****/
+	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_ITEM_1 = InventoryItemsEnum.Shild;
+	public static final int INVENTORY_LEVEL1_INVENTORY_ITEM_1_AMOUNT = 3;
+	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_ITEM_2 = InventoryItemsEnum.Sword;
+	public static final int INVENTORY_LEVEL1_INVENTORY_ITEM_2_AMOUNT = 1;
+	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_ITEM_3 = InventoryItemsEnum.Helmet;
+	public static final int INVENTORY_LEVEL1_INVENTORY_ITEM_3_AMOUNT = 2;
+	
 	@SuppressWarnings("serial")
 	public static final ArrayList<Pair<InventoryItemsEnum,Integer>> INVENTORY_LEVEL1 = new ArrayList<Pair<InventoryItemsEnum,Integer>>(){
 		{
-			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Shild, 3));
-			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Sword, 1));
-			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Helmet, 2));
+			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
+					INVENTORY_LEVEL1_INVENTORY_ITEM_1, INVENTORY_LEVEL1_INVENTORY_ITEM_1_AMOUNT));
+			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
+					INVENTORY_LEVEL1_INVENTORY_ITEM_1, INVENTORY_LEVEL1_INVENTORY_ITEM_2_AMOUNT));
+			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
+					INVENTORY_LEVEL1_INVENTORY_ITEM_1, INVENTORY_LEVEL1_INVENTORY_ITEM_3_AMOUNT));
+
 		}
 	};
+	/***** Inventory *****/
 
+	/***** Win Inventory *****/
+	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_1 = InventoryItemsEnum.Shild;
+	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_1_AMOUNT = 3;
+	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_2 = InventoryItemsEnum.Sword;
+	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_2_AMOUNT = 1;
+	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_3 = InventoryItemsEnum.Helmet;
+	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_3_AMOUNT = 2;
 	@SuppressWarnings("serial")
 	public static final ArrayList<Pair<InventoryItemsEnum,Integer>> WIN_INVENTORY_LEVEL1 = new ArrayList<Pair<InventoryItemsEnum,Integer>>(){
 		{
-			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Sword, 1));
-			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Helmet, 2));
-			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Shild, 3));
+			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
+					INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_1, INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_1_AMOUNT));
+			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
+					INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_2, INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_2_AMOUNT));
+			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
+					INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_3, INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_3_AMOUNT));
 		}
 	};
+	/***** Win Inventory *****/
 
 	@Override
 	public void initiateConfigurations() {
-
-		// TODO
 		/*
 		List<Pair<InventoryItemsEnum, Integer>> items = randomizeInventoryItems(4);
 		setDefaultConfig(new MyConfiguration(items, items, items.size()));
 		 */
-
-		// TODO
-		setDefaultConfig(new MyConfiguration(INVENTORY_LEVEL1, WIN_INVENTORY_LEVEL1, INVENTORY_LEVEL1.size()));
+		setDefaultConfig(new MyConfiguration(INVENTORY_LEVEL1, WIN_INVENTORY_LEVEL1, INVENTORY_LEVEL1_INVENTORY_SIZE));
 
 		setCurrentConfig(getDefaultConfig());
 

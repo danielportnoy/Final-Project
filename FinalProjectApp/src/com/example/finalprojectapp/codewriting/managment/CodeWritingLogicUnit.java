@@ -20,6 +20,11 @@ import com.example.finalprojectapp.node.Scope;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
+/**
+ * Manages all code writing logical data and functions.
+ * @author daniel portnoy
+ *
+ */
 public class CodeWritingLogicUnit {
 
 	private List<CodeWritingLine> codeWritingLines;
@@ -59,6 +64,9 @@ public class CodeWritingLogicUnit {
 		return currentOptions;
 	}
 
+	/**
+	 * Rearranges and preparing the codeWritingLines list to be displayed.
+	 */
 	public void updateCodeWritingLines() {
 
 		codeWritingLines.clear();
@@ -73,6 +81,8 @@ public class CodeWritingLogicUnit {
 			if(!codePart.isNewline())
 				temp.getCodeWritingParts().add(codePart);
 			else{
+
+				// create new code line after newLine.
 				codeWritingLines.add(temp);
 				temp = new CodeWritingLine();
 			}
@@ -81,6 +91,9 @@ public class CodeWritingLogicUnit {
 		codeWritingLines.add(temp);
 	}
 
+	/**
+	 * Marks the current editable chosen Node on the screen.
+	 */
 	public void markEditable(){
 
 		if(currentMakerNode != null){
@@ -105,14 +118,25 @@ public class CodeWritingLogicUnit {
 		}
 	}
 
+	/**
+	 * Loads all of the possible options that their type is the same as the setters type. 
+	 * @param setter
+	 */
 	public void loadOptionsForSetter(Setter setter) {
 
+		// clear old options.
 		currentOptions.clear();
 
+		// load pre-defines static options.
 		loadStaticOptions(setter);
+		// load dynamic identifiers.
 		loadIdentifierOptions(setter);
 	}
 
+	/**
+	 * Loads the pre-defines static options of the scenario.
+	 * @param setter
+	 */
 	private void loadStaticOptions(Setter setter) {
 
 		for (Option option : LevelManager.getInstance().getScenario().getAvailableOptions()) {
@@ -123,15 +147,22 @@ public class CodeWritingLogicUnit {
 		}
 	}
 
+	/**
+	 * Loads the current dynamic possible identifiers.
+	 * @param setter
+	 */
 	private void loadIdentifierOptions(Setter setter) {
 
 		List<String> identifiers;
 
+		// Load boolean identifiers.
 		if(setter.possibleTypes().contains(Type.Bool)){
 			identifiers = Scope.getPrevBooleanIdentifiersRecursive(setter.getParent(), setter.getOrder());
 			for (String id : identifiers)
 				currentOptions.add(new BoolIdentifierOption(id));
 		}
+
+		// Load integer identifiers.
 		if(setter.possibleTypes().contains(Type.Int)){
 			identifiers = Scope.getPrevIntegerIdentifiersRecursive(setter.getParent(), setter.getOrder());
 			for (String id : identifiers)
@@ -139,16 +170,12 @@ public class CodeWritingLogicUnit {
 		}
 	}
 
-	/*public boolean isCodeLinesValid() {
-		for (CodeWritingPart codePart : LevelManager.getInstance().getRootNode().getCodeWritingParts())
-			if(codePart.getSetter()!=null && codePart.getSetter().isMandatory())
-				return false;
-
-		return true;
-	}*/
-
-	// TODO
+	/**
+	 * Loads the options for editing (delete)
+	 */
 	public void loadEditingOptions(){
+
+		// Add the expand button.
 		currentOptions.add(new Option() {
 
 			@Override
@@ -160,8 +187,11 @@ public class CodeWritingLogicUnit {
 					@Override
 					public void onClick(View v) {
 
+						// Set the makerNode to be the parent Node.
 						if(currentMakerNode.getParent() != null){
 							LevelManager.getInstance().setEditable(currentMakerNode.getParent());
+
+							// Update screen.
 							LevelManager.getInstance().refrashWritingScreen();
 						}
 					}
@@ -172,6 +202,7 @@ public class CodeWritingLogicUnit {
 			public boolean isType(Type type) {return false;}
 		});
 
+		// Add the contract button.
 		currentOptions.add(new Option() {
 
 			@Override
@@ -182,8 +213,12 @@ public class CodeWritingLogicUnit {
 
 					@Override
 					public void onClick(View v) {
+
+						// Set the makerNode to be the first child Node.
 						if(currentMakerNode.getFirstNode() != null){
 							LevelManager.getInstance().setEditable(currentMakerNode.getFirstNode());
+
+							// Update screen.
 							LevelManager.getInstance().refrashWritingScreen();
 						}
 					}
@@ -194,6 +229,7 @@ public class CodeWritingLogicUnit {
 			public boolean isType(Type type) {return false;}
 		});
 
+		// Add the delete button.
 		currentOptions.add(new Option() {
 
 			@Override
@@ -204,26 +240,39 @@ public class CodeWritingLogicUnit {
 
 					@Override
 					public void onClick(View v) {
+
+						// Delete a certain Node.
 						if(currentMakerNode.getParent() != null){
-							
+
+							// Delete only if the Node is erasable.
 							if(!currentMakerNode.isErasable()){
 								LevelManager.getInstance().setEditMode(false);
 								LevelManager.getInstance().setEditable(null);
+
+								// Update screen.
 								LevelManager.getInstance().refrashWritingScreen();
 							}
-							else if(currentMakerNode.getParent().DeleteChildNode(currentMakerNode)){							
+							else if(currentMakerNode.getParent().DeleteChildNode(currentMakerNode)){	
+
+								// After a successful delete, return to normal writing mode.
 								LevelManager.getInstance().setEditMode(false);
 								LevelManager.getInstance().setEditable(null);
+
+								// Update screen.
 								LevelManager.getInstance().refrashWritingScreen();
 							}
 							else
-								Toast.makeText(CONTEXT, "Failed - invalid removal attempt.", Toast.LENGTH_LONG).show(); // TODO	
+								Toast.makeText(CONTEXT, "Failed - invalid removal attempt.", Toast.LENGTH_LONG).show();
 						}
 						else{
+
+							// Delete entire code.
 							LevelManager.getInstance().clearCode();
 
 							LevelManager.getInstance().setEditMode(false);
 							LevelManager.getInstance().setEditable(null);
+
+							// Update screen.
 							LevelManager.getInstance().refrashWritingScreen();
 						}
 					}
@@ -235,6 +284,7 @@ public class CodeWritingLogicUnit {
 
 		});
 
+		// Add the cencel button.
 		currentOptions.add(new Option() {
 
 			@Override
@@ -246,8 +296,12 @@ public class CodeWritingLogicUnit {
 
 					@Override
 					public void onClick(View v) {
+
+						// Return to normal writing mode.
 						LevelManager.getInstance().setEditMode(false);
 						LevelManager.getInstance().setEditable(null);
+
+						// Update screen.
 						LevelManager.getInstance().refrashWritingScreen();
 					}
 				});

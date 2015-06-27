@@ -9,12 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Scope;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.node.concrete.vardec.IntVarDecNode;
 
+/**
+ * Option that represents a IntVarDec Node.
+ * @author daniel portnoy
+ *
+ */
 public class IntVarDecOption extends Option {
 
 	private AlertDialog dialog;
@@ -29,8 +35,10 @@ public class IntVarDecOption extends Option {
 	@Override
 	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
-		optionButton.setText("int var dec");	//TODO
+		// Set the button text.
+		optionButton.setText(Constants.INT_VAR_DEC_OPTION_TEXT);
 
+		// Set the button listener.
 		optionButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -39,6 +47,7 @@ public class IntVarDecOption extends Option {
 				// Creating and Building the Dialog 
 				AlertDialog.Builder builder = new AlertDialog.Builder(CONTEXT);
 
+				// Set the dialog view.
 				builder.setTitle("Select The Identifier Name");
 
 				final EditText INPUT = new EditText(CONTEXT);
@@ -58,13 +67,21 @@ public class IntVarDecOption extends Option {
 
 						String text = INPUT.getText().toString();
 
-						if(text.isEmpty() || !text.matches(reg))
-							Toast.makeText(CONTEXT, "Failed - not a valid identifier", Toast.LENGTH_LONG).show();
-						else if(Scope.getPrevIdentifiers(SETTER.getParent(), SETTER.getOrder()).contains(text))
-							Toast.makeText(CONTEXT, "Failed - identifier allready declared", Toast.LENGTH_LONG).show();
-						else if(Scope.getNextIdentifiers(SETTER.getParent(), SETTER.getOrder()).contains(text))
-							Toast.makeText(CONTEXT, "Failed - identifier declared afterwards", Toast.LENGTH_LONG).show();
+						if(text.isEmpty() || !text.matches(reg)){
+							// Check if the text was entered and if the characters are valid.
+							Toast.makeText(CONTEXT, "Failed - not a valid identifier.", Toast.LENGTH_LONG).show();
+						}
+						else if(Scope.getPrevIdentifiers(SETTER.getParent(), SETTER.getOrder()).contains(text)){
+							// Check if there is already defined identifier.
+							Toast.makeText(CONTEXT, "Failed - identifier allready declared.", Toast.LENGTH_LONG).show();
+						}
+						else if(Scope.getNextIdentifiers(SETTER.getParent(), SETTER.getOrder()).contains(text)){
+							// Check if there is defined identifier after.
+							Toast.makeText(CONTEXT, "Failed - identifier declared afterwards.", Toast.LENGTH_LONG).show();
+						}
 						else{
+							
+							// Create the BoolVarDecNode node.
 							SETTER.setChildNode(new IntVarDecNode(text));
 							SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 							SETTER.addToIntegerScope(text);

@@ -7,6 +7,11 @@ import com.example.finalprojectapp.coderunning.exception.MyException;
 import com.example.finalprojectapp.coderunning.snapshot.Snapshot;
 import com.example.finalprojectapp.scenario.configuration.Configuration;
 
+/**
+ * Test results of running the current code with a specific configuration of the system. 
+ * @author daniel portnoy
+ *
+ */
 public class TestCase {
 
 	private Configuration config;
@@ -14,6 +19,11 @@ public class TestCase {
 	
 	private MyException exception;
 
+	/** 
+	 * @param config - Current configuration of the system.
+	 * @param snapshots - System Snapshots created after running.
+	 * @param exception - Possible thrown exception. might be null.
+	 */
 	public TestCase(Configuration config, List<Snapshot> snapshots, MyException exception) {
 		this.config = config.copy();
 		this.snapshots = new ArrayList<Snapshot>();

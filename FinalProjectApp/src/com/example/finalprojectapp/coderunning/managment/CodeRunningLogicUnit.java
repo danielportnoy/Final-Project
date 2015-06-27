@@ -12,6 +12,11 @@ import com.example.finalprojectapp.coderunning.snapshot.Snapshot;
 import com.example.finalprojectapp.coderunning.varvalues.VarValues;
 import com.example.finalprojectapp.node.Node;
 
+/**
+ * Manages all code running logical data and functions.
+ * @author daniel portnoy
+ *
+ */
 public class CodeRunningLogicUnit {
 
 	private VarValues values;
@@ -30,6 +35,10 @@ public class CodeRunningLogicUnit {
 		valuesList = new ArrayList<Pair<String,String>>();
 	}
 
+	/**
+	 * Adds a Snapshot to the list. 
+	 * @param n - Node that takes the Snapshot.
+	 */
 	public void takeSnapshot(Node n){
 		snapshots.add(new Snapshot(n,values, LevelManager.getInstance().getScenario().takeSnapshot()));
 	}
@@ -64,6 +73,10 @@ public class CodeRunningLogicUnit {
 		return codeRunningLines;
 	}
 
+	/**
+	 * Rearranges and preparing the CodeRunningLines list to be displayed.
+	 * @param target - Node that need to be highlighted.
+	 */
 	public void updateCodeRunningLines(Node target) {
 
 		codeRunningLines.clear();
@@ -74,6 +87,8 @@ public class CodeRunningLogicUnit {
 			if(!codePart.isNewline())
 				temp.getCodeRunningParts().add(codePart);
 			else{
+				
+				// create new code line after newLine.
 				codeRunningLines.add(temp);
 				temp = new CodeRunningLine();
 			}
@@ -87,6 +102,10 @@ public class CodeRunningLogicUnit {
 		snapshots = new ArrayList<Snapshot>();
 	}
 
+	/**
+	 * Insert values in valuesList to this.valuesList
+	 * @param valuesList
+	 */
 	public void updateVarValues(List<Pair<String, String>> valuesList) {
 		this.valuesList.clear();
 		

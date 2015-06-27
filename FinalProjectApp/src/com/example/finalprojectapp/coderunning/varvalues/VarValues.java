@@ -9,20 +9,36 @@ import java.util.Map.Entry;
 
 import android.util.Pair;
 
+/**
+ * Holds the variable identifiers and their value.
+ * @author daniel portnoy
+ *
+ */
 public class VarValues {
 
 	private Map<String, Integer> intValues = new HashMap<String, Integer>();
 	private Map<String, Boolean> boolValues = new HashMap<String, Boolean>();
 
+	/**
+	 * Copies the other VarValues.
+	 * @param other
+	 */
 	public VarValues(VarValues other){
 		intValues.putAll(other.intValues);
 		boolValues.putAll(other.boolValues);
 	}
 
+	/**
+	 * Empty constructor.
+	 */
 	public VarValues() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Comparing to another VarValues object. 
+	 * @param other
+	 * @return if they are equal.
+	 */
 	public boolean equals(VarValues other) {
 
 		if (intValues.size() != other.intValues.size() || boolValues.size() != other.boolValues.size())
@@ -61,6 +77,10 @@ public class VarValues {
 		return boolValues;
 	}
 
+	/**
+	 * Removes the duplicated identifiers.
+	 * @param identifiers
+	 */
 	public void removeExtra(List<String> identifiers){
 
 		for(Iterator<Map.Entry<String, Integer>> it = intValues.entrySet().iterator(); it.hasNext(); ) {
@@ -76,6 +96,10 @@ public class VarValues {
 		}
 	}
 	
+	/**
+	 * Convert the VarValues into a list.
+	 * @return A list representation of the VarValues.
+	 */
 	public List<Pair<String, String>> toList(){
 		
 		List<Pair<String, String>> res = new ArrayList<Pair<String,String>>();

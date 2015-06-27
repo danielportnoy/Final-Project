@@ -4,9 +4,15 @@ import com.example.finalprojectapp.coderunning.snapshot.GameSnapshot;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.PixelFormat;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+/**
+ * A view to display the game on.
+ * @author daniel portnoy
+ *
+ */
 public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback{
 
 	private SurfaceHolder holder;
@@ -15,6 +21,12 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 	protected int fps;
 	protected boolean isAnimating;
 
+	/**
+	 * 
+	 * @param context - Context of the application.
+	 * @param fps - Frame per second rate.
+	 * @param isAnimating - Flag that tells if there need to be animation.
+	 */
 	public MySurfaceView(Context context, int fps, boolean isAnimating) {
 		super(context);
 
@@ -24,20 +36,25 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 		holder = getHolder();
 		holder.addCallback(this);
 
+		//make transtparant
+		setZOrderOnTop(true);
+		holder.setFormat(PixelFormat.TRANSPARENT);
+
 		gameLoopThread = new GameLoopThread(this);
 	}
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,int height) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 
+		// Re create the game loop thread.
 		if (gameLoopThread.getState() == Thread.State.TERMINATED) 
 			gameLoopThread = new GameLoopThread(this);
 
+		// Start the game loop thread.
 		gameLoopThread.setRunning(true);
 		gameLoopThread.start();
 
@@ -50,6 +67,7 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 		gameLoopThread.setRunning(false);
 
+		// Loop until the game loop is destroyed.
 		while (retry) {
 
 			try {
@@ -61,28 +79,50 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 		}
 	}
 
+	/**
+	 * Get the actual sleep time.
+	 * @return sleep time in milliseconds.
+	 */
 	private int sleepInMS(){
 		return Math.round(1000/fps);
 	}
 
-	// logical reset function
+	/**
+	 * Logical reset function
+	 */
 	public abstract void reset();
 
-	// graphic, positions and mathematics function
+	/**
+	 * Graphic, positions and mathematics function
+	 */
 	public abstract void preCalculation();
 
-	// logical update for  animated mode function
+	/**
+	 * Logical update for  animated mode function
+	 */
 	public abstract void updateAnimated();
 
-	// logical update for non animated mode function
+	/**
+	 * Logical update for non animated mode function
+	 */
 	public abstract void updateNonAnimated();
 
-	// graphic rendering of images
+	/**
+	 * Graphic rendering of images
+	 */
 	public abstract void render();
 
+	/**
+	 * Loads the current GameSnapshot object to the system.
+	 * @param gameSnapshot - GameSnapshot object.
+	 */
 	public abstract void loadSnapshot(GameSnapshot gameSnapshot);
 
-	// running thread
+	/**
+	 * A thread class that updates and re-draws the screen.
+	 * @author daniel portnoy
+	 *
+	 */
 	class GameLoopThread extends Thread{
 
 		private MySurfaceView mySurfaceView = null;
@@ -113,6 +153,8 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 
 				try {
 					synchronized (holder){
+						
+						// Update the logical side.
 
 						if(isAnimating)
 							mySurfaceView.updateAnimated();
@@ -120,6 +162,8 @@ public abstract class MySurfaceView extends SurfaceView implements SurfaceHolder
 							mySurfaceView.updateNonAnimated();
 
 						c = holder.lockCanvas();
+						
+						// Update the graphical side.
 						if(c!=null)
 							mySurfaceView.draw(c);
 					}

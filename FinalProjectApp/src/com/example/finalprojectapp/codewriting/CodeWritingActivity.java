@@ -24,6 +24,10 @@ public class CodeWritingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_code_writing);
 
+		/*
+		 * Initialize the logicUnit.
+		 * Adding the codeLine adapter to the logicUnit.
+		 */
 		CodeWritingLogicUnit logics = new CodeWritingLogicUnit();
 
 		ListView codeLines = (ListView)findViewById(R.id.listView_Writing_Code);
@@ -33,11 +37,16 @@ public class CodeWritingActivity extends Activity {
 		ListView options = (ListView)findViewById(R.id.listView_Options);
 		OptionsAdapter optionsAdapter = new OptionsAdapter(this, android.R.layout.simple_list_item_1, logics.getCurrentOptions());
 		options.setAdapter(optionsAdapter);	
-
+		
+		/*
+		 * Initialize the graphicUnit.
+		 * Adding the gameView to the graphicUnit.
+		 */
 		CodeWritingGraphicUnit graphics = new CodeWritingGraphicUnit(codeLinesAdapter, optionsAdapter);
 
 		CodeWritingManager manager = new CodeWritingManager(logics, graphics);
 
+		// registering the managers to the levelManager instance.
 		LevelManager.getInstance().registerCodeWritingManager(manager);
 
 		manager.refresh();
@@ -47,14 +56,20 @@ public class CodeWritingActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		// Set the normal writing mode.
 		LevelManager.getInstance().setEditMode(false);
 		LevelManager.getInstance().setEditable(null);
+		
+		// Update screen.
 		LevelManager.getInstance().refrashWritingScreen();
 	}
 
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
+		
+		//Back button was clicked - launch the level display activity.
 
 		Intent intent = new Intent(this, ScenraioDisplyActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -64,6 +79,7 @@ public class CodeWritingActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.code_screen_menu, menu);
 		return true;
@@ -72,16 +88,21 @@ public class CodeWritingActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		
 		case R.id.action_clear:
+			
 			// Clear option clicked.
 			LevelManager.getInstance().clearCode();
 			LevelManager.getInstance().refrashWritingScreen();
 			return true;
+			
 		case R.id.action_settings:
+			
 			// Settings option clicked.
 			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 			return true;
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}

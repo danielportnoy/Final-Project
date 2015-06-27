@@ -15,6 +15,11 @@ import com.example.finalprojectapp.graphic_utils.SpriteSheet;
 import com.example.finalprojectapp.scenario.archetype.InventoryScenarioArchetype.InventoryItemsEnum;
 import com.example.finalprojectapp.utilities.Logic_Utils;
 
+/**
+ * SpriteSheet that handles the InventoryScenarioArchetype board graphic visualization.
+ * @author daniel portnoy
+ *
+ */
 public class InventorySpriteSheet extends SpriteSheet {
 
 	private final int ITEM_WIDTH = 48, ITEM_HEIGHT = 48;
@@ -33,6 +38,12 @@ public class InventorySpriteSheet extends SpriteSheet {
 
 	private Bitmap[] inventorySlots;
 
+	/**
+	 * 
+	 * @param sourceBitmap - Bitmap of the SpriteSheet image.
+	 * @param inventorySlot - Bitmap of the Inventory slot image.
+	 * @param length - length of the inventory.
+	 */
 	public InventorySpriteSheet(Bitmap sourceBitmap, Bitmap inventorySlot, int length) {
 		super(sourceBitmap);
 
@@ -50,6 +61,10 @@ public class InventorySpriteSheet extends SpriteSheet {
 			inventorySlots[i] = inventorySlot;
 	}
 
+	/**
+	 * Merge the inventorySlots of bitmaps to a single image.
+	 * @return Bitmap.
+	 */
 	public Bitmap getInventoryBitmap() {
 
 		Bitmap.Config conf = Bitmap.Config.ARGB_8888;
@@ -64,6 +79,14 @@ public class InventorySpriteSheet extends SpriteSheet {
 		return inventory;
 	}
 
+	/**
+	 * Merge the inventory items of bitmaps to a single image.
+	 * @param inventory - Logical representation of the inventory.
+	 * @param amountWidthRelative
+	 * @param amountHeightRelative
+	 * @param amountTextRelative - amount text.
+	 * @return
+	 */
 	public List<Bitmap> getInventoryItemsBitmaps(List<Pair<InventoryItemsEnum,
 			Integer>> inventory, double amountWidthRelative, double amountHeightRelative,
 			double amountTextRelative) {
@@ -101,6 +124,17 @@ public class InventorySpriteSheet extends SpriteSheet {
 		return inventoryItems;
 	}
 
+	/**
+	 * Create a 'Tag' image to visualy represent the amount.
+	 * @param source - the item bitmap.
+	 * @param amount - the amount.
+	 * @param TagColor - the Tag background color.
+	 * @param TagStrokeColor - the Tag stroke color.
+	 * @param TextColor - the Tag Text color.
+	 * @param RelativWidthPos
+	 * @param RelativHeightPos
+	 * @param amountTextRelative
+	 */
 	private void addAmountTag(Bitmap source, String amount, int TagColor, int TagStrokeColor, int TextColor ,double RelativWidthPos
 			, double RelativHeightPos, double amountTextRelative){
 
@@ -113,15 +147,18 @@ public class InventorySpriteSheet extends SpriteSheet {
 		int amountSquareXPos = itemWidth - amountSquareWidth;
 		int amountSquareYPos = itemHeight - amountSquareHeight;
 
+		// Set amount background Paint object.
 		Paint amountSquarePaint = new Paint();
 		amountSquarePaint.setColor(TagColor);
 		amountSquarePaint.setStyle(Paint.Style.FILL);
 
+		// Set amount stroke Paint object.
 		Paint amountSquareStrokePaint = new Paint();
 		amountSquareStrokePaint.setColor(TagStrokeColor);
 		amountSquareStrokePaint.setStyle(Paint.Style.STROKE);
 		amountSquareStrokePaint.setStrokeWidth(STROKE_WIDTH/2);
 
+		// Set amount text Paint object.
 		Paint amountTextPaint = new Paint();
 		amountTextPaint.setColor(TextColor);
 

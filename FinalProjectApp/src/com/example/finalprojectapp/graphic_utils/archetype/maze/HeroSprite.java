@@ -4,8 +4,18 @@ import android.graphics.Bitmap;
 
 import com.example.finalprojectapp.graphic_utils.Sprite;
 
+/**
+ * Hold the data and functions needed to handle a hero animation image. 
+ * @author daniel portnoy
+ *
+ */
 public class HeroSprite extends Sprite {
 
+	/**
+	 * Represents the hero direction.
+	 * @author daniel portnoy
+	 *
+	 */
 	public static enum heroDirection{	
 		Stand,
 		Up,
@@ -18,6 +28,13 @@ public class HeroSprite extends Sprite {
 
 	private heroDirection direction;
 
+	/**
+	 * @param sourceBitmap - Bitmap of the hero animation sprite image.
+	 * @param sourceRows - Number of rows in the sprite.
+	 * @param sourceCols - Number of columns in the sprite.
+	 * @param currentRow - Current Y position to show.
+	 * @param currentCol - Current X position to show.
+	 */
 	public HeroSprite(Bitmap sourceBitmap, int sourceRows, int sourceCols,int currentRow, int currentCol) {
 		super(sourceBitmap, sourceRows, sourceCols, currentRow, currentCol);
 		reset();		
@@ -27,6 +44,9 @@ public class HeroSprite extends Sprite {
 		return sourceCols;
 	}
 
+	/**
+	 * Resets the data.
+	 */
 	public void reset() {
 		setDirection(heroDirection.Stand);
 		currentCol = 0;

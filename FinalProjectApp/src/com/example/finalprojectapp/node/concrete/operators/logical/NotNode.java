@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.coderunning.exception.MyException;
@@ -14,6 +15,11 @@ import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
+/**
+ * Holds the Logical data and functionality of a Not 'Code part'.
+ * @author daniel portnoy
+ *
+ */
 public class NotNode extends Node {
 
 	private Node innerNode;
@@ -48,13 +54,18 @@ public class NotNode extends Node {
 
 		Set<String> used = new HashSet<String>();
 
+		// Find any used identifiers after childNode.
 		if(childNode.equals(innerNode))
 			used = new HashSet<String>();
 
+		// Find any declared identifiers in childNode.
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
+		// Check if deletion is valid.
 		if(intersection.isEmpty()){
+			
+			// delete the childNode.
 			if(childNode.equals(innerNode)){
 				removeFromScope(innerNode);
 				innerNode = null;
@@ -98,8 +109,10 @@ public class NotNode extends Node {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 		
-		res.add(new CodeWritingPart(false, false, "! ", null, this));
+		// Add the not sign (!).
+		res.add(new CodeWritingPart(false, false, Constants.NOT_CODE_TEXT, null, this));
 		
+		// Add the inner Node or add '+' setter.
 		if(innerNode == null)
 			res.add(new CodeWritingPart(false, false, null, new InnerNodeSetter(this), this));
 		else
@@ -117,8 +130,10 @@ public class NotNode extends Node {
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, "! "));
+		// Add the not sign (!).
+		res.add(new CodeRunningPart(false, false,isHighlighted, Constants.NOT_CODE_TEXT));
 		
+		// Add the inner Node.
 		res.addAll(innerNode.getCodeRunningParts(target, isHighlighted));
 
 		if(!isHideSemicolon())
@@ -133,12 +148,17 @@ public class NotNode extends Node {
 		return new ReturnObject(!innerNode.run().getBoolValue());
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the Inner Node button for a Assignment 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class InnerNodeSetter extends Setter{
 
 		final static int ORDER = 0;
 
 		public InnerNodeSetter(Node parent) {
-			super(/*"< bool expr >", */true, parent, ORDER);	// TODO	
+			super(true, parent, ORDER);
 		}
 
 		@Override

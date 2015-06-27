@@ -10,6 +10,11 @@ import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.node.concrete.identifier.BoolIdentifier;
 
+/**
+ * Option that represents a Boolean Identifier Node.
+ * @author daniel portnoy
+ *
+ */
 public class BoolIdentifierOption extends Option {
 
 	private String name;
@@ -26,10 +31,10 @@ public class BoolIdentifierOption extends Option {
 	@Override
 	public void setButton(Context context, Button optionButton, final Setter SETTER) {
 
-		optionButton.setText(name);	//TODO
+		// Set the button text.
+		optionButton.setText(name);
 
-		//optionButton.setBackgroundColor(Color.LTGRAY); //TODO
-
+		// Set the button listener.
 		optionButton.setOnClickListener(new OnClickListener() {
 
 			@Override

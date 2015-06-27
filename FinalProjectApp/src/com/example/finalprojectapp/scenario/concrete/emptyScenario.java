@@ -11,39 +11,32 @@ public class emptyScenario extends Scenario {
 
 	@Override
 	public void initiateConfigurations() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void initiateAvailableOptions() {
-		// TODO Auto-generated method stub	
 	}
 
 	@Override
 	public void initiateLevelText() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public GameSnapshot takeSnapshot() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public MySurfaceView generateGameView(Context context, int fps,boolean isAnimation) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean checkWin(Configuration config, GameSnapshot gameSnapshot) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

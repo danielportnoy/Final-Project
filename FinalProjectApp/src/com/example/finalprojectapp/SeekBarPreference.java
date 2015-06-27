@@ -12,6 +12,11 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+/**
+ * Custom Preference for FPS\CPS rates.
+ * @author daniel portnoy
+ *
+ */
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
 
 	private int mDefaultValue;

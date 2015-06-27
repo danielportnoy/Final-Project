@@ -22,10 +22,17 @@ import com.example.finalprojectapp.codewriting.option.concrete.operators.relatio
 import com.example.finalprojectapp.codewriting.option.concrete.vardec.*;*/
 import com.example.finalprojectapp.scenario.archetype.MazeScenarioArchetype;
 
+/**
+ * Instance of the Maze game scenario - Level 5.
+ * @author daniel portnoy
+ *
+ */
 public class Maze_Wing_Level_5 extends MazeScenarioArchetype {
 
+	// hint text.
 	public static final String MAZE_LEVEL5_TEXT = "";
 
+	// Specific definitions.
 	@SuppressWarnings("serial")
 	public static final List<List<BoardTilesTypesEnum>> MAZE_LEVEL5_BOARD_TILES = new ArrayList<List<BoardTilesTypesEnum>>(){
 		{	
@@ -46,10 +53,22 @@ public class Maze_Wing_Level_5 extends MazeScenarioArchetype {
 		}
 	};
 
+	public static final int MAZE_LEVEL5_ROWS = 4;
+	public static final int MAZE_LEVEL5_COLS = 4;
+	public static final int MAZE_LEVEL5_HERO_X_POS = 0;
+	public static final int MAZE_LEVEL5_HERO_Y_POS = 0;
+	public static final int MAZE_LEVEL5_GOAL_X_POS = 3;
+	public static final int MAZE_LEVEL5_GOAL_Y_POS = 3;
+
 	@Override
 	public void initiateConfigurations() {
 
-		setDefaultConfig(new MyConfiguration(4, 4, 0, 0, 3, 3, MAZE_LEVEL5_BOARD_TILES, MAZE_LEVEL5_FIRE_TILES));
+		setDefaultConfig(new MyConfiguration(
+				MAZE_LEVEL5_ROWS, MAZE_LEVEL5_COLS,
+				MAZE_LEVEL5_HERO_X_POS, MAZE_LEVEL5_HERO_Y_POS,
+				MAZE_LEVEL5_GOAL_X_POS, MAZE_LEVEL5_GOAL_Y_POS,
+				MAZE_LEVEL5_BOARD_TILES, MAZE_LEVEL5_FIRE_TILES));
+
 		setCurrentConfig(getDefaultConfig());
 
 		addToConfigs(getDefaultConfig());	
@@ -62,20 +81,20 @@ public class Maze_Wing_Level_5 extends MazeScenarioArchetype {
 		addToAvailableOptions(new GoLeftOption());
 		addToAvailableOptions(new GoUpOption());
 		addToAvailableOptions(new GoDownOption());
-		
+
 		addToAvailableOptions(new NumberOfRowsOption());
 		addToAvailableOptions(new NumberOfColumnsOption());
-		
+
 		addToAvailableOptions(new ForOption());
 		addToAvailableOptions(new IntVarDecOption());
 		addToAvailableOptions(new IncrementOption());
-		
+
 		addToAvailableOptions(new GreaterThanOption());
 		addToAvailableOptions(new LessThanOption());
-		
+
 		addToAvailableOptions(new NumberOption());
 		addToAvailableOptions(new BlockOption());
-		
+
 		addToAvailableOptions(new AdditionOption());
 		addToAvailableOptions(new SubtractionOption());
 	}

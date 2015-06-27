@@ -1,5 +1,6 @@
 package com.example.finalprojectapp.gamescreen;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
 import com.example.finalprojectapp.activities.SettingsActivity;
@@ -28,11 +29,17 @@ public class GameScreenActivity extends FragmentActivity {
 		return pagerAdapter;
 	}
 
+	/**
+	 * Removes the 'Run' tab from the action bar.
+	 */
 	public void removeRunTab() {
 		if(getActionBar().getTabCount() == 3)
 			getActionBar().removeTab(tab_Run);
 	}
 
+	/**
+	 * Add the 'Run' tab from the action bar.
+	 */
 	public void addRunTab() {
 		if(getActionBar().getTabCount() != 3)
 			getActionBar().addTab(tab_Run);
@@ -47,16 +54,22 @@ public class GameScreenActivity extends FragmentActivity {
 
 		setContentView(R.layout.activity_game_screen);
 
+		/*
+		 * Initialize the ViewPager.
+		 * Initialize the PagerAdapter.
+		 */
 		viewPager = (ViewPager) findViewById(R.id.pager);
 
 		pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
 		viewPager.setAdapter(pagerAdapter);
 
+		
+		// Set up the ActionBar.
 		final ActionBar ACTION_BAR = getActionBar();
-		
+
 		//actionBar.hide(); TODO
-		
+
 		ACTION_BAR.setDisplayShowHomeEnabled(false);             
 		ACTION_BAR.setDisplayShowTitleEnabled(false);
 
@@ -89,9 +102,10 @@ public class GameScreenActivity extends FragmentActivity {
 			}
 		};
 
-		tab_Level = ACTION_BAR.newTab().setText("Level").setTabListener(tabListener);
-		tab_Code = ACTION_BAR.newTab().setText("Code").setTabListener(tabListener);
-		tab_Run = ACTION_BAR.newTab().setText("Run").setTabListener(tabListener);
+		// Set the tabs texts and listeners.
+		tab_Level = ACTION_BAR.newTab().setText(Constants.LEVEL_TAB_TEXT).setTabListener(tabListener);
+		tab_Code = ACTION_BAR.newTab().setText(Constants.CODE_TAB_TEXT).setTabListener(tabListener);
+		tab_Run = ACTION_BAR.newTab().setText(Constants.RUN_TAB_TEXT).setTabListener(tabListener);
 
 		// Add 3 tabs, specifying the tab's text and TabListener
 		ACTION_BAR.addTab(tab_Level);
@@ -114,6 +128,7 @@ public class GameScreenActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.game_screen, menu);
 		return true;
@@ -122,11 +137,14 @@ public class GameScreenActivity extends FragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+
 		case R.id.action_settings:
-			// Settings option clicked.
+
+			//Settings option was clicked - launch settings activity.
 			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -134,7 +152,6 @@ public class GameScreenActivity extends FragmentActivity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 
 		if(!firstResume)

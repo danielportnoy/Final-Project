@@ -19,9 +19,6 @@ import android.view.View.OnClickListener;
 
 public class InventoryWingActivity extends Activity implements OnClickListener{
 
-	/*private SharedPreferences.Editor editor;
-	private SharedPreferences settings;*/
-
 	private LevelManager levelManager = LevelManager.getInstance();
 	private SharedPreferences SP;
 
@@ -30,15 +27,13 @@ public class InventoryWingActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inventory_wing);
 
-		/*settings = 	getSharedPreferences(Constants.SHARED_PREFERANCES, MODE_PRIVATE);
-		editor = settings.edit();*/
-
+		// Retrieve all preferences.
 		SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.inventory_wing, menu);
 		return true;
@@ -47,11 +42,14 @@ public class InventoryWingActivity extends Activity implements OnClickListener{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_settings:
-			// Settings option clicked.
+
+		case R.id.action_settings:		
+
+			//Settings option was clicked - launch settings activity.
 			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -65,6 +63,12 @@ public class InventoryWingActivity extends Activity implements OnClickListener{
 		Scenario scenario = null;
 
 		levelManager.reset();
+
+		/*
+		 *  If swipe mode option is:
+		 *  	ON - use fragments in GameScreenActivity.
+		 *  	OFF - use the regular display. 
+		 */
 		
 		boolean isSwipeMode = SP.getBoolean(Constants.SWIPE_KEY,Constants.DEFAULT_SWIPE);
 
@@ -73,18 +77,21 @@ public class InventoryWingActivity extends Activity implements OnClickListener{
 		else
 			intent = new Intent(this, ScenraioDisplyActivity.class);
 
+		//Set the scenario in according to the button that was clicked.
+		
 		if(v.getId() ==  R.id.button_inventory_wing_LEVEL1)
 			scenario = new Inventory_Wing_Level_1();
-	
+
 		levelManager.loadScenario(scenario);
 
 		startActivity(intent);
-		//finish(); //TODO 
 	}
 
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
+		
+		//Back button was clicked - launch wingPicking activity.
 
 		Intent intent = new Intent(this, WingPickingActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.coderunning.exception.MyException;
@@ -35,7 +36,7 @@ public class NotEqualsNode extends Node {
 
 		return res;
 	}
-	
+
 	@Override
 	public boolean addChild(Node child, int order) {
 
@@ -55,15 +56,20 @@ public class NotEqualsNode extends Node {
 
 		Set<String> used = new HashSet<String>();
 
-		if(childNode.equals(left) && right!=null)
+		// Find any used identifiers after childNode.
+		if(childNode.equals(left) && right != null)
 			used.addAll(right.getUsedIdentifiers());
 		else if(childNode.equals(right))
 			used = new HashSet<String>();
 
+		// Find any declared identifiers in childNode.
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
+		// Check if deletion is valid.
 		if(intersection.isEmpty()){
+
+			// delete the childNode.
 			if(childNode.equals(left)){
 				removeFromScope(left);
 				left = null;
@@ -116,13 +122,16 @@ public class NotEqualsNode extends Node {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
+		// Add the left Node or add '+' setter.
 		if(left == null)
 			res.add(new CodeWritingPart(false, false, null, new LeftSetter(this), this));
-		else			
+		else
 			res.addAll(left.getCodeWritingParts());
 
-		res.add(new CodeWritingPart(false, false, "!=", null, this));
+		// Add the not equals sign (!=).
+		res.add(new CodeWritingPart(false, false, Constants.NOT_EQUALS_CODE_TEXT, null, this));
 
+		// Add the right Node or add '+' setter.
 		if(right == null)
 			res.add(new CodeWritingPart(false, false, null, new RightSetter(this), this));
 		else			
@@ -132,19 +141,23 @@ public class NotEqualsNode extends Node {
 	}
 
 	@Override
-	public List<CodeRunningPart> getCodeRunningParts(Node target,boolean isHighlighted) {
+	public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
 
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
+		// Add the left Node.
 		res.addAll(left.getCodeRunningParts(target, isHighlighted));
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, "!="));
+		// Add the not equals sign (!=).
+		res.add(new CodeRunningPart(false, false,isHighlighted, Constants.NOT_EQUALS_CODE_TEXT));
 
+		// Add the right Node.
 		res.addAll(right.getCodeRunningParts(target, isHighlighted));
 
 		return res;
 	}
+
 
 	@Override
 	public ReturnObject run() throws MyException {
@@ -156,15 +169,20 @@ public class NotEqualsNode extends Node {
 		else if(left_type == Type.Int && right_type == Type.Int)
 			return new ReturnObject(left.run().getIntValue() != right.run().getIntValue());
 
-		return new ReturnObject();	// TODO
+		return new ReturnObject();
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the left button for a NotEquals 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class LeftSetter extends Setter{
 
 		final static int ORDER = 0;
 
-		public LeftSetter(Node parent) {	// TODO	
-			super(/*"< expr >", */true, parent, ORDER);	
+		public LeftSetter(Node parent) {
+			super(true, parent, ORDER);	
 		}
 
 		@Override
@@ -191,12 +209,17 @@ public class NotEqualsNode extends Node {
 		}
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the right button for a NotEquals 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class RightSetter extends Setter{
 
 		final static int ORDER = 1;
 
-		public RightSetter(Node parent) {	// TODO	
-			super(/*"< expr >", */true, parent, ORDER);	
+		public RightSetter(Node parent) {
+			super(true, parent, ORDER);	
 		}
 
 		@Override

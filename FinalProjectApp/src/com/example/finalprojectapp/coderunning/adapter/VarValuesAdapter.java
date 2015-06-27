@@ -12,10 +12,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * Bridges between the VarValues data and the display.
+ * @author daniel portnoy
+ *
+ */
 public class VarValuesAdapter extends ArrayAdapter<Pair<String, String>>{
 
 	private Context context = null;
 
+	/**
+	 * 
+	 * @param context
+	 * @param resource
+	 * @param VarValuesList
+	 */
 	public VarValuesAdapter(Context context, int resource, List<Pair<String, String>> VarValuesList) {
 		super(context, resource, VarValuesList);
 		this.context = context;
@@ -28,6 +39,8 @@ public class VarValuesAdapter extends ArrayAdapter<Pair<String, String>>{
 		TextView textView_Var_Value = null;
 		View view = null;
 
+		// Inflating the VarValue item.
+
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = inflater.inflate(R.layout.var_value_item, null);
@@ -37,6 +50,8 @@ public class VarValuesAdapter extends ArrayAdapter<Pair<String, String>>{
 
 		textView_Var_Name = (TextView) view.findViewById(R.id.textView_Var_Name);
 		textView_Var_Value = (TextView) view.findViewById(R.id.textView_Var_Value);
+		
+		//Set the text and its appearance.
 
 		Pair<String, String> item = getItem(position);
 

@@ -13,6 +13,11 @@ import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
+/**
+ * Holds the Logical data and functionality of a Block 'Code part'.
+ * @author daniel portnoy
+ *
+ */
 public class BlockNode extends Node {
 
 	private List<Node> innerNodes;
@@ -21,15 +26,11 @@ public class BlockNode extends Node {
 		innerNodes = new ArrayList<Node>();
 		setType(Type.Statement);
 	}
-	
+
 	@Override
 	public boolean addChild(Node child, int order) {
-		// TODO
-		/*if(order > getChildNodes().size() - 1)
-			return false;
-		else*/
-			innerNodes.add(order, child);
-		
+
+		innerNodes.add(order, child);	
 		return true;
 	}
 
@@ -42,18 +43,24 @@ public class BlockNode extends Node {
 	public boolean DeleteChildNode(Node childNode) {
 		int startingPosition = 0;
 
+		// Find the childNode position.
 		while(!childNode.equals(innerNodes.get(startingPosition)))
 			startingPosition++;
 
 		Set<String> used = new HashSet<String>();
 
+		// Find any used identifiers after childNode.
 		for (int i = startingPosition + 1; i < innerNodes.size() ; i++)
 			used.addAll(innerNodes.get(i).getUsedIdentifiers());
 
+		// Find any declared identifiers in childNode.
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
+		// Check if deletion is valid.
 		if(intersection.isEmpty()){
+
+			// delete the childNode.
 			removeFromScope(innerNodes.get(startingPosition));
 			innerNodes.remove(startingPosition);
 			return true;
@@ -100,18 +107,22 @@ public class BlockNode extends Node {
 		res.add(new CodeWritingPart(false, false, "{", null, this));
 		res.add(new CodeWritingPart(false, true, null, null, this));
 
+		// Add the '+' setters and existing Nodes.
 		for (int i = 0; i < innerNodes.size(); i++) {
 
 			Node innerNode = innerNodes.get(i);
 
+			// Add '+' setter.
 			res.add(new CodeWritingPart(true, false, null, null, this));
 			res.add(new CodeWritingPart(false, false, null, new BlockSetter(this, i), this));	// add more 
 			res.add(new CodeWritingPart(false, true, null, null, this));
 
+			// Add existing Node.
 			res.addAll(CodeWritingPart.tabber(innerNode.getCodeWritingParts()));
 			res.add(new CodeWritingPart(false, true, null, null, this));
 		}
 
+		// Add the last '+' setter.
 		res.add(new CodeWritingPart(true, false, null, null, this));
 		res.add(new CodeWritingPart(false, false, null, new BlockSetter(this, innerNodes.size()), this));	// add more 
 
@@ -130,6 +141,7 @@ public class BlockNode extends Node {
 		res.add(new CodeRunningPart(false, false, isHighlighted, "{"));
 		res.add(new CodeRunningPart(false, true, isHighlighted, null));
 
+		// Add existing Nodes.
 		for (Node innerNode : innerNodes){
 			res.addAll(CodeRunningPart.tabber(innerNode.getCodeRunningParts(target,isHighlighted)));
 			res.add(new CodeRunningPart(false, true,isHighlighted, null));
@@ -148,13 +160,18 @@ public class BlockNode extends Node {
 			n.run();
 		}
 
-		return new ReturnObject();	// TODO
+		return new ReturnObject();
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of a 'Add (+)' button for a Block 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class BlockSetter extends Setter{
 
 		public BlockSetter(Node parent, int order) {
-			super(/*"+",*/false,parent,order);	//TODO
+			super(false,parent,order);
 		}
 
 		@Override

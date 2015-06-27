@@ -55,7 +55,7 @@ public class Level1 extends Scenario {
 	@Override
 	public void initiateConfigurations() {
 
-		setDefaultConfig(new MyConfiguration(3, 6, 0, 1, 5, 1));	// TODO
+		setDefaultConfig(new MyConfiguration(3, 6, 0, 1, 5, 1));
 		setCurrentConfig(getDefaultConfig());
 
 		addToConfigs(getDefaultConfig());	
@@ -78,7 +78,7 @@ public class Level1 extends Scenario {
 		addToAvailableOptions(new ForOption());
 
 		// literal
-		//addToAvailableOptions(new LiteralOption());	// TODO
+		//addToAvailableOptions(new LiteralOption());
 		addToAvailableOptions(new NumberOption());
 		addToAvailableOptions(new TrueOption());
 		addToAvailableOptions(new FalseOption());
@@ -93,7 +93,7 @@ public class Level1 extends Scenario {
 		
 		addToAvailableOptions(new IncrementOption());
 
-		//custom options	// TODO
+		//custom options
 		addToAvailableOptions(new GoRightOption());
 	}
 
@@ -290,7 +290,7 @@ public class Level1 extends Scenario {
 		@Override
 		public void setButton(Context context, Button optionButton,final Setter setter) {
 
-			optionButton.setText("goRight");	//TODO
+			optionButton.setText("goRight");
 
 			optionButton.setOnClickListener(new OnClickListener() {
 
@@ -431,7 +431,7 @@ public class Level1 extends Scenario {
 
 			render();
 
-			canvas.drawColor(Color.WHITE);		// TODO
+			canvas.drawColor(Color.WHITE);
 
 			canvas.drawBitmap(boardBitmap, boardXpos, boardYpos, null);
 			canvas.drawBitmap(goalCurrentBitmap, goalXpos, goalYpos, null);

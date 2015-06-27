@@ -10,6 +10,11 @@ import android.util.DisplayMetrics;
 import com.example.finalprojectapp.graphic_utils.SpriteSheet;
 import com.example.finalprojectapp.scenario.archetype.MazeScenarioArchetype.BoardTilesTypesEnum;
 
+/**
+ * SpriteSheet that handles the MazeScenarioArchetype board graphic visualization.
+ * @author daniel portnoy
+ *
+ */
 public class BoardSpriteSheet extends SpriteSheet{
 
 	private final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
@@ -22,7 +27,13 @@ public class BoardSpriteSheet extends SpriteSheet{
 
 	private List<List<Bitmap>> boardMatrix;
 
-
+	/**
+	 * 
+	 * @param rows - Number of rows in the sprite.
+	 * @param columns - Number of columns in the sprite.
+	 * @param boardMap - Bitmap of the SpriteSheet image.
+	 * @param boardTiles - Logical representation of the board.
+	 */
 	public BoardSpriteSheet(int rows, int columns, Bitmap boardMap, List<List<BoardTilesTypesEnum>> boardTiles) {
 		super(boardMap);
 
@@ -34,6 +45,8 @@ public class BoardSpriteSheet extends SpriteSheet{
 
 		boardMatrix = new ArrayList<List<Bitmap>>();
 
+		// Load the bitmaps to the boardMatrix.
+		
 		for (int i = 0; i < rows; i++) {
 			
 			List<Bitmap> bitmapRow = new ArrayList<Bitmap>();
@@ -59,6 +72,10 @@ public class BoardSpriteSheet extends SpriteSheet{
 		}
 	}
 
+	/**
+	 * Merge the boardMatrix of bitmaps to a single image.
+	 * @return Bitmap.
+	 */
 	public Bitmap getBitmap() {
 
 		Bitmap.Config conf = Bitmap.Config.ARGB_8888;

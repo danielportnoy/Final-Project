@@ -37,6 +37,7 @@ import com.example.finalprojectapp.utilities.Logic_Utils;
 
 public abstract class InventoryScenarioArchetype extends Scenario {
 
+	// Scenario specific definitions.
 	public static final String INDEX_OUT_OF_BOUND_EXCEPTION_TEXT = "Exception : The index is out of range.";
 
 	public static enum InventoryItemsEnum{
@@ -45,23 +46,35 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 		Shild	
 	}
 
+	// Scenario dynamic parts.
 	private List<Pair<InventoryItemsEnum, Integer>> inventory;
 
+	/**
+	 * Randomizes a inventory set.
+	 * @param size - Number of items in the inventory
+	 * @return Logical representation of the inventory.
+	 */
 	public List<Pair<InventoryItemsEnum, Integer>> randomizeInventoryItems(int size){
 
+		// Create a new logical nventory.
 		List<Pair<InventoryItemsEnum, Integer>> randomInventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
 
 		List<Integer> usedAmounts = new ArrayList<Integer>();
 
 		for (int i = 0; i < size; i++) {
 
+			// Randomize an item.
 			int randomNumItem = Logic_Utils.randInt(1 , InventoryItemsEnum.values().length);
 
+			// Randomize an amount.
 			int randomNumAmount = Logic_Utils.randInt(1 , 99);
 
+			// remove duplications in the amount.
 			while (usedAmounts.contains(randomNumAmount))
 				randomNumAmount = Logic_Utils.randInt(1 , 99);
 
+
+			// Add the item to the inventory.
 			usedAmounts.add(randomNumAmount);
 
 			switch (randomNumItem) {
@@ -139,6 +152,11 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 
 	/********** config class **********/
+	/**
+	 * Inventory scenario specific Configuration object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class MyConfiguration extends Configuration{
 
 		private List<Pair<InventoryItemsEnum, Integer>> startInventory;
@@ -152,11 +170,13 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 				List<Pair<InventoryItemsEnum, Integer>> winInventory,
 				int length) {
 
+			// Copy items to the startInventory.
 			this.startInventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
 
 			for (Pair<InventoryItemsEnum, Integer> item : startInventory)
 				this.startInventory.add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(item.first, item.second));
 
+			// Copy items to the winInventory.
 			this.winInventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
 
 			for (Pair<InventoryItemsEnum, Integer> item : winInventory)
@@ -187,12 +207,18 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 
 	/********** snapshot class **********/
+	/**
+	 * Inventory scenario specific GameSnapshot object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class MyGameSnapshot extends GameSnapshot{
 
 		private List<Pair<InventoryItemsEnum, Integer>> inventory;
 
 		public MyGameSnapshot(MyGameSnapshot other) {
 
+			// Copy items to the inventory.
 			this.inventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
 
 			for (Pair<InventoryItemsEnum, Integer> item : other.inventory)
@@ -201,6 +227,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 		public MyGameSnapshot(List<Pair<InventoryItemsEnum, Integer>> inventory) {
 
+			// Copy items to the inventory.
 			this.inventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
 
 			for (Pair<InventoryItemsEnum, Integer> item : inventory)
@@ -230,6 +257,11 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 
 	/********** special nodes class's **********/
+	/**
+	 * Inventory scenario specific Node object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class swapNode extends Node{
 
 		private Node left;
@@ -396,7 +428,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			final static int ORDER = 0;
 
 			public LeftSetter(Node parent) {
-				super(/*"< int expr >", */true, parent, ORDER);	// TODO	
+				super(true, parent, ORDER);	
 			}
 
 			@Override
@@ -420,7 +452,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			final static int ORDER = 1;
 
 			public RightSetter(Node parent) {
-				super(/*"< int expr >", */true, parent, ORDER);	// TODO
+				super(true, parent, ORDER);
 
 			}
 
@@ -444,6 +476,11 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 
 	/********** special option class's **********/
+	/**
+	 * Inventory scenario specific Option object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class SwapOption extends Option{
 
 		public SwapOption() {}
@@ -456,7 +493,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 		@Override
 		public void setButton(Context context, Button optionButton, final Setter SETTER) {
 
-			optionButton.setText("swap");	//TODO
+			optionButton.setText("swap");
 
 			optionButton.setOnClickListener(new OnClickListener() {
 
@@ -473,30 +510,32 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 
 	/********** SurfaceView class **********/
+	/**
+	 * Inventory scenario specific MySurfaceView object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class SurfaceView_Inventory extends MySurfaceView {
 
+		// Specific definitions.
 		private static final int SWAP_CLIMB_NUM_OF_FRAMES = 10;
 		private static final int SWAP_MOVE_NUM_OF_FRAMES = 20;
-
 		private static final double SWING_HEIGHT_AMPLITUDE_RELATIVE = 0.30;
-
 		private static final double ITEM_AMOUNT_RELATIVE_X_POS = 0.65, ITEM_AMOUNT_RELATIVE_Y_POS = 0.65;
 		private static final double ITEM_AMOUNT_RELATIVE_TEXT_SIZE = 0.6;
-
 		private static final double ITEM_SCALE_HEIGHT_PERCENT = 0.5, ITEM_SCALE_WIDTH_PERCENT = 0.5;
 
 		private boolean isStillAnimating = false;
 
+		// Inventory related
 		private InventorySpriteSheet inventorySprite;
-
 		private int inventoryXpos, inventoryYpos;
 
 		private Bitmap inventoryBitmap;
 
+		// Inventory items related
 		private List<Item> items;
-
 		private Item SwapingItemLeft,SwapingItemRight;
-
 		private List<Pair<InventoryItemsEnum, Integer>> currentInventory;
 
 		private int currentSwapTopBottomFrame, currentSwapLeftRightFrame; 
@@ -512,10 +551,8 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 		private int shiftItemX;
 		private int shiftItemY;
 		private int swingHeightAmplitude;
-
 		private int swapHeightDistance;
 		private int swapHeightInterval;
-
 		private int swapWidthDistance;
 		private int swapWidthInterval;
 
@@ -524,6 +561,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
 
+			// Initialize inventorySprite.
 			inventorySprite = new InventorySpriteSheet(
 					BitmapFactory.decodeResource(
 							getResources(),
@@ -549,10 +587,13 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 			render();
 
-			canvas.drawColor(Color.WHITE);		// TODO
+			// fill background.
+			canvas.drawColor(Color.WHITE);
 
+			// draw inventory.
 			canvas.drawBitmap(inventoryBitmap, inventoryXpos, inventoryYpos, null);
 
+			// draw inventory items.
 			for (int i = 0; i < items.size(); i++)
 				canvas.drawBitmap(items.get(i).bitmap , items.get(i).itemXpos, items.get(i).itemYpos, null);
 
@@ -583,6 +624,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 		@Override
 		public void preCalculation() {
 
+			/***** Calculate screen and board positions and measurements *****/
 			screenWidth = getWidth();
 			screenHeight = getHeight();
 
@@ -604,34 +646,37 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			}
 
 			int XShift = (screenWidth - inventoryScaleWidth)/2;
-			int YShift = (screenHeight - inventoryScaleHeight)/2;
+			int YShift = (screenHeight - inventoryScaleHeight)/2;	
 
 			inventoryXpos = XShift;
 			inventoryYpos = YShift;
+			/***** Calculate screen and board positions and measurements *****/
 
 			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
 
 			slotHeight = inventoryScaleHeight;
 			slotWidth = inventoryScaleWidth  / currentConfig.length;
 
+			/***** Calculate item positions and measurements *****/
 			itemScaleWidth = (int) (slotWidth * ITEM_SCALE_WIDTH_PERCENT);
 			itemScaleHeight = (int) (slotHeight * ITEM_SCALE_HEIGHT_PERCENT);
 
 			shiftItemX = (slotWidth - itemScaleWidth)/2;
 			shiftItemY = (slotHeight - itemScaleHeight)/2;
+			/***** Calculate item positions and measurements *****/
 
-			/* CLIMB */
+			/***** Calculate Climb positions and measurements *****/
 			swapHeightDistance = slotHeight;
 			//swapBottomHeightDistance = screenHeight - (inventoryYpos + slotHeight - shiftItemY);
 
 			swapHeightInterval = swapHeightDistance / SWAP_CLIMB_NUM_OF_FRAMES;
 			//swapBottomHeightInterval = swapBottomHeightDistance / SWAP_CLIMB_NUM_OF_FRAMES;
-			/* CLIMB */
 
 			swingHeightAmplitude = (int) (( (slotHeight - itemScaleHeight) / 2 ) * SWING_HEIGHT_AMPLITUDE_RELATIVE);
+			/***** Calculate Climb positions and measurements *****/
 
+			// randomize starting Y offsets
 			if(isAnimating){
-				// randomize starting Y offsets TODO
 				for (int i = 0; i < items.size(); i++){
 					items.get(i).itemInitialYPosOffset = Logic_Utils.randInt(- swingHeightAmplitude, swingHeightAmplitude);
 					items.get(i).itemYPosOffset = items.get(i).itemInitialYPosOffset;
@@ -693,9 +738,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 			for (int i = 0; i < mgs.inventory.size(); i++) {
 
-				// TODO
-				if(/*!mgs.inventory.get(i).first.equals(currentInventory.get(i).first) &&*/
-						!mgs.inventory.get(i).second.equals(currentInventory.get(i).second)){
+				if(!mgs.inventory.get(i).second.equals(currentInventory.get(i).second)){
 
 					isStillAnimating = true;
 
@@ -712,10 +755,11 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			}
 
 			if(SwapingItemLeft != null && SwapingItemRight != null){
-				/* MOVE */
+
+				/***** Calculate Move positions and measurements *****/
 				swapWidthDistance = slotWidth*(ItemLeftPos - ItemRightPos);
 				swapWidthInterval = swapWidthDistance / SWAP_MOVE_NUM_OF_FRAMES;
-				/* MOVE */
+				/***** Calculate Move positions and measurements *****/
 			}
 
 			currentInventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
@@ -730,6 +774,9 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			return isStillAnimating;
 		}
 
+		/**
+		 * Update the bitmaps of the inventory items XY positions.
+		 */
 		private void updateItems(){
 
 			for (int i = 0; i < items.size() ; i++) {
@@ -738,6 +785,10 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			}
 		}
 
+		/**
+		 * Update the bitmaps of the inventory items Offsets.
+		 * @param amplitude
+		 */
 		public void updateItemsOffsets(int amplitude){
 
 			for (int i = 0; i < items.size() ; i++) {
@@ -757,10 +808,8 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 				}
 			}
 
-			// dont add offsets to swaping items
+			// Don't add offsets to swapping items
 			if(SwapingItemLeft != null && SwapingItemRight != null){
-
-				//SwapingItemLeft.itemYPosOffset = SwapingItemRight.itemYPosOffset = 0;
 
 				SwapingItemLeft.isMovingRight = true;
 				SwapingItemRight.isMovingRight = false;
@@ -809,7 +858,9 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			}
 		}
 
-
+		/**
+		 * Update the bitmaps of the inventory items.
+		 */
 		public void updateItemsBitmaps(){
 
 			List<Bitmap> itemsBitmaps = inventorySprite.getInventoryItemsBitmaps(
@@ -823,6 +874,11 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			}
 		}
 
+		/**
+		 * Logical Representation of an inventory item bitmap.
+		 * @author daniel portnoy
+		 *
+		 */
 		protected class Item{
 
 			private Bitmap bitmap;
@@ -841,6 +897,9 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 				this.itemInitialXPosOffset = this.itemInitialYPosOffset = 0;
 			}
 
+			/**
+			 * reset to default values.
+			 */
 			private void reset() {
 				this.bitmap = null;
 

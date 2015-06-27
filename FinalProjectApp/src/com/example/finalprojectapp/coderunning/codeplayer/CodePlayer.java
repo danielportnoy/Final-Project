@@ -2,7 +2,6 @@ package com.example.finalprojectapp.coderunning.codeplayer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.widget.Button;
 
 import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
@@ -10,10 +9,15 @@ import com.example.finalprojectapp.coderunning.testcase.TestCase;
 import com.example.finalprojectapp.graphic_utils.MySurfaceView;
 import com.example.finalprojectapp.utilities.Android_Utils;
 
+/**
+ * Manages the playing of Snapshots, refreshing the game view, etc...
+ * @author daniel portnoy
+ *
+ */
 public class CodePlayer {
 
 	private Activity activity; 
-	private Button playPauseButton;
+	//private ImageButton playPauseButton;
 
 	private int numberOfSnapshots;
 	private int currentSnapshotNumber;
@@ -29,12 +33,18 @@ public class CodePlayer {
 
 	private MySurfaceView gameView;
 
-	public CodePlayer(Activity activity, Button playPauseButton , int cps, TestCase testCase, MySurfaceView gameView) {
+	/**
+	 * @param activity - Current showing activity.
+	 * @param cps - command per second rate.
+	 * @param testCase - current test case to show.
+	 * @param gameView - the game view.
+	 */
+	public CodePlayer(Activity activity, /*ImageButton imageButton*/ int cps, TestCase testCase, MySurfaceView gameView) {
 
 		numberOfSnapshots = testCase.getSnapshots().size();
 
 		this.activity = activity;
-		this.playPauseButton = playPauseButton;
+		//this.playPauseButton = imageButton;
 
 		this.cps = cps;
 
@@ -45,20 +55,29 @@ public class CodePlayer {
 		currentSnapshotNumber = 0;
 
 		isPlaying = false;
-		playPauseButton.setText("Play");
-
+		//imageButton.setText("Play");
 	}
 
+	/**
+	 * Get the actual sleep time.
+	 * @return sleep time in milliseconds.
+	 */
 	private int sleepInMS() {
 		return Math.round(1000/cps);
 	}
 
+	/**
+	 * Start the player thread.
+	 */
 	public void start() {
 		playerTheard = new PlayerThread();
 		playerTheard.setRunning(true);
 		playerTheard.start();
 	}
 
+	/**
+	 * Destroy the player thread.
+	 */
 	public void destroy(){
 		
 		if(playerTheard == null)
@@ -79,10 +98,17 @@ public class CodePlayer {
 		}
 	}
 
+	/**
+	 * 
+	 * @return whether the player is playing.
+	 */
 	public boolean isPlaying() {
 		return isPlaying;
 	}
 
+	/**
+	 * Display the current Snapshot on the screen.
+	 */
 	public void display() {
 		activity.runOnUiThread(new Runnable() {
 
@@ -96,13 +122,15 @@ public class CodePlayer {
 				//if last snapshot
 				if(currentSnapshotNumber == numberOfSnapshots - 1){
 					isPlaying = false;
-					playPauseButton.setText("Play");
+					//playPauseButton.setText("Play");
 					destroy();
-					handleEndGame();
+					EndGame();
 				}
 
 				long EndTimeInMS = System.currentTimeMillis();
 
+				// calculate the needed sleep time and set the player to sleep.
+				
 				long sleepTime = sleepInMS() - (EndTimeInMS - StartTimeInMS);
 
 				if(playerTheard != null){
@@ -114,60 +142,91 @@ public class CodePlayer {
 
 	}
 
+	/**
+	 * Set current Snapshot to be the first one.
+	 */
 	public void startSnapshot() {
 		currentSnapshotNumber = 0;
 		display();
 	}
 
+	/**
+	 * Set current Snapshot to be the previous one.
+	 */
 	public void prevSnapshot() {
 		if(currentSnapshotNumber > 0)
 			currentSnapshotNumber--;
 		display();
 	}
 
+	/**
+	 * Set current Snapshot to be the next one.
+	 */
 	public void nextSnapshot() {
 		if(currentSnapshotNumber < numberOfSnapshots - 1)
 			currentSnapshotNumber++;
 		display();
 	}
 
+	/**
+	 * Set current Snapshot to be the last one.
+	 */
 	public void endSnapshot() {
 		currentSnapshotNumber = numberOfSnapshots - 1;
 		display();
 	}	
 
+	/**
+	 * Toggles between playing and not playing.
+	 */
 	public void togglePlay() {
 		isPlaying = !isPlaying;
 
 		if(isPlaying()){
-			playPauseButton.setText("Play");
+			//playPauseButton.setText("Play");
 			start();
 		}
 		else{
-			playPauseButton.setText("Pause");
+			//playPauseButton.setText("Pause");
 			destroy();
 		}
 	}
 
-	public void handleEndGame(){	// TODO
+	/**
+	 * Handles the presentation of the end game.
+	 */
+	public void EndGame(){
 
 		AlertDialog.Builder builder = null;
 
-		if(testCase.getException() != null)			
+		if(testCase.getException() != null)		
+			
+			// Display the exception text in a dialog. 
 			builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_HEADER_TEXT,
 					testCase.getException().getMessage(), Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
 		else{
-			if(LevelManager.getInstance().checkWin(testCase))
+			if(LevelManager.getInstance().checkWin(testCase)){
+				
+				// Display win text in a dialog.
 				builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_WIN_TITLE_TEXT, Constants.LEVEL_END_WIN_HEADER_TEXT,
 						Constants.LEVEL_END_WIN_TEXT, Constants.LEVEL_END_WIN_POSITIVE_TEXT , true);
-			else
+			}
+			else{
+				
+				// Display loss text in a dialog.
 				builder = Android_Utils.getEndGameDialog(activity, Constants.LEVEL_END_LOSS_TITLE_TEXT, Constants.LEVEL_END_LOSS_HEADER_TEXT,
 						Constants.LEVEL_END_LOSS_TEXT, Constants.LEVEL_END_LOSS_POSITIVE_TEXT , false);
+			}
 		}
 
 		builder.create().show();
 	}
 
+	/**
+	 * A thread class that 'plays' the Screenshots one after the other.
+	 * @author daniel portnoy
+	 *
+	 */
 	class PlayerThread extends Thread{
 
 		private boolean sleep = false;

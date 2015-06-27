@@ -25,6 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
+            android:background="@android:color/white"
             android:gravity="center"
             android:orientation="vertical" >
 
@@ -32,16 +33,30 @@
                 android:id="@+id/buttonCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="@drawable/menu_button"
                 android:onClick="onClick"
-                android:text="@string/code" />
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="@string/code"
+                android:textColor="#4792d6" />
 
             <Button
                 android:id="@+id/buttonRun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:background="@drawable/menu_button"
                 android:onClick="onClick"
-                android:text="@string/run" />
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="@string/run"
+                android:textColor="#4792d6" />
         </LinearLayout>
     </LinearLayout>
 

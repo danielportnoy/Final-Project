@@ -15,7 +15,12 @@ import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.node.concrete.block.BlockNode;
 
-public class ForNode extends Node{			// TODO
+/**
+ * Holds the Logical data and functionality of a For 'Code part'.
+ * @author daniel portnoy
+ *
+ */
+public class ForNode extends Node{
 
 	private Node init;
 	private Node condition;
@@ -61,6 +66,7 @@ public class ForNode extends Node{			// TODO
 
 		Set<String> used = new HashSet<String>();
 
+		// Find any used identifiers after childNode.
 		if(childNode.equals(init)){
 			if(condition != null)
 				used.addAll(condition.getUsedIdentifiers());
@@ -80,12 +86,14 @@ public class ForNode extends Node{			// TODO
 		else if(childNode.equals(body))
 			used = new HashSet<String>();
 
-
+		// Find any declared identifiers in childNode.
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
+		// Check if deletion is valid.
 		if(intersection.isEmpty()){	
-
+			
+			// delete the childNode.
 			if(childNode.equals(init)){
 				removeFromScope(init);
 				init = null;
@@ -157,8 +165,10 @@ public class ForNode extends Node{			// TODO
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
+		// Add the for text.
 		res.add(new CodeWritingPart(false, false, "for (", null, this));
 
+		// Add the init Node or add '+' setter.
 		if(init == null)
 			res.add(new CodeWritingPart(false, false, null, new InitSetter(this), this));
 		else
@@ -166,6 +176,7 @@ public class ForNode extends Node{			// TODO
 
 		res.add(new CodeWritingPart(false, false, ";", null, this));
 
+		// Add the condition Node or add '+' setter.
 		if(condition == null)
 			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this), this));
 		else
@@ -173,6 +184,7 @@ public class ForNode extends Node{			// TODO
 
 		res.add(new CodeWritingPart(false, false, ";", null, this));
 
+		// Add the update Node or add '+' setter.
 		if(update == null)
 			res.add(new CodeWritingPart(false, false, null, new UpdateSetter(this), this));
 		else
@@ -180,7 +192,7 @@ public class ForNode extends Node{			// TODO
 
 		res.add(new CodeWritingPart(false, false, ")", null, this));
 
-
+		// Add the body Node or add '+' setter.
 		if(body == null){
 			res.add(new CodeWritingPart(false, true, null, null, this));
 			res.add(new CodeWritingPart(true, false, null, null, this));
@@ -188,7 +200,7 @@ public class ForNode extends Node{			// TODO
 			res.add(new CodeWritingPart(false, false, null, new BodySetter(this), this));
 		}
 		else{
-			if(body instanceof BlockNode)	//TODO
+			if(body instanceof BlockNode)
 				res.addAll(body.getCodeWritingParts());
 			else{
 				res.add(new CodeWritingPart(false, true, null, null, this));
@@ -207,22 +219,26 @@ public class ForNode extends Node{			// TODO
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
+		// Add the for text.
 		res.add(new CodeRunningPart(false, false,isHighlighted, "for ("));
 
+		// Add the init Node.
 		if(init != null)
 			res.addAll(init.getCodeRunningParts(target, isHighlighted));
 		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
 
+		// Add the condition Node.
 		if(condition != null)
 			res.addAll(condition.getCodeRunningParts(target, isHighlighted));
 		res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
 
+		// Add the update Node.
 		if(update != null)
 			res.addAll(update.getCodeRunningParts(target, isHighlighted));	
 		res.add(new CodeRunningPart(false, false,isHighlighted, ")"));
 
-
-		if(body instanceof BlockNode)	//TODO
+		// Add the body Node.
+		if(body instanceof BlockNode)
 			res.addAll(body.getCodeRunningParts(target, isHighlighted));
 		else{
 			res.add(new CodeRunningPart(false, true,isHighlighted, null));
@@ -253,12 +269,17 @@ public class ForNode extends Node{			// TODO
 		return new ReturnObject();
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the Init button for a For 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class InitSetter extends Setter{
 
 		static final int ORDER = 0;
 
 		public InitSetter(Node parent) {
-			super(/*"+", */false, parent ,ORDER);	//TODO
+			super(false, parent ,ORDER);
 		}
 
 		@Override
@@ -281,12 +302,17 @@ public class ForNode extends Node{			// TODO
 
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the Condition button for a For 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class ConditionSetter extends Setter{
 
 		final static int ORDER = 1;
 
 		public ConditionSetter(Node parent) {
-			super(/*"< bool expr >", */false, parent, ORDER);	//TODO
+			super(false, parent, ORDER);
 		}
 
 		@Override
@@ -308,12 +334,17 @@ public class ForNode extends Node{			// TODO
 		}
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the Update button for a For 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class UpdateSetter extends Setter{
 
 		static final int ORDER = 2;
 
 		public UpdateSetter(Node parent) {
-			super(/*"+", */false, parent ,ORDER);	//TODO
+			super(false, parent ,ORDER);
 		}
 
 		@Override
@@ -336,12 +367,17 @@ public class ForNode extends Node{			// TODO
 
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the Body button for a For 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class BodySetter extends Setter{
 
 		static final int ORDER = 4;
 
 		public BodySetter(Node parent) {
-			super(/*"+", */true, parent ,ORDER);	//TODO
+			super(true, parent ,ORDER);
 		}
 
 		@Override

@@ -3,8 +3,18 @@ package com.example.finalprojectapp.utilities;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+/**
+ * Supplies the needed utility functions of the java logical code.
+ * @author daniel portnoy
+ *
+ */
 public class Logic_Utils {
 
+	/**
+	 * Check if string is in a valid Identifier format.
+	 * @param text
+	 * @return boolean value.
+	 */
 	public static boolean isValidIdentifier(String text){
 
 		if(text == null || text.length() == 0)
@@ -22,6 +32,13 @@ public class Logic_Utils {
 		return true;
 	}
 
+	/**
+	 * Get the max font size for a String inside a rectangle.
+	 * @param str
+	 * @param maxWidth
+	 * @param maxHeight
+	 * @return integer value.
+	 */
 	public static int determineMaxTextSize(String str, float maxWidth, float maxHeight)
 	{
 		int size = 0; 

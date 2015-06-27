@@ -4,9 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+/**
+ * Bridges between the Fragments and the Pager.
+ * @author daniel portnoy
+ *
+ */
 public class PagerAdapter extends FragmentStatePagerAdapter{
-
-	//private FragmentManager fm;
 
 	private DisplayFragment displayFragment;
 
@@ -18,7 +21,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter{
 
 	public PagerAdapter(FragmentManager fm) {
 		super(fm);
-		//this.fm = fm;
 		displayFragment = new DisplayFragment();
 		codingFragment = new CodingFragment();
 		runningFragment = new RunningFragment();

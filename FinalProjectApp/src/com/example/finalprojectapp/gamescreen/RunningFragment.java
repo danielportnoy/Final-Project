@@ -22,15 +22,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.LinearLayout.LayoutParams;
 
 public class RunningFragment extends Fragment implements OnClickListener{
 
-	private Button playButton;
-
+	//private ImageButton playButton;
 	private CodePlayer player;
 
 	private SharedPreferences SP;
@@ -43,27 +41,40 @@ public class RunningFragment extends Fragment implements OnClickListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+		// Inflate the fragment.
 		View myFragmentView = inflater.inflate(R.layout.running_fragment_layout,container,false);
 
+		/*
+		 * Initialize the logicUnit.
+		 * Adding the codeLine and VarValues adapters to the logicUnit.
+		 */
 		CodeRunningLogicUnit logics = new CodeRunningLogicUnit();
 
 		ListView codeLines = (ListView)myFragmentView.findViewById(R.id.listView_Running_Code);
 		CodeRunningLinesAdapter codeRunningLinesAdapter = new CodeRunningLinesAdapter(getActivity(), android.R.layout.simple_list_item_1, logics.getRunningCodeLines());
 		codeLines.setAdapter(codeRunningLinesAdapter);	
-		
+
 		ListView listView_VarValues= (ListView)myFragmentView.findViewById(R.id.listView_Running_VarValues);
 		VarValuesAdapter varValuesLinesAdapter = new VarValuesAdapter(getActivity(), android.R.layout.simple_list_item_1, logics.getValuesList());
 		listView_VarValues.setAdapter(varValuesLinesAdapter);	
 
+		//Retrieve all preferences.
 		SP = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
+		/*
+		 * Initialize the graphicUnit.
+		 * Adding the gameView to the graphicUnit.
+		 */
 		graphics = new CodeRunningGraphicUnit(codeRunningLinesAdapter, varValuesLinesAdapter, gameView);
+
+		// registering the managers to the levelManager instance.
 		LevelManager.getInstance().registerCodeRunningManager(new CodeRunningManager(logics, graphics));
 
 		gameViewLayout = (LinearLayout)myFragmentView.findViewById(R.id.LinearLayout_Game);
 
-		playButton = (Button)myFragmentView.findViewById(R.id.button_PlayPause);
+		//playButton = (ImageButton)myFragmentView.findViewById(R.id.button_PlayPause);
 
+		// Set the buttons listeners.
 		myFragmentView.findViewById(R.id.button_endSnapshot).setOnClickListener(this);
 		myFragmentView.findViewById(R.id.button_nextSnapshot).setOnClickListener(this);
 		myFragmentView.findViewById(R.id.button_PlayPause).setOnClickListener(this);
@@ -73,38 +84,32 @@ public class RunningFragment extends Fragment implements OnClickListener{
 		return myFragmentView;
 	}
 
-/*	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-
-		super.setUserVisibleHint(isVisibleToUser);
-
-		if(isVisibleToUser){
-			if(player!=null){
-				player.display();
-			}
-		}
-		else{ 
-			if(player!=null)
-				player.destroy();
-		}
-	}*/
-
 	@Override
 	public void onClick(View v) {
 
 		switch (v.getId()) {
+
+		// Start clicked.
 		case R.id.button_startSnapshot:
 			player.startSnapshot();
 			break;
+
+			// Previous clicked.
 		case R.id.button_prevSnapshot:
 			player.prevSnapshot();
 			break;
+
+			// PLay \ Pause clicked.
 		case R.id.button_PlayPause:
 			player.togglePlay();
 			break;
+
+			// Next clicked.
 		case R.id.button_nextSnapshot:
 			player.nextSnapshot();
 			break;
+
+			// End clicked.
 		case R.id.button_endSnapshot:
 			player.endSnapshot();
 			break;
@@ -115,26 +120,43 @@ public class RunningFragment extends Fragment implements OnClickListener{
 
 	}
 
+	/**
+	 * Update the fragment screen.
+	 */
 	public void refresh() {
 
 		int fps = SP.getInt(Constants.FPS_KEY,Constants.DEFAULT_FPS);
 		int cps = SP.getInt(Constants.CPS_KEY,Constants.DEFAULT_CPS);
 		boolean animation = SP.getBoolean(Constants.ANIMATION_KEY, Constants.DEFAULT_ANIMATION);
 
+		/*
+		 * Conduct the testing of the code for all of the Configurations.
+		 * Choosing a proper TestCase to show in the CodeRunning display.
+		 * If there is no Failing tests, the default (first) is chosen.
+		 */
+		
 		TestCase testCaseToShow = null;
 
 		List<TestCase> tests = LevelManager.getInstance().runCodeTests();
 
 		for (TestCase testCase : tests) 
 			if(!LevelManager.getInstance().checkWin(testCase)){
+				
+				// pick the failing test.
 				testCaseToShow = testCase;
 				break;
 			}
 
+		// default (first).
 		if(testCaseToShow == null)
 			testCaseToShow = tests.get(0);
 
 		LevelManager.getInstance().getScenario().setCurrentConfig(testCaseToShow.getConfig());
+		
+		/*
+		 * Creating the gameView and adding it to the activity.
+		 * using FPS and CPS in the creation process. 
+		 */
 
 		gameView = LevelManager.getInstance().getScenario().generateGameView(getActivity(), fps, animation);;
 		gameView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -143,8 +165,13 @@ public class RunningFragment extends Fragment implements OnClickListener{
 		gameViewLayout.addView(gameView);
 
 		graphics.setGameView(gameView);
+		
+		/*
+		 * Creating the CodePLayer.
+		 * using the chosen TestCase and the gameView.
+		 */
 
-		player = new CodePlayer(getActivity(), playButton, cps, testCaseToShow, gameView);
+		player = new CodePlayer(getActivity(), /*playButton*/ cps, testCaseToShow, gameView);
 
 		player.display();
 	}

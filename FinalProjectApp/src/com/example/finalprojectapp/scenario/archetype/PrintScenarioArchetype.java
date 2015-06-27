@@ -29,8 +29,14 @@ import com.example.finalprojectapp.scenario.Scenario;
 import com.example.finalprojectapp.scenario.configuration.Configuration;
 import com.example.finalprojectapp.utilities.Logic_Utils;
 
+/**
+ * Logical and Graphical data and functionality of the Print game scenario.
+ * @author daniel portnoy
+ *
+ */
 public abstract class PrintScenarioArchetype extends Scenario {
 
+	// Scenario dynamic parts.
 	private String currentTextToPrint = null;
 
 	@Override
@@ -69,6 +75,11 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 
 	/********** config class **********/
+	/**
+	 * Print scenario specific Configuration object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class MyConfiguration extends Configuration{
 
 		private String headerText;
@@ -109,6 +120,11 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 
 	/********** snapshot class **********/
+	/**
+	 * Print scenario specific GameSnapshot object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class MyGameSnapshot extends GameSnapshot{
 
 		private String textToPrint;
@@ -141,6 +157,11 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 
 	/********** special nodes class's **********/
+	/**
+	 * Print scenario specific Node object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class PrintNode extends Node{
 
 		private Node toPrint;
@@ -266,7 +287,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 			final static int ORDER = 0;
 
 			public ToPrintSetter(Node parent) {
-				super(/*"< expr >", */true, parent, ORDER);	//TODO
+				super(true, parent, ORDER);
 			}
 
 			@Override
@@ -291,6 +312,11 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 
 	/********** special option class's **********/
+	/**
+	 * Maze scenario specific Option object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class PrintOption extends Option {
 
 		public PrintOption() {}
@@ -303,7 +329,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 		@Override
 		public void setButton(Context context, Button optionButton,final Setter SETTER) {
 
-			optionButton.setText("print");	//TODO
+			optionButton.setText("print");
 
 			optionButton.setOnClickListener(new OnClickListener() {
 
@@ -320,26 +346,36 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 
 	/********** SurfaceView class **********/
+	/**
+	 * Print scenario specific MySurfaceView object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class SurfaceView_Board extends MySurfaceView {
 
-		private int textXpos, textYpos;
-		private String currentTextToPrint = null;
-		private Paint textPaint;
-
-		private int headerTextXpos, headerTextYpos;
-		private String currentHeaderToPrint = ((MyConfiguration)getCurrentConfig()).getHeaderText();
-		private Paint headerTextPaint;
-
-		private int subHeaderTextXpos, subHeaderTextYpos;
-		private String currentSubHeaderToPrint = ((MyConfiguration)getCurrentConfig()).getSubHeaderText();
-		private Paint subHeaderTextPaint;
-
+		// Specific definitions.
 		private static final double SCALE_WIDTH_COEFFICIENT = 0.9;
 		private static final double SCALE_HEIGHT_COEFFICIENT = 0.8;
 
 		private static final double HEADER_HEIGHT_RELATIVE = 1.0/4.0, SUB_HEADER_HEIGHT_RELATIVE = 1.0/4.0 , TEXT_HEIGHT_RELATIVE = 1.0/4.0;
 		private static final double HEADER_HEIGHT_RELATIVE_POS = 1.0/4.0, SUB_HEADER_HEIGHT_RELATIVE_POS = 7.0/16.0 , TEXT_HEIGHT_RELATIVE_POS = 3.0/4.0;
 
+		// Printed text related.
+		private int textXpos, textYpos;
+		private String currentTextToPrint = null;
+		private Paint textPaint;
+
+		// Header text related.
+		private int headerTextXpos, headerTextYpos;
+		private String currentHeaderToPrint = ((MyConfiguration)getCurrentConfig()).getHeaderText();
+		private Paint headerTextPaint;
+
+		// SubHeader text related.
+		private int subHeaderTextXpos, subHeaderTextYpos;
+		private String currentSubHeaderToPrint = ((MyConfiguration)getCurrentConfig()).getSubHeaderText();
+		private Paint subHeaderTextPaint;
+
+		// positions and measurements
 		private int midWidth;
 		private int screenRectWidth;
 
@@ -358,13 +394,16 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 			render();
 
-			canvas.drawColor(Color.WHITE);		// TODO
+			// fill background.
+			canvas.drawColor(Color.WHITE);
 
+			// draw Header text.
 			canvas.drawText(currentHeaderToPrint, headerTextXpos, headerTextYpos, headerTextPaint);
 
+			// draw SubHeader text.
 			canvas.drawText(currentSubHeaderToPrint, subHeaderTextXpos, subHeaderTextYpos, subHeaderTextPaint);
 
-
+			// draw Printed text.
 			if(currentTextToPrint != null)
 				canvas.drawText(currentTextToPrint, textXpos, textYpos, textPaint);
 		}
@@ -377,12 +416,15 @@ public abstract class PrintScenarioArchetype extends Scenario {
 		@Override
 		public void preCalculation() {
 
+			/***** Calculate screen and board positions and measurements *****/
 			int screenWidth = getWidth();
 			int screenHeight = getHeight();
 
 			midWidth = screenWidth / 2 ;
 			screenRectWidth = (int)(screenWidth * SCALE_WIDTH_COEFFICIENT);
+			/***** Calculate screen and board positions and measurements *****/
 
+			/***** Calculate text positions and measurements *****/
 			int headerRectHeight = (int)((screenHeight * HEADER_HEIGHT_RELATIVE) * SCALE_HEIGHT_COEFFICIENT);
 
 			int subHeaderRectHeight = (int)((screenHeight * SUB_HEADER_HEIGHT_RELATIVE) * SCALE_HEIGHT_COEFFICIENT);
@@ -393,7 +435,9 @@ public abstract class PrintScenarioArchetype extends Scenario {
 			int subHeaderHeight = (int) (screenHeight * SUB_HEADER_HEIGHT_RELATIVE_POS);
 
 			textHeight = (int) (screenHeight * TEXT_HEIGHT_RELATIVE_POS);
+			/***** Calculate tile positions and measurements *****/
 
+			/***** Define Paint objects *****/
 			textPaint = new Paint();
 			textPaint.setColor(Color.RED);
 
@@ -410,12 +454,18 @@ public abstract class PrintScenarioArchetype extends Scenario {
 			Rect subHeaderBounds = new Rect();
 
 			subHeaderTextPaint.getTextBounds(currentSubHeaderToPrint, 0, currentSubHeaderToPrint.length(), subHeaderBounds);
+			/***** Define Paint objects *****/
 
+			/***** Calculate header positions and measurements *****/
 			headerTextXpos = midWidth - (headerBounds.width() / 2);
 			headerTextYpos = headerHeight;
+			/***** Calculate header positions and measurements *****/
 
+			/***** Calculate sub header positions and measurements *****/
 			subHeaderTextXpos = midWidth - (subHeaderBounds.width() / 2);
 			subHeaderTextYpos = subHeaderHeight;
+			/***** Calculate sub header positions and measurements *****/
+
 		}
 
 		@Override
@@ -447,10 +497,7 @@ public abstract class PrintScenarioArchetype extends Scenario {
 		}
 
 		@Override
-		public void render() {
-			// TODO Auto-generated method stub
-
-		}
+		public void render() {}
 
 		@Override
 		public void loadSnapshot(GameSnapshot gameSnapshot) {
@@ -461,7 +508,6 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 		@Override
 		public boolean isStillAnimating() {
-			// TODO Auto-generated method stub
 			return false;
 		}
 	}
@@ -469,5 +515,4 @@ public abstract class PrintScenarioArchetype extends Scenario {
 
 
 	/******************** Nested classes ********************/
-
 }

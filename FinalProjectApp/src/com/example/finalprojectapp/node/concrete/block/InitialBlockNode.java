@@ -14,6 +14,11 @@ import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 
+/**
+ * Holds the Logical data and functionality of a InitialBlock 'Code part'.
+ * @author daniel portnoy
+ *
+ */
 public class InitialBlockNode extends Node{
 
 	private List<Node> innerNodes;
@@ -22,16 +27,11 @@ public class InitialBlockNode extends Node{
 		innerNodes = new ArrayList<Node>();
 		setType(Type.Statement);
 	}
-	
+
 	@Override
 	public boolean addChild(Node child, int order) {
 
-		// TODO
-		/*if(order > getChildNodes().size() - 1)
-			return false;
-		else*/
-			innerNodes.add(order, child);
-		
+		innerNodes.add(order, child);
 		return true;
 	}
 
@@ -44,18 +44,24 @@ public class InitialBlockNode extends Node{
 	public boolean DeleteChildNode(Node childNode) {
 		int startingPosition = 0;
 
+		// Find the childNode position.
 		while(!childNode.equals(innerNodes.get(startingPosition)))
 			startingPosition++;
 
 		Set<String> used = new HashSet<String>();
 
+		// Find any used identifiers after childNode.
 		for (int i = startingPosition + 1; i < innerNodes.size() ; i++)
 			used.addAll(innerNodes.get(i).getUsedIdentifiers());
 
+		// Find any declared identifiers in childNode.
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
+		// Check if deletion is valid.
 		if(intersection.isEmpty()){
+			
+			// delete the childNode.
 			removeFromScope(innerNodes.get(startingPosition));
 			innerNodes.remove(startingPosition);
 			return true;
@@ -99,17 +105,21 @@ public class InitialBlockNode extends Node{
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
+		// Add the '+' setters and existing Nodes.
 		for (int i = 0; i < innerNodes.size(); i++) {
 
 			Node innerNode = innerNodes.get(i);
 
+			// Add '+' setter.
 			res.add(new CodeWritingPart(false, false, null, new InitialBlockSetter(this, i), this));// add more 
 			res.add(new CodeWritingPart(false, true, null, null, this));
 
+			// Add existing Node.
 			res.addAll(innerNode.getCodeWritingParts());
 			res.add(new CodeWritingPart(false, true, null, null, this));
 		}
 
+		// Add the last '+' setter.
 		res.add(new CodeWritingPart(false, false, null, new InitialBlockSetter(this, innerNodes.size()), this));// add more 
 
 		return res;
@@ -120,6 +130,7 @@ public class InitialBlockNode extends Node{
 
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
+		// Add existing Nodes.
 		for (Node innerNode : innerNodes){
 			res.addAll(innerNode.getCodeRunningParts(target,isHighlighted));
 			res.add(new CodeRunningPart(false, true,false, null));
@@ -135,20 +146,28 @@ public class InitialBlockNode extends Node{
 			try {
 				n.run();
 			} catch (MyException e) {
-				LevelManager.getInstance().takeSnapshot(this);	// TODO
+				
+				// take the exception Snapshot
+				LevelManager.getInstance().takeSnapshot(this);
 				throw e;
 			}	
 		}
 
-		LevelManager.getInstance().takeSnapshot(this);	// TODO
+		// take the final Snapshot
+		LevelManager.getInstance().takeSnapshot(this);
 
-		return new ReturnObject();	// TODO
+		return new ReturnObject();
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of a 'Add (+)' button for a InitialBlock 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class InitialBlockSetter extends Setter{
 
 		public InitialBlockSetter(Node parent, int order) {
-			super(/*"+" , */false, parent, order);	//TODO
+			super(false, parent, order);
 		}
 
 		@Override

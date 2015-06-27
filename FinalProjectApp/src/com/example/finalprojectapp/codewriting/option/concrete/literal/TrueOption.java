@@ -5,11 +5,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.codewriting.option.Option;
 import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.node.concrete.literal.BoolLiteralNode;
 
+/**
+ * Option that represents a True Node.
+ * @author daniel portnoy
+ *
+ */
 public class TrueOption extends Option{
 
 	@Override
@@ -20,8 +26,10 @@ public class TrueOption extends Option{
 	@Override
 	public void setButton(final Context CONTEXT, Button optionButton, final Setter SETTER) {
 
-		optionButton.setText("True");
+		// Set the button text.
+		optionButton.setText(Constants.TRUE_OPTION_TEXT);
 
+		// Set the button listener.
 		optionButton.setOnClickListener(new OnClickListener() {
 
 			@Override

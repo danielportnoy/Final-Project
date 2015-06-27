@@ -13,6 +13,11 @@ import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Type;
 
+/**
+ * Holds the Logical data and functionality of a Integer Identifier 'Code part'.
+ * @author daniel portnoy
+ *
+ */
 public class IntIdentifier extends Node{
 
 	private String name;
@@ -62,6 +67,7 @@ public class IntIdentifier extends Node{
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
+		// Add the identifier name.
 		res.add(new CodeWritingPart(false, false, name, null, this));
 
 		return res;
@@ -73,6 +79,7 @@ public class IntIdentifier extends Node{
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
+		// Add the identifier name.
 		res.add(new CodeRunningPart(false, false,isHighlighted, name));
 
 		return res;
@@ -80,7 +87,6 @@ public class IntIdentifier extends Node{
 
 	@Override
 	public ReturnObject run() throws MyException {	
-		//LevelManager.getInstance().takeSnapshot(this); //TODO
 		return new ReturnObject(LevelManager.getInstance().getInegerValueFromIdentifier(name));
 	}
 }

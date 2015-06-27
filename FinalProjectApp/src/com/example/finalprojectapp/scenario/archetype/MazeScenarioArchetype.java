@@ -38,29 +38,48 @@ import com.example.finalprojectapp.scenario.configuration.Configuration;
 import com.example.finalprojectapp.utilities.Android_Utils;
 import com.example.finalprojectapp.utilities.Logic_Utils;
 
+/**
+ * Logical and Graphical data and functionality of the Maze game scenario.
+ * @author daniel portnoy
+ *
+ */
 public abstract class  MazeScenarioArchetype extends Scenario {
 
+	// Scenario specific definitions.
 	public static final String MOVE_OUT_OF_LIMITS_EXCEPTION_TEXT = "Exception : The character moved out of the maze limits.";
 	public static final String STEP_ON_FIRE_EXCEPTION_TEXT = "Exception : The character steped on fire.";
+
 	public static enum BoardTilesTypesEnum{
 		Rockys_stones,
 		Grass,
 		Round_bricks_gray	
 	}
 
+	// Scenario dynamic parts.
 	private int heroCurrentX,heroCurrentY;
 
+	/**
+	 * Randomizes a board.
+	 * @param rows
+	 * @param columns
+	 * @return 2D logical representation of the board.
+	 */
 	public List<List<BoardTilesTypesEnum>> randomizeBoardTiles(int rows , int columns){
 
+		// Create a new 2D logical board.
 		List<List<BoardTilesTypesEnum>> randomMap = new ArrayList<List<BoardTilesTypesEnum>>();
 
 		for (int i = 0; i < rows; i++) {
-			
+
+			// Create a new logical row.
 			List<BoardTilesTypesEnum> randomMapRow = new ArrayList<MazeScenarioArchetype.BoardTilesTypesEnum>();
-			
+
 			for (int j = 0; j < columns; j++) {
+
+				// Randomize a tile.
 				int randomNum = Logic_Utils.randInt(1 , BoardTilesTypesEnum.values().length);
 
+				// Add the tile to the row.
 				switch (randomNum) {
 				case 1:
 					randomMapRow.add(j, BoardTilesTypesEnum.Rockys_stones);
@@ -76,7 +95,8 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 					break;
 				}
 			}
-			
+
+			// Add the row to the board. 
 			randomMap.add(i, randomMapRow);
 		}
 
@@ -134,6 +154,11 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 
 	/********** config class **********/
+	/**
+	 * Maze scenario specific Configuration object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class MyConfiguration extends Configuration{
 
 		public int rows;
@@ -171,6 +196,11 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 
 	/********** snapshot class **********/
+	/**
+	 * Maze scenario specific GameSnapshot object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class MyGameSnapshot extends GameSnapshot{
 
 		private int heroX,heroY;
@@ -210,6 +240,11 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 
 	/********** special nodes class's **********/
+	/**
+	 * Maze scenario specific Node object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected abstract class NumberOfNode extends Node{
 
 		private String codeText;
@@ -220,7 +255,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		}
 
 		public abstract NumberOfNode newInstance();
-		
+
 		@Override
 		public List<CodeWritingPart> getCodeWritingParts() {
 
@@ -284,7 +319,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		public NumberOfRowsNode() {
 			super(NUMBER_OF_ROWS_CODE_TEXT);
 		}
-		
+
 		@Override
 		public NumberOfNode newInstance() {
 			return new NumberOfRowsNode();
@@ -293,11 +328,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		@Override
 		public ReturnObject run() throws MyException {
 
-			//TODO
-			//LevelManager.getInstance().takeSnapshot(this);
-			
 			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
-
 			return new ReturnObject(currentConfig.rows);
 		}	
 	}
@@ -318,15 +349,16 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		@Override
 		public ReturnObject run() throws MyException {
 
-			//TODO
-			//LevelManager.getInstance().takeSnapshot(this);
-
 			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
-
 			return new ReturnObject(currentConfig.cols);
 		}	
 	}
 
+	/**
+	 * Maze scenario specific Node object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected abstract class MovementNode extends Node{
 
 		private String codeText;
@@ -595,8 +627,13 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 
 	/********** special option class's **********/
+	/**
+	 * Maze scenario specific Option object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected abstract class NumberOfOption extends Option{
-		
+
 		private String optionText;
 
 		private NumberOfNode node;
@@ -614,7 +651,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		@Override
 		public void setButton(Context context, Button optionButton,final Setter SETTER) {
 
-			optionButton.setText(optionText);	//TODO
+			optionButton.setText(optionText);
 
 			optionButton.setOnClickListener(new OnClickListener() {
 
@@ -627,7 +664,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			});
 		}
 	}
-	
+
 	protected class NumberOfRowsOption extends NumberOfOption{
 
 		public static final String NUMBER_OF_ROWS_OPTION_TEXT = "numberOfRows";
@@ -635,9 +672,9 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		public NumberOfRowsOption() {
 			super(NUMBER_OF_ROWS_OPTION_TEXT, new NumberOfRowsNode());
 		}
-		
+
 	}
-	
+
 	protected class NumberOfColumnsOption extends NumberOfOption{
 
 		public static final String NUMBER_OF_Columns_OPTION_TEXT = "numberOfColumns";
@@ -645,9 +682,14 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		public NumberOfColumnsOption() {
 			super(NUMBER_OF_Columns_OPTION_TEXT, new NumberOfColumnsNode());
 		}
-		
+
 	}
-	
+
+	/**
+	 * Maze scenario specific Option object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected abstract class MovementOption extends Option{
 
 		private String optionText;
@@ -667,7 +709,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		@Override
 		public void setButton(Context context, Button optionButton,final Setter SETTER) {
 
-			optionButton.setText(optionText);	//TODO
+			optionButton.setText(optionText);
 
 			optionButton.setOnClickListener(new OnClickListener() {
 
@@ -756,37 +798,44 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 
 	/********** SurfaceView class **********/
+	/**
+	 * Maze scenario specific MySurfaceView object.
+	 * @author daniel portnoy
+	 *
+	 */
 	protected class SurfaceView_Maze extends MySurfaceView {
 
 		private boolean isStillAnimating = false;
 
-		private boolean walkOrJump = false;	// true - walk \ false - jump
+		// true - walk \ false - jump
+		private boolean walkOrJump = false;
 
+		// hero related
 		private HeroSprite heroSprite;
 		private int heroXpos, heroYpos;
 		private int heroXprevLogic, heroYprevLogic;
 		private int heroXcurrentLogic, heroYcurrentLogic;
-
 		private final double HERO_SCALE_HEIGHT_PERCENT = 0.9, HERO_SCALE_WIDTH_PERCENT = 0.9;
 
+		// goal related
 		private GoalSprite goalSprite;
 		private int goalXpos, goalYpos;
 		private final double GOAL_SCALE_HEIGHT_PERCENT = 0.5, GOAL_SCALE_WIDTH_PERCENT = 0.5;
 
+		// fire related
 		private FireSprite fireSprite;
 		private List<Pair<Integer, Integer>> fireXYpos;
 		private final double FIRE_SCALE_HEIGHT_PERCENT = 1, FIRE_SCALE_WIDTH_PERCENT = 1;
 
+		// board related
 		private BoardSpriteSheet boardSpriteSheet;
 		private int boardXpos, boardYpos;
 
+		// Bitmaps
 		private Bitmap heroCurrentBitmap;
 		private Bitmap heroStandBitmap;
-
 		private Bitmap goalCurrentBitmap;
-
 		private Bitmap fireCurrentBitmap;
-
 		private Bitmap boardBitmap;
 
 		// positions and measurements
@@ -810,6 +859,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
 
+			// Initialize boardSpriteSheet.
 			boardSpriteSheet = new BoardSpriteSheet(
 					currentConfig.rows,
 					currentConfig.cols, 
@@ -826,6 +876,8 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 			boardBitmap = boardSpriteSheet.getBitmap();
 
 			fireXYpos = new ArrayList<Pair<Integer,Integer>>();
+
+			// Initialize fireSprite.
 			fireSprite = new FireSprite(
 
 					BitmapFactory.decodeResource(
@@ -840,6 +892,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 							0
 					);
 
+			// Initialize goalSprite.
 			goalSprite = new GoalSprite(
 
 					BitmapFactory.decodeResource(
@@ -854,6 +907,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 							0
 					);
 
+			// Initialize heroSprite.
 			heroSprite = new HeroSprite(
 
 					BitmapFactory.decodeResource(
@@ -882,6 +936,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 		@Override
 		public void preCalculation() {
 
+			/***** Calculate screen and board positions and measurements *****/
 			int screenWidth = getWidth();
 			int screenHeight = getHeight();
 
@@ -904,39 +959,49 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 			int XShift = (screenWidth - boardScaleWidth)/2;
 			int YShift = (screenHeight - boardScaleHeight)/2;
+			
+			boardXpos = XShift;
+			boardYpos = YShift;
+			/***** Calculate screen and board positions and measurements *****/
 
 			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
 
+			/***** Calculate tile positions and measurements *****/
 			tileHeight = boardScaleHeight/currentConfig.rows;
 			tileWidth = boardScaleWidth/currentConfig.cols;
+			/***** Calculate tile positions and measurements *****/
 
+			/***** Calculate Hero related positions and measurements *****/
 			heroScaleWidth = (int) (tileWidth * HERO_SCALE_WIDTH_PERCENT);
 			heroScaleHeight = (int) (tileHeight * HERO_SCALE_HEIGHT_PERCENT);
 
 			shiftHeroX = (tileWidth - heroScaleWidth)/2;
 			shiftHeroY = (tileHeight - heroScaleHeight)/2;
-
+			
+			tileWidthSpriteInterval = tileWidth/heroSprite.getNumOfFrames();
+			tileHeightSpriteInterval = tileHeight/heroSprite.getNumOfFrames();
+			/***** Calculate Hero related positions and measurements *****/
+			
+			/***** Calculate Goal related positions and measurements *****/
 			goalScaleWidth = (int) (tileWidth * GOAL_SCALE_WIDTH_PERCENT);
 			goalScaleHeight = (int) (tileHeight * GOAL_SCALE_HEIGHT_PERCENT);
 
 			int shiftGoalX = (tileWidth - goalScaleWidth)/2;
 			int shiftGoalY = (tileHeight - goalScaleHeight)/2;
-
+			
+			goalXpos = boardXpos + shiftGoalX + currentConfig.targetX*tileWidth; 
+			goalYpos = boardYpos + shiftGoalY + currentConfig.targetY*tileHeight;
+			/***** Calculate Goal related positions and measurements *****/
+			
+			/***** Calculate Fire related positions and measurements *****/
 			fireScaleWidth = (int) (tileWidth * FIRE_SCALE_WIDTH_PERCENT);
 			fireScaleHeight = (int) (tileHeight * FIRE_SCALE_HEIGHT_PERCENT);
 
 			int shiftFireX = (tileWidth - fireScaleWidth)/2;
 			int shiftFireY = (tileHeight - fireScaleHeight)/2;
+			/***** Calculate Fire related positions and measurements *****/
 
-			tileWidthSpriteInterval = tileWidth/heroSprite.getNumOfFrames();
-			tileHeightSpriteInterval = tileHeight/heroSprite.getNumOfFrames();
-
-			boardXpos = XShift;
-			boardYpos = YShift;
-
-			goalXpos = boardXpos + shiftGoalX + currentConfig.targetX*tileWidth; 
-			goalYpos = boardYpos + shiftGoalY + currentConfig.targetY*tileHeight;
-
+			// Set fire tile XY positions.
 			if(currentConfig.fireTiles != null){
 
 				for (int i = 0; i < currentConfig.fireTiles.size(); i++) {
@@ -960,15 +1025,20 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 			render();
 
-			canvas.drawColor(Color.WHITE);		// TODO
+			// fill background.
+			canvas.drawColor(Color.WHITE);
 
+			// draw board.
 			canvas.drawBitmap(boardBitmap, boardXpos, boardYpos, null);
 
+			// draw fire tiles.
 			for (Pair<Integer, Integer> coord : fireXYpos) {
 				canvas.drawBitmap(fireCurrentBitmap, coord.first, coord.second, null);
 			}
 
+			// draw goal
 			canvas.drawBitmap(goalCurrentBitmap, goalXpos, goalYpos, null);
+			// draw hero
 			canvas.drawBitmap(heroCurrentBitmap, heroXpos, heroYpos, null);
 		}
 
@@ -979,9 +1049,11 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
 
+			// reset all data to the configuration.
 			heroXprevLogic = heroXcurrentLogic = currentConfig.heroStartX;
 			heroYprevLogic = heroYcurrentLogic = currentConfig.heroStartY;
 
+			// reset all sprites.
 			heroSprite.reset();
 			goalSprite.reset();
 			fireSprite.reset();

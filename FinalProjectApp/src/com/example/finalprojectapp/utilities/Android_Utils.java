@@ -31,34 +31,67 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Supplies the needed utility functions of the android system.
+ * @author daniel portnoy
+ *
+ */
 public class Android_Utils {
 
+	/**
+	 * Calculates the density pixels for the device.
+	 * @param dpValue
+	 * @param context
+	 * @return integer pixels.
+	 */
 	public static int calcDP(int dpValue , Context context){
 		return (int)(dpValue * context.getResources().getDisplayMetrics().density); 
 	}
 
+	/**
+	 * Sets up the view.
+	 * @param v - View to set up.
+	 * @param context
+	 */
 	public static void setLayoutParams(View v ,  Context context){
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.CENTER;
-		//params.setMargins(Android_Utils.calcDP(4 , context), 0, 0, 0);	// TODO
 		v.setPadding(Android_Utils.calcDP(3 , context), 0, 0, Android_Utils.calcDP(3 , context));
 		v.setLayoutParams(params);
 	}
 
-
+	/**
+	 * Sets up the setter view.
+	 * @param v - View to set up.
+	 * @param context
+	 */
 	public static void setSetterLayoutParams(View v ,  Context context){
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, calcDP(28, context)); //(calcDP(32, context), calcDP(24, context)
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, calcDP(28, context));
 		params.gravity = Gravity.CENTER;
 		params.setMargins(Android_Utils.calcDP(2 , context), 0, Android_Utils.calcDP(2 , context), 0);
 		v.setLayoutParams(params);
 	}
 
+	/**
+	 * Set up BitmapFactory.Options object.
+	 * @return BitmapFactory.Options object.
+	 */
 	public static BitmapFactory.Options BitmapFactoryOptionsInScaled(){
 		BitmapFactory.Options opts = new Options();
 		opts.inScaled = false;
 		return opts;
 	}
 
+	/**
+	 * Set up and display the endGame dialog.
+	 * @param ACTIVITY
+	 * @param title
+	 * @param headerText
+	 * @param text
+	 * @param textPositive
+	 * @param IS_WIN
+	 * @return AlertDialog.Builder object.
+	 */
 	public static AlertDialog.Builder getEndGameDialog(final Activity ACTIVITY,
 			String title, String headerText, String text , String textPositive, final boolean IS_WIN){
 
@@ -72,7 +105,7 @@ public class Android_Utils {
 
 		TextView headerTV = (TextView)view.findViewById(R.id.textView_gameEndTextHeader);
 		headerTV.setText(headerText);
-		
+
 		TextView textTV = (TextView)view.findViewById(R.id.textView_gameEndText);
 		textTV.setText(text);
 
@@ -86,7 +119,7 @@ public class Android_Utils {
 				SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(ACTIVITY);
 				boolean isSwipeMode = SP.getBoolean(Constants.SWIPE_KEY,Constants.DEFAULT_SWIPE);
 
-				
+
 				Intent intent = null;
 				if(IS_WIN || !isSwipeMode)
 				{
@@ -94,7 +127,7 @@ public class Android_Utils {
 						intent = new Intent(ACTIVITY, TutorialActivity.class);
 					else if(!isSwipeMode)
 						intent = new Intent(ACTIVITY, ScenraioDisplyActivity.class);
-					
+
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					ACTIVITY.startActivity(intent);
 					ACTIVITY.finish(); 
@@ -105,7 +138,7 @@ public class Android_Utils {
 			}
 		});
 
-		builder.setNegativeButton("Stay", new OnClickListener() {
+		builder.setNegativeButton(Constants.END_GAME_NEGATIVE_TEXT, new OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -116,6 +149,16 @@ public class Android_Utils {
 		return builder;
 	}
 
+	/**
+	 * Set up and display the startGame dialog.
+	 * @param ACTIVITY
+	 * @param title
+	 * @param headerText
+	 * @param text
+	 * @param textPositive
+	 * @param IS_WIN
+	 * @return AlertDialog.Builder object.
+	 */
 	public static AlertDialog.Builder getStartGameDialog(final Activity ACTIVITY, String title, String text){
 
 		// Creating and Building the Dialog 
@@ -150,7 +193,7 @@ public class Android_Utils {
 
 		builder.setView(view);
 
-		builder.setPositiveButton("OK", new OnClickListener() {
+		builder.setPositiveButton(Constants.END_GAME_POSITIVE_TEXT, new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {}
 		});
@@ -158,6 +201,12 @@ public class Android_Utils {
 		return builder;
 	}
 
+	/**
+	 * Creates a white background Bitmap.
+	 * @param width
+	 * @param height
+	 * @return Bitmap object.
+	 */
 	public static Bitmap GetWhiteBitmap(int width, int height){
 
 		Bitmap.Config conf = Bitmap.Config.ARGB_8888;

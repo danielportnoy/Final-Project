@@ -15,17 +15,23 @@ import com.example.finalprojectapp.node.concrete.block.InitialBlockNode;
 import com.example.finalprojectapp.scenario.Scenario;
 import com.example.finalprojectapp.scenario.configuration.Configuration;
 
+/**
+ * Control the flow of events of the level.
+ * @author daniel portnoy
+ *
+ */
 public class LevelManager {
 
-
+	// Data
 	private Scenario scenario;
 	private InitialBlockNode rootNode;
 
 	private CodeWritingManager codeWritingManager;
 	private CodeRunningManager codeRunningManager;
 
+	/*****  Singleton pattern *****/
 	private static LevelManager instance = new LevelManager();
-	
+
 	public static Class<?> lastWingActivityClass;
 
 	private LevelManager() {
@@ -35,7 +41,11 @@ public class LevelManager {
 	public static LevelManager getInstance() {
 		return instance;
 	}
+	/*****  Singleton pattern *****/
 
+	/**
+	 * Reset the data to default values.
+	 */
 	public void reset() {
 		rootNode = new InitialBlockNode();
 		scenario = null;
@@ -78,9 +88,12 @@ public class LevelManager {
 	/******************* GET *******************/
 
 	/******************* Utility *******************/
-	public boolean isCodeLinesValid() {
-		//return codeWritingManager.getLogics().isCodeLinesValid();
 
+	/**
+	 * Checks validity of the code lines.
+	 * @return boolean value.
+	 */
+	public boolean isCodeLinesValid() {
 		for (CodeWritingPart codePart : rootNode.getCodeWritingParts())
 			if(codePart.getSetter()!=null && codePart.getSetter().isMandatory())
 				return false;
@@ -95,7 +108,7 @@ public class LevelManager {
 	public void clearCode() {
 		rootNode = new InitialBlockNode();
 	}
-	
+
 	public int getNumOfSnapshots(){
 		return getCodeRunningManager().getLogics().getSnapshots().size();
 	}
@@ -135,37 +148,45 @@ public class LevelManager {
 	public boolean checkWin(TestCase testCase){
 		return scenario.checkWin(testCase.getConfig(), testCase.getSnapshots().get(testCase.getSnapshots().size() - 1).gameSnapshot);
 	}
-	
+
 	/********** game utilities **********/
-	
+
 	public void SetterClick(Setter setter) {
 		codeWritingManager.SetterClick(setter);
 	}
 
+	/**
+	 * Conduct the testing of the code for all of the Configurations.
+	 * @return list of the testCases.
+	 */
 	public List<TestCase> runCodeTests() {
-		
+
 		List<TestCase> tests = new ArrayList<TestCase>();
-		
+
+		// Iterate over all of the configurations.
 		for (Configuration config : scenario.getConfigs()) {
+
 			getScenario().setCurrentConfig(config);
 			getScenario().reset();
 			getCodeRunningManager().getLogics().reset();
-			
+
 			List<Snapshot> snapshots = getCodeRunningManager().getLogics().getSnapshots();
-			
+
 			MyException exception = null;
-			
+
+			// Run the code.
 			try {
 				getRootNode().run();
 			} catch (MyException e) {
 				exception = e;
 			}
 
+			// create a new testCase.
 			TestCase t = new TestCase(config, snapshots, exception);
-					
+
 			tests.add(t);
 		}
-		
+
 		return tests;
 	}
 

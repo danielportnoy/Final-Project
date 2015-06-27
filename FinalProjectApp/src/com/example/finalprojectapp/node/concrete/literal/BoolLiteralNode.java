@@ -12,6 +12,11 @@ import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Type;
 
+/**
+ * Holds the Logical data and functionality of a Boolean Literal 'Code part'.
+ * @author daniel portnoy
+ *
+ */
 public class BoolLiteralNode extends Node {
 
 	private boolean value;
@@ -60,6 +65,7 @@ public class BoolLiteralNode extends Node {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
+		// Add the literal value.
 		res.add(new CodeWritingPart(false, false, value + "", null, this));
 
 		return res;
@@ -71,6 +77,7 @@ public class BoolLiteralNode extends Node {
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
+		// Add the literal value.
 		res.add(new CodeRunningPart(false, false,isHighlighted, value + ""));
 
 		return res;
@@ -79,7 +86,6 @@ public class BoolLiteralNode extends Node {
 
 	@Override
 	public ReturnObject run() throws MyException {	
-		//LevelManager.getInstance().takeSnapshot(this); //TODO
 		return new ReturnObject(value);
 	}
 

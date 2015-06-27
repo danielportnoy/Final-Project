@@ -1,5 +1,10 @@
 package com.example.finalprojectapp.coderunning.exception;
 
+/**
+ * 
+ * @author daniel portnoy
+ *
+ */
 @SuppressWarnings("serial")
 public class MyException extends Exception {
 	

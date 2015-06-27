@@ -13,12 +13,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+/**
+ * Bridges between the Options data and the display.
+ * @author daniel portnoy
+ *
+ */
 public class OptionsAdapter extends ArrayAdapter<Option> {
 
 	private Context context = null;
 
 	private Setter currentSetter = null;
 
+	/**
+	 * 
+	 * @param context
+	 * @param resource
+	 * @param objects
+	 */
 	public OptionsAdapter(Context context, int resource, List<Option> objects) {
 		super(context, resource, objects);
 		this.context = context;
@@ -29,6 +40,8 @@ public class OptionsAdapter extends ArrayAdapter<Option> {
 
 		Button optionButton = null;
 		View view = null;
+		
+		// Inflating the VarValue item.
 
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,6 +51,8 @@ public class OptionsAdapter extends ArrayAdapter<Option> {
 			view = convertView;
 
 		optionButton = (Button) view.findViewById(R.id.button_option);
+		
+		//Set the option button.
 
 		Option item = getItem(position);
 

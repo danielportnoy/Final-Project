@@ -15,6 +15,11 @@ import com.example.finalprojectapp.node.Setter;
 import com.example.finalprojectapp.node.Type;
 import com.example.finalprojectapp.node.concrete.block.BlockNode;
 
+/**
+ * Holds the Logical data and functionality of a If than 'Code part'.
+ * @author daniel portnoy
+ *
+ */
 public class IfThenNode extends Node{
 
 	private Node condition;
@@ -53,15 +58,20 @@ public class IfThenNode extends Node{
 
 		Set<String> used = new HashSet<String>();
 
+		// Find any used identifiers after childNode.
 		if(childNode.equals(condition) && thenBody != null)
 			used.addAll(thenBody.getUsedIdentifiers());
 		else if(childNode.equals(thenBody))
 			used = new HashSet<String>();
 
+		// Find any declared identifiers in childNode.
 		Set<String> intersection = new HashSet<String>(used);
 		intersection.retainAll(childNode.getDeclaredIdentifiers());
 
+		// Check if deletion is valid.
 		if(intersection.isEmpty()){
+			
+			// delete the childNode.
 			if(childNode.equals(condition)){
 				removeFromScope(condition);
 				condition = null;
@@ -114,8 +124,10 @@ public class IfThenNode extends Node{
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
+		// Add the if text.
 		res.add(new CodeWritingPart(false, false, "if (", null, this));
 
+		// Add the condition Node or add '+' setter.
 		if(condition == null)
 			res.add(new CodeWritingPart(false, false, null, new ConditionSetter(this), this));
 		else
@@ -123,6 +135,7 @@ public class IfThenNode extends Node{
 
 		res.add(new CodeWritingPart(false, false, ")", null, this));
 
+		// Add the body Node or add '+' setter.
 		if(thenBody == null){
 			res.add(new CodeWritingPart(false, true, null, null, this));
 			res.add(new CodeWritingPart(true, false, null, null, this));
@@ -130,7 +143,7 @@ public class IfThenNode extends Node{
 			res.add(new CodeWritingPart(false, false, null, new ThenBodySetter(this), this));
 		}
 		else{
-			if(thenBody instanceof BlockNode)	//TODO
+			if(thenBody instanceof BlockNode)
 				res.addAll(thenBody.getCodeWritingParts());
 			else{
 				res.add(new CodeWritingPart(false, true, null, null, this));
@@ -149,11 +162,14 @@ public class IfThenNode extends Node{
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
+		// Add the if text.
 		res.add(new CodeRunningPart(false, false,isHighlighted, "if ("));
+		// Add the condition Node.
 		res.addAll(condition.getCodeRunningParts(target, isHighlighted));
 		res.add(new CodeRunningPart(false, false,isHighlighted, ")"));
 
-		if(thenBody instanceof BlockNode)	//TODO
+		// Add the body Node.
+		if(thenBody instanceof BlockNode)
 			res.addAll(thenBody.getCodeRunningParts(target, isHighlighted));
 		else{
 			res.add(new CodeRunningPart(false, true, isHighlighted, null));
@@ -174,12 +190,17 @@ public class IfThenNode extends Node{
 		return new ReturnObject();
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the Condition button for a For 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class ConditionSetter extends Setter{
 
 		final static int ORDER = 0;
 
 		public ConditionSetter(Node parent) {
-			super(/*"< bool expr >", */true, parent, ORDER);	//TODO
+			super(true, parent, ORDER);
 		}
 
 		@Override
@@ -199,12 +220,17 @@ public class IfThenNode extends Node{
 		}
 	}
 
+	/**
+	 * Logical and Graphic data and functionality of the Body button for a For 'Code part'.
+	 * @author daniel portnoy
+	 *
+	 */
 	class ThenBodySetter extends Setter{
 
 		static final int ORDER = 1;
 
 		public ThenBodySetter(Node parent) {
-			super(/*"+", */true, parent ,ORDER);	//TODO
+			super(true, parent ,ORDER);
 		}
 
 		@Override

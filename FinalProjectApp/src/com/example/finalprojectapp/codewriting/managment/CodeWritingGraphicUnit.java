@@ -3,6 +3,11 @@ package com.example.finalprojectapp.codewriting.managment;
 import com.example.finalprojectapp.codewriting.adapter.OptionsAdapter;
 import com.example.finalprojectapp.codewriting.adapter.CodeWritingLinesAdapter;
 
+/**
+ * Manages all code writing graphic visualization and display.
+ * @author daniel portnoy
+ *
+ */
 public class CodeWritingGraphicUnit {
 
 	private CodeWritingLinesAdapter codeWritingLinesAdapter;
@@ -13,10 +18,16 @@ public class CodeWritingGraphicUnit {
 		this.optionsAdapter = optionsAdapter;
 	}
 
+	/**
+	 * Displays the code options on the screen.
+	 */
 	public void updateOptions() {
 		optionsAdapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * Displays the code lines on the screen.
+	 */
 	public void updateCodeWritingLines() {
 		codeWritingLinesAdapter.notifyDataSetChanged();
 	}

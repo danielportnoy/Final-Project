@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.finalprojectapp.Constants;
 import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.coderunning.coderunning_components.CodeRunningPart;
 import com.example.finalprojectapp.coderunning.exception.MyException;
@@ -13,6 +14,11 @@ import com.example.finalprojectapp.node.Node;
 import com.example.finalprojectapp.node.ReturnObject;
 import com.example.finalprojectapp.node.Type;
 
+/**
+ * Holds the Logical data and functionality of a Increment 'Code part'.
+ * @author daniel portnoy
+ *
+ */
 public class IncrementNode extends Node {
 
 	private String identifierName;
@@ -62,7 +68,8 @@ public class IncrementNode extends Node {
 
 		List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-		res.add(new CodeWritingPart(false, false, identifierName+"++", null, this));
+		// Add the identifier name and Increment sign(++).
+		res.add(new CodeWritingPart(false, false, identifierName + Constants.INCREMENT_CODE_TEXT, null, this));
 
 		if(!isHideSemicolon())
 			res.add(new CodeWritingPart(false, false, ";", null, this));
@@ -76,7 +83,8 @@ public class IncrementNode extends Node {
 		isHighlighted = target.equals(this) || isHighlighted;
 		List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
-		res.add(new CodeRunningPart(false, false,isHighlighted, identifierName+"++"));
+		// Add the identifier name and Increment sign(++).
+		res.add(new CodeRunningPart(false, false,isHighlighted, identifierName + Constants.INCREMENT_CODE_TEXT));
 
 		if(!isHideSemicolon())
 			res.add(new CodeRunningPart(false, false,isHighlighted, ";"));

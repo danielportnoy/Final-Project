@@ -30,6 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.75"
+                    android:background="@android:color/white"
                     android:orientation="vertical" >
 
                     <ListView
@@ -105,12 +106,12 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal" >
 
-                        <!--
                         <ImageButton
                             android:id="@+id/button_startSnapshot"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@android:color/transparent"
                             android:onClick="onClick"
                             android:scaleType="fitCenter"
                             android:src="@drawable/previous" >
@@ -121,6 +122,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@android:color/transparent"
                             android:onClick="onClick"
                             android:scaleType="fitCenter"
                             android:src="@drawable/temp2" >
@@ -131,6 +133,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@android:color/transparent"
                             android:onClick="onClick"
                             android:scaleType="fitCenter"
                             android:src="@drawable/play" >
@@ -141,6 +144,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@android:color/transparent"
                             android:onClick="onClick"
                             android:scaleType="fitCenter"
                             android:src="@drawable/temp1" >
@@ -151,12 +155,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@android:color/transparent"
                             android:onClick="onClick"
                             android:scaleType="fitCenter"
                             android:src="@drawable/next" >
                         </ImageButton>
-                        -->
 
+                        <!--
                         <Button
                             android:id="@+id/button_startSnapshot"
                             android:layout_width="match_parent"
@@ -195,6 +200,7 @@
                             android:layout_weight="1"
                             android:onClick="onClick"
                             android:text="@string/toEnd" />
+                        -->
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

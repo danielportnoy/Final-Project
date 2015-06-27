@@ -19,6 +19,7 @@ public class MainManuActivity extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main_manu, menu);
 		return true;
@@ -26,21 +27,30 @@ public class MainManuActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		
 		if( v.getId() == R.id.buttonPLAY){
+			//Play button was clicked - launch wingPicking activity.
+			
 			Intent intent = new Intent(this, WingPickingActivity.class);
 			startActivity(intent);
 		}
 		else if(v.getId() == R.id.buttonSETTINGS){
+			//Settings button was clicked - launch settings activity.
+
 			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 		}
 		else if(v.getId() == R.id.buttonEXIT){
+			//Exit button was clicked - exit application.
+
 			System.exit(0);
 		}
 	}
 	
 	@Override
 	public void onBackPressed() {
+		//Back button was clicked - exit application.
+
 		super.onBackPressed();
 		System.exit(0);
 	}

@@ -24,10 +24,23 @@ import com.example.finalprojectapp.codewriting.option.concrete.operators.relatio
 import com.example.finalprojectapp.codewriting.option.concrete.vardec.*;*/
 import com.example.finalprojectapp.scenario.archetype.MazeScenarioArchetype;
 
+/**
+ * Instance of the Maze game scenario - Level 4.
+ * @author daniel portnoy
+ *
+ */
 public class Maze_Wing_Level_4 extends MazeScenarioArchetype {
 
-	public static final String MAZE_LEVEL4_TEXT = "";
+	// hint text.
+	public static final String MAZE_LEVEL4_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
+			"this time write a GENERAL solution (one that solves all cases)..\n\n"+
+			"Hint: try ALL of the movment options...\n\n" +
+			"Warning: be careful not to go out of the maze borders.\n\n"+
+			"Warning: be careful not to step on the fire.";
 
+	// Specific definitions.
+	
+	/***** Configuration 1 *****/
 	@SuppressWarnings("serial")
 	public static final List<List<BoardTilesTypesEnum>> MAZE_LEVEL4_BOARD_TILES_2 = new ArrayList<List<BoardTilesTypesEnum>>(){
 		{	
@@ -45,7 +58,16 @@ public class Maze_Wing_Level_4 extends MazeScenarioArchetype {
 			add(Arrays.asList(new Boolean[]{false, false, false, false}));	
 		}
 	};
-	
+
+	public static final int MAZE_LEVEL4_ROWS_1 = 2;
+	public static final int MAZE_LEVEL4_COLS_1 = 3;
+	public static final int MAZE_LEVEL4_HERO_X_POS_1 = 0;
+	public static final int MAZE_LEVEL4_HERO_Y_POS_1 = 0;
+	public static final int MAZE_LEVEL4_GOAL_X_POS_1 = 2;
+	public static final int MAZE_LEVEL4_GOAL_Y_POS_1 = 0;
+	/***** Configuration 1 *****/
+
+	/***** Configuration 2 *****/
 	@SuppressWarnings("serial")
 	public static final List<List<BoardTilesTypesEnum>> MAZE_LEVEL4_BOARD_TILES_1 = new ArrayList<List<BoardTilesTypesEnum>>(){
 		{	
@@ -62,15 +84,32 @@ public class Maze_Wing_Level_4 extends MazeScenarioArchetype {
 		}
 	};
 
+	public static final int MAZE_LEVEL4_ROWS_2 = 3;
+	public static final int MAZE_LEVEL4_COLS_2 = 4;
+	public static final int MAZE_LEVEL4_HERO_X_POS_2 = 0;
+	public static final int MAZE_LEVEL4_HERO_Y_POS_2 = 0;
+	public static final int MAZE_LEVEL4_GOAL_X_POS_2 = 3;
+	public static final int MAZE_LEVEL4_GOAL_Y_POS_2 = 0;
+	/***** Configuration 2 *****/
 
 	@Override
 	public void initiateConfigurations() {
 
-		setDefaultConfig(new MyConfiguration(2, 3, 0, 0, 2, 0, MAZE_LEVEL4_BOARD_TILES_1, MAZE_LEVEL4_FIRE_TILES_1));
+		setDefaultConfig(new MyConfiguration(
+				MAZE_LEVEL4_ROWS_1, MAZE_LEVEL4_COLS_1,
+				MAZE_LEVEL4_HERO_X_POS_1, MAZE_LEVEL4_HERO_Y_POS_1,
+				MAZE_LEVEL4_GOAL_X_POS_1, MAZE_LEVEL4_GOAL_Y_POS_1,
+				MAZE_LEVEL4_BOARD_TILES_1, MAZE_LEVEL4_FIRE_TILES_1));
+
 		setCurrentConfig(getDefaultConfig());
 
 		addToConfigs(getDefaultConfig());
-		addToConfigs(new MyConfiguration(3, 4, 0, 0, 3, 0, MAZE_LEVEL4_BOARD_TILES_2, MAZE_LEVEL4_FIRE_TILES_2));	
+
+		addToConfigs(new MyConfiguration(
+				MAZE_LEVEL4_ROWS_2, MAZE_LEVEL4_COLS_2,
+				MAZE_LEVEL4_HERO_X_POS_2, MAZE_LEVEL4_HERO_Y_POS_2,
+				MAZE_LEVEL4_GOAL_X_POS_2, MAZE_LEVEL4_GOAL_Y_POS_2,
+				MAZE_LEVEL4_BOARD_TILES_2, MAZE_LEVEL4_FIRE_TILES_2));
 
 	}
 
@@ -81,23 +120,23 @@ public class Maze_Wing_Level_4 extends MazeScenarioArchetype {
 		addToAvailableOptions(new GoLeftOption());
 		addToAvailableOptions(new GoUpOption());
 		addToAvailableOptions(new GoDownOption());
-		
+
 		addToAvailableOptions(new NumberOfRowsOption());
 		addToAvailableOptions(new NumberOfColumnsOption());
-		
+
 		addToAvailableOptions(new ForOption());
 		addToAvailableOptions(new WhileOption());
-		
+
 		addToAvailableOptions(new IntVarDecOption());
 		addToAvailableOptions(new IncrementOption());
 		addToAvailableOptions(new DecrementOption());
-		
+
 		addToAvailableOptions(new GreaterThanOption());
 		addToAvailableOptions(new LessThanOption());
-		
+
 		addToAvailableOptions(new NumberOption());
 		addToAvailableOptions(new BlockOption());
-		
+
 		addToAvailableOptions(new AdditionOption());
 		addToAvailableOptions(new SubtractionOption());
 	}

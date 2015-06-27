@@ -1,5 +1,10 @@
 package com.example.finalprojectapp.node;
 
+/**
+ * Hold the data returned from a Run simulation.
+ * @author daniel portnoy
+ *
+ */
 public class ReturnObject {
 
 	private Integer intValue = null;
@@ -12,7 +17,6 @@ public class ReturnObject {
 		this.boolValue = boolValue;
 	}
 	public ReturnObject() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Integer getIntValue() {

@@ -13,12 +13,19 @@ import com.example.finalprojectapp.codewriting.option.concrete.operators.relatio
 import com.example.finalprojectapp.codewriting.option.concrete.vardec.*;*/
 import com.example.finalprojectapp.scenario.archetype.MazeScenarioArchetype;
 
+/**
+ * Instance of the Maze game scenario - Level 3.
+ * @author daniel portnoy
+ *
+ */
 public class Maze_Wing_Level_3 extends MazeScenarioArchetype {
 
+	// hint text.
 	public static final String MAZE_LEVEL3_TEXT = "Hello, travler! you'r goal is to reach the Coin. go ahead and try.... \n\n" +
 			"Hint: try ALL of the movment options...\n\n" +
 			"Warning: be careful not to go out of the maze borders.";
 	
+	// Specific definitions.
 	@SuppressWarnings("serial")
 	public static final List<List<BoardTilesTypesEnum>> MAZE_LEVEL3_BOARD_TILES = new ArrayList<List<BoardTilesTypesEnum>>(){
 		{
@@ -29,11 +36,23 @@ public class Maze_Wing_Level_3 extends MazeScenarioArchetype {
 
 		}
 	};
+	
+	public static final int MAZE_LEVEL3_ROWS = 4;
+	public static final int MAZE_LEVEL3_COLS = 4;
+	public static final int MAZE_LEVEL3_HERO_X_POS = 1;
+	public static final int MAZE_LEVEL3_HERO_Y_POS = 1;
+	public static final int MAZE_LEVEL3_GOAL_X_POS = 3;
+	public static final int MAZE_LEVEL3_GOAL_Y_POS = 2;
 
 	@Override
 	public void initiateConfigurations() {
 
-		setDefaultConfig(new MyConfiguration(4, 4, 1, 1, 3, 2, MAZE_LEVEL3_BOARD_TILES, null));
+		setDefaultConfig(new MyConfiguration(
+				MAZE_LEVEL3_ROWS, MAZE_LEVEL3_COLS,
+				MAZE_LEVEL3_HERO_X_POS, MAZE_LEVEL3_HERO_Y_POS,
+				MAZE_LEVEL3_GOAL_X_POS, MAZE_LEVEL3_GOAL_Y_POS,
+				MAZE_LEVEL3_BOARD_TILES, null));
+
 		setCurrentConfig(getDefaultConfig());
 
 		addToConfigs(getDefaultConfig());	
