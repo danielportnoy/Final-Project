@@ -39,56 +39,66 @@ public class Maze_Wing_Level_4 extends MazeScenarioArchetype {
 			"Warning: be careful not to step on the fire.";
 
 	// Specific definitions.
-	
+
 	/***** Configuration 1 *****/
+	@SuppressWarnings("serial")
+	public static final List<List<BoardTilesTypesEnum>> MAZE_LEVEL4_BOARD_TILES_1 = new ArrayList<List<BoardTilesTypesEnum>>(){
+		{	
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+		}
+	};
+
+	@SuppressWarnings("serial")
+	public static final List<List<Boolean>> MAZE_LEVEL4_FIRE_TILES_1 = new ArrayList<List<Boolean>>(){
+		{		
+			add(Arrays.asList(new Boolean[]{false, true, true, true, false}));
+			add(Arrays.asList(new Boolean[]{false, true, true, true, false}));	
+			add(Arrays.asList(new Boolean[]{false, true, true, true, false}));
+			add(Arrays.asList(new Boolean[]{false, false, false, false, false}));	
+		}
+	};
+
+	public static final int MAZE_LEVEL4_ROWS_1 = 4;
+	public static final int MAZE_LEVEL4_COLS_1 = 5;
+	public static final int MAZE_LEVEL4_HERO_X_POS_1 = 0;
+	public static final int MAZE_LEVEL4_HERO_Y_POS_1 = 0;
+	public static final int MAZE_LEVEL4_GOAL_X_POS_1 = 4;
+	public static final int MAZE_LEVEL4_GOAL_Y_POS_1 = 0;
+	/***** Configuration 1 *****/
+
+	/***** Configuration 2 *****/
 	@SuppressWarnings("serial")
 	public static final List<List<BoardTilesTypesEnum>> MAZE_LEVEL4_BOARD_TILES_2 = new ArrayList<List<BoardTilesTypesEnum>>(){
 		{	
-			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
-			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
-			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
+			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));			
 		}
 	};
 
 	@SuppressWarnings("serial")
 	public static final List<List<Boolean>> MAZE_LEVEL4_FIRE_TILES_2 = new ArrayList<List<Boolean>>(){
 		{
-			add(Arrays.asList(new Boolean[]{false, true, true, false}));
-			add(Arrays.asList(new Boolean[]{false, true, true, false}));
-			add(Arrays.asList(new Boolean[]{false, false, false, false}));	
+			add(Arrays.asList(new Boolean[]{false, true, true, true, true, true, false}));
+			add(Arrays.asList(new Boolean[]{false, true, true, true, true, true, false}));
+			add(Arrays.asList(new Boolean[]{false, true, true, true, true, true, false}));	
+			add(Arrays.asList(new Boolean[]{false, true, true, true, true, true, false}));
+			add(Arrays.asList(new Boolean[]{false, true, true, true, true, true, false}));
+			add(Arrays.asList(new Boolean[]{false, false, false, false, false, false, false}));	
 		}
 	};
 
-	public static final int MAZE_LEVEL4_ROWS_1 = 2;
-	public static final int MAZE_LEVEL4_COLS_1 = 3;
-	public static final int MAZE_LEVEL4_HERO_X_POS_1 = 0;
-	public static final int MAZE_LEVEL4_HERO_Y_POS_1 = 0;
-	public static final int MAZE_LEVEL4_GOAL_X_POS_1 = 2;
-	public static final int MAZE_LEVEL4_GOAL_Y_POS_1 = 0;
-	/***** Configuration 1 *****/
-
-	/***** Configuration 2 *****/
-	@SuppressWarnings("serial")
-	public static final List<List<BoardTilesTypesEnum>> MAZE_LEVEL4_BOARD_TILES_1 = new ArrayList<List<BoardTilesTypesEnum>>(){
-		{	
-			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
-			add(Arrays.asList(new BoardTilesTypesEnum[]{BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass, BoardTilesTypesEnum.Grass}));
-		}
-	};
-
-	@SuppressWarnings("serial")
-	public static final List<List<Boolean>> MAZE_LEVEL4_FIRE_TILES_1 = new ArrayList<List<Boolean>>(){
-		{
-			add(Arrays.asList(new Boolean[]{false, true, false}));
-			add(Arrays.asList(new Boolean[]{false, false, false}));	
-		}
-	};
-
-	public static final int MAZE_LEVEL4_ROWS_2 = 3;
-	public static final int MAZE_LEVEL4_COLS_2 = 4;
+	public static final int MAZE_LEVEL4_ROWS_2 = 6;
+	public static final int MAZE_LEVEL4_COLS_2 = 7;
 	public static final int MAZE_LEVEL4_HERO_X_POS_2 = 0;
 	public static final int MAZE_LEVEL4_HERO_Y_POS_2 = 0;
-	public static final int MAZE_LEVEL4_GOAL_X_POS_2 = 3;
+	public static final int MAZE_LEVEL4_GOAL_X_POS_2 = 6;
 	public static final int MAZE_LEVEL4_GOAL_Y_POS_2 = 0;
 	/***** Configuration 2 *****/
 

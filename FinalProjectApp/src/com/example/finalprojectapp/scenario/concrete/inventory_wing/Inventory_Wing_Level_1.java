@@ -87,9 +87,9 @@ public class Inventory_Wing_Level_1 extends InventoryScenarioArchetype {
 			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
 					INVENTORY_LEVEL1_INVENTORY_ITEM_1, INVENTORY_LEVEL1_INVENTORY_ITEM_1_AMOUNT));
 			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
-					INVENTORY_LEVEL1_INVENTORY_ITEM_1, INVENTORY_LEVEL1_INVENTORY_ITEM_2_AMOUNT));
+					INVENTORY_LEVEL1_INVENTORY_ITEM_2, INVENTORY_LEVEL1_INVENTORY_ITEM_2_AMOUNT));
 			add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(
-					INVENTORY_LEVEL1_INVENTORY_ITEM_1, INVENTORY_LEVEL1_INVENTORY_ITEM_3_AMOUNT));
+					INVENTORY_LEVEL1_INVENTORY_ITEM_3, INVENTORY_LEVEL1_INVENTORY_ITEM_3_AMOUNT));
 
 		}
 	};
@@ -97,11 +97,11 @@ public class Inventory_Wing_Level_1 extends InventoryScenarioArchetype {
 
 	/***** Win Inventory *****/
 	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_1 = InventoryItemsEnum.Shild;
-	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_1_AMOUNT = 3;
+	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_1_AMOUNT = 1;
 	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_2 = InventoryItemsEnum.Sword;
-	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_2_AMOUNT = 1;
+	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_2_AMOUNT = 2;
 	public static final InventoryItemsEnum INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_3 = InventoryItemsEnum.Helmet;
-	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_3_AMOUNT = 2;
+	public static final int INVENTORY_LEVEL1_INVENTORY_WIN_ITEM_3_AMOUNT = 3;
 	@SuppressWarnings("serial")
 	public static final ArrayList<Pair<InventoryItemsEnum,Integer>> WIN_INVENTORY_LEVEL1 = new ArrayList<Pair<InventoryItemsEnum,Integer>>(){
 		{
@@ -121,7 +121,7 @@ public class Inventory_Wing_Level_1 extends InventoryScenarioArchetype {
 		List<Pair<InventoryItemsEnum, Integer>> items = randomizeInventoryItems(4);
 		setDefaultConfig(new MyConfiguration(items, items, items.size()));
 		 */
-		setDefaultConfig(new MyConfiguration(INVENTORY_LEVEL1, WIN_INVENTORY_LEVEL1, INVENTORY_LEVEL1_INVENTORY_SIZE));
+		setDefaultConfig(new MyConfiguration(INVENTORY_LEVEL1, sortInventory(INVENTORY_LEVEL1), INVENTORY_LEVEL1_INVENTORY_SIZE));
 
 		setCurrentConfig(getDefaultConfig());
 

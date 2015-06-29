@@ -130,7 +130,7 @@ public class SubtractionNode extends Node{
 			res.addAll(left.getCodeWritingParts());
 
 		// Add the subtraction sign (-).
-		res.add(new CodeWritingPart(false, false, Constants.ADDITION_CODE_TEXT, null, this));
+		res.add(new CodeWritingPart(false, false, Constants.SUBTRACTION_CODE_TEXT, null, this));
 
 		// Add the right Node or add '+' setter.
 		if(right == null)
@@ -151,7 +151,7 @@ public class SubtractionNode extends Node{
 		res.addAll(left.getCodeRunningParts(target, isHighlighted));
 
 		// Add the subtraction sign (-).
-		res.add(new CodeRunningPart(false, false,isHighlighted, Constants.ADDITION_CODE_TEXT));
+		res.add(new CodeRunningPart(false, false,isHighlighted, Constants.SUBTRACTION_CODE_TEXT));
 
 		// Add the right Node.
 		res.addAll(right.getCodeRunningParts(target, isHighlighted));

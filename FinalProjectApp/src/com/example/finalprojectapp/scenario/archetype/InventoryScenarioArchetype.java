@@ -98,6 +98,37 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 		return randomInventory;
 	}
+	
+	/**
+	 * Sort the given inventory.
+	 * @param inventory
+	 * @return List of items.
+	 */
+	public List<Pair<InventoryItemsEnum,Integer>> sortInventory(List<Pair<InventoryItemsEnum,Integer>> inventory){
+		
+		List<Pair<InventoryItemsEnum,Integer>> sortedInventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
+		
+		for (Pair<InventoryItemsEnum,Integer> item : inventory)
+			sortedInventory.add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(item.first, item.second));
+		
+		for (int i = 0; i < sortedInventory.size(); i++) {
+			
+			int swapIndex = i;
+			Integer minAmount = sortedInventory.get(i).second;
+			
+			for (int j = i + 1; j < sortedInventory.size(); j++) {
+				
+				if(sortedInventory.get(j).second < minAmount){
+					minAmount = sortedInventory.get(j).second;
+					swapIndex = j;
+				}
+			}
+			
+			Collections.swap(sortedInventory, i, swapIndex);	
+		}
+		
+		return sortedInventory;
+	}
 
 	@Override
 	public void reset() {
