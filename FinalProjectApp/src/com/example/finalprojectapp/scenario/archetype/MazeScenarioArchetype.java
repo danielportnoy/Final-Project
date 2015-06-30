@@ -430,8 +430,10 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 				throw e;
 			}
 
-			if(currentConfig.fireTiles.get(heroCurrentY).get(heroCurrentX))
-				throw new StepOnFireException();
+			if(currentConfig.fireTiles != null){
+				if(currentConfig.fireTiles.get(heroCurrentY).get(heroCurrentX))
+					throw new StepOnFireException();
+			}
 
 			return new ReturnObject();
 		}
@@ -959,7 +961,7 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 			int XShift = (screenWidth - boardScaleWidth)/2;
 			int YShift = (screenHeight - boardScaleHeight)/2;
-			
+
 			boardXpos = XShift;
 			boardYpos = YShift;
 			/***** Calculate screen and board positions and measurements *****/
@@ -977,22 +979,22 @@ public abstract class  MazeScenarioArchetype extends Scenario {
 
 			shiftHeroX = (tileWidth - heroScaleWidth)/2;
 			shiftHeroY = (tileHeight - heroScaleHeight)/2;
-			
+
 			tileWidthSpriteInterval = tileWidth/heroSprite.getNumOfFrames();
 			tileHeightSpriteInterval = tileHeight/heroSprite.getNumOfFrames();
 			/***** Calculate Hero related positions and measurements *****/
-			
+
 			/***** Calculate Goal related positions and measurements *****/
 			goalScaleWidth = (int) (tileWidth * GOAL_SCALE_WIDTH_PERCENT);
 			goalScaleHeight = (int) (tileHeight * GOAL_SCALE_HEIGHT_PERCENT);
 
 			int shiftGoalX = (tileWidth - goalScaleWidth)/2;
 			int shiftGoalY = (tileHeight - goalScaleHeight)/2;
-			
+
 			goalXpos = boardXpos + shiftGoalX + currentConfig.targetX*tileWidth; 
 			goalYpos = boardYpos + shiftGoalY + currentConfig.targetY*tileHeight;
 			/***** Calculate Goal related positions and measurements *****/
-			
+
 			/***** Calculate Fire related positions and measurements *****/
 			fireScaleWidth = (int) (tileWidth * FIRE_SCALE_WIDTH_PERCENT);
 			fireScaleHeight = (int) (tileHeight * FIRE_SCALE_HEIGHT_PERCENT);

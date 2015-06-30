@@ -1,8 +1,8 @@
 package com.example.finalprojectapp.utilities;
 
 import com.example.finalprojectapp.Constants;
+import com.example.finalprojectapp.LevelManager;
 import com.example.finalprojectapp.R;
-import com.example.finalprojectapp.activities.TutorialActivity;
 import com.example.finalprojectapp.activities.ScenraioDisplyActivity;
 import com.example.finalprojectapp.gamescreen.GameScreenActivity;
 
@@ -124,7 +124,7 @@ public class Android_Utils {
 				if(IS_WIN || !isSwipeMode)
 				{
 					if(IS_WIN)
-						intent = new Intent(ACTIVITY, TutorialActivity.class);
+						intent = new Intent(ACTIVITY, LevelManager.lastWingActivityClass);
 					else if(!isSwipeMode)
 						intent = new Intent(ACTIVITY, ScenraioDisplyActivity.class);
 
