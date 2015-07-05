@@ -22,7 +22,7 @@ public abstract class LogicTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp(); 
 		
-		levelManager.reset();
+		levelManager.reset(); 
 
 		CodeWritingLogicUnit writingLogics = new CodeWritingLogicUnit();
 		CodeWritingManager writingManager = new CodeWritingManager(writingLogics, null);
