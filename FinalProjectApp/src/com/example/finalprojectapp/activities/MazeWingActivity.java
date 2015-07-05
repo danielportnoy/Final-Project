@@ -90,9 +90,10 @@ public class MazeWingActivity extends Activity implements OnClickListener {
 		
 		//Set the scenario in according to the button that was clicked.
 	
-		levelManager.loadScenario(scenario);
-
-		startActivity(intent);
+		if(scenario != null){
+			levelManager.loadScenario(scenario);
+			startActivity(intent);
+		}
 	}
 
 	@Override

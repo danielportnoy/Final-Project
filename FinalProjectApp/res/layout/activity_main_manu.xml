@@ -25,49 +25,27 @@
 
         <Button
             android:id="@+id/buttonPLAY"
+            style="@style/my_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/menu_button"
             android:onClick="onClick"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/play"
-            android:textColor="#4792d6" />
+            android:text="@string/play" />
 
         <Button
             android:id="@+id/buttonSETTINGS"
+            style="@style/my_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/menu_button"
             android:onClick="onClick"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/settings"
-            android:textColor="#4792d6" />
+            android:text="@string/settings" />
 
         <Button
             android:id="@+id/buttonEXIT"
+            style="@style/my_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/menu_button"
             android:onClick="onClick"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/exit"
-            android:textColor="#4792d6" />
-
+            android:text="@string/exit" />
     </LinearLayout>
 
 </RelativeLayout>

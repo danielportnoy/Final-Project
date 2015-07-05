@@ -147,7 +147,7 @@ public class BlockNode extends Node {
 			res.add(new CodeRunningPart(false, true,isHighlighted, null));
 		}
 
-		res.add(new CodeRunningPart(false, true, isHighlighted, null));
+//		res.add(new CodeRunningPart(false, true, isHighlighted, null));
 		res.add(new CodeRunningPart(false, false,isHighlighted, "}"));
 
 		return res;

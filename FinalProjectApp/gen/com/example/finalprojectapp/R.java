@@ -47,16 +47,20 @@ containing a value of this type.
         public static final int inventory_slot=0x7f020007;
         public static final int mandatory_button=0x7f020008;
         public static final int mandatory_button_highlighted=0x7f020009;
-        public static final int menu_button=0x7f02000a;
-        public static final int next=0x7f02000b;
-        public static final int not_mandatory_button=0x7f02000c;
-        public static final int not_mandatory_button_highlighted=0x7f02000d;
-        public static final int play=0x7f02000e;
-        public static final int previous=0x7f02000f;
-        public static final int temp1=0x7f020010;
-        public static final int temp2=0x7f020011;
-        public static final int tile_set_one=0x7f020012;
-        public static final int tile_set_two=0x7f020013;
+        public static final int my_button=0x7f02000a;
+        public static final int my_button_disabled=0x7f02000b;
+        public static final int my_button_enabled=0x7f02000c;
+        public static final int my_button_focused=0x7f02000d;
+        public static final int my_button_pressed=0x7f02000e;
+        public static final int next=0x7f02000f;
+        public static final int not_mandatory_button=0x7f020010;
+        public static final int not_mandatory_button_highlighted=0x7f020011;
+        public static final int play=0x7f020012;
+        public static final int previous=0x7f020013;
+        public static final int temp1=0x7f020014;
+        public static final int temp2=0x7f020015;
+        public static final int tile_set_one=0x7f020016;
+        public static final int tile_set_two=0x7f020017;
     }
     public static final class id {
         public static final int LinearLayout_Code=0x7f090003;
@@ -79,22 +83,22 @@ containing a value of this type.
         public static final int action_clear=0x7f090052;
         public static final int action_settings=0x7f090051;
         public static final int buttonCode=0x7f09002c;
-        public static final int buttonEXIT=0x7f090020;
-        public static final int buttonPLAY=0x7f09001e;
+        public static final int buttonEXIT=0x7f090023;
+        public static final int buttonPLAY=0x7f090021;
         public static final int buttonRun=0x7f09002d;
-        public static final int buttonSETTINGS=0x7f09001f;
+        public static final int buttonSETTINGS=0x7f090022;
         public static final int button_Inventory_Wing=0x7f090040;
         public static final int button_Maze_Wing=0x7f09003f;
         public static final int button_PlayPause=0x7f09000f;
         public static final int button_Tutorial=0x7f09003e;
         public static final int button_endSnapshot=0x7f090011;
         public static final int button_inventory_wing_LEVEL1=0x7f09001c;
-        public static final int button_maze_wing_LEVEL1=0x7f090021;
-        public static final int button_maze_wing_LEVEL2=0x7f090022;
-        public static final int button_maze_wing_LEVEL3=0x7f090023;
-        public static final int button_maze_wing_LEVEL4=0x7f090026;
-        public static final int button_maze_wing_LEVEL5=0x7f090027;
-        public static final int button_maze_wing_LEVEL6=0x7f090028;
+        public static final int button_inventory_wing_LEVEL2=0x7f09001f;
+        public static final int button_maze_wing_LEVEL1=0x7f090024;
+        public static final int button_maze_wing_LEVEL2=0x7f090025;
+        public static final int button_maze_wing_LEVEL3=0x7f090026;
+        public static final int button_maze_wing_LEVEL4=0x7f090027;
+        public static final int button_maze_wing_LEVEL5=0x7f090028;
         public static final int button_nextSnapshot=0x7f090010;
         public static final int button_option=0x7f090044;
         public static final int button_prevSnapshot=0x7f09000e;
@@ -112,7 +116,7 @@ containing a value of this type.
         public static final int button_tutorial_LEVEL9=0x7f090038;
         public static final int checkBox_ShowNessageAgain=0x7f09004d;
         public static final int editText_Identifier=0x7f090045;
-        public static final int linearLayout_menuButtons=0x7f09001d;
+        public static final int linearLayout_menuButtons=0x7f090020;
         public static final int listView_Options=0x7f090016;
         public static final int listView_Running_Code=0x7f090004;
         public static final int listView_Running_VarValues=0x7f090007;
@@ -129,11 +133,11 @@ containing a value of this type.
         public static final int tableLayout_maze_wing=0x7f090019;
         public static final int tableLayout_tutorial=0x7f09002e;
         public static final int tableRow1=0x7f09001b;
-        public static final int tableRow2=0x7f090025;
+        public static final int tableRow2=0x7f09001e;
         public static final int tableRow3=0x7f090035;
         public static final int tableRow4=0x7f09003a;
         public static final int textView_Row1_head=0x7f09001a;
-        public static final int textView_Row2_head=0x7f090024;
+        public static final int textView_Row2_head=0x7f09001d;
         public static final int textView_Row3_head=0x7f090034;
         public static final int textView_Row4_head=0x7f090039;
         public static final int textView_Var_Name=0x7f09004f;
@@ -187,6 +191,7 @@ containing a value of this type.
         public static final int assignment=0x7f06002a;
         public static final int basic_move=0x7f06002e;
         public static final int booleans=0x7f060028;
+        public static final int bubble=0x7f060038;
         public static final int clear=0x7f06001a;
         public static final int code=0x7f060008;
         public static final int dat_loop_=0x7f060026;
@@ -217,6 +222,7 @@ containing a value of this type.
         public static final int reset=0x7f060009;
         public static final int run=0x7f060007;
         public static final int settings=0x7f060002;
+        public static final int sort=0x7f060037;
         public static final int start_=0x7f060023;
         public static final int swap=0x7f060033;
         public static final int swipe_mode_off=0x7f06001e;
@@ -239,11 +245,23 @@ containing a value of this type.
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+
+
+
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
+
+
+
+
+
 
         
 
@@ -263,7 +281,9 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int MyApplicationTheme=0x7f070004;
         public static final int PreferencesTheme=0x7f070002;
+        public static final int my_button=0x7f070003;
     }
     public static final class xml {
         public static final int preferences=0x7f040000;

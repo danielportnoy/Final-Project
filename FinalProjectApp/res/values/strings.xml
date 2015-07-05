@@ -56,5 +56,7 @@
     <string name="diagonal">Diagonal</string>
     <string name="firewall">FireWall</string>
     <string name="don_t_play_with_fire">Don\'t play with fire</string>
+    <string name="sort">Sort</string>
+    <string name="bubble">Bubble</string>
 
 </resources>

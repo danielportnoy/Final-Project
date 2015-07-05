@@ -46,18 +46,36 @@
 
                 <Button
                     android:id="@+id/button_inventory_wing_LEVEL1"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/swap"
-                    android:textColor="#4792d6" />
+                    android:text="@string/swap" />
+            </TableRow>
+
+            <TextView
+                android:id="@+id/textView_Row2_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/sort"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textStyle="bold" />
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/button_inventory_wing_LEVEL2"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="@string/bubble" />
             </TableRow>
         </TableLayout>
     </ScrollView>

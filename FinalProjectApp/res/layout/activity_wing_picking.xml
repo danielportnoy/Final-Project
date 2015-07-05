@@ -25,48 +25,27 @@
 
         <Button
             android:id="@+id/button_Tutorial"
+            style="@style/my_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/menu_button"
             android:onClick="onClick"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/tutorial"
-            android:textColor="#4792d6" />
+            android:text="@string/tutorial" />
 
         <Button
             android:id="@+id/button_Maze_Wing"
+            style="@style/my_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/menu_button"
             android:onClick="onClick"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/maze_wing"
-            android:textColor="#4792d6" />
+            android:text="@string/maze_wing" />
 
         <Button
             android:id="@+id/button_Inventory_Wing"
+            style="@style/my_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/menu_button"
             android:onClick="onClick"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/inventory_wing"
-            android:textColor="#4792d6" />
+            android:text="@string/inventory_wing" />
     </LinearLayout>
 
 </RelativeLayout>

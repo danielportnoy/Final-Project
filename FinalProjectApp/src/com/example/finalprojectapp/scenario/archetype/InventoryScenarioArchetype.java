@@ -2,8 +2,10 @@ package com.example.finalprojectapp.scenario.archetype;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import android.content.Context;
@@ -41,9 +43,49 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 	public static final String INDEX_OUT_OF_BOUND_EXCEPTION_TEXT = "Exception : The index is out of range.";
 
 	public static enum InventoryItemsEnum{
-		Sword,
-		Helmet,
-		Shild	
+		Sword(1),
+		Helmet(2),
+		Shild(3),
+		Ring(4),
+		Neckless(5),
+		Diamond(6),
+		Key(7),
+		Book(8),
+		Axe(9),
+		Armor(10),
+		Wand(11);
+
+		private int id;
+
+		private static Map<Integer, InventoryItemsEnum> map = new HashMap<Integer, InventoryItemsEnum>();
+		static {
+			for (InventoryItemsEnum itemEnum : InventoryItemsEnum.values()) {
+				map.put(itemEnum.id, itemEnum);
+			}
+		}
+
+		private InventoryItemsEnum(int id) {
+			this.id = id;
+		}
+
+		public static InventoryItemsEnum getRandomItem() {
+			return values()[(int) (Math.random() * values().length)];
+		}
+
+		public static List<InventoryItemsEnum> getAllItems() {
+
+			List<InventoryItemsEnum> items = new ArrayList<InventoryItemsEnum>();
+
+			for (int i = 1; i <= InventoryItemsEnum.values().length; i++)
+				items.add(InventoryItemsEnumById(i));
+
+			return items;
+		}
+		
+		public static InventoryItemsEnum InventoryItemsEnumById(int id) {
+	        return map.get(id);
+	    }
+
 	}
 
 	// Scenario dynamic parts.
@@ -56,77 +98,65 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 	 */
 	public List<Pair<InventoryItemsEnum, Integer>> randomizeInventoryItems(int size){
 
-		// Create a new logical nventory.
+		// Create a new logical inventory.
 		List<Pair<InventoryItemsEnum, Integer>> randomInventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
 
-		List<Integer> usedAmounts = new ArrayList<Integer>();
+		List<InventoryItemsEnum> items = InventoryItemsEnum.getAllItems();
+
+		List<Integer> amounts = new ArrayList<Integer>();
+		for (int i = 1; i <= size; i++)
+			amounts.add(i);
 
 		for (int i = 0; i < size; i++) {
 
-			// Randomize an item.
-			int randomNumItem = Logic_Utils.randInt(1 , InventoryItemsEnum.values().length);
+			// Randomize an item.	
+			int randomNumItemIndex = Logic_Utils.randInt(0 , items.size() - 1);
+			InventoryItemsEnum randomItem = items.get(randomNumItemIndex);
 
 			// Randomize an amount.
-			int randomNumAmount = Logic_Utils.randInt(1 , 99);
+			int randomNumAmountIndex = Logic_Utils.randInt(0 , amounts.size() - 1);
+			int amount =  amounts.get(randomNumAmountIndex);
 
-			// remove duplications in the amount.
-			while (usedAmounts.contains(randomNumAmount))
-				randomNumAmount = Logic_Utils.randInt(1 , 99);
+			randomInventory.add(i,new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(randomItem, amount));
 
+			amounts.remove(randomNumAmountIndex);
+			items.remove(randomNumItemIndex);
 
-			// Add the item to the inventory.
-			usedAmounts.add(randomNumAmount);
-
-			switch (randomNumItem) {
-			case 1:
-				randomInventory.add(i,
-						new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Sword, randomNumAmount));
-				break;
-			case 2:
-				randomInventory.add(i,
-						new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Helmet, randomNumAmount));
-				break;
-			case 3:
-				randomInventory.add(i,
-						new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(InventoryItemsEnum.Shild, randomNumAmount));
-				break;
-
-			default:
-				break;
-			}	
+			if(items.isEmpty())
+				items = InventoryItemsEnum.getAllItems();
 		}
 
 		return randomInventory;
 	}
-	
+
 	/**
 	 * Sort the given inventory.
 	 * @param inventory
 	 * @return List of items.
 	 */
 	public List<Pair<InventoryItemsEnum,Integer>> sortInventory(List<Pair<InventoryItemsEnum,Integer>> inventory){
-		
+
 		List<Pair<InventoryItemsEnum,Integer>> sortedInventory = new ArrayList<Pair<InventoryItemsEnum,Integer>>();
-		
+
 		for (Pair<InventoryItemsEnum,Integer> item : inventory)
 			sortedInventory.add(new Pair<InventoryScenarioArchetype.InventoryItemsEnum, Integer>(item.first, item.second));
-		
+
 		for (int i = 0; i < sortedInventory.size(); i++) {
-			
+
 			int swapIndex = i;
 			Integer minAmount = sortedInventory.get(i).second;
-			
+
 			for (int j = i + 1; j < sortedInventory.size(); j++) {
-				
+
 				if(sortedInventory.get(j).second < minAmount){
 					minAmount = sortedInventory.get(j).second;
 					swapIndex = j;
 				}
 			}
-			
+
 			Collections.swap(sortedInventory, i, swapIndex);	
 		}
-		
+
 		return sortedInventory;
 	}
 
@@ -293,12 +323,14 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 	 * @author daniel portnoy
 	 *
 	 */
-	protected class swapNode extends Node{
+	protected class SwapNode extends Node{
+
+		public static final String SWAP_CODE_TEXT = "swap";
 
 		private Node left;
 		private Node right;
 
-		public swapNode() {
+		public SwapNode() {
 			setType(Type.Statement);
 		}
 
@@ -307,7 +339,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 
 			List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
 
-			res.add(new CodeWritingPart(false, false, "swap( ", null, this));
+			res.add(new CodeWritingPart(false, false, SWAP_CODE_TEXT + "(", null, this));
 
 			if(left == null)
 				res.add(new CodeWritingPart(false, false, null, new LeftSetter(this), this));
@@ -332,7 +364,7 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			isHighlighted = target.equals(this) || isHighlighted;
 			List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
 
-			res.add(new CodeRunningPart(false, false,isHighlighted, "swap( "));
+			res.add(new CodeRunningPart(false, false,isHighlighted, SWAP_CODE_TEXT + "("));
 
 			res.addAll(left.getCodeRunningParts(target, isHighlighted));
 
@@ -503,6 +535,257 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 			}
 		}
 	}
+
+	/**
+	 * Inventory scenario specific Node object.
+	 * @author daniel portnoy
+	 *
+	 */
+	protected class InventorySizeNode extends Node{
+
+		public static final String INVENTORY_SIZE_CODE_TEXT = "inventorySize";
+
+		public InventorySizeNode() {
+			setType(Type.Int);
+		}
+
+		@Override
+		public List<CodeWritingPart> getCodeWritingParts() {
+
+			List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
+
+			res.add(new CodeWritingPart(false, false, INVENTORY_SIZE_CODE_TEXT, null, this));
+
+			return res;
+		}
+
+		@Override
+		public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
+
+			isHighlighted = target.equals(this) || isHighlighted;
+			List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+			res.add(new CodeRunningPart(false, false,isHighlighted, INVENTORY_SIZE_CODE_TEXT));
+
+			return res;
+		}
+
+		@Override
+		public ReturnObject run() throws MyException {
+
+			LevelManager.getInstance().takeSnapshot(this);
+
+			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+
+			return new ReturnObject(currentConfig.length);	
+		}
+
+		@Override
+		public Node getFirstNode() {
+			return null;
+		}
+
+		@Override
+		public Set<String> getDeclaredIdentifiers() {
+
+			HashSet<String> res = new HashSet<String>();
+			return res;
+		}
+
+		@Override
+		public Set<String> getUsedIdentifiers() {
+
+			HashSet<String> res = new HashSet<String>();
+			return res;
+		}
+
+		@Override
+		public boolean DeleteChildNode(Node childNode) {
+			return true;
+		}
+
+		@Override
+		public List<Node> getChildNodes() {
+			return null;
+		}
+
+		@Override
+		public boolean addChild(Node child, int order) {
+			return false;
+		}
+
+	}
+
+	/**
+	 * Inventory scenario specific Node object.
+	 * @author daniel portnoy
+	 *
+	 */
+	protected class AmountAtNode extends Node{
+
+		public static final String AMOUNT_AT_CODE_TEXT = "amountAt";
+
+		public AmountAtNode() {
+			setType(Type.Int);
+		}
+
+		private Node index;
+
+		@Override
+		public List<CodeWritingPart> getCodeWritingParts() {
+
+			List<CodeWritingPart> res = new ArrayList<CodeWritingPart>();
+
+			res.add(new CodeWritingPart(false, false, AMOUNT_AT_CODE_TEXT + "(", null, this));
+
+			if(index == null)
+				res.add(new CodeWritingPart(false, false, null, new IndexSetter(this), this));
+			else
+				res.addAll(index.getCodeWritingParts());
+
+			res.add(new CodeWritingPart(false, false, ")", null, this));
+
+
+			if(!isHideSemicolon())
+				res.add(new CodeWritingPart(false, false, ";", null, this));
+
+			return res;
+		}
+
+		@Override
+		public List<CodeRunningPart> getCodeRunningParts(Node target, boolean isHighlighted) {
+
+			isHighlighted = target.equals(this) || isHighlighted;
+			List<CodeRunningPart> res = new ArrayList<CodeRunningPart>();
+
+			res.add(new CodeRunningPart(false, false,isHighlighted, AMOUNT_AT_CODE_TEXT + "("));
+
+			res.addAll(index.getCodeRunningParts(target, isHighlighted));
+
+			res.add(new CodeRunningPart(false, false,isHighlighted, ")"));
+
+			if(!isHideSemicolon())
+				res.add(new CodeRunningPart(false, false,isHighlighted, ";"));
+
+
+			return res;
+		}
+
+		@Override
+		public ReturnObject run() throws MyException {
+
+			LevelManager.getInstance().takeSnapshot(this);
+
+			MyConfiguration currentConfig = (MyConfiguration) getCurrentConfig();
+
+			try {
+				int indexNum = index.run().getIntValue();
+
+				if(indexNum < 0 || indexNum > currentConfig.length)
+					throw new IndexOutOfBoundsException();
+				else
+					return new ReturnObject(inventory.get(indexNum).second);			
+			} 
+			catch (MyException e) {
+				throw e;
+			}
+		}
+
+		@Override
+		public Node getFirstNode() {
+			if(index != null)
+				return index;
+			else
+				return null;
+		}
+
+		@Override
+		public Set<String> getDeclaredIdentifiers() {
+
+			HashSet<String> res = new HashSet<String>();
+			if(index!=null)
+				res.addAll(index.getDeclaredIdentifiers());
+			return res;
+		}
+
+		@Override
+		public Set<String> getUsedIdentifiers() {
+
+			HashSet<String> res = new HashSet<String>();
+			if(index!=null)
+				res.addAll(index.getUsedIdentifiers());
+			return res;
+		}
+
+		@Override
+		public boolean DeleteChildNode(Node childNode) {
+
+			Set<String> used = new HashSet<String>();
+
+			if(childNode.equals(index) && index != null)
+				used.addAll(index.getUsedIdentifiers());
+
+			Set<String> intersection = new HashSet<String>(used);
+			intersection.retainAll(childNode.getDeclaredIdentifiers());
+
+			if(intersection.isEmpty()){
+
+				if(childNode.equals(index)){
+					removeFromScope(index);
+					index = null;
+				}
+				return true;
+			}
+			else
+				return false;
+		}
+
+		@Override
+		public List<Node> getChildNodes() {
+
+			List<Node> res = new ArrayList<Node>();
+
+			res.add(index);
+
+			return res;
+		}
+
+		@Override
+		public boolean addChild(Node child, int order) {
+
+			if(order > getChildNodes().size() - 1)
+				return false;
+			else{
+				if(order == 0)
+					index = child;
+			}
+			return true;	
+		}
+
+		class IndexSetter extends Setter{
+
+			final static int ORDER = 0;
+
+			public IndexSetter(Node parent) {
+				super(true, parent, ORDER);	
+			}
+
+			@Override
+			public void setChildNode(Node toSet) {
+				index = toSet;
+				toSet.setOrder(ORDER);
+				toSet.setParent(getParent());
+			}
+
+			@Override
+			public List<Type> possibleTypes() {
+				List<Type> possibilities = new ArrayList<Type>();
+				possibilities.add(Type.Int);
+
+				return possibilities;
+			}
+		}
+	}
 	/********** special nodes class's **********/
 
 
@@ -514,6 +797,8 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 	 */
 	protected class SwapOption extends Option{
 
+		public static final String SWAP_CODE_TEXT = "swap";
+
 		public SwapOption() {}
 
 		@Override
@@ -524,19 +809,86 @@ public abstract class InventoryScenarioArchetype extends Scenario {
 		@Override
 		public void setButton(Context context, Button optionButton, final Setter SETTER) {
 
-			optionButton.setText("swap");
+			optionButton.setText(SWAP_CODE_TEXT);
 
 			optionButton.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					SETTER.setChildNode(new swapNode());
+					SETTER.setChildNode(new SwapNode());
 					SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
 					refresh();
 				}
 			});
 		}
 	}
+
+	/**
+	 * Inventory scenario specific Option object.
+	 * @author daniel portnoy
+	 *
+	 */
+	protected class InventorySizeOption extends Option{
+
+		public static final String INVENTORY_SIZE_CODE_TEXT = "inventorySize";
+
+		public InventorySizeOption() {}
+
+		@Override
+		public boolean isType(Type type) {
+			return type == Type.Int;
+		}
+
+		@Override
+		public void setButton(Context context, Button optionButton, final Setter SETTER) {
+
+			optionButton.setText(INVENTORY_SIZE_CODE_TEXT);
+
+			optionButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					SETTER.setChildNode(new InventorySizeNode());
+					SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
+					refresh();
+				}
+			});
+		}
+	}
+
+	/**
+	 * Inventory scenario specific Option object.
+	 * @author daniel portnoy
+	 *
+	 */
+	protected class AmountAtOption extends Option{
+
+		public static final String AMOUNT_AT_CODE_TEXT = "amountAt";
+
+		public AmountAtOption() {}
+
+		@Override
+		public boolean isType(Type type) {
+			return type == Type.Int;
+		}
+
+		@Override
+		public void setButton(Context context, Button optionButton, final Setter SETTER) {
+
+			optionButton.setText(AMOUNT_AT_CODE_TEXT);
+
+			optionButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					SETTER.setChildNode(new AmountAtNode());
+					SETTER.getParent().reOrderScope(SETTER.getOrder(), 1);
+					refresh();
+				}
+			});
+		}
+	}
+
 	/********** special option class's **********/
 
 

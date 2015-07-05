@@ -46,48 +46,30 @@
 
                 <Button
                     android:id="@+id/button_maze_wing_LEVEL1"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/basic_move"
-                    android:textColor="#4792d6" />
+                    android:text="@string/basic_move" />
 
                 <Button
                     android:id="@+id/button_maze_wing_LEVEL2"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/more_moves"
-                    android:textColor="#4792d6" />
+                    android:text="@string/more_moves" />
 
                 <Button
                     android:id="@+id/button_maze_wing_LEVEL3"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/all_moves"
-                    android:textColor="#4792d6" />
+                    android:text="@string/all_moves" />
             </TableRow>
 
             <TextView
@@ -106,47 +88,21 @@
 
                 <Button
                     android:id="@+id/button_maze_wing_LEVEL4"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/firewall"
-                    android:textColor="#4792d6" />
+                    android:text="@string/firewall" />
 
                 <Button
                     android:id="@+id/button_maze_wing_LEVEL5"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/diagonal"
-                    android:textColor="#4792d6" />
-
-                <Button
-                    android:id="@+id/button_maze_wing_LEVEL6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/menu_button"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text=""
-                    android:textColor="#4792d6" />
+                    android:text="@string/diagonal" />
             </TableRow>
         </TableLayout>
     </ScrollView>

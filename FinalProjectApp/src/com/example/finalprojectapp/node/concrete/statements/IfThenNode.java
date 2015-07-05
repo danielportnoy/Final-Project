@@ -208,6 +208,8 @@ public class IfThenNode extends Node{
 			condition = toSet;
 			toSet.setOrder(ORDER);
 			toSet.setParent(getParent());
+			
+			toSet.setHideSemicolon(true);
 		}
 
 		@Override

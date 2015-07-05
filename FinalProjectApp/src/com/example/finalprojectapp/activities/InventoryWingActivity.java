@@ -81,10 +81,13 @@ public class InventoryWingActivity extends Activity implements OnClickListener{
 		
 		if(v.getId() ==  R.id.button_inventory_wing_LEVEL1)
 			scenario = new Inventory_Wing_Level_1();
+		else if(v.getId() ==  R.id.button_inventory_wing_LEVEL2)
+			scenario = new Inventory_Wing_Level_2();
 
-		levelManager.loadScenario(scenario);
-
-		startActivity(intent);
+		if(scenario != null){
+			levelManager.loadScenario(scenario);
+			startActivity(intent);
+		}
 	}
 
 	@Override

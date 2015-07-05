@@ -85,18 +85,19 @@ public class TutorialActivity extends Activity implements OnClickListener{
 			scenario = new Tutorial_Level_2();
 		else if(v.getId() ==  R.id.button_tutorial_LEVEL3)
 			scenario = new Tutorial_Level_3();
-		else if(v.getId() ==  R.id.button_tutorial_LEVEL4)
-			scenario = new Tutorial_Level_4();
+		/*else if(v.getId() ==  R.id.button_tutorial_LEVEL4)
+			scenario = new Tutorial_Level_4();*/
 
-		levelManager.loadScenario(scenario);
-
-		startActivity(intent);
+		if(scenario != null){
+			levelManager.loadScenario(scenario);
+			startActivity(intent);
+		}
 	}
 
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		
+
 		//Back button was clicked - launch wingPicking activity.
 
 		Intent intent = new Intent(this, WingPickingActivity.class);

@@ -35,6 +35,14 @@ public class InventorySpriteSheet extends SpriteSheet {
 	private Bitmap sword = getBitmapByCoords(96, 336, ITEM_WIDTH, ITEM_HEIGHT);
 	private Bitmap helmet = getBitmapByCoords(96, 432, ITEM_WIDTH, ITEM_HEIGHT);
 	private Bitmap shild = getBitmapByCoords(384, 528, ITEM_WIDTH, ITEM_HEIGHT);
+	private Bitmap ring = getBitmapByCoords(96, 48, ITEM_WIDTH, ITEM_HEIGHT);
+	private Bitmap neckless = getBitmapByCoords(384, 48, ITEM_WIDTH, ITEM_HEIGHT);
+	private Bitmap diamond = getBitmapByCoords(144, 144, ITEM_WIDTH, ITEM_HEIGHT);
+	private Bitmap key = getBitmapByCoords(528, 144, ITEM_WIDTH, ITEM_HEIGHT);
+	private Bitmap book = getBitmapByCoords(480, 576, ITEM_WIDTH, ITEM_HEIGHT);
+	private Bitmap axe = getBitmapByCoords(480, 288, ITEM_WIDTH, ITEM_HEIGHT);
+	private Bitmap armor = getBitmapByCoords(48, 480, ITEM_WIDTH, ITEM_HEIGHT);
+	private Bitmap wand = getBitmapByCoords(192, 528, ITEM_WIDTH, ITEM_HEIGHT);
 
 	private Bitmap[] inventorySlots;
 
@@ -104,6 +112,30 @@ public class InventorySpriteSheet extends SpriteSheet {
 				break;
 			case Shild:
 				inventoryItems.add(i, Bitmap.createBitmap(shild));
+				break;
+			case Ring:
+				inventoryItems.add(i, Bitmap.createBitmap(ring));
+				break;
+			case Neckless:
+				inventoryItems.add(i, Bitmap.createBitmap(neckless));
+				break;
+			case Diamond:
+				inventoryItems.add(i, Bitmap.createBitmap(diamond));
+				break;
+			case Key:
+				inventoryItems.add(i, Bitmap.createBitmap(key));
+				break;
+			case Book:
+				inventoryItems.add(i, Bitmap.createBitmap(book));
+				break;
+			case Axe:
+				inventoryItems.add(i, Bitmap.createBitmap(axe));
+				break;
+			case Armor:
+				inventoryItems.add(i, Bitmap.createBitmap(armor));
+				break;
+			case Wand:
+				inventoryItems.add(i, Bitmap.createBitmap(wand));
 				break;
 
 			default:

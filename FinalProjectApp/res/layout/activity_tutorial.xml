@@ -44,33 +44,21 @@
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL1"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/numbers"
-                    android:textColor="#4792d6" />
+                    android:text="@string/numbers" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL2"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/booleans"
-                    android:textColor="#4792d6" />
+                    android:text="@string/booleans" />
             </TableRow>
 
             <TextView
@@ -89,47 +77,30 @@
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL3"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/variables"
-                    android:textColor="#4792d6" />
+                    android:text="@string/variables" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL4"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
                     android:onClick="onClick"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/assignment"
-                    android:textColor="#4792d6" />
+                    android:text="@string/assignment" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL5"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text="@string/inc_dec"
-                    android:textColor="#4792d6" />
+                    android:onClick="onClick"
+                    android:text="@string/inc_dec" />
             </TableRow>
 
             <TextView
@@ -148,45 +119,30 @@
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL7"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text=""
-                    android:textColor="#4792d6" />
+                    android:onClick="onClick"
+                    android:text="" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL8"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text=""
-                    android:textColor="#4792d6" />
+                    android:onClick="onClick"
+                    android:text="" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL9"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text=""
-                    android:textColor="#4792d6" />
+                    android:onClick="onClick"
+                    android:text="" />
             </TableRow>
 
             <TextView
@@ -205,45 +161,30 @@
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL10"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text=""
-                    android:textColor="#4792d6" />
+                    android:onClick="onClick"
+                    android:text="" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL11"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text=""
-                    android:textColor="#4792d6" />
+                    android:onClick="onClick"
+                    android:text="" />
 
                 <Button
                     android:id="@+id/button_tutorial_LEVEL12"
-                    android:layout_width="wrap_content"
+                    style="@style/my_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:background="@drawable/menu_button"
-                    android:shadowColor="#000000"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="1"
-                    android:text=""
-                    android:textColor="#4792d6" />
+                    android:onClick="onClick"
+                    android:text="" />
             </TableRow>
         </TableLayout>
     </ScrollView>
